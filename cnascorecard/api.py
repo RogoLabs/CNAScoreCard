@@ -1,7 +1,13 @@
 from fastapi import FastAPI, HTTPException
-from cnagradecard.main import generate_reports
+from fastapi.staticfiles import StaticFiles
+from cnascorecard.main import generate_reports
+import os
 
 app = FastAPI()
+
+# Mount the frontend directory to serve static files
+frontend_dir = os.path.join(os.path.dirname(__file__), '..', 'frontend')
+app.mount("/", StaticFiles(directory=frontend_dir, html=True), name="frontend")
 
 # Generate the report card data and individual CVE scores on startup
 cna_report_data, all_cve_scores = generate_reports()

@@ -4,7 +4,7 @@
 set -e
 
 # Define the image and container names
-IMAGE_NAME="cnagradecard"
+IMAGE_NAME="cnascorecard"
 CONTAINER_NAME="cnacard-test"
 CVE_DATA_DIR="./cve_data"
 REPO_URL="https://github.com/CVEProject/cvelistV5.git"
@@ -31,7 +31,7 @@ docker rm $CONTAINER_NAME >/dev/null 2>&1 || true
 
 # Run the Docker container in detached mode, mapping the local cve_data directory
 echo "Launching Docker container..."
-docker run -d -p 80:80 --name $CONTAINER_NAME -v "$(pwd)/cve_data:/app/cve_data" $IMAGE_NAME
+docker run -d -p 80:80 --name $CONTAINER_NAME -v "$(pwd)/cve_data:/app/cve_data" -v "$(pwd)/frontend:/app/frontend" $IMAGE_NAME
 
 # Wait for the application to start up and process data
 echo "Waiting for application to be ready..."
@@ -71,7 +71,7 @@ echo "Saved bottom 100 CVEs to output/bottom100_cves.json"
 
 # Stop and remove the container
 echo "Stopping and removing container..."
-docker stop $CONTAINER_NAME
-docker rm $CONTAINER_NAME
+# docker stop $CONTAINER_NAME
+# docker rm $CONTAINER_NAME
 
 echo "Build and test script finished successfully."

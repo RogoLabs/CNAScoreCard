@@ -1,5 +1,5 @@
-from cnagradecard import data_ingestor
-from cnagradecard.scoring_service import ScoringService
+from cnascorecard import data_ingestor
+from cnascorecard.scoring_service import ScoringService
 
 def generate_reports():
     """

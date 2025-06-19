@@ -14,13 +14,13 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the main application directory into the container
-COPY ./cnagradecard ./cnagradecard
+COPY ./cnascorecard ./cnascorecard
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
 
 # Define environment variables
-ENV NAME="CNAGradeCard"
+ENV NAME="CNAScoreCard"
 
-# Run the uvicorn server, pointing to the 'app' instance in 'api.py' within the 'cnagradecard' module
-CMD ["uvicorn", "cnagradecard.api:app", "--host", "0.0.0.0", "--port", "80"]
+# Run the uvicorn server, pointing to the 'app' instance in 'api.py' within the 'cnascorecard' module
+CMD ["uvicorn", "cnascorecard.api:app", "--host", "0.0.0.0", "--port", "80"]
