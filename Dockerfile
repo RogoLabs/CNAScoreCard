@@ -17,7 +17,7 @@ COPY ./cnagradecard ./cnagradecard
 EXPOSE 80
 
 # Define environment variables
-ENV NAME CNAGradeCard
+ENV NAME="CNAGradeCard"
 
 # Run the uvicorn server, pointing to the 'app' instance in 'api.py' within the 'cnagradecard' module
 CMD ["uvicorn", "cnagradecard.api:app", "--host", "0.0.0.0", "--port", "80"]
