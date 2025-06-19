@@ -4,14 +4,24 @@ from datetime import datetime
 class ScoringService:
     def score_description_readability(self, description_text):
         """
-        Scores the readability of a description text using Flesch Reading Ease.
+        Scores the readability of a description text using the Gunning Fog index,
+        which is more suitable for technical documentation.
         """
         if not description_text or len(description_text.split()) < 15:
             return 0
         
-        flesch_score = textstat.flesch_reading_ease(description_text)
-        # Normalize the Flesch score (0-100) to a 0-10 scale.
-        return min(max(flesch_score / 10, 0), 10)
+        # Gunning Fog Index is better for technical text. A lower score is better.
+        # A score of ~12 is ideal, scores > 17 are difficult.
+        # We'll normalize this to a 0-10 scale where 10 is the best.
+        # A score of 10 or less gets a perfect 10/10.
+        # A score of 25 or more gets a 0/10.
+        gunning_fog_score = textstat.gunning_fog(description_text)
+        
+        # Normalize the score
+        normalized_score = 10 * (1 - (gunning_fog_score - 10) / 15)
+        
+        # Clamp the score between 0 and 10
+        return min(max(normalized_score, 0), 10)
 
     def score_references_quality(self, references_array):
         """
@@ -26,26 +36,50 @@ class ScoringService:
         
         return min(score, 10)
 
-    def score_timeliness(self, date_reserved_str, date_published_str):
+    def score_timeliness(self, date_published_str, date_updated_str, references_score):
         """
-        Scores the timeliness based on the difference between reservation and publication dates.
+        Scores the timeliness based on how quickly a CVE is enriched after publication.
+        A higher score is better.
         """
+        if not date_published_str or not date_updated_str:
+            return 0
+
         try:
-            date_reserved = datetime.fromisoformat(date_reserved_str.replace("Z", "+00:00"))
             date_published = datetime.fromisoformat(date_published_str.replace("Z", "+00:00"))
-            delta = date_published - date_reserved
+            date_updated = datetime.fromisoformat(date_updated_str.replace("Z", "+00:00"))
+            delta = date_updated - date_published
             days = delta.days
 
-            if days <= 7:
-                return 10
+            if days <= 0:  # Published and not updated, or updated same day.
+                # If the reference score is high, it was likely published complete.
+                return 10 if references_score > 5 else 1
+            elif days <= 7:
+                return 9  # Very responsive
             elif days <= 30:
-                return 7
+                return 6  # Good
             elif days <= 90:
-                return 4
+                return 3  # Slow
             else:
-                return 1
+                return 1  # Very slow
         except (ValueError, TypeError):
             return 0
+
+    def score_completeness(self, cve_record):
+        """
+        Scores the completeness of a CVE record based on the presence of key fields.
+        """
+        score = 0
+        try:
+            cna_container = cve_record["containers"]["cna"]
+            if cna_container.get("affected"): score += 3
+            if cna_container.get("problemTypes"): score += 2
+            if cna_container.get("metrics"): score += 2
+            if cna_container.get("solutions"): score += 1
+            if cna_container.get("workarounds"): score += 1
+            if cna_container.get("credits"): score += 1
+        except (KeyError, IndexError):
+            pass
+        return score
 
     def score_cve(self, cve_record):
         """
@@ -69,12 +103,15 @@ class ScoringService:
             pass
 
         # Safely extract dates
-        date_reserved = cve_record.get("cveMetadata", {}).get("dateReserved")
         date_published = cve_record.get("cveMetadata", {}).get("datePublished")
+        date_updated = cve_record.get("containers", {}).get("cna", {}).get("providerMetadata", {}).get("dateUpdated")
 
         readability_score = self.score_description_readability(description)
         references_score = self.score_references_quality(references)
-        timeliness_score = self.score_timeliness(date_reserved, date_published)
+        timeliness_score = self.score_timeliness(date_published, date_updated, references_score)
+        completeness_score = self.score_completeness(cve_record)
+        
+        overall_score = (readability_score + references_score + timeliness_score + completeness_score) / 4
 
         return {
             "cve_id": cve_id,
@@ -82,4 +119,6 @@ class ScoringService:
             "readability_score": readability_score,
             "references_score": references_score,
             "timeliness_score": timeliness_score,
+            "completeness_score": completeness_score,
+            "overall_score": round(overall_score, 2)
         }

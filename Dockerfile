@@ -1,6 +1,9 @@
 # Use Python 3.13 as a parent image
 FROM python:3.13
 
+# Install git
+RUN apt-get update && apt-get install -y git
+
 # Set the working directory in the container
 WORKDIR /app
 

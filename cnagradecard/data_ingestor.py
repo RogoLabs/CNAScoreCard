@@ -1,7 +1,5 @@
 import os
 import requests
-import zipfile
-import io
 import json
 from datetime import datetime, timedelta
 
@@ -20,41 +18,38 @@ def get_cna_list():
 
 def get_cve_records():
     """
-    Downloads and filters CVE records from the last 6 months.
+    Reads CVE records from the local cve_data directory and filters them for the last 6 months.
+    Assumes the repository is already cloned and up-to-date.
     """
-    url = "https://github.com/CVEProject/cvelistV5/archive/refs/heads/main.zip"
-    print("Downloading CVE data...")
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-    except requests.exceptions.RequestException as e:
-        print(f"Error downloading CVE data: {e}")
+    # Path to the data directory, which is mapped from the host
+    clone_path = os.path.join(os.path.dirname(__file__), '..', 'cve_data')
+
+    if not os.path.exists(clone_path):
+        print(f"Error: CVE data directory not found at {clone_path}")
+        print("Please run the build_and_test.sh script to clone the data first.")
         return []
 
-    print("Filtering records...")
-    zip_file = zipfile.ZipFile(io.BytesIO(response.content))
-    
+    print("Filtering records from local CVE data...")
     six_months_ago = datetime.now() - timedelta(days=180)
-    
     recent_cves = []
-    
-    for file_info in zip_file.infolist():
-        if file_info.filename.endswith('.json') and 'cves/' in file_info.filename:
-            # Extract the content of the json file
-            with zip_file.open(file_info) as file:
-                try:
-                    cve_data = json.load(file)
-                    date_published_str = cve_data.get('cveMetadata', {}).get('datePublished')
-                    if date_published_str:
-                        date_published = datetime.fromisoformat(date_published_str.replace('Z', '+00:00'))
-                        if date_published.replace(tzinfo=None) >= six_months_ago:
-                            recent_cves.append(cve_data)
-                except json.JSONDecodeError:
-                    # Not a valid JSON file, skip
-                    continue
-                except Exception as e:
-                    print(f"Error processing file {file_info.filename}: {e}")
+    cves_path = os.path.join(clone_path, 'cves')
 
+    for root, _, files in os.walk(cves_path):
+        for file in files:
+            if file.startswith('CVE-') and file.endswith('.json'):
+                file_path = os.path.join(root, file)
+                with open(file_path, 'r') as f:
+                    try:
+                        cve_data = json.load(f)
+                        date_published_str = cve_data.get('cveMetadata', {}).get('datePublished')
+                        if date_published_str:
+                            date_published = datetime.fromisoformat(date_published_str.replace('Z', '+00:00'))
+                            if date_published.replace(tzinfo=None) >= six_months_ago:
+                                recent_cves.append(cve_data)
+                    except json.JSONDecodeError:
+                        continue
+                    except Exception as e:
+                        print(f"Error processing file {file_path}: {e}")
 
     print(f"Found {len(recent_cves)} recent CVEs.")
     return recent_cves
