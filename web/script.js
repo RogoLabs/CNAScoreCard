@@ -112,7 +112,11 @@ function getScoreClass(score) {
 
 // Escape HTML to prevent XSS
 function escapeHtml(unsafe) {
+    if (unsafe === null || unsafe === undefined) {
+        return '';
+    }
     return unsafe
+        .toString()
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
@@ -157,6 +161,16 @@ function handleSort(event) {
     });
     
     displayCNAs(filteredCNAs);
+}
+
+// Safe property access helper
+function safeGet(obj, property, defaultValue = 0) {
+    return obj && obj[property] !== undefined ? obj[property] : defaultValue;
+}
+
+// Safe percentage formatting
+function formatPercentage(value) {
+    return typeof value === 'number' ? value.toFixed(1) : '0.0';
 }
 
 // Initialize the application
