@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNA ScoreCard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>CNA ScoreCard</h1>
+        <p>A comprehensive evaluation of CVE Numbering Authorities (CNAs) based on their CVE record quality.</p>
+        
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="Search CNAs...">
+            <select id="sortSelect">
+                <option value="overall">Sort by Overall Score</option>
+                <option value="name">Sort by Name</option>
+                <option value="count">Sort by CVE Count</option>
+            </select>
+        </div>
+        
+        <div id="loading">Loading CNA data...</div>
+        <div id="cnaGrid" class="cna-grid"></div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
