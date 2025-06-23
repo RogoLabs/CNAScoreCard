@@ -56,6 +56,12 @@ def generate_reports():
                 cna_reports[cna]["cwe_count"] += 1
     print("Finished scoring CVEs.")
 
+    # Create all_scores list from the scores stored in each CNA's data
+    all_scores = []
+    for cna_data in cna_reports.values():
+        if "scores" in cna_data:
+            all_scores.extend(cna_data["scores"])
+
     print("Aggregating scores by CNA...")
     # Aggregate the scores by CNA
     for score in all_scores:
@@ -122,4 +128,4 @@ def generate_reports():
     print("Finished calculating percentages.")
     
     print("Report generation complete.")
-    return cna_reports, all_scores
+    return cna_reports, list(cna_reports.values())
