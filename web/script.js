@@ -67,7 +67,6 @@ function createCNACard(cna) {
     const scoreClass = getScoreClass(score);
     const cnaName = safeGet(cna, 'cna', 'Unknown CNA');
     const totalCVEs = safeGet(cna, 'total_cves_scored', 0);
-    const avgTimeliness = safeGet(cna, 'average_timeliness_score', 0);
     const avgCompleteness = safeGet(cna, 'average_completeness_score', 0);
     const cvssPercentage = formatPercentage(safeGet(cna, 'percentage_with_cvss', 0));
     const cwePercentage = formatPercentage(safeGet(cna, 'percentage_with_cwe', 0));
@@ -82,10 +81,6 @@ function createCNACard(cna) {
                 <div class="detail-item">
                     <span class="label">CVE Count:</span>
                     <span class="value">${totalCVEs}</span>
-                </div>
-                <div class="detail-item">
-                    <span class="label">Avg Timeliness:</span>
-                    <span class="value">${avgTimeliness.toFixed(1)}</span>
                 </div>
                 <div class="detail-item">
                     <span class="label">Avg Completeness:</span>

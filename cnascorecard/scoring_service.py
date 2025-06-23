@@ -36,33 +36,7 @@ class ScoringService:
         
         return min(score, 10)
 
-    def score_timeliness(self, date_published_str, date_updated_str, references_score):
-        """
-        Scores the timeliness based on how quickly a CVE is enriched after publication.
-        A higher score is better.
-        """
-        if not date_published_str or not date_updated_str:
-            return 0
 
-        try:
-            date_published = datetime.fromisoformat(date_published_str.replace("Z", "+00:00"))
-            date_updated = datetime.fromisoformat(date_updated_str.replace("Z", "+00:00"))
-            delta = date_updated - date_published
-            days = delta.days
-
-            if days <= 0:  # Published and not updated, or updated same day.
-                # If the reference score is high, it was likely published complete.
-                return 10 if references_score > 5 else 1
-            elif days <= 7:
-                return 9  # Very responsive
-            elif days <= 30:
-                return 6  # Good
-            elif days <= 90:
-                return 3  # Slow
-            else:
-                return 1  # Very slow
-        except (ValueError, TypeError):
-            return 0
 
     def score_completeness(self, cve_record):
         """
@@ -107,7 +81,6 @@ class ScoringService:
 
             readability_score = self.score_description_readability(description)
             references_score = self.score_references_quality(references)
-            timeliness_score = self.score_timeliness(date_published, date_updated, references_score)
             completeness_score = self.score_completeness(cve_record)
             
             # Check for CVSS score presence according to CVE 5.0 schema
@@ -144,14 +117,13 @@ class ScoringService:
             except (KeyError, TypeError):
                 pass
             
-            overall_score = (readability_score + references_score + timeliness_score + completeness_score) / 4
+            overall_score = (readability_score + references_score + completeness_score) / 3
 
             return {
                 "cve_id": cve_id,
                 "cna": cna,
                 "readability_score": readability_score,
                 "references_score": references_score,
-                "timeliness_score": timeliness_score,
                 "completeness_score": completeness_score,
                 "overall_score": round(overall_score, 2),
                 'has_cvss': has_cvss,

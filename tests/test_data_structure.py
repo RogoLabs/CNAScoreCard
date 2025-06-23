@@ -27,7 +27,6 @@ def validate_cna_data():
             'cna',
             'total_cves_scored',
             'overall_average_score',
-            'average_timeliness_score',
             'average_completeness_score'
         ]
         

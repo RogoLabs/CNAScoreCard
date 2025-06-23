@@ -1,6 +1,6 @@
 # CNA ScoreCard
 
-A static website that provides comprehensive scorecards for Certificate Numbering Authorities (CNAs) based on their CVE reporting quality and timeliness.
+A static website that provides comprehensive scorecards for Certificate Numbering Authorities (CNAs) based on their CVE reporting quality.
 
 ## Overview
 
@@ -59,10 +59,10 @@ This will create the necessary JSON files in the `web/data/` directory.
 ## Scoring Methodology
 
 CNAs are evaluated based on multiple factors:
-- **Response Time**: How quickly CVEs are processed and published
 - **Data Quality**: Completeness and accuracy of CVE information
+- **References Quality**: Presence and quality of reference materials
+- **Description Readability**: Clarity and completeness of vulnerability descriptions
 - **Consistency**: Regular and reliable reporting patterns
-- **Timeliness**: Meeting disclosure timelines and deadlines
 
 Scores range from 0-10, with color coding:
 - 🟢 Excellent (8.0+)

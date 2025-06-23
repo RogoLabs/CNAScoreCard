@@ -83,14 +83,12 @@ def generate_reports():
         if total_cves > 0:
             avg_readability = sum(s["readability_score"] for s in scores) / total_cves
             avg_references = sum(s["references_score"] for s in scores) / total_cves
-            avg_timeliness = sum(s["timeliness_score"] for s in scores) / total_cves
             avg_completeness = sum(s["completeness_score"] for s in scores) / total_cves
-            overall_avg = (avg_readability + avg_references + avg_timeliness + avg_completeness) / 4
+            overall_avg = (avg_readability + avg_references + avg_completeness) / 3
             
             data["total_cves_scored"] = total_cves
             data["average_readability_score"] = round(avg_readability, 2)
             data["average_references_score"] = round(avg_references, 2)
-            data["average_timeliness_score"] = round(avg_timeliness, 2)
             data["average_completeness_score"] = round(avg_completeness, 2)
             data["overall_average_score"] = round(overall_avg, 2)
             # Calculate CVSS and CWE percentages
@@ -111,7 +109,6 @@ def generate_reports():
                     "total_cves_scored": 0,
                     "average_readability_score": 0,
                     "average_references_score": 0,
-                    "average_timeliness_score": 0,
                     "average_completeness_score": 0,
                     "overall_average_score": 0,
                     "percentage_with_cvss": 0.0,
