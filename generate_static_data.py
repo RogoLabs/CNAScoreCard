@@ -36,8 +36,8 @@ def main():
         json.dump(cna_array, f, indent=2)
     
     print(f"Processing CVE data ({len(cve_data)} CVEs)...")
-    # Sort CVEs by score (assuming score is a numeric field)
-    sorted_cves = sorted(cve_data, key=lambda x: x.get('score', 0), reverse=True)
+    # Sort CVEs by overall_score (assuming score is a numeric field)
+    sorted_cves = sorted(cve_data, key=lambda x: x.get('overall_score', 0), reverse=True)
     
     # Save top 100 CVEs
     top_100 = sorted_cves[:100]

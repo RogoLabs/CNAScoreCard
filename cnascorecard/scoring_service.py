@@ -112,29 +112,37 @@ class ScoringService:
             
             # Check for CVSS score presence according to CVE 5.0 schema
             has_cvss = False
-            if 'metrics' in cve_record:
-                # metrics is an array of metric objects
-                for metric in cve_record['metrics']:
-                    # Each metric can have cvssV3_1, cvssV3_0, cvssV2_0, etc.
-                    if any(key.startswith('cvssV') for key in metric.keys()):
-                        has_cvss = True
-                        break
+            try:
+                cna_container = cve_record["containers"]["cna"]
+                if 'metrics' in cna_container:
+                    # metrics is an array of metric objects
+                    for metric in cna_container['metrics']:
+                        # Each metric can have cvssV3_1, cvssV3_0, cvssV2_0, etc.
+                        if any(key.startswith('cvssV') for key in metric.keys()):
+                            has_cvss = True
+                            break
+            except (KeyError, TypeError):
+                pass
             
             # Check for CWE ID presence according to CVE 5.0 schema
             has_cwe = False
-            if 'problemTypes' in cve_record:
-                # problemTypes is an array of problemType objects
-                for problem_type in cve_record['problemTypes']:
-                    if 'descriptions' in problem_type:
-                        # descriptions is an array of description objects
-                        for description in problem_type['descriptions']:
-                            # CWE references can be in 'cweId' field or 'references' with type 'CWE'
-                            if ('cweId' in description and description['cweId']) or \
-                               ('type' in description and description['type'] == 'CWE'):
-                                has_cwe = True
-                                break
-                    if has_cwe:
-                        break
+            try:
+                cna_container = cve_record["containers"]["cna"]
+                if 'problemTypes' in cna_container:
+                    # problemTypes is an array of problemType objects
+                    for problem_type in cna_container['problemTypes']:
+                        if 'descriptions' in problem_type:
+                            # descriptions is an array of description objects
+                            for description in problem_type['descriptions']:
+                                # CWE references can be in 'cweId' field or 'references' with type 'CWE'
+                                if ('cweId' in description and description['cweId']) or \
+                                   ('type' in description and description['type'] == 'CWE'):
+                                    has_cwe = True
+                                    break
+                        if has_cwe:
+                            break
+            except (KeyError, TypeError):
+                pass
             
             overall_score = (readability_score + references_score + timeliness_score + completeness_score) / 4
 

@@ -63,40 +63,43 @@ function displayCNAs(cnas) {
 
 // Create individual CNA card
 function createCNACard(cna) {
-    const scoreClass = getScoreClass(cna.score);
-    const lastUpdateDate = cna.lastUpdate ? new Date(cna.lastUpdate).toLocaleDateString() : 'Unknown';
+    const score = safeGet(cna, 'overall_average_score', 0);
+    const scoreClass = getScoreClass(score);
+    const cnaName = safeGet(cna, 'cna', 'Unknown CNA');
+    const totalCVEs = safeGet(cna, 'total_cves_scored', 0);
+    const avgTimeliness = safeGet(cna, 'average_timeliness_score', 0);
+    const avgCompleteness = safeGet(cna, 'average_completeness_score', 0);
+    const cvssPercentage = formatPercentage(safeGet(cna, 'percentage_with_cvss', 0));
+    const cwePercentage = formatPercentage(safeGet(cna, 'percentage_with_cwe', 0));
     
     return `
         <div class="cna-card ${scoreClass}">
             <div class="cna-header">
-                <h3 class="cna-name">${escapeHtml(cna.name)}</h3>
-                <div class="cna-score">${cna.score.toFixed(1)}</div>
+                <h3 class="cna-name">${escapeHtml(cnaName)}</h3>
+                <div class="cna-score">${score.toFixed(1)}</div>
             </div>
             <div class="cna-details">
                 <div class="detail-item">
                     <span class="label">CVE Count:</span>
-                    <span class="value">${cna.cveCount}</span>
+                    <span class="value">${totalCVEs}</span>
                 </div>
                 <div class="detail-item">
-                    <span class="label">Avg Response Time:</span>
-                    <span class="value">${cna.avgResponseTime} days</span>
+                    <span class="label">Avg Timeliness:</span>
+                    <span class="value">${avgTimeliness.toFixed(1)}</span>
                 </div>
                 <div class="detail-item">
-                    <span class="label">Quality Score:</span>
-                    <span class="value">${cna.qualityScore.toFixed(1)}</span>
+                    <span class="label">Avg Completeness:</span>
+                    <span class="value">${avgCompleteness.toFixed(1)}</span>
                 </div>
                 <div class="detail-item">
-                    <span class="label">Last Update:</span>
-                    <span class="value">${lastUpdateDate}</span>
+                    <span class="label">CVEs with CVSS:</span>
+                    <span class="value">${cvssPercentage}%</span>
                 </div>
                 <div class="detail-item">
-                    <span class="label">CVEs with CVSS Score:</span>
-                    <span class="value">${cna.percentage_with_cvss}%</span>
+                    <span class="label">CVEs with CWE:</span>
+                    <span class="value">${cwePercentage}%</span>
                 </div>
-                <div class="detail-item">
-                    <span class="label">CVEs with CWE ID:</span>
-                    <span class="value">${cna.percentage_with_cwe}%</span>
-                </div>
+                ${cna.message ? `<div class="detail-item"><span class="label">Status:</span><span class="value">${escapeHtml(cna.message)}</span></div>` : ''}
             </div>
         </div>
     `;
@@ -138,9 +141,10 @@ function setupEventListeners() {
 // Handle search
 function handleSearch(event) {
     const searchTerm = event.target.value.toLowerCase();
-    filteredCNAs = allCNAs.filter(cna => 
-        cna.name.toLowerCase().includes(searchTerm)
-    );
+    filteredCNAs = allCNAs.filter(cna => {
+        const cnaName = safeGet(cna, 'cna', '').toLowerCase();
+        return cnaName.includes(searchTerm);
+    });
     displayCNAs(filteredCNAs);
 }
 
@@ -151,12 +155,18 @@ function handleSort(event) {
     filteredCNAs.sort((a, b) => {
         switch (sortBy) {
             case 'name':
-                return a.name.localeCompare(b.name);
+                const nameA = safeGet(a, 'cna', '');
+                const nameB = safeGet(b, 'cna', '');
+                return nameA.localeCompare(nameB);
             case 'cveCount':
-                return b.cveCount - a.cveCount;
+                const countA = safeGet(a, 'total_cves_scored', 0);
+                const countB = safeGet(b, 'total_cves_scored', 0);
+                return countB - countA;
             case 'score':
             default:
-                return b.score - a.score;
+                const scoreA = safeGet(a, 'overall_average_score', 0);
+                const scoreB = safeGet(b, 'overall_average_score', 0);
+                return scoreB - scoreA;
         }
     });
     

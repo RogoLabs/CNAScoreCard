@@ -106,12 +106,16 @@ def generate_reports():
             cna_name = cna_info.get("shortName")
             if cna_name and cna_name not in cna_reports:
                 cna_reports[cna_name] = {
+                    "cna": cna_name,
+                    "total_cves": 0,
                     "total_cves_scored": 0,
                     "average_readability_score": 0,
                     "average_references_score": 0,
                     "average_timeliness_score": 0,
                     "average_completeness_score": 0,
                     "overall_average_score": 0,
+                    "percentage_with_cvss": 0.0,
+                    "percentage_with_cwe": 0.0,
                     "message": "No CVEs published in the last 6 months"
                 }
     print("Finished adding inactive CNAs.")
@@ -128,4 +132,4 @@ def generate_reports():
     print("Finished calculating percentages.")
     
     print("Report generation complete.")
-    return cna_reports, list(cna_reports.values())
+    return cna_reports, all_scores
