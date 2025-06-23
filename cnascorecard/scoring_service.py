@@ -111,6 +111,28 @@ class ScoringService:
         timeliness_score = self.score_timeliness(date_published, date_updated, references_score)
         completeness_score = self.score_completeness(cve_record)
         
+        # Check for CVSS score presence
+        has_cvss = False
+        if 'metrics' in cve_record:
+            metrics = cve_record['metrics']
+            # Check for any CVSS version (v3.0, v3.1, v2.0, etc.)
+            for metric_source in metrics.values():
+                if any(key.startswith('cvss') for key in metric_source.keys()):
+                    has_cvss = True
+                    break
+        
+        # Check for CWE ID presence
+        has_cwe = False
+        if 'problemTypes' in cve_record:
+            for problem_type in cve_record['problemTypes']:
+                if 'descriptions' in problem_type:
+                    for description in problem_type['descriptions']:
+                        if 'cweId' in description and description['cweId']:
+                            has_cwe = True
+                            break
+                if has_cwe:
+                    break
+        
         overall_score = (readability_score + references_score + timeliness_score + completeness_score) / 4
 
         return {
@@ -120,5 +142,7 @@ class ScoringService:
             "references_score": references_score,
             "timeliness_score": timeliness_score,
             "completeness_score": completeness_score,
-            "overall_score": round(overall_score, 2)
+            "overall_score": round(overall_score, 2),
+            "has_cvss": has_cvss,
+            "has_cwe": has_cwe
         }

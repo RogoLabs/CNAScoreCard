@@ -5,21 +5,46 @@ let filteredCNAs = [];
 // Load and display CNA data
 async function loadCNAData() {
     try {
-        const response = await fetch('./output/cnas.json');
+        const response = await fetch('./data/cnas.json');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
         
-        allCNAs = data;
+        // Handle different possible data structures
+        let cnaArray;
+        if (Array.isArray(data)) {
+            cnaArray = data;
+        } else if (data.cnas && Array.isArray(data.cnas)) {
+            cnaArray = data.cnas;
+        } else if (typeof data === 'object' && data !== null) {
+            // If it's an object, convert to array
+            cnaArray = Object.values(data);
+        } else {
+            throw new Error('Invalid data format received');
+        }
+        
+        allCNAs = cnaArray;
         filteredCNAs = [...allCNAs];
         
+        console.log('Loaded CNA data:', allCNAs.length, 'CNAs');
         document.getElementById('loading').style.display = 'none';
         displayCNAs(filteredCNAs);
         setupEventListeners();
     } catch (error) {
         console.error('Error loading CNA data:', error);
-        document.getElementById('loading').innerHTML = 'Error loading data. Please try again later.';
+        document.getElementById('loading').innerHTML = `
+            <div style="color: #e74c3c; text-align: center;">
+                <h3>Error loading data</h3>
+                <p>Could not load CNA data. This might be because:</p>
+                <ul style="text-align: left; display: inline-block;">
+                    <li>The data hasn't been generated yet</li>
+                    <li>The GitHub Action is still running</li>
+                    <li>There's a network issue</li>
+                </ul>
+                <p>Please try refreshing the page in a few minutes.</p>
+            </div>
+        `;
     }
 }
 
@@ -63,6 +88,14 @@ function createCNACard(cna) {
                 <div class="detail-item">
                     <span class="label">Last Update:</span>
                     <span class="value">${lastUpdateDate}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">CVEs with CVSS Score:</span>
+                    <span class="value">${cna.percentage_with_cvss}%</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">CVEs with CWE ID:</span>
+                    <span class="value">${cna.percentage_with_cwe}%</span>
                 </div>
             </div>
         </div>

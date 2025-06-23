@@ -16,9 +16,9 @@ CNA ScoreCard is now a static website hosted on GitHub Pages that automatically 
 
 ### Data Processing
 The system generates three main data files:
-- `web/output/cnas.json` - Complete CNA scorecard data
-- `web/output/top100_cves.json` - Top 100 CVEs by score
-- `web/output/bottom100_cves.json` - Bottom 100 CVEs by score
+- `web/data/cnas.json` - Complete CNA scorecard data
+- `web/data/top100_cves.json` - Top 100 CVEs by score
+- `web/data/bottom100_cves.json` - Bottom 100 CVEs by score
 
 ### Frontend
 - Pure HTML, CSS, and JavaScript (no frameworks)
@@ -54,7 +54,7 @@ To generate fresh data locally:
 python generate_static_data.py
 ```
 
-This will create the necessary JSON files in the `web/output/` directory.
+This will create the necessary JSON files in the `web/data/` directory.
 
 ## Scoring Methodology
 

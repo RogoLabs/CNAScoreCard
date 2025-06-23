@@ -18,13 +18,22 @@ def main():
     cna_data, cve_data = generate_reports()
     
     # Create output directories
-    output_dir = Path("web/output")
+    output_dir = Path("web/data")
     output_dir.mkdir(parents=True, exist_ok=True)
     
     print(f"Saving CNA data ({len(cna_data)} CNAs)...")
+    # Ensure CNA data is in the correct format (array)
+    if isinstance(cna_data, dict):
+        # If it's a dict, convert to array of values
+        cna_array = list(cna_data.values())
+    elif isinstance(cna_data, list):
+        cna_array = cna_data
+    else:
+        raise ValueError(f"Unexpected CNA data type: {type(cna_data)}")
+    
     # Save complete CNA report data
     with open(output_dir / "cnas.json", "w") as f:
-        json.dump(cna_data, f, indent=2)
+        json.dump(cna_array, f, indent=2)
     
     print(f"Processing CVE data ({len(cve_data)} CVEs)...")
     # Sort CVEs by score (assuming score is a numeric field)

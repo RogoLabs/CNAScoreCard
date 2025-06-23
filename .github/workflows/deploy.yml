@@ -1,6 +1,8 @@
 name: Deploy Static Site to GitHub Pages
 
 on:
+  push:
+    branches: [ main ]
   schedule:
     - cron: '0 */6 * * *'  # Run every 6 hours
   workflow_dispatch:  # Allow manual triggering
@@ -9,6 +11,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read
 
 concurrency:
   group: "pages"

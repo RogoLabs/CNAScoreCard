@@ -76,5 +76,16 @@ def generate_reports():
                 }
     print("Finished adding inactive CNAs.")
     
+    print("Calculating CVSS and CWE percentages...")
+    # Calculate CVSS and CWE percentages for each CNA
+    for cna, data in cna_reports.items():
+        total_cves = data["total_cves_scored"]
+        cvss_count = sum(1 for score in data["scores"] if score.get("has_cvss"))
+        cwe_count = sum(1 for score in data["scores"] if score.get("has_cwe"))
+        
+        data["cvss_percentage"] = round((cvss_count / total_cves) * 100, 1) if total_cves > 0 else 0.0
+        data["cwe_percentage"] = round((cwe_count / total_cves) * 100, 1) if total_cves > 0 else 0.0
+    print("Finished calculating percentages.")
+    
     print("Report generation complete.")
     return cna_reports, all_scores
