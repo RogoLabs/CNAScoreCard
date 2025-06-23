@@ -20,13 +20,44 @@ def generate_reports():
     if all_cnas:
         print(f"Found {len(all_cnas)} total CNAs.")
 
+    # Initialize CVSS and CWE counters for each CNA
+    cna_reports = {}
+    for cna_info in all_cnas:
+        cna_name = cna_info.get("shortName")
+        if cna_name and cna_name not in cna_reports:
+            cna_reports[cna_name] = {
+                "cna": cna_name,
+                "total_cves": 0,
+                "scores": [],
+                "cvss_count": 0,
+                "cwe_count": 0
+            }
+    
     print("Scoring all recent CVEs...")
-    all_scores = [scorer.score_cve(cve_record) for cve_record in recent_cves]
+    for cve in recent_cves:
+        cve_score = scorer.score_cve(cve)
+        if cve_score:
+            cna = cve_score["cna"]
+            if cna not in cna_reports:
+                cna_reports[cna] = {
+                    "cna": cna,
+                    "total_cves": 0,
+                    "scores": [],
+                    "cvss_count": 0,
+                    "cwe_count": 0
+                }
+            cna_reports[cna]["scores"].append(cve_score)
+            cna_reports[cna]["total_cves"] += 1
+            
+            # Count CVSS and CWE presence
+            if cve_score.get("has_cvss", False):
+                cna_reports[cna]["cvss_count"] += 1
+            if cve_score.get("has_cwe", False):
+                cna_reports[cna]["cwe_count"] += 1
     print("Finished scoring CVEs.")
 
     print("Aggregating scores by CNA...")
     # Aggregate the scores by CNA
-    cna_reports = {}
     for score in all_scores:
         cna_name = score.get("cna")
         if not cna_name or cna_name == "N/A":
@@ -56,6 +87,9 @@ def generate_reports():
             data["average_timeliness_score"] = round(avg_timeliness, 2)
             data["average_completeness_score"] = round(avg_completeness, 2)
             data["overall_average_score"] = round(overall_avg, 2)
+            # Calculate CVSS and CWE percentages
+            data["percentage_with_cvss"] = round((data.get("cvss_count", 0) / total_cves) * 100, 1) if total_cves > 0 else 0.0
+            data["percentage_with_cwe"] = round((data.get("cwe_count", 0) / total_cves) * 100, 1) if total_cves > 0 else 0.0
             # Clean up the individual scores from the final report
             del data["scores"]
 

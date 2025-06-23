@@ -82,67 +82,74 @@ class ScoringService:
         return score
 
     def score_cve(self, cve_record):
-        """
-        Orchestrates the scoring of a single CVE record.
-        """
-        cve_id = cve_record.get("cveMetadata", {}).get("cveId", "N/A")
-        cna = cve_record.get("cveMetadata", {}).get("assignerShortName", "N/A")
-        
-        # Safely extract description
-        description = ""
+        """Score a single CVE record across multiple quality metrics."""
         try:
-            description = cve_record["containers"]["cna"]["descriptions"][0]["value"]
-        except (KeyError, IndexError):
-            pass
+            cve_id = cve_record.get("cveMetadata", {}).get("cveId", "Unknown")
+            cna = cve_record.get("cveMetadata", {}).get("assignerShortName", "Unknown")
+            
+            # Safely extract description
+            description = ""
+            try:
+                description = cve_record["containers"]["cna"]["descriptions"][0]["value"]
+            except (KeyError, IndexError):
+                pass
 
-        # Safely extract references
-        references = []
-        try:
-            references = cve_record["containers"]["cna"]["references"]
-        except (KeyError, IndexError):
-            pass
+            # Safely extract references
+            references = []
+            try:
+                references = cve_record["containers"]["cna"]["references"]
+            except (KeyError, IndexError):
+                pass
 
-        # Safely extract dates
-        date_published = cve_record.get("cveMetadata", {}).get("datePublished")
-        date_updated = cve_record.get("containers", {}).get("cna", {}).get("providerMetadata", {}).get("dateUpdated")
+            # Safely extract dates
+            date_published = cve_record.get("cveMetadata", {}).get("datePublished")
+            date_updated = cve_record.get("containers", {}).get("cna", {}).get("providerMetadata", {}).get("dateUpdated")
 
-        readability_score = self.score_description_readability(description)
-        references_score = self.score_references_quality(references)
-        timeliness_score = self.score_timeliness(date_published, date_updated, references_score)
-        completeness_score = self.score_completeness(cve_record)
-        
-        # Check for CVSS score presence
-        has_cvss = False
-        if 'metrics' in cve_record:
-            metrics = cve_record['metrics']
-            # Check for any CVSS version (v3.0, v3.1, v2.0, etc.)
-            for metric_source in metrics.values():
-                if any(key.startswith('cvss') for key in metric_source.keys()):
-                    has_cvss = True
-                    break
-        
-        # Check for CWE ID presence
-        has_cwe = False
-        if 'problemTypes' in cve_record:
-            for problem_type in cve_record['problemTypes']:
-                if 'descriptions' in problem_type:
-                    for description in problem_type['descriptions']:
-                        if 'cweId' in description and description['cweId']:
-                            has_cwe = True
-                            break
-                if has_cwe:
-                    break
-        
-        overall_score = (readability_score + references_score + timeliness_score + completeness_score) / 4
+            readability_score = self.score_description_readability(description)
+            references_score = self.score_references_quality(references)
+            timeliness_score = self.score_timeliness(date_published, date_updated, references_score)
+            completeness_score = self.score_completeness(cve_record)
+            
+            # Check for CVSS score presence according to CVE 5.0 schema
+            has_cvss = False
+            if 'metrics' in cve_record:
+                # metrics is an array of metric objects
+                for metric in cve_record['metrics']:
+                    # Each metric can have cvssV3_1, cvssV3_0, cvssV2_0, etc.
+                    if any(key.startswith('cvssV') for key in metric.keys()):
+                        has_cvss = True
+                        break
+            
+            # Check for CWE ID presence according to CVE 5.0 schema
+            has_cwe = False
+            if 'problemTypes' in cve_record:
+                # problemTypes is an array of problemType objects
+                for problem_type in cve_record['problemTypes']:
+                    if 'descriptions' in problem_type:
+                        # descriptions is an array of description objects
+                        for description in problem_type['descriptions']:
+                            # CWE references can be in 'cweId' field or 'references' with type 'CWE'
+                            if ('cweId' in description and description['cweId']) or \
+                               ('type' in description and description['type'] == 'CWE'):
+                                has_cwe = True
+                                break
+                    if has_cwe:
+                        break
+            
+            overall_score = (readability_score + references_score + timeliness_score + completeness_score) / 4
 
-        return {
-            "cve_id": cve_id,
-            "cna": cna,
-            "readability_score": readability_score,
-            "references_score": references_score,
-            "timeliness_score": timeliness_score,
-            "completeness_score": completeness_score,
-            "overall_score": round(overall_score, 2),
-            "has_cvss": has_cvss,
-            "has_cwe": has_cwe
-        }
+            return {
+                "cve_id": cve_id,
+                "cna": cna,
+                "readability_score": readability_score,
+                "references_score": references_score,
+                "timeliness_score": timeliness_score,
+                "completeness_score": completeness_score,
+                "overall_score": round(overall_score, 2),
+                'has_cvss': has_cvss,
+                'has_cwe': has_cwe
+            }
+            
+        except Exception as e:
+            print(f"Error scoring CVE: {e}")
+            return None
