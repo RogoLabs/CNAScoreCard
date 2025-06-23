@@ -1,5 +1,5 @@
 from cnascorecard import data_ingestor
-from cnascorecard.scoring_service import ScoringService
+from cnascorecard.eas_scorer import calculate_eas
 
 def generate_reports():
     """
@@ -9,7 +9,6 @@ def generate_reports():
     2. A list of all individual CVE scores.
     """
     print("Starting to generate reports...")
-    scorer = ScoringService()
     
     print("Fetching recent CVE records...")
     recent_cves = data_ingestor.get_cve_records()
@@ -20,40 +19,33 @@ def generate_reports():
     if all_cnas:
         print(f"Found {len(all_cnas)} total CNAs.")
 
-    # Initialize CVSS and CWE counters for each CNA
+    # Initialize CNA reports
     cna_reports = {}
-    for cna_info in all_cnas:
-        cna_name = cna_info.get("shortName")
-        if cna_name and cna_name not in cna_reports:
-            cna_reports[cna_name] = {
-                "cna": cna_name,
-                "total_cves": 0,
-                "scores": [],
-                "cvss_count": 0,
-                "cwe_count": 0
-            }
+    if all_cnas:
+        for cna_info in all_cnas:
+            cna_name = cna_info.get("shortName")
+            if cna_name and cna_name not in cna_reports:
+                cna_reports[cna_name] = {
+                    "cna": cna_name,
+                    "total_cves": 0,
+                    "scores": []
+                }
     
     print("Scoring all recent CVEs...")
+    all_scores = []
     for cve in recent_cves:
-        cve_score = scorer.score_cve(cve)
+        cve_score = calculate_eas(cve)
         if cve_score:
-            cna = cve_score["cna"]
+            all_scores.append(cve_score)
+            cna = cve_score["assigningCna"]
             if cna not in cna_reports:
                 cna_reports[cna] = {
                     "cna": cna,
                     "total_cves": 0,
-                    "scores": [],
-                    "cvss_count": 0,
-                    "cwe_count": 0
+                    "scores": []
                 }
             cna_reports[cna]["scores"].append(cve_score)
             cna_reports[cna]["total_cves"] += 1
-            
-            # Count CVSS and CWE presence
-            if cve_score.get("has_cvss", False):
-                cna_reports[cna]["cvss_count"] += 1
-            if cve_score.get("has_cwe", False):
-                cna_reports[cna]["cwe_count"] += 1
     print("Finished scoring CVEs.")
 
     # Create all_scores list from the scores stored in each CNA's data
@@ -65,13 +57,13 @@ def generate_reports():
     print("Aggregating scores by CNA...")
     # Aggregate the scores by CNA
     for score in all_scores:
-        cna_name = score.get("cna")
+        cna_name = score.get("assigningCna")
         if not cna_name or cna_name == "N/A":
             continue
         
         if cna_name not in cna_reports:
             cna_reports[cna_name] = {"scores": []}
-        cna_reports[cna_name]["scores"].append(score)
+        # Score is already added above, no need to add again
     print("Finished aggregating scores.")
 
     print("Calculating final grades for each CNA...")
@@ -81,19 +73,23 @@ def generate_reports():
         total_cves = len(scores)
         
         if total_cves > 0:
-            avg_readability = sum(s["readability_score"] for s in scores) / total_cves
-            avg_references = sum(s["references_score"] for s in scores) / total_cves
-            avg_completeness = sum(s["completeness_score"] for s in scores) / total_cves
-            overall_avg = (avg_readability + avg_references + avg_completeness) / 3
+            # Calculate average EAS score and breakdown
+            avg_total_eas = sum(s["totalEasScore"] for s in scores) / total_cves
+            avg_foundational = sum(s["scoreBreakdown"]["foundationalCompleteness"] for s in scores) / total_cves
+            avg_root_cause = sum(s["scoreBreakdown"]["rootCauseAnalysis"] for s in scores) / total_cves
+            avg_severity = sum(s["scoreBreakdown"]["severityAndImpactContext"] for s in scores) / total_cves
+            avg_actionable = sum(s["scoreBreakdown"]["actionableIntelligence"] for s in scores) / total_cves
+            avg_format = sum(s["scoreBreakdown"]["dataFormatAndPrecision"] for s in scores) / total_cves
             
             data["total_cves_scored"] = total_cves
-            data["average_readability_score"] = round(avg_readability, 2)
-            data["average_references_score"] = round(avg_references, 2)
-            data["average_completeness_score"] = round(avg_completeness, 2)
-            data["overall_average_score"] = round(overall_avg, 2)
-            # Calculate CVSS and CWE percentages
-            data["percentage_with_cvss"] = round((data.get("cvss_count", 0) / total_cves) * 100, 1) if total_cves > 0 else 0.0
-            data["percentage_with_cwe"] = round((data.get("cwe_count", 0) / total_cves) * 100, 1) if total_cves > 0 else 0.0
+            data["average_eas_score"] = round(avg_total_eas, 2)
+            data["overall_average_score"] = round(avg_total_eas, 2)  # For compatibility
+            data["average_foundational_completeness"] = round(avg_foundational, 2)
+            data["average_root_cause_analysis"] = round(avg_root_cause, 2)
+            data["average_severity_context"] = round(avg_severity, 2)
+            data["average_actionable_intelligence"] = round(avg_actionable, 2)
+            data["average_data_format_precision"] = round(avg_format, 2)
+            
             # Clean up the individual scores from the final report
             del data["scores"]
 
@@ -107,26 +103,16 @@ def generate_reports():
                     "cna": cna_name,
                     "total_cves": 0,
                     "total_cves_scored": 0,
-                    "average_readability_score": 0,
-                    "average_references_score": 0,
-                    "average_completeness_score": 0,
+                    "average_eas_score": 0,
                     "overall_average_score": 0,
-                    "percentage_with_cvss": 0.0,
-                    "percentage_with_cwe": 0.0,
+                    "average_foundational_completeness": 0,
+                    "average_root_cause_analysis": 0,
+                    "average_severity_context": 0,
+                    "average_actionable_intelligence": 0,
+                    "average_data_format_precision": 0,
                     "message": "No CVEs published in the last 6 months"
                 }
     print("Finished adding inactive CNAs.")
-    
-    print("Calculating CVSS and CWE percentages...")
-    # Calculate CVSS and CWE percentages for each CNA
-    for cna, data in cna_reports.items():
-        total_cves = data["total_cves"]
-        cvss_count = data.get("cvss_count", 0)
-        cwe_count = data.get("cwe_count", 0)
-        
-        data["cvss_percentage"] = round((cvss_count / total_cves) * 100, 1) if total_cves > 0 else 0.0
-        data["cwe_percentage"] = round((cwe_count / total_cves) * 100, 1) if total_cves > 0 else 0.0
-    print("Finished calculating percentages.")
     
     print("Report generation complete.")
     return cna_reports, all_scores

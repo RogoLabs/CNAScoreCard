@@ -63,19 +63,21 @@ function displayCNAs(cnas) {
 
 // Create individual CNA card
 function createCNACard(cna) {
-    const score = safeGet(cna, 'overall_average_score', 0);
+    const score = safeGet(cna, 'average_eas_score', 0);
     const scoreClass = getScoreClass(score);
     const cnaName = safeGet(cna, 'cna', 'Unknown CNA');
     const totalCVEs = safeGet(cna, 'total_cves_scored', 0);
-    const avgCompleteness = safeGet(cna, 'average_completeness_score', 0);
-    const cvssPercentage = formatPercentage(safeGet(cna, 'percentage_with_cvss', 0));
-    const cwePercentage = formatPercentage(safeGet(cna, 'percentage_with_cwe', 0));
+    const avgFoundational = safeGet(cna, 'average_foundational_completeness', 0);
+    const avgRootCause = safeGet(cna, 'average_root_cause_analysis', 0);
+    const avgSeverity = safeGet(cna, 'average_severity_context', 0);
+    const avgActionable = safeGet(cna, 'average_actionable_intelligence', 0);
+    const avgFormat = safeGet(cna, 'average_data_format_precision', 0);
     
     return `
         <div class="cna-card ${scoreClass}">
             <div class="cna-header">
                 <h3 class="cna-name">${escapeHtml(cnaName)}</h3>
-                <div class="cna-score">${score.toFixed(1)}</div>
+                <div class="cna-score">${score.toFixed(1)}/100</div>
             </div>
             <div class="cna-details">
                 <div class="detail-item">
@@ -83,16 +85,24 @@ function createCNACard(cna) {
                     <span class="value">${totalCVEs}</span>
                 </div>
                 <div class="detail-item">
-                    <span class="label">Avg Completeness:</span>
-                    <span class="value">${avgCompleteness.toFixed(1)}</span>
+                    <span class="label">Foundational Completeness:</span>
+                    <span class="value">${avgFoundational.toFixed(1)}/30</span>
                 </div>
                 <div class="detail-item">
-                    <span class="label">CVEs with CVSS:</span>
-                    <span class="value">${cvssPercentage}%</span>
+                    <span class="label">Root Cause Analysis:</span>
+                    <span class="value">${avgRootCause.toFixed(1)}/20</span>
                 </div>
                 <div class="detail-item">
-                    <span class="label">CVEs with CWE:</span>
-                    <span class="value">${cwePercentage}%</span>
+                    <span class="label">Severity Context:</span>
+                    <span class="value">${avgSeverity.toFixed(1)}/25</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Actionable Intelligence:</span>
+                    <span class="value">${avgActionable.toFixed(1)}/20</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Data Format Precision:</span>
+                    <span class="value">${avgFormat.toFixed(1)}/5</span>
                 </div>
                 ${cna.message ? `<div class="detail-item"><span class="label">Status:</span><span class="value">${escapeHtml(cna.message)}</span></div>` : ''}
             </div>
@@ -102,9 +112,9 @@ function createCNACard(cna) {
 
 // Get CSS class based on score
 function getScoreClass(score) {
-    if (score >= 8) return 'score-excellent';
-    if (score >= 6) return 'score-good';
-    if (score >= 4) return 'score-fair';
+    if (score >= 80) return 'score-excellent';
+    if (score >= 60) return 'score-good';
+    if (score >= 40) return 'score-fair';
     return 'score-poor';
 }
 
@@ -159,8 +169,8 @@ function handleSort(event) {
                 return countB - countA;
             case 'score':
             default:
-                const scoreA = safeGet(a, 'overall_average_score', 0);
-                const scoreB = safeGet(b, 'overall_average_score', 0);
+                const scoreA = safeGet(a, 'average_eas_score', 0);
+                const scoreB = safeGet(b, 'average_eas_score', 0);
                 return scoreB - scoreA;
         }
     });
