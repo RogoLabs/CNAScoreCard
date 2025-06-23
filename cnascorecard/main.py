@@ -119,7 +119,7 @@ def generate_reports():
     print("Calculating CVSS and CWE percentages...")
     # Calculate CVSS and CWE percentages for each CNA
     for cna, data in cna_reports.items():
-        total_cves = data["total_cves_scored"]
+        total_cves = data["total_cves"]
         cvss_count = data.get("cvss_count", 0)
         cwe_count = data.get("cwe_count", 0)
         
