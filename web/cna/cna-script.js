@@ -131,7 +131,7 @@ async function loadCNAData() {
             securityContext: cve.scoreBreakdown?.severityAndImpactContext || 0,
             actionableIntelligence: cve.scoreBreakdown?.actionableIntelligence || 0,
             dataFormatPrecision: cve.scoreBreakdown?.dataFormatAndPrecision || 0
-        }));
+        ));
         
         displayCNAHeader(overallScore, percentile, totalCVEs, breakdown);
         displayCVECards(cveScores);
@@ -160,19 +160,19 @@ function displayCNAHeader(overallScore, percentile, totalCVEs, breakdown) {
     document.getElementById('cnaHeader').style.display = 'block';
     document.getElementById('cveSection').style.display = 'block';
 
-    // Modern, single card header layout
+    // Modern, single card header layout (white card, dark text)
     document.getElementById('cnaHeader').innerHTML = `
-        <div class="cna-header modern-cna-header-card" style="max-width: 700px; margin: 0 auto 2rem auto; border-radius: 18px; box-shadow: 0 4px 24px rgba(44,62,80,0.08); background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; padding: 2.5rem 2rem 2rem 2rem;">
+        <div class="cna-header modern-cna-header-card" style="max-width: 700px; margin: 0 auto 2rem auto; border-radius: 18px; box-shadow: 0 4px 24px rgba(44,62,80,0.08); background: #fff; color: #222; padding: 2.5rem 2rem 2rem 2rem; border: 1px solid #e0e0e0;">
             <div style="display: flex; flex-direction: column; align-items: center;">
-                <h1 id="cnaTitle" style="font-size:2.5rem; font-weight:800; margin-bottom: 0.5rem; letter-spacing: 1px; text-shadow: 0 2px 8px rgba(0,0,0,0.10);">${CNA_NAME.toUpperCase()}</h1>
+                <h1 id="cnaTitle" style="font-size:2.5rem; font-weight:800; margin-bottom: 0.5rem; letter-spacing: 1px; text-shadow: none; color: #222;">${CNA_NAME.toUpperCase()}</h1>
                 <div style="display: flex; gap: 2.5rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; justify-content: center;">
                     <div style="text-align:center;">
-                        <div style="font-size:2.5rem; font-weight:900;">${formatNumber(overallScore)}<span style="font-size:1.2rem; font-weight:400;">/100</span></div>
-                        <div style="font-size:1.1rem; opacity:0.9;">${formatNumber(percentile)}th percentile</div>
+                        <div style="font-size:2.5rem; font-weight:900; color: #222;">${formatNumber(overallScore)}<span style="font-size:1.2rem; font-weight:400; color: #888;">/100</span></div>
+                        <div style="font-size:1.1rem; opacity:0.9; color: #666;">${formatNumber(percentile)}th percentile</div>
                     </div>
                     <div style="text-align:center;">
-                        <div style="font-size:2.1rem; font-weight:700;">${formatNumber(totalCVEs)}</div>
-                        <div style="font-size:1rem; opacity:0.9;">CVEs Published (6mo)</div>
+                        <div style="font-size:2.1rem; font-weight:700; color: #222;">${formatNumber(totalCVEs)}</div>
+                        <div style="font-size:1rem; opacity:0.9; color: #666;">CVEs Published (6mo)</div>
                     </div>
                 </div>
                 <div style="width:100%; max-width:500px; margin:0 auto;">
