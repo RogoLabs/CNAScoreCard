@@ -98,7 +98,7 @@ function createCNACard(cna) {
     return `
         <div class="cna-card ${scoreClass} ${inactiveClass}">
             <div class="cna-header">
-                <h3 class="cna-name">${escapeHtml(cnaName)}</h3>
+                <h3 class="cna-name" title="${escapeHtml(cnaName)}">${escapeHtml(cnaName)}</h3>
                 <div class="cna-score-container">
                     <div class="cna-score">${score.toFixed(1)}/100</div>
                     <div class="cna-percentile">${percentileText}</div>
