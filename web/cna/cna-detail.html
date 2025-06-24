@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNA Detail - CNA ScoreCard</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .cna-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .cna-header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .cna-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .cna-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .cna-score-display {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .main-score {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 1rem;
+            margin: 0.5rem 0;
+            opacity: 0.9;
+        }
+
+        .percentile {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .score-breakdown {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .score-breakdown h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .breakdown-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .category {
+            font-size: 0.9rem;
+        }
+
+        .breakdown-item .score {
+            font-weight: 600;
+        }
+
+        .cve-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid #e0e0e0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cve-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        /* Color coding for CVE cards based on score */
+        .cve-card[data-score-range="high"] {
+            border-left-color: #4CAF50;
+        }
+
+        .cve-card[data-score-range="medium"] {
+            border-left-color: #FF9800;
+        }
+
+        .cve-card[data-score-range="low"] {
+            border-left-color: #f44336;
+        }
+
+        .cve-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cve-id {
+            font-weight: 600;
+            color: #2196F3;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .cve-id:hover {
+            text-decoration: underline;
+        }
+
+        .cve-score {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+            background: #f8f9fa;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .cve-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .cve-metrics .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.25rem 0;
+            font-size: 0.9rem;
+        }
+
+        .section-header {
+            margin: 2rem 0 1rem 0;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .section-header h2 {
+            margin: 0 0 1rem 0;
+            color: #2c3e50;
+            font-size: 1.5rem;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .controls input, .controls select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .controls input:focus, .controls select:focus {
+            outline: none;
+            border-color: #2196F3;
+            box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="index.html">← Back to Home</a>
+        </nav>
+        
+        <div id="loading">Loading CNA data...</div>
+        <div id="cve-container"></div>
+    </div>
+    
+    <script>
+        function displayCNAHeader(cnaData) {
+            const header = document.querySelector('.cna-header') || document.createElement('div');
+            header.className = 'cna-header';
+            
+            const cnaScore = calculateCNAScore(cnaData);
+            
+            header.innerHTML = `
+                <div class="container">
+                    <div class="cna-header-content">
+                        <div class="cna-info">
+                            <h1>${cnaData.name}</h1>
+                            <div class="cna-stats">
+                                <div class="stat">
+                                    <span class="stat-label">Total CVEs:</span>
+                                    <span class="stat-value">${cnaData.total_cves || 0}</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Recent CVEs shown:</span>
+                                    <span class="stat-value">${cnaData.recent_cves || 100}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cna-score-display">
+                            <div class="main-score">${cnaScore.toFixed(1)}</div>
+                            <div class="score-label">CNA Score</div>
+                            <div class="percentile">${cnaData.percentile || 'N/A'}th percentile</div>
+                        </div>
+                    </div>
+                    
+                    <div class="score-breakdown">
+                        <h3>Average Scores by Category</h3>
+                        <div class="breakdown-grid">
+                            <div class="breakdown-item">
+                                <span class="category">Foundational Completeness</span>
+                                <span class="score">${cnaData.foundational_completeness || '0.0/30'}</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="category">Root Cause Analysis</span>
+                                <span class="score">${cnaData.root_cause_analysis || '0.0/20'}</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="category">Severity Context</span>
+                                <span class="score">${cnaData.severity_context || '0.0/25'}</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="category">Actionable Intelligence</span>
+                                <span class="score">${cnaData.actionable_intelligence || '0.0/20'}</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="category">Data Format Precision</span>
+                                <span class="score">${cnaData.data_format_precision || '0.0/5'}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Insert at the top of the main content
+            const main = document.querySelector('main') || document.body;
+            main.insertBefore(header, main.firstChild);
+        }
+
+        function displayCVECards(cveData) {
+            const container = document.getElementById('cve-container') || document.createElement('div');
+            container.id = 'cve-container';
+            container.innerHTML = '';
+            
+            // Add a section header for CVE cards
+            const sectionHeader = document.createElement('div');
+            sectionHeader.className = 'section-header';
+            sectionHeader.innerHTML = `
+                <h2>Recent CVE Scores</h2>
+                <div class="controls">
+                    <input type="text" id="cve-search" placeholder="Search CVEs..." style="padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; margin-right: 1rem;">
+                    <select id="cve-sort" style="padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                        <option value="score">Sort by EAS Score</option>
+                        <option value="id">Sort by CVE ID</option>
+                    </select>
+                </div>
+            `;
+            
+            cveData.forEach(cve => {
+                const card = document.createElement('div');
+                card.className = 'cve-card';
+                
+                // Calculate individual CVE score
+                const cveScore = calculateCVEScore(cve);
+                
+                // Determine score range for color coding
+                let scoreRange = 'low';
+                if (cveScore >= 70) scoreRange = 'high';
+                else if (cveScore >= 40) scoreRange = 'medium';
+                
+                card.setAttribute('data-score-range', scoreRange);
+                
+                card.innerHTML = `
+                    <div class="cve-header">
+                        <a href="#" class="cve-id">${cve.id}</a>
+                        <div class="cve-score">${cveScore.toFixed(1)}/100</div>
+                    </div>
+                    <div class="cve-metrics">
+                        <div class="metric">
+                            <span>Foundational Completeness</span>
+                            <span>${cve.foundational_completeness || '0.0/30'}</span>
+                        </div>
+                        <div class="metric">
+                            <span>Root Cause Analysis</span>
+                            <span>${cve.root_cause_analysis || '0.0/20'}</span>
+                        </div>
+                        <div class="metric">
+                            <span>Severity Context</span>
+                            <span>${cve.severity_context || '0.0/25'}</span>
+                        </div>
+                        <div class="metric">
+                            <span>Actionable Intelligence</span>
+                            <span>${cve.actionable_intelligence || '0.0/20'}</span>
+                        </div>
+                        <div class="metric">
+                            <span>Data Format Precision</span>
+                            <span>${cve.data_format_precision || '0.0/5'}</span>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+            
+            // Insert section header before container
+            const mainContainer = document.querySelector('.container');
+            mainContainer.insertBefore(sectionHeader, container);
+            mainContainer.appendChild(container);
+        }
+
+        function calculateCNAScore(item) {
+            const foundational = parseFloat(item.foundational_completeness?.split('/')[0] || 0);
+            const rootCause = parseFloat(item.root_cause_analysis?.split('/')[0] || 0);
+            const severity = parseFloat(item.severity_context?.split('/')[0] || 0);
+            const actionable = parseFloat(item.actionable_intelligence?.split('/')[0] || 0);
+            const dataFormat = parseFloat(item.data_format_precision?.split('/')[0] || 0);
+            
+            return foundational + rootCause + severity + actionable + dataFormat;
+        }
+
+        function calculateCVEScore(cve) {
+            const foundational = parseFloat(cve.foundational_completeness?.split('/')[0] || 0);
+            const rootCause = parseFloat(cve.root_cause_analysis?.split('/')[0] || 0);
+            const severity = parseFloat(cve.severity_context?.split('/')[0] || 0);
+            const actionable = parseFloat(cve.actionable_intelligence?.split('/')[0] || 0);
+            const dataFormat = parseFloat(cve.data_format_precision?.split('/')[0] || 0);
+            
+            return foundational + rootCause + severity + actionable + dataFormat;
+        }
+
+        // Load CNA data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get CNA name from URL parameter or use default
+            const urlParams = new URLSearchParams(window.location.search);
+            const cnaName = urlParams.get('cna') || 'sample-cna';
+            
+            // Load CNA data (placeholder for now)
+            const sampleCNAData = {
+                name: cnaName,
+                total_cves: 455,
+                recent_cves: 100,
+                percentile: 81.5,
+                foundational_completeness: '99.6/30',
+                root_cause_analysis: '53.2/20',
+                severity_context: '76.5/25',
+                actionable_intelligence: '14.9/20',
+                data_format_precision: '79.7/5'
+            };
+            
+            const sampleCVEData = [
+                {
+                    id: 'CVE-2025-43561',
+                    foundational_completeness: '30.0/30',
+                    root_cause_analysis: '20.0/20',
+                    severity_context: '15.0/25',
+                    actionable_intelligence: '5.0/20',
+                    data_format_precision: '0.0/5'
+                },
+                {
+                    id: 'CVE-2025-21129',
+                    foundational_completeness: '30.0/30',
+                    root_cause_analysis: '20.0/20',
+                    severity_context: '15.0/25',
+                    actionable_intelligence: '5.0/20',
+                    data_format_precision: '0.0/5'
+                },
+                {
+                    id: 'CVE-2025-21169',
+                    foundational_completeness: '30.0/30',
+                    root_cause_analysis: '20.0/20',
+                    severity_context: '15.0/25',
+                    actionable_intelligence: '5.0/20',
+                    data_format_precision: '0.0/5'
+                }
+            ];
+            
+            displayCNAHeader(sampleCNAData);
+            displayCVECards(sampleCVEData);
+            
+            document.getElementById('loading').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
