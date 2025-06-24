@@ -4,7 +4,7 @@ A static website that provides comprehensive scorecards for Certificate Numberin
 
 ## Overview
 
-CNA ScoreCard is now a static website hosted on GitHub Pages that automatically updates every 6 hours with the latest CVE data. The site evaluates CNAs based on various metrics including response time, data quality, and reporting consistency.
+CNA ScoreCard is a static website hosted on GitHub Pages that automatically updates every 6 hours with the latest CVE data. The site evaluates CNAs using the Enhanced Aggregate Scoring (EAS) methodology, which measures CVE record quality across five key dimensions: foundational completeness, root cause analysis, severity context, actionable intelligence, and data format precision.
 
 ## Architecture
 
@@ -15,10 +15,9 @@ CNA ScoreCard is now a static website hosted on GitHub Pages that automatically 
 - **Hosting**: The site is served directly from GitHub Pages
 
 ### Data Processing
-The system generates three main data files:
-- `web/data/cnas.json` - Complete CNA scorecard data
-- `web/data/top100_cves.json` - Top 100 CVEs by score
-- `web/data/bottom100_cves.json` - Bottom 100 CVEs by score
+The system generates JSON data files:
+- `web/data/cnas.json` - Complete CNA scorecard data with EAS scores
+- `web/cna/data/*.json` - Individual CNA data files with their recent CVEs
 
 ### Frontend
 - Pure HTML, CSS, and JavaScript (no frameworks)
@@ -58,46 +57,70 @@ This will create the necessary JSON files in the `web/data/` directory.
 
 ## Scoring Methodology
 
-CNAs are evaluated based on multiple factors:
-- **Data Quality**: Completeness and accuracy of CVE information
-- **References Quality**: Presence and quality of reference materials
-- **Description Readability**: Clarity and completeness of vulnerability descriptions
-- **Consistency**: Regular and reliable reporting patterns
+The Enhanced Aggregate Scoring (EAS) system evaluates CVE records across five key dimensions:
 
-Scores range from 0-10, with color coding:
-- 🟢 Excellent (8.0+)
-- 🟡 Good (6.0-7.9)
-- 🟠 Fair (4.0-5.9)
-- 🔴 Needs Improvement (<4.0)
+### 1. Foundational Completeness (25% weight)
+- Product identification, version details, and clear vulnerability descriptions
+- Checks for basic required fields and description quality
+
+### 2. Root Cause Analysis (20% weight) 
+- CWE classifications and technical depth indicators
+- Evaluates presence of proper problem type identification
+
+### 3. Severity & Impact Context (20% weight)
+- CVSS metrics (v2, v3.0, v3.1) with base scores and vector strings
+- Impact information and exploitation indicators
+
+### 4. Actionable Intelligence (20% weight)
+- Solution information, patch references, and workarounds
+- Quality and actionability of reference materials
+
+### 5. Data Format & Precision (15% weight)
+- Structured data formats and machine-readable content
+- Proper formatting of affected products and references
+
+CNAs are scored on a 0-100 scale with color coding:
+- 🟢 Excellent (80-100)
+- 🟡 Good (60-79)
+- 🟠 Fair (40-59)
+- 🔴 Needs Improvement (0-39)
 
 ## Features
 
-- **Main Dashboard**: Overview of CVE statistics and recent vulnerabilities
-- **Individual CNA Pages**: Dedicated pages for each CNA showing their last 100 CVEs
-- **CVE Cards**: Display CVE ID, CVSS base score, severity, exploitability, and impact scores
+- **Main Dashboard**: Overview of CVE statistics and recent vulnerabilities with EAS scores
+- **Individual CNA Pages**: Dedicated pages for each CNA showing their last 100 CVEs with detailed EAS breakdowns
+- **CVE Cards**: Display CVE ID, EAS score, and detailed score breakdown across all five dimensions
 - **Direct CVE Links**: CVE IDs link directly to CVE.org for detailed information
 - **Responsive Design**: Works on desktop and mobile devices
-- **Real-time Data**: Fetches latest CVE data from NVD API
+- **Real-time Data**: Automatically updated every 6 hours from the official CVE repository
 
 ## Project Structure
 
 ```
 CNAScoreCard/
+├── cnascorecard/
+│   ├── main.py              # Core analysis engine
+│   ├── data_ingestor.py     # CVE data processing
+│   ├── eas_scorer.py        # Enhanced Aggregate Scoring implementation
+│   └── generate_static_data.py # Static data generation
 ├── scripts/
 │   ├── build.py              # Main build script
 │   ├── generate_dashboard.py # Main dashboard generation
 │   └── generate_cna_pages.py # Individual CNA page generation
-├── cnascorecard/
-│   ├── main.py              # Core analysis engine
-│   ├── data_ingestor.py     # CVE data processing
-│   └── generate_static_data.py # Static data generation
 ├── web/
 │   ├── index.html           # Main dashboard
-│   ├── style.css            # Styling
+│   ├── styles.css           # Main styling
+│   ├── script.js            # Dashboard functionality
+│   ├── scoring.html         # EAS methodology documentation
 │   └── cna/                 # Individual CNA pages
-│       ├── index.html       # CNA directory
+│       ├── cna-styles.css   # CNA page styling
+│       ├── cna-script.js    # CNA page functionality
 │       ├── data/            # Individual CNA data files
 │       └── *.html           # Individual CNA pages
+├── tests/
+│   ├── test_data_structure.py
+│   ├── test_integration.py
+│   └── test_quick.py
 └── README.md
 ```
 

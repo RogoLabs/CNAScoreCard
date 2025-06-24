@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CNA ScoreCard</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .cna-name a {
+            color: #007acc;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .cna-name a:hover {
+            color: #005999;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -44,7 +56,7 @@
         </div>
 
         <div class="text-center mb-4">
-            <a href="cna/index.html" class="btn btn-primary">Browse CNAs</a>
+            <a href="cna/" class="btn btn-primary">Browse CNAs</a>
         </div>
         
         <div class="filters">
@@ -61,5 +73,28 @@
     </div>
     
     <script src="script.js"></script>
+    <script>
+        // Update the renderTable function to link CNA names to their individual pages
+        function renderTable(cnas) {
+            const tbody = document.getElementById('cnaTableBody');
+            tbody.innerHTML = '';
+            
+            cnas.forEach((cna, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="rank">${index + 1}</td>
+                    <td class="cna-name">
+                        <a href="cna/${cna.name}.html">${cna.name}</a>
+                    </td>
+                    <td class="score ${getScoreColorClass(cna.overall_score)}">${cna.overall_score}</td>
+                    <td class="grade ${getGradeColorClass(cna.overall_grade)}">${cna.overall_grade}</td>
+                    <td class="publications">${cna.total_publications}</td>
+                    <td class="avg-score">${cna.average_score}</td>
+                    <td class="percentile">${cna.percentile}%</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+    </script>
 </body>
 </html>
