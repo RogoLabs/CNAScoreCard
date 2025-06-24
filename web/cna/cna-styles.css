@@ -19,121 +19,137 @@
 }
 
 /* CNA header section */
-#cnaHeader {
-    margin-bottom: 30px;
+.cna-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 3rem 2rem;
+    margin: -2rem -2rem 2rem -2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.cna-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.cna-header > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* Color variants for header based on score */
+.cna-header.score-high {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+}
+
+.cna-header.score-medium {
+    background: linear-gradient(135deg, #FF9800 0%, #f57c00 100%);
+}
+
+.cna-header.score-low {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
 }
 
 #cnaTitle {
-    margin-bottom: 20px;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.cna-summary {
-    background: white;
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-left: 5px solid #ddd;
+#cnaStats {
+    color: white;
 }
 
-.cna-summary.percentile-top {
-    border-left-color: #27ae60;
-}
-
-.cna-summary.percentile-upper {
-    border-left-color: #3498db;
-}
-
-.cna-summary.percentile-lower {
-    border-left-color: #f39c12;
-}
-
-.cna-summary.percentile-bottom {
-    border-left-color: #e74c3c;
-}
-
-.summary-main {
+.header-score-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 2rem;
 }
 
-.summary-score {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-.score-value {
-    font-size: 2.5em;
-    font-weight: bold;
-    color: #2c3e50;
-    background: #f8f9fa;
-    padding: 10px 20px;
-    border-radius: 25px;
-    min-width: 120px;
+.main-score {
     text-align: center;
+}
+
+.score-display {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .score-percentile {
-    font-size: 0.9em;
-    color: #666;
-    text-align: center;
-}
-
-.summary-details {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-end;
-}
-
-.summary-details .detail-item {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-.summary-details .label {
-    font-weight: 600;
-    color: #555;
-}
-
-.summary-details .value {
-    color: #333;
+    font-size: 1.1rem;
+    opacity: 0.9;
     font-weight: 500;
 }
 
-.summary-breakdown h3 {
-    color: #2c3e50;
-    margin-bottom: 15px;
-    font-size: 1.2em;
+.header-stats {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+    min-width: 100px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.header-breakdown {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 2rem;
 }
 
 .breakdown-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
 }
 
 .breakdown-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 0;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
 }
 
 .breakdown-label {
-    font-weight: 600;
-    color: #555;
+    font-weight: 500;
+    font-size: 0.9rem;
 }
 
 .breakdown-value {
-    color: #333;
-    font-weight: 500;
+    font-weight: 700;
+    font-size: 1rem;
 }
 
 /* CVE Cards */

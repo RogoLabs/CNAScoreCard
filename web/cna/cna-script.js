@@ -134,33 +134,54 @@ function loadCNAIndexData() {
 
 // Display CNA header information
 function displayCNAHeader(cnaInfo, recentCves) {
+    const cnaHeader = document.getElementById('cnaHeader');
+    const cnaTitle = document.getElementById('cnaTitle');
     const cnaStats = document.getElementById('cnaStats');
-    if (!cnaStats || !cnaInfo) return;
+    
+    if (!cnaHeader || !cnaInfo) return;
     
     const totalCves = cnaInfo.total_cves_scored || 0;
-    const avgScore = cnaInfo.average_eas_score || 0;
+    const avgScore = calculateCNAScore(cnaInfo);
     const percentile = cnaInfo.percentile || 0;
     
-    cnaStats.innerHTML = `
-        <div class="cna-summary ${getPercentileClass(percentile)}">
-            <div class="summary-main">
-                <div class="summary-score">
-                    <div class="score-value">${avgScore.toFixed(1)}</div>
+    // Set color coding based on score
+    let scoreClass;
+    if (avgScore >= 80) {
+        scoreClass = 'score-high';
+    } else if (avgScore >= 60) {
+        scoreClass = 'score-medium';  
+    } else {
+        scoreClass = 'score-low';
+    }
+    
+    // Add score class to header
+    cnaHeader.className = `cna-header ${scoreClass}`;
+    
+    // Update title if it exists
+    if (cnaTitle) {
+        cnaTitle.textContent = CNA_NAME || 'CNA Details';
+    }
+    
+    // Update stats section
+    if (cnaStats) {
+        cnaStats.innerHTML = `
+            <div class="header-score-section">
+                <div class="main-score">
+                    <div class="score-display">${avgScore.toFixed(1)}/100</div>
                     <div class="score-percentile">${percentile.toFixed(1)}th percentile</div>
                 </div>
-                <div class="summary-details">
-                    <div class="detail-item">
-                        <span class="label">Total CVEs:</span>
-                        <span class="value">${totalCves}</span>
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">${totalCves}</span>
+                        <span class="stat-label">Total CVEs</span>
                     </div>
-                    <div class="detail-item">
-                        <span class="label">Recent CVEs shown:</span>
-                        <span class="value">${recentCves ? recentCves.length : 0}</span>
+                    <div class="stat-item">
+                        <span class="stat-value">${recentCves ? recentCves.length : 0}</span>
+                        <span class="stat-label">Recent CVEs</span>
                     </div>
                 </div>
             </div>
-            <div class="summary-breakdown">
-                <h3>Average Scores by Category</h3>
+            <div class="header-breakdown">
                 <div class="breakdown-grid">
                     <div class="breakdown-item">
                         <span class="breakdown-label">Foundational Completeness</span>
@@ -184,8 +205,8 @@ function displayCNAHeader(cnaInfo, recentCves) {
                     </div>
                 </div>
             </div>
-        </div>
-    `;
+        `;
+    }
 }
 
 // Display CVE cards
@@ -204,7 +225,23 @@ function displayCVEs(cves) {
 // Create individual CVE card
 function createCVECard(cve) {
     const cveId = cve.cveId || cve.cve_id || 'Unknown';
-    const totalScore = cve.totalEasScore || 0;
+    
+    // Calculate total score from components - try multiple property name variations
+    const foundationalScore = cve.foundationalCompletenesScore || cve.foundational_completeness_score || 
+                             cve.foundationalCompleteness || cve.foundational_completeness || 0;
+    const rootCauseScore = cve.rootCauseAnalysisScore || cve.root_cause_analysis_score || 
+                          cve.rootCauseAnalysis || cve.root_cause_analysis || 0;
+    const severityScore = cve.severityContextScore || cve.severity_context_score || 
+                         cve.severityContext || cve.severity_context || 0;
+    const actionableScore = cve.actionableIntelligenceScore || cve.actionable_intelligence_score || 
+                           cve.actionableIntelligence || cve.actionable_intelligence || 0;
+    const dataFormatScore = cve.dataFormatPrecisionScore || cve.data_format_precision_score || 
+                           cve.dataFormatPrecision || cve.data_format_precision || 0;
+    
+    // If we have a totalEasScore, use that, otherwise calculate from components
+    const totalScore = cve.totalEasScore || cve.total_eas_score || 
+                      (foundationalScore + rootCauseScore + severityScore + actionableScore + dataFormatScore);
+    
     const scoreClass = getScoreClass(totalScore);
     
     return `
@@ -219,37 +256,37 @@ function createCVECard(cve) {
                 <div class="score-breakdown">
                     <div class="breakdown-item">
                         <span class="label">Foundational Completeness</span>
-                        <span class="value">${(cve.foundationalCompletenesScore || 0).toFixed(1)}/30</span>
+                        <span class="value">${foundationalScore.toFixed(1)}/30</span>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${Math.min(100, (cve.foundationalCompletenesScore || 0) / 30 * 100)}%"></div>
+                            <div class="progress-fill" style="width: ${Math.min(100, foundationalScore / 30 * 100)}%"></div>
                         </div>
                     </div>
                     <div class="breakdown-item">
                         <span class="label">Root Cause Analysis</span>
-                        <span class="value">${(cve.rootCauseAnalysisScore || 0).toFixed(1)}/20</span>
+                        <span class="value">${rootCauseScore.toFixed(1)}/20</span>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${Math.min(100, (cve.rootCauseAnalysisScore || 0) / 20 * 100)}%"></div>
+                            <div class="progress-fill" style="width: ${Math.min(100, rootCauseScore / 20 * 100)}%"></div>
                         </div>
                     </div>
                     <div class="breakdown-item">
                         <span class="label">Severity Context</span>
-                        <span class="value">${(cve.severityContextScore || 0).toFixed(1)}/25</span>
+                        <span class="value">${severityScore.toFixed(1)}/25</span>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${Math.min(100, (cve.severityContextScore || 0) / 25 * 100)}%"></div>
+                            <div class="progress-fill" style="width: ${Math.min(100, severityScore / 25 * 100)}%"></div>
                         </div>
                     </div>
                     <div class="breakdown-item">
                         <span class="label">Actionable Intelligence</span>
-                        <span class="value">${(cve.actionableIntelligenceScore || 0).toFixed(1)}/20</span>
+                        <span class="value">${actionableScore.toFixed(1)}/20</span>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${Math.min(100, (cve.actionableIntelligenceScore || 0) / 20 * 100)}%"></div>
+                            <div class="progress-fill" style="width: ${Math.min(100, actionableScore / 20 * 100)}%"></div>
                         </div>
                     </div>
                     <div class="breakdown-item">
                         <span class="label">Data Format Precision</span>
-                        <span class="value">${(cve.dataFormatPrecisionScore || 0).toFixed(1)}/5</span>
+                        <span class="value">${dataFormatScore.toFixed(1)}/5</span>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${Math.min(100, (cve.dataFormatPrecisionScore || 0) / 5 * 100)}%"></div>
+                            <div class="progress-fill" style="width: ${Math.min(100, dataFormatScore / 5 * 100)}%"></div>
                         </div>
                     </div>
                 </div>
@@ -307,6 +344,19 @@ function filterCVEs() {
     
     filteredCves = filtered;
     displayCVEs(filteredCves);
+}
+
+// Calculate CNA score based on its components
+function calculateCNAScore(cnaInfo) {
+    // Extract numerical values from the score components
+    const foundational = cnaInfo.average_foundational_completeness || 0;
+    const rootCause = cnaInfo.average_root_cause_analysis || 0;
+    const severity = cnaInfo.average_severity_context || 0;
+    const actionable = cnaInfo.average_actionable_intelligence || 0;
+    const dataFormat = cnaInfo.average_data_format_precision || 0;
+    
+    // Sum all components to get the total CNA score out of 100
+    return foundational + rootCause + severity + actionable + dataFormat;
 }
 
 // Utility functions

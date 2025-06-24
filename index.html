@@ -43,8 +43,8 @@
             <a href="web/scoring.html">📊 Detailed Scoring Methodology</a>
         </div>
 
-        <div class="text-center mb-4">
-            <a href="web/cna/" class="btn btn-primary">Browse CNAs</a>
+        <div class="hero-buttons">
+            <a href="#" class="btn btn-secondary">View Methodology</a>
         </div>
         
         <div class="filters">
@@ -61,5 +61,87 @@
     </div>
     
     <script src="web/script.js"></script>
+    <script>
+        function displayResults(data) {
+            const container = document.getElementById('results-container');
+            container.innerHTML = '';
+            
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'score-card';
+                
+                // Calculate the actual CNA score instead of using percentile
+                const cnaScore = calculateCNAScore(item);
+                
+                // Set color coding based on score
+                let scoreRange;
+                if (cnaScore >= 80) {
+                    scoreRange = 'high';
+                } else if (cnaScore >= 60) {
+                    scoreRange = 'medium';
+                } else {
+                    scoreRange = 'low';
+                }
+                card.setAttribute('data-score-range', scoreRange);
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <h3>${item.name}</h3>
+                        <div class="score">${cnaScore.toFixed(1)}/100</div>
+                        <div class="percentile">${item.percentile}th percentile</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="metric">
+                            <span>CVE Count:</span>
+                            <span>${item.cve_count || 0}</span>
+                        </div>
+                        <div class="metric">
+                            <span>Foundational Completeness:</span>
+                            <span>${item.foundational_completeness || '0.0/30'}</span>
+                        </div>
+                        <div class="metric">
+                            <span>Root Cause Analysis:</span>
+                            <span>${item.root_cause_analysis || '0.0/20'}</span>
+                        </div>
+                        <div class="metric">
+                            <span>Severity Context:</span>
+                            <span>${item.severity_context || '0.0/25'}</span>
+                        </div>
+                        <div class="metric">
+                            <span>Actionable Intelligence:</span>
+                            <span>${item.actionable_intelligence || '0.0/20'}</span>
+                        </div>
+                        <div class="metric">
+                            <span>Data Format Precision:</span>
+                            <span>${item.data_format_precision || '0.0/5'}</span>
+                        </div>
+                        <a href="#" class="view-details">View Individual CVEs →</a>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function calculateCNAScore(item) {
+            // Extract numerical values from the score components
+            const foundational = parseFloat(item.foundational_completeness?.split('/')[0] || 0);
+            const rootCause = parseFloat(item.root_cause_analysis?.split('/')[0] || 0);
+            const severity = parseFloat(item.severity_context?.split('/')[0] || 0);
+            const actionable = parseFloat(item.actionable_intelligence?.split('/')[0] || 0);
+            const dataFormat = parseFloat(item.data_format_precision?.split('/')[0] || 0);
+            
+            // Sum all components to get the total CNA score out of 100
+            return foundational + rootCause + severity + actionable + dataFormat;
+        }
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            
+            // Set default sort to "score"
+            document.getElementById('sortSelect').value = 'score';
+        });
+    </script>
 </body>
 </html>
