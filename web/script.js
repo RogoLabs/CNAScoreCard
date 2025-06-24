@@ -95,10 +95,16 @@ function createCNACard(cna) {
     // Format percentile display
     const percentileText = isInactive ? 'N/A' : `${percentile.toFixed(1)}th percentile`;
     
+    // Create safe filename for CNA page link
+    const safeFilename = cnaName.replace(/[^a-zA-Z0-9\s\-_]/g, '').trim().replace(/\s+/g, '_');
+    const cnaPageLink = isInactive ? '#' : `./cna/${safeFilename}.html`;
+    
     return `
         <div class="cna-card ${scoreClass} ${inactiveClass}">
             <div class="cna-header">
-                <h3 class="cna-name" title="${escapeHtml(cnaName)}">${escapeHtml(cnaName)}</h3>
+                <h3 class="cna-name" title="${escapeHtml(cnaName)}">
+                    ${isInactive ? escapeHtml(cnaName) : `<a href="${cnaPageLink}" class="cna-link">${escapeHtml(cnaName)}</a>`}
+                </h3>
                 <div class="cna-score-container">
                     <div class="cna-score">${score.toFixed(1)}/100</div>
                     <div class="cna-percentile">${percentileText}</div>
@@ -130,6 +136,7 @@ function createCNACard(cna) {
                     <span class="value">${avgFormat.toFixed(1)}/5</span>
                 </div>
                 ${cna.message ? `<div class="detail-item"><span class="label">Status:</span><span class="value">${escapeHtml(cna.message)}</span></div>` : ''}
+                ${!isInactive ? `<div class="detail-item cna-view-details"><a href="${cnaPageLink}" class="view-details-link">View Individual CVEs →</a></div>` : ''}
             </div>
         </div>
     `;

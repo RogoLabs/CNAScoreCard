@@ -1,0 +1,308 @@
+/* filepath: /Users/gamblin/Code/CNAScoreCard/web/cna/cna-styles.css */
+/* Additional styles for individual CNA pages */
+
+/* Breadcrumb navigation */
+.breadcrumb {
+    margin-bottom: 20px;
+}
+
+.breadcrumb a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    background-color: #ecf0f1;
+    text-decoration: none;
+}
+
+/* CNA header section */
+#cnaHeader {
+    margin-bottom: 30px;
+}
+
+#cnaTitle {
+    margin-bottom: 20px;
+}
+
+.cna-summary {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #ddd;
+}
+
+.cna-summary.percentile-top {
+    border-left-color: #27ae60;
+}
+
+.cna-summary.percentile-upper {
+    border-left-color: #3498db;
+}
+
+.cna-summary.percentile-lower {
+    border-left-color: #f39c12;
+}
+
+.cna-summary.percentile-bottom {
+    border-left-color: #e74c3c;
+}
+
+.summary-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.summary-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.score-value {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #2c3e50;
+    background: #f8f9fa;
+    padding: 10px 20px;
+    border-radius: 25px;
+    min-width: 120px;
+    text-align: center;
+}
+
+.score-percentile {
+    font-size: 0.9em;
+    color: #666;
+    text-align: center;
+}
+
+.summary-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.summary-details .detail-item {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.summary-details .label {
+    font-weight: 600;
+    color: #555;
+}
+
+.summary-details .value {
+    color: #333;
+    font-weight: 500;
+}
+
+.summary-breakdown h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.breakdown-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.breakdown-label {
+    font-weight: 600;
+    color: #555;
+}
+
+.breakdown-value {
+    color: #333;
+    font-weight: 500;
+}
+
+/* CVE Cards */
+.cve-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.cve-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-left: 5px solid #ddd;
+}
+
+.cve-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Score-based colors for CVE cards */
+.cve-card.score-excellent {
+    border-left-color: #27ae60;
+}
+
+.cve-card.score-good {
+    border-left-color: #3498db;
+}
+
+.cve-card.score-fair {
+    border-left-color: #f39c12;
+}
+
+.cve-card.score-poor {
+    border-left-color: #e74c3c;
+}
+
+/* CVE card header */
+.cve-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.cve-id {
+    font-size: 1.2em;
+    color: #2c3e50;
+    margin: 0;
+    font-family: 'Courier New', monospace;
+}
+
+.cve-score {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #2c3e50;
+    background: #f8f9fa;
+    padding: 5px 12px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+/* CVE details and breakdown */
+.cve-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.score-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.score-breakdown .breakdown-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.score-breakdown .breakdown-item .label {
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9em;
+}
+
+.score-breakdown .breakdown-item .value {
+    color: #333;
+    font-weight: 500;
+    font-size: 0.85em;
+    align-self: flex-end;
+}
+
+/* Progress bars */
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background-color: #ecf0f1;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 2px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #e74c3c 0%, #f39c12 25%, #3498db 50%, #27ae60 100%);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+/* Responsive design for CNA pages */
+@media (max-width: 768px) {
+    .summary-main {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    
+    .summary-details {
+        align-items: flex-start;
+    }
+    
+    .breakdown-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .cve-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .score-value {
+        font-size: 2em;
+        min-width: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cna-summary {
+        padding: 20px;
+    }
+    
+    .summary-main {
+        padding-bottom: 15px;
+    }
+    
+    .breakdown-grid {
+        gap: 10px;
+    }
+    
+    .cve-card {
+        padding: 15px;
+    }
+    
+    .cve-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .cve-score {
+        align-self: flex-end;
+    }
+}

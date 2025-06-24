@@ -47,7 +47,7 @@ fi
 
 # Generate static data
 echo "⚙️  Generating static data..."
-python generate_static_data.py
+python cnascorecard/generate_static_data.py
 
 # Check if data was generated successfully
 if [ ! -f "web/data/cnas.json" ]; then

@@ -13,7 +13,7 @@ def validate_cna_data():
     data_file = Path("web/data/cnas.json")
     
     if not data_file.exists():
-        print("❌ CNA data file not found. Run generate_static_data.py first.")
+        print("❌ CNA data file not found. Run cnascorecard/generate_static_data.py first.")
         return False
     
     try:

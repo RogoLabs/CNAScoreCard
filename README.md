@@ -45,13 +45,13 @@ The site is automatically deployed to GitHub Pages via GitHub Actions. The workf
 ### Local Development
 1. Clone the repository
 2. Install dependencies: `pip install -r requirements.txt`
-3. Generate test data: `python generate_static_data.py`
+3. Generate test data: `python cnascorecard/generate_static_data.py`
 4. Serve the `web` directory with any static file server
 
 ### Manual Data Generation
 To generate fresh data locally:
 ```bash
-python generate_static_data.py
+python cnascorecard/generate_static_data.py
 ```
 
 This will create the necessary JSON files in the `web/data/` directory.
@@ -69,6 +69,36 @@ Scores range from 0-10, with color coding:
 - 🟡 Good (6.0-7.9)
 - 🟠 Fair (4.0-5.9)
 - 🔴 Needs Improvement (<4.0)
+
+## Features
+
+- **Main Dashboard**: Overview of CVE statistics and recent vulnerabilities
+- **Individual CNA Pages**: Dedicated pages for each CNA showing their last 100 CVEs
+- **CVE Cards**: Display CVE ID, CVSS base score, severity, exploitability, and impact scores
+- **Direct CVE Links**: CVE IDs link directly to CVE.org for detailed information
+- **Responsive Design**: Works on desktop and mobile devices
+- **Real-time Data**: Fetches latest CVE data from NVD API
+
+## Project Structure
+
+```
+CNAScoreCard/
+├── scripts/
+│   ├── build.py              # Main build script
+│   ├── fetch_cve_data.py     # CVE data fetching
+│   ├── generate_dashboard.py # Main dashboard generation
+│   └── generate_cna_pages.py # Individual CNA page generation
+├── data/
+│   └── cve_data.json        # CVE data cache
+├── web/
+│   ├── index.html           # Main dashboard
+│   ├── style.css            # Styling
+│   └── cna/                 # Individual CNA pages
+│       ├── index.html       # CNA directory
+│       ├── data/            # Individual CNA data files
+│       └── *.html           # Individual CNA pages
+└── README.md
+```
 
 ## Contributing
 

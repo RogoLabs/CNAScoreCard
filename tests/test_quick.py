@@ -26,12 +26,12 @@ def main():
     print("🧪 Running CNA ScoreCard tests...\n")
     
     # Check if we're in the right directory
-    if not Path("generate_static_data.py").exists():
+    if not Path("cnascorecard/generate_static_data.py").exists():
         print("❌ Please run this script from the project root directory")
         return False
     
     # Test 1: Generate static data
-    if not run_command("python generate_static_data.py", "Generating static data"):
+    if not run_command("python cnascorecard/generate_static_data.py", "Generating static data"):
         return False
     
     # Test 2: Validate data structure
