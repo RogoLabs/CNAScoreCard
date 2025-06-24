@@ -97,7 +97,7 @@ function createCNACard(cna) {
     
     // Create safe filename for CNA page link
     const safeFilename = cnaName.replace(/[^a-zA-Z0-9\s\-_]/g, '').trim().replace(/\s+/g, '_');
-    const cnaPageLink = isInactive ? '#' : `./cna/${safeFilename}.html`;
+    const cnaPageLink = isInactive ? '#' : `./cna/cna-detail.html?cna=${encodeURIComponent(cnaName)}`;
     
     return `
         <div class="cna-card ${scoreClass} ${inactiveClass}">

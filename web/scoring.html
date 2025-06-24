@@ -97,7 +97,7 @@
         </div>
         
         <h1>EAS Scoring Methodology</h1>
-        <p>The Enriched Actionability Score (EAS) evaluates CVE record quality across five key dimensions, with a maximum score of 100 points.</p>
+        <p>The Enhanced Aggregate Scoring (EAS) evaluates CVE record quality across five key dimensions, with a maximum score of 100 points.</p>
         
         <div class="scoring-section">
             <h2>Score Ranges</h2>
@@ -123,19 +123,24 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Affected Product/Vendor</td>
+                        <td>English Description</td>
                         <td class="points">10</td>
-                        <td>Clear identification of vendor and product (not "N/A")</td>
+                        <td>Presence of English language description</td>
                     </tr>
                     <tr>
-                        <td>Structured Version Information</td>
-                        <td class="points">15</td>
-                        <td>Specific version ranges or status information</td>
-                    </tr>
-                    <tr>
-                        <td>Clear Problem Description</td>
+                        <td>Description Quality</td>
                         <td class="points">5</td>
-                        <td>Meaningful description (>40 characters)</td>
+                        <td>Meaningful description (>50 characters)</td>
+                    </tr>
+                    <tr>
+                        <td>Affected Products</td>
+                        <td class="points">10</td>
+                        <td>Clear identification of affected products</td>
+                    </tr>
+                    <tr>
+                        <td>Version Information</td>
+                        <td class="points">5</td>
+                        <td>Specific version ranges or status information</td>
                     </tr>
                 </tbody>
             </table>
@@ -185,25 +190,25 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>CVSS v3.1/v4.0 Base Score</td>
-                        <td class="points">10</td>
-                        <td>Standard CVSS base metrics with vector string</td>
+                        <td>CVSS Base Score</td>
+                        <td class="points">15</td>
+                        <td>CVSS v3.1/v3.0 base score provided</td>
                     </tr>
                     <tr>
-                        <td>CVSS v4.0 Threat Metrics</td>
+                        <td>CVSS Vector String</td>
                         <td class="points">5</td>
-                        <td>Exploit maturity (E) metric defined</td>
+                        <td>Complete CVSS vector string for reproducibility</td>
                     </tr>
                     <tr>
-                        <td>Environmental/Supplemental Metrics</td>
-                        <td class="points">10</td>
-                        <td>Additional context metrics (2 points each, max 10)</td>
+                        <td>Impact Description</td>
+                        <td class="points">5</td>
+                        <td>Description includes impact indicators</td>
                     </tr>
                 </tbody>
             </table>
             
             <div class="example-cve">
-                <strong>Example:</strong> A CVE with CVSS v4.0 base score, exploit maturity rating, and environmental metrics for confidentiality/integrity requirements would score 25 points.
+                <strong>Example:</strong> A CVE with CVSS v3.1 base score of 9.8, complete vector string, and description mentioning "remote code execution" would score 25 points.
             </div>
         </div>
 
@@ -221,19 +226,24 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>High-Quality References</td>
-                        <td class="points">12</td>
-                        <td>External links (4 points each, max 12)</td>
+                        <td>Solution Information</td>
+                        <td class="points">8</td>
+                        <td>Available fixes, patches, or mitigations</td>
                     </tr>
                     <tr>
-                        <td>Exploit/PoC Information</td>
-                        <td class="points">5</td>
-                        <td>Links to exploits or proof-of-concept code</td>
+                        <td>Actionable References</td>
+                        <td class="points">6</td>
+                        <td>Links to patches, advisories, or security guidance</td>
                     </tr>
                     <tr>
-                        <td>VEX Data Provided</td>
-                        <td class="points">3</td>
-                        <td>Vulnerability Exploitability eXchange data</td>
+                        <td>Exploit Information</td>
+                        <td class="points">4</td>
+                        <td>Links to proof-of-concept code or exploit details</td>
+                    </tr>
+                    <tr>
+                        <td>Workarounds</td>
+                        <td class="points">2</td>
+                        <td>Temporary mitigation steps</td>
                     </tr>
                 </tbody>
             </table>

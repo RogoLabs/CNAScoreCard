@@ -18,6 +18,7 @@ function loadIndividualCNAData() {
     const loading = document.getElementById('loading');
     const cveCards = document.getElementById('cveCards');
     const cnaHeader = document.getElementById('cnaHeader');
+    const cveSection = document.getElementById('cveSection');
     const cnaTitle = document.getElementById('cnaTitle');
     const cnaStats = document.getElementById('cnaStats');
     
@@ -32,6 +33,14 @@ function loadIndividualCNAData() {
         .then(data => {
             cnaData = data;
             loading.style.display = 'none';
+            
+            // Show the header and CVE sections
+            if (cnaHeader) {
+                cnaHeader.style.display = 'block';
+            }
+            if (cveSection) {
+                cveSection.style.display = 'block';
+            }
             
             // Update header with CNA info
             displayCNAHeader(data.cna_info, data.recent_cves);
@@ -144,18 +153,8 @@ function displayCNAHeader(cnaInfo, recentCves) {
     const avgScore = calculateCNAScore(cnaInfo);
     const percentile = cnaInfo.percentile || 0;
     
-    // Set color coding based on score
-    let scoreClass;
-    if (avgScore >= 80) {
-        scoreClass = 'score-high';
-    } else if (avgScore >= 60) {
-        scoreClass = 'score-medium';  
-    } else {
-        scoreClass = 'score-low';
-    }
-    
-    // Add score class to header
-    cnaHeader.className = `cna-header ${scoreClass}`;
+    // Remove score-based styling - use neutral professional header
+    cnaHeader.className = 'cna-header';
     
     // Update title if it exists
     if (cnaTitle) {

@@ -10,7 +10,7 @@
     <div class="container">
         <h1>CNA ScoreCard</h1>
         <div class="intro-section">
-            <p class="main-description">A comprehensive evaluation platform that scores CVE Numbering Authorities (CNAs) based on the quality and completeness of their vulnerability disclosures using the Enriched Actionability Score (EAS) methodology.</p>
+            <p class="main-description">A comprehensive evaluation platform that scores CVE Numbering Authorities (CNAs) based on the quality and completeness of their vulnerability disclosures using the Enhanced Aggregate Scoring (EAS) methodology.</p>
             
             <div class="key-features">
                 <h2>What We Measure</h2>
@@ -35,7 +35,7 @@
             </div>
             
             <div class="data-info">
-                <p><strong>Live Data:</strong> Automatically updated every 6 hours from the official CVE database • <strong>Time Range:</strong> Last 6 months of CVE publications • <strong>Methodology:</strong> Enriched Actionability Score (EAS) with 100-point scale</p>
+                <p><strong>Live Data:</strong> Automatically updated every 6 hours from the official CVE database • <strong>Time Range:</strong> Last 6 months of CVE publications • <strong>Methodology:</strong> Enhanced Aggregate Scoring (EAS) with 100-point scale</p>
             </div>
         </div>
         
@@ -61,87 +61,5 @@
     </div>
     
     <script src="script.js"></script>
-    <script>
-        function displayResults(data) {
-            const container = document.getElementById('results-container');
-            container.innerHTML = '';
-            
-            data.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'score-card';
-                
-                // Calculate the actual CNA score
-                const cnaScore = calculateCNAScore(item);
-                
-                // Set color coding based on score
-                let scoreRange;
-                if (cnaScore >= 80) {
-                    scoreRange = 'high';
-                } else if (cnaScore >= 60) {
-                    scoreRange = 'medium';
-                } else {
-                    scoreRange = 'low';
-                }
-                card.setAttribute('data-score-range', scoreRange);
-                
-                card.innerHTML = `
-                    <div class="card-header">
-                        <h3>${item.name}</h3>
-                        <div class="score">${cnaScore.toFixed(1)}/100</div>
-                        <div class="percentile">${item.percentile || 'N/A'}th percentile</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="metric">
-                            <span>CVE Count:</span>
-                            <span>${item.cve_count || 0}</span>
-                        </div>
-                        <div class="metric">
-                            <span>Foundational Completeness:</span>
-                            <span>${item.foundational_completeness || '0.0/30'}</span>
-                        </div>
-                        <div class="metric">
-                            <span>Root Cause Analysis:</span>
-                            <span>${item.root_cause_analysis || '0.0/20'}</span>
-                        </div>
-                        <div class="metric">
-                            <span>Severity Context:</span>
-                            <span>${item.severity_context || '0.0/25'}</span>
-                        </div>
-                        <div class="metric">
-                            <span>Actionable Intelligence:</span>
-                            <span>${item.actionable_intelligence || '0.0/20'}</span>
-                        </div>
-                        <div class="metric">
-                            <span>Data Format Precision:</span>
-                            <span>${item.data_format_precision || '0.0/5'}</span>
-                        </div>
-                        <a href="#" class="view-details">View Individual CVEs →</a>
-                    </div>
-                `;
-                
-                container.appendChild(card);
-            });
-        }
-
-        function calculateCNAScore(item) {
-            // Extract numerical values from the score components
-            const foundational = parseFloat(item.foundational_completeness?.split('/')[0] || 0);
-            const rootCause = parseFloat(item.root_cause_analysis?.split('/')[0] || 0);
-            const severity = parseFloat(item.severity_context?.split('/')[0] || 0);
-            const actionable = parseFloat(item.actionable_intelligence?.split('/')[0] || 0);
-            const dataFormat = parseFloat(item.data_format_precision?.split('/')[0] || 0);
-            
-            // Sum all components to get the total CNA score out of 100
-            return foundational + rootCause + severity + actionable + dataFormat;
-        }
-
-        // Load data when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            loadData();
-            
-            // Set default sort to "score"
-            document.getElementById('sortSelect').value = 'score';
-        });
-    </script>
 </body>
 </html>
