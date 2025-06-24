@@ -253,6 +253,177 @@
     transition: width 0.3s ease;
 }
 
+/* CNA-specific styles */
+.cna-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.cna-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    display: block;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.breadcrumb {
+    margin-bottom: 1rem;
+}
+
+.breadcrumb a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    align-items: center;
+}
+
+.filters input,
+.filters select {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.filters input {
+    flex: 1;
+    max-width: 300px;
+}
+
+.cve-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.cve-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.cve-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.cve-id {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.cve-score {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.score-excellent {
+    background: #4caf50;
+    color: white;
+}
+
+.score-good {
+    background: #8bc34a;
+    color: white;
+}
+
+.score-fair {
+    background: #ffc107;
+    color: black;
+}
+
+.score-poor {
+    background: #ff9800;
+    color: white;
+}
+
+.score-very-poor {
+    background: #f44336;
+    color: white;
+}
+
+.cve-date {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.score-breakdown {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.25rem 0;
+}
+
+.breakdown-label {
+    color: #666;
+}
+
+.breakdown-value {
+    font-weight: bold;
+    color: #333;
+}
+
+#loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+.no-results {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    font-style: italic;
+}
+
 /* Responsive design for CNA pages */
 @media (max-width: 768px) {
     .summary-main {
@@ -276,6 +447,22 @@
     .score-value {
         font-size: 2em;
         min-width: 100px;
+    }
+    
+    .filters {
+        flex-direction: column;
+    }
+    
+    .filters input {
+        max-width: none;
+    }
+    
+    .cve-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .cna-stats {
+        grid-template-columns: 1fr;
     }
 }
 
