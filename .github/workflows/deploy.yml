@@ -13,28 +13,31 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.13'
-      
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests
-      
-      - name: Clone CVE data repository
-        run: |
-          git clone https://github.com/CVEProject/cvelistV5.git cve_data
-      
-      - name: Build complete project
-        run: python scripts/build.py
-      
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./web
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.13'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+    
+    - name: Clone CVE data repository
+      run: |
+        git clone https://github.com/CVEProject/cvelistV5.git cve_data
+        echo "CVE data cloned successfully"
+        ls -la cve_data/
+    
+    - name: Run build script
+      run: |
+        python scripts/build.py
+    
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./web
+        publish_branch: gh-pages

@@ -1,206 +1,318 @@
 #!/usr/bin/env python3
 """
-Calculates the Enriched Actionability Score (EAS) for a given CVE record.
-
-This script accepts a file path to a CVE JSON 5.1 record and prints a
-JSON object to standard output containing the total EAS score and a
-detailed breakdown.
+Enhanced Aggregate Scoring (EAS) system for CVE records.
+Evaluates CVE quality across multiple dimensions.
 """
 
+import re
 import json
 import sys
-import re
 from typing import Dict, Any, List
 
 # A small, hardcoded list of known exploit database domains.
 KNOWN_EXPLOIT_DOMAINS = ['exploit-db.com', 'github.com']
 
-def score_foundational_completeness(cna_container: Dict[str, Any]) -> int:
+def calculate_eas(cve_data: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Calculates the Foundational Completeness score.
-
+    Calculate Enhanced Aggregate Score (EAS) for a CVE record.
+    
     Args:
-        cna_container: The 'cna' container from the CVE record.
-
+        cve_data (dict): CVE record data
+        
     Returns:
-        The score for this category (0-30).
+        dict: Score breakdown and metadata
     """
+    if not cve_data:
+        return None
+    
+    # Extract basic metadata
+    cve_id = cve_data.get('cveMetadata', {}).get('cveId', 'Unknown')
+    assigning_cna = cve_data.get('cveMetadata', {}).get('assignerShortName', 'Unknown')
+    date_published = cve_data.get('cveMetadata', {}).get('datePublished', '')
+    
+    # Get containers for analysis
+    containers = cve_data.get('containers', {})
+    cna_container = containers.get('cna', {}) if isinstance(containers, dict) else {}
+    
+    # Calculate individual scores
+    foundational_score = _calculate_foundational_completeness(cna_container)
+    root_cause_score = _calculate_root_cause_analysis(cna_container)
+    severity_score = _calculate_severity_context(cna_container)
+    actionable_score = _calculate_actionable_intelligence(cna_container)
+    format_score = _calculate_data_format_precision(cna_container)
+    
+    # Calculate total EAS score (weighted average)
+    total_eas_score = (
+        foundational_score * 0.25 +
+        root_cause_score * 0.20 +
+        severity_score * 0.20 +
+        actionable_score * 0.20 +
+        format_score * 0.15
+    )
+    
+    return {
+        'cveId': cve_id,
+        'assigningCna': assigning_cna,
+        'datePublished': date_published,
+        'totalEasScore': round(total_eas_score, 2),
+        'scoreBreakdown': {
+            'foundationalCompleteness': round(foundational_score, 2),
+            'rootCauseAnalysis': round(root_cause_score, 2),
+            'severityAndImpactContext': round(severity_score, 2),
+            'actionableIntelligence': round(actionable_score, 2),
+            'dataFormatAndPrecision': round(format_score, 2)
+        }
+    }
+
+
+def _calculate_foundational_completeness(cna_container: Dict[str, Any]) -> int:
+    """Calculate foundational completeness score (0-100)."""
     score = 0
-    # Metric: Affected Product/Vendor (10 points)
-    if 'affected' in cna_container and isinstance(cna_container['affected'], list):
-        for affect in cna_container['affected']:
-            vendor = affect.get('vendor')
-            product = affect.get('product')
-            if vendor and product and vendor != 'N/A' and product != 'N/A':
+    max_score = 100
+    
+    # Check for basic required fields
+    if cna_container.get('descriptions'):
+        descriptions = cna_container['descriptions']
+        if isinstance(descriptions, list) and len(descriptions) > 0:
+            # Check for English description
+            has_english = any(d.get('lang') == 'en' for d in descriptions if isinstance(d, dict))
+            if has_english:
+                score += 30
+                # Check description quality
+                en_desc = next((d.get('value', '') for d in descriptions if d.get('lang') == 'en'), '')
+                if len(en_desc) > 50:
+                    score += 10
+                if len(en_desc) > 200:
+                    score += 10
+    
+    # Check for affected products
+    if cna_container.get('affected'):
+        affected = cna_container['affected']
+        if isinstance(affected, list) and len(affected) > 0:
+            score += 25
+            # Check for version information
+            has_versions = any(
+                item.get('versions') for item in affected if isinstance(item, dict)
+            )
+            if has_versions:
+                score += 15
+    
+    # Check for problem types
+    if cna_container.get('problemTypes'):
+        problem_types = cna_container['problemTypes']
+        if isinstance(problem_types, list) and len(problem_types) > 0:
+            score += 10
+    
+    # Check for references
+    if cna_container.get('references'):
+        references = cna_container['references']
+        if isinstance(references, list) and len(references) > 0:
+            score += 10
+    
+    return min(score, max_score)
+
+
+def _calculate_root_cause_analysis(cna_container: Dict[str, Any]) -> int:
+    """Calculate root cause analysis score (0-100)."""
+    score = 0
+    
+    # Check problem types for technical detail
+    problem_types = cna_container.get('problemTypes', [])
+    if isinstance(problem_types, list):
+        for pt in problem_types:
+            if isinstance(pt, dict) and pt.get('descriptions'):
+                descriptions = pt['descriptions']
+                if isinstance(descriptions, list):
+                    for desc in descriptions:
+                        if isinstance(desc, dict):
+                            cwe_id = desc.get('cweId', '')
+                            if cwe_id and cwe_id.startswith('CWE-'):
+                                score += 40
+                                break
+    
+    # Check descriptions for technical depth
+    descriptions = cna_container.get('descriptions', [])
+    if isinstance(descriptions, list):
+        for desc in descriptions:
+            if isinstance(desc, dict) and desc.get('lang') == 'en':
+                text = desc.get('value', '').lower()
+                # Look for technical indicators
+                technical_terms = [
+                    'buffer overflow', 'sql injection', 'cross-site scripting', 'xss',
+                    'authentication', 'authorization', 'memory', 'heap', 'stack',
+                    'integer overflow', 'format string', 'race condition',
+                    'privilege escalation', 'directory traversal', 'code injection'
+                ]
+                found_terms = sum(1 for term in technical_terms if term in text)
+                if found_terms > 0:
+                    score += min(30, found_terms * 10)
+                
+                # Check for root cause language
+                root_cause_indicators = [
+                    'due to', 'caused by', 'because of', 'resulting from',
+                    'lack of validation', 'improper handling', 'insufficient'
+                ]
+                if any(indicator in text for indicator in root_cause_indicators):
+                    score += 20
+                
+                break
+    
+    return min(score, 100)
+
+
+def _calculate_severity_context(cna_container: Dict[str, Any]) -> int:
+    """Calculate severity and impact context score (0-100)."""
+    score = 0
+    
+    # Check for CVSS metrics
+    metrics = cna_container.get('metrics', [])
+    if isinstance(metrics, list):
+        for metric in metrics:
+            if isinstance(metric, dict):
+                # Check for CVSS v3
+                if 'cvssV3_1' in metric or 'cvssV3_0' in metric:
+                    cvss_data = metric.get('cvssV3_1') or metric.get('cvssV3_0')
+                    if isinstance(cvss_data, dict):
+                        if cvss_data.get('baseScore') is not None:
+                            score += 50
+                        if cvss_data.get('vectorString'):
+                            score += 20
+                        break
+                # Check for CVSS v2
+                elif 'cvssV2' in metric:
+                    cvss_data = metric['cvssV2']
+                    if isinstance(cvss_data, dict) and cvss_data.get('baseScore') is not None:
+                        score += 30
+                        break
+    
+    # Check descriptions for impact information
+    descriptions = cna_container.get('descriptions', [])
+    if isinstance(descriptions, list):
+        for desc in descriptions:
+            if isinstance(desc, dict) and desc.get('lang') == 'en':
+                text = desc.get('value', '').lower()
+                impact_terms = [
+                    'remote code execution', 'denial of service', 'information disclosure',
+                    'privilege escalation', 'data corruption', 'system compromise',
+                    'arbitrary code', 'crash', 'hang', 'memory corruption'
+                ]
+                if any(term in text for term in impact_terms):
+                    score += 20
+                break
+    
+    # Check for exploitation information
+    if any('exploit' in str(ref).lower() for ref in cna_container.get('references', [])):
+        score += 10
+    
+    return min(score, 100)
+
+
+def _calculate_actionable_intelligence(cna_container: Dict[str, Any]) -> int:
+    """Calculate actionable intelligence score (0-100)."""
+    score = 0
+    
+    # Check for solution information
+    solutions = cna_container.get('solutions', [])
+    if isinstance(solutions, list) and len(solutions) > 0:
+        score += 40
+        # Check for detailed solutions
+        for solution in solutions:
+            if isinstance(solution, dict):
+                value = solution.get('value', '')
+                if len(value) > 100:
+                    score += 20
+                    break
+    
+    # Check references for actionable content
+    references = cna_container.get('references', [])
+    if isinstance(references, list):
+        actionable_refs = 0
+        for ref in references:
+            if isinstance(ref, dict):
+                url = ref.get('url', '').lower()
+                name = ref.get('name', '').lower()
+                tags = ref.get('tags', [])
+                
+                # Look for patch/advisory references
+                if any(tag in ['Patch', 'Vendor Advisory', 'Mitigation'] for tag in tags):
+                    actionable_refs += 1
+                elif any(term in url for term in ['patch', 'advisory', 'security', 'fix']):
+                    actionable_refs += 1
+                elif any(term in name for term in ['patch', 'advisory', 'fix', 'update']):
+                    actionable_refs += 1
+        
+        if actionable_refs > 0:
+            score += min(30, actionable_refs * 15)
+    
+    # Check for workaround information
+    workarounds = cna_container.get('workarounds', [])
+    if isinstance(workarounds, list) and len(workarounds) > 0:
+        score += 10
+    
+    return min(score, 100)
+
+
+def _calculate_data_format_precision(cna_container: Dict[str, Any]) -> int:
+    """Calculate data format and precision score (0-100)."""
+    score = 0
+    
+    # Check affected products structure
+    affected = cna_container.get('affected', [])
+    if isinstance(affected, list):
+        for item in affected:
+            if isinstance(item, dict):
+                # Check for vendor/product information
+                if item.get('vendor') and item.get('product'):
+                    score += 20
+                
+                # Check for version information
+                versions = item.get('versions', [])
+                if isinstance(versions, list) and len(versions) > 0:
+                    score += 20
+                    # Check for detailed version info
+                    for version in versions:
+                        if isinstance(version, dict):
+                            if version.get('version') and version.get('status'):
+                                score += 10
+                                break
+                break
+    
+    # Check for properly formatted problem types
+    problem_types = cna_container.get('problemTypes', [])
+    if isinstance(problem_types, list):
+        for pt in problem_types:
+            if isinstance(pt, dict) and pt.get('descriptions'):
+                descriptions = pt['descriptions']
+                if isinstance(descriptions, list):
+                    for desc in descriptions:
+                        if isinstance(desc, dict) and desc.get('type') and desc.get('description'):
+                            score += 15
+                            break
+                break
+    
+    # Check for structured references
+    references = cna_container.get('references', [])
+    if isinstance(references, list):
+        structured_refs = 0
+        for ref in references:
+            if isinstance(ref, dict):
+                if ref.get('url') and ref.get('name'):
+                    structured_refs += 1
+                if ref.get('tags'):
+                    structured_refs += 1
+        
+        if structured_refs > 0:
+            score += min(25, structured_refs * 5)
+    
+    # Check for language consistency
+    descriptions = cna_container.get('descriptions', [])
+    if isinstance(descriptions, list):
+        for desc in descriptions:
+            if isinstance(desc, dict) and desc.get('lang'):
                 score += 10
                 break
-
-    # Metric: Structured Version Info (15 points)
-    if 'affected' in cna_container and isinstance(cna_container['affected'], list):
-        for affect in cna_container['affected']:
-            if 'versions' in affect and isinstance(affect['versions'], list):
-                for version in affect['versions']:
-                    if version.get('status') and (version.get('version') or version.get('lessThanOrEqual')):
-                        score += 15
-                        break
-            if score >= 25:  # Optimization: if we already have vendor/product + version
-                break
-
-    # Metric: Clear Problem Description (5 points)
-    if 'descriptions' in cna_container and isinstance(cna_container['descriptions'], list):
-        if cna_container['descriptions'] and len(cna_container['descriptions'][0].get('value', '')) > 40:
-            score += 5
-
-    return score
-
-def score_root_cause_analysis(cna_container: Dict[str, Any]) -> int:
-    """
-    Calculates the Root Cause Analysis score.
-
-    Args:
-        cna_container: The 'cna' container from the CVE record.
-
-    Returns:
-        The score for this category (0-20).
-    """
-    # Metric: CWE ID Provided (20 points)
-    cwe_pattern = re.compile(r'^CWE-[1-9][0-9]*$')
-    if 'problemTypes' in cna_container and isinstance(cna_container['problemTypes'], list):
-        for pt in cna_container['problemTypes']:
-            if 'descriptions' in pt and isinstance(pt['descriptions'], list):
-                for desc in pt['descriptions']:
-                    cwe_id = desc.get('cweId')
-                    if cwe_id and cwe_pattern.match(cwe_id):
-                        return 20
-    return 0
-
-def score_severity_context(cna_container: Dict[str, Any]) -> int:
-    """
-    Calculates the Severity & Impact Context score.
-
-    Args:
-        cna_container: The 'cna' container from the CVE record.
-
-    Returns:
-        The score for this category (0-25).
-    """
-    score = 0
-    cvss_v4_metrics = None
-
-    if 'metrics' in cna_container and isinstance(cna_container['metrics'], list):
-        for metric in cna_container['metrics']:
-            # Metric: CVSS v3.1/v4.0 Base Score (10 points)
-            if 'cvssV3_1' in metric and metric['cvssV3_1'].get('vectorString'):
-                score = max(score, 10)
-            if 'cvssV4_0' in metric and metric['cvssV4_0'].get('vectorString'):
-                score = max(score, 10)
-                cvss_v4_metrics = metric['cvssV4_0']
-
-    if cvss_v4_metrics:
-        # Metric: CVSS v4.0 Threat Metrics (5 points)
-        if cvss_v4_metrics.get('E') and cvss_v4_metrics.get('E') != 'X':
-            score += 5
-
-        # Metric: CVSS v4.0 Environmental/Supplemental (max 10 points)
-        env_supp_keys = ['CR', 'IR', 'AR', 'S', 'A', 'RE', 'U', 'V']
-        defined_metrics = 0
-        for key in env_supp_keys:
-            if cvss_v4_metrics.get(key) and cvss_v4_metrics.get(key) != 'X':
-                defined_metrics += 1
-        score += min(defined_metrics * 2, 10)
-
-    return score
-
-def score_actionable_intelligence(cna_container: Dict[str, Any]) -> int:
-    """
-    Calculates the Actionable Intelligence score.
-
-    Args:
-        cna_container: The 'cna' container from the CVE record.
-
-    Returns:
-        The score for this category (0-20).
-    """
-    score = 0
-    has_exploit_info = False
-    has_vex_info = False
-
-    if 'references' in cna_container and isinstance(cna_container['references'], list):
-        references = cna_container['references']
-
-        # Metric: High-Quality References (max 12 points)
-        score += min(len(references) * 4, 12)
-
-        for ref in references:
-            # Metric: Exploit/PoC Information (5 points)
-            if not has_exploit_info:
-                tags = ref.get('tags', [])
-                if 'exploit' in tags or 'poc' in tags:
-                    has_exploit_info = True
-                elif 'url' in ref:
-                    if any(domain in ref['url'] for domain in KNOWN_EXPLOIT_DOMAINS):
-                        has_exploit_info = True
-
-            # Metric: VEX Data Provided (3 points)
-            if not has_vex_info and 'vex' in ref.get('tags', []):
-                has_vex_info = True
-
-    if has_exploit_info:
-        score += 5
     
-    if has_vex_info:
-        score += 3
-
-    return score
-
-def score_data_format_precision(cna_container: Dict[str, Any]) -> int:
-    """
-    Calculates the Data Format & Precision score.
-
-    Args:
-        cna_container: The 'cna' container from the CVE record.
-
-    Returns:
-        The score for this category (0-5).
-    """
-    # Metric: CPE Usage (5 points)
-    if 'affected' in cna_container and isinstance(cna_container['affected'], list):
-        for affect in cna_container['affected']:
-            if 'cpes' in affect and isinstance(affect['cpes'], list):
-                for cpe in affect['cpes']:
-                    if isinstance(cpe, str) and cpe.startswith('cpe:2.3:'):
-                        return 5
-    return 0
-
-def calculate_eas(cve_record: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Orchestrates the EAS calculation by calling helper for each metric category.
-
-    Args:
-        cve_record: A dictionary representing a single CVE record.
-
-    Returns:
-        A dictionary with the total score and a detailed breakdown.
-    """
-    cna_container = cve_record.get('containers', {}).get('cna', {})
-
-    breakdown = {
-        "foundationalCompleteness": score_foundational_completeness(cna_container),
-        "rootCauseAnalysis": score_root_cause_analysis(cna_container),
-        "severityAndImpactContext": score_severity_context(cna_container),
-        "actionableIntelligence": score_actionable_intelligence(cna_container),
-        "dataFormatAndPrecision": score_data_format_precision(cna_container)
-    }
-
-    total_score = sum(breakdown.values())
-
-    result = {
-        "cveId": cve_record.get('cveMetadata', {}).get('cveId', 'N/A'),
-        "assigningCna": cve_record.get('cveMetadata', {}).get('assignerShortName', 'N/A'),
-        "totalEasScore": total_score,
-        "scoreBreakdown": breakdown
-    }
-    return result
+    return min(score, 100)
 
 def main():
     """

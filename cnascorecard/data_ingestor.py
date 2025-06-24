@@ -1,6 +1,7 @@
 import os
 import requests
 import json
+import subprocess
 from datetime import datetime, timedelta
 
 def get_cna_list():
@@ -19,15 +20,31 @@ def get_cna_list():
 def get_cve_records():
     """
     Reads CVE records from the local cve_data directory and filters them for the last 6 months.
-    Assumes the repository is already cloned and up-to-date.
+    Clones the repository if it doesn't exist.
     """
     # Path to the data directory, which is mapped from the host
     clone_path = os.path.join(os.path.dirname(__file__), '..', 'cve_data')
 
     if not os.path.exists(clone_path):
-        print(f"Error: CVE data directory not found at {clone_path}")
-        print("Please run the build_and_test.sh script to clone the data first.")
-        return []
+        print(f"CVE data directory not found at {clone_path}")
+        print("Cloning CVE data repository...")
+        try:
+            # Clone the CVE data repository
+            parent_dir = os.path.dirname(clone_path)
+            subprocess.run([
+                'git', 'clone', '--depth', '1',
+                'https://github.com/CVEProject/cvelistV5.git',
+                clone_path
+            ], cwd=parent_dir, check=True, capture_output=True, text=True)
+            print("Successfully cloned CVE data repository")
+        except subprocess.CalledProcessError as e:
+            print(f"Error cloning CVE data repository: {e}")
+            print(f"stdout: {e.stdout}")
+            print(f"stderr: {e.stderr}")
+            return []
+        except Exception as e:
+            print(f"Unexpected error cloning CVE data repository: {e}")
+            return []
 
     print("Filtering records from local CVE data...")
     six_months_ago = datetime.now() - timedelta(days=180)
