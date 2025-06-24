@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoring Methodology - CNA ScoreCard</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .scoring-section {
+            background: white;
+            margin: 20px 0;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .scoring-section h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .metric-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .metric-table th,
+        .metric-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .metric-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .points {
+            font-weight: bold;
+            color: #27ae60;
+        }
+        
+        .example-cve {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .score-range {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .score-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        .excellent { background: #27ae60; color: white; }
+        .good { background: #f39c12; color: white; }
+        .fair { background: #e67e22; color: white; }
+        .poor { background: #e74c3c; color: white; }
+        
+        .nav-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .nav-links a {
+            color: #3498db;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-links">
+            <a href="index.html">← Back to Scorecards</a>
+        </div>
+        
+        <h1>EAS Scoring Methodology</h1>
+        <p>The Enriched Actionability Score (EAS) evaluates CVE record quality across five key dimensions, with a maximum score of 100 points.</p>
+        
+        <div class="scoring-section">
+            <h2>Score Ranges</h2>
+            <div class="score-range">
+                <div class="score-badge excellent">80-100: Excellent</div>
+                <div class="score-badge good">60-79: Good</div>
+                <div class="score-badge fair">40-59: Fair</div>
+                <div class="score-badge poor">0-39: Needs Improvement</div>
+            </div>
+        </div>
+
+        <div class="scoring-section">
+            <h2>1. Foundational Completeness (30 points)</h2>
+            <p>Measures the presence of basic, essential information needed to understand and act on a vulnerability.</p>
+            
+            <table class="metric-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Points</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Affected Product/Vendor</td>
+                        <td class="points">10</td>
+                        <td>Clear identification of vendor and product (not "N/A")</td>
+                    </tr>
+                    <tr>
+                        <td>Structured Version Information</td>
+                        <td class="points">15</td>
+                        <td>Specific version ranges or status information</td>
+                    </tr>
+                    <tr>
+                        <td>Clear Problem Description</td>
+                        <td class="points">5</td>
+                        <td>Meaningful description (>40 characters)</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="example-cve">
+                <strong>Example:</strong> A CVE that specifies "Apache HTTP Server versions 2.4.0 through 2.4.52" with a detailed description of the buffer overflow vulnerability would score the full 30 points.
+            </div>
+        </div>
+
+        <div class="scoring-section">
+            <h2>2. Root Cause Analysis (20 points)</h2>
+            <p>Evaluates whether the CVE provides insight into the underlying weakness type.</p>
+            
+            <table class="metric-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Points</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CWE ID Provided</td>
+                        <td class="points">20</td>
+                        <td>Valid CWE identifier (e.g., CWE-79, CWE-120)</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="example-cve">
+                <strong>Example:</strong> A CVE that includes "CWE-787: Out-of-bounds Write" provides developers with the specific weakness pattern to look for.
+            </div>
+        </div>
+
+        <div class="scoring-section">
+            <h2>3. Severity & Impact Context (25 points)</h2>
+            <p>Assesses the quality and completeness of severity scoring information.</p>
+            
+            <table class="metric-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Points</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CVSS v3.1/v4.0 Base Score</td>
+                        <td class="points">10</td>
+                        <td>Standard CVSS base metrics with vector string</td>
+                    </tr>
+                    <tr>
+                        <td>CVSS v4.0 Threat Metrics</td>
+                        <td class="points">5</td>
+                        <td>Exploit maturity (E) metric defined</td>
+                    </tr>
+                    <tr>
+                        <td>Environmental/Supplemental Metrics</td>
+                        <td class="points">10</td>
+                        <td>Additional context metrics (2 points each, max 10)</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="example-cve">
+                <strong>Example:</strong> A CVE with CVSS v4.0 base score, exploit maturity rating, and environmental metrics for confidentiality/integrity requirements would score 25 points.
+            </div>
+        </div>
+
+        <div class="scoring-section">
+            <h2>4. Actionable Intelligence (20 points)</h2>
+            <p>Measures the availability of information that enables immediate action by security teams.</p>
+            
+            <table class="metric-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Points</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>High-Quality References</td>
+                        <td class="points">12</td>
+                        <td>External links (4 points each, max 12)</td>
+                    </tr>
+                    <tr>
+                        <td>Exploit/PoC Information</td>
+                        <td class="points">5</td>
+                        <td>Links to exploits or proof-of-concept code</td>
+                    </tr>
+                    <tr>
+                        <td>VEX Data Provided</td>
+                        <td class="points">3</td>
+                        <td>Vulnerability Exploitability eXchange data</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="example-cve">
+                <strong>Example:</strong> A CVE with vendor advisory, security researcher blog post, patch commit, and GitHub PoC would score the full 20 points.
+            </div>
+        </div>
+
+        <div class="scoring-section">
+            <h2>5. Data Format & Precision (5 points)</h2>
+            <p>Evaluates the use of structured, machine-readable formats.</p>
+            
+            <table class="metric-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Points</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CPE Usage</td>
+                        <td class="points">5</td>
+                        <td>Common Platform Enumeration identifiers</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="example-cve">
+                <strong>Example:</strong> Including "cpe:2.3:a:apache:http_server:2.4.52:*:*:*:*:*:*:*" enables automated vulnerability scanning tools to identify affected systems.
+            </div>
+        </div>
+
+        <div class="scoring-section">
+            <h2>Aggregation and Ranking</h2>
+            <p>CNA scores are calculated by:</p>
+            <ol>
+                <li><strong>Individual CVE Scoring:</strong> Each CVE receives a score from 0-100 based on the metrics above</li>
+                <li><strong>CNA Average:</strong> The arithmetic mean of all CVEs published by a CNA in the last 6 months</li>
+                <li><strong>Minimum Threshold:</strong> CNAs must have published at least 1 CVE to receive a score</li>
+                <li><strong>Inactive CNAs:</strong> CNAs with no recent publications are marked as "No CVEs published in the last 6 months"</li>
+            </ol>
+            
+            <div class="example-cve">
+                <strong>Data Freshness:</strong> Scores are updated every 6 hours using the latest CVE data from the official CVEProject repository.
+            </div>
+        </div>
+
+        <div class="scoring-section">
+            <h2>Why This Matters</h2>
+            <p>Higher EAS scores indicate CVE records that are:</p>
+            <ul>
+                <li><strong>More Actionable:</strong> Security teams can quickly understand and respond to threats</li>
+                <li><strong>Better Integrated:</strong> Automated tools can process structured data effectively</li>
+                <li><strong>More Complete:</strong> All necessary information is provided upfront</li>
+                <li><strong>Industry Leading:</strong> Following best practices for vulnerability disclosure</li>
+            </ul>
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html">← Back to Scorecards</a>
+        </div>
+    </div>
+</body>
+</html>

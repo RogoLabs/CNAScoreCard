@@ -1,0 +1,430 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 2.5em;
+}
+
+p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+}
+
+/* Introduction section */
+.intro-section {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.main-description {
+    font-size: 1.2em;
+    line-height: 1.7;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.key-features h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.feature {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    border-left: 4px solid #3498db;
+}
+
+.feature h3 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.feature p {
+    color: #555;
+    font-size: 0.95em;
+    text-align: left;
+    margin: 0;
+}
+
+.data-info {
+    background: #ecf0f1;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    border-left: 4px solid #27ae60;
+}
+
+.data-info p {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 0.95em;
+}
+
+/* Navigation links */
+.nav-links {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.nav-links a {
+    color: #3498db;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-links a:hover {
+    background-color: #ecf0f1;
+    text-decoration: none;
+}
+
+/* Filters section */
+.filters {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#searchInput {
+    padding: 10px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    min-width: 300px;
+    transition: border-color 0.3s ease;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+#sortSelect {
+    padding: 10px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+#sortSelect:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+/* Loading and error states */
+#loading {
+    text-align: center;
+    font-size: 1.2em;
+    color: #666;
+    padding: 50px;
+}
+
+/* CNA Cards Grid */
+.cna-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Individual CNA Card */
+.cna-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-left: 5px solid #ddd;
+}
+
+.cna-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Inactive CNA styling */
+.cna-inactive {
+    opacity: 0.6;
+    background: #f8f9fa;
+    border-left-color: #bdc3c7 !important;
+}
+
+.cna-inactive .cna-header {
+    opacity: 0.8;
+}
+
+.cna-inactive .cna-score {
+    background: #ecf0f1;
+    color: #7f8c8d;
+}
+
+.cna-inactive .detail-item .label {
+    color: #95a5a6;
+}
+
+.cna-inactive .detail-item .value {
+    color: #7f8c8d;
+}
+
+.cna-inactive:hover {
+    transform: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Score-based colors (kept for backward compatibility) */
+.score-excellent {
+    border-left-color: #27ae60;
+}
+
+.score-good {
+    border-left-color: #f39c12;
+}
+
+.score-fair {
+    border-left-color: #e67e22;
+}
+
+.score-poor {
+    border-left-color: #e74c3c;
+}
+
+/* Percentile-based colors (primary color scheme) */
+.percentile-top {
+    border-left-color: #27ae60;    /* Green - Top 25% */
+}
+
+.percentile-upper {
+    border-left-color: #3498db;    /* Blue - Upper middle 25% */
+}
+
+.percentile-lower {
+    border-left-color: #f39c12;    /* Orange - Lower middle 25% */
+}
+
+.percentile-bottom {
+    border-left-color: #e74c3c;    /* Red - Bottom 25% */
+}
+
+/* Card header */
+.cna-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.cna-name {
+    font-size: 1.3em;
+    color: #2c3e50;
+    margin: 0;
+    flex: 1;
+    margin-right: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+    cursor: help;
+}
+
+.cna-score-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.cna-score {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #2c3e50;
+    background: #f8f9fa;
+    padding: 5px 12px;
+    border-radius: 20px;
+    min-width: 60px;
+    text-align: center;
+}
+
+.cna-percentile {
+    font-size: 0.8em;
+    color: #666;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Card details */
+.cna-details {
+    display: grid;
+    gap: 8px;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+}
+
+.label {
+    font-weight: 600;
+    color: #555;
+}
+
+.value {
+    color: #333;
+    font-weight: 500;
+}
+
+/* CNA Links */
+.cna-link {
+    color: #2c3e50;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.cna-link:hover {
+    color: #3498db;
+    text-decoration: underline;
+}
+
+.view-details-link {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9em;
+    transition: color 0.3s ease;
+}
+
+.view-details-link:hover {
+    color: #2980b9;
+    text-decoration: none;
+}
+
+.cna-view-details {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    text-align: center;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    
+    .intro-section {
+        padding: 20px;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .feature {
+        padding: 15px;
+    }
+    
+    .filters {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    #searchInput {
+        min-width: 250px;
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .cna-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .cna-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .cna-score-container {
+        align-self: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .intro-section {
+        padding: 15px;
+    }
+    
+    .main-description {
+        font-size: 1.1em;
+    }
+    
+    .key-features h2 {
+        font-size: 1.5em;
+    }
+    
+    .cna-card {
+        padding: 15px;
+    }
+    
+    #searchInput {
+        min-width: auto;
+    }
+}
