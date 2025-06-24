@@ -32,6 +32,93 @@ p {
     font-size: 1.1em;
 }
 
+/* Introduction section */
+.intro-section {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.main-description {
+    font-size: 1.2em;
+    line-height: 1.7;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.key-features h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.feature {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    border-left: 4px solid #3498db;
+}
+
+.feature h3 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.feature p {
+    color: #555;
+    font-size: 0.95em;
+    text-align: left;
+    margin: 0;
+}
+
+.data-info {
+    background: #ecf0f1;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    border-left: 4px solid #27ae60;
+}
+
+.data-info p {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 0.95em;
+}
+
+/* Navigation links */
+.nav-links {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.nav-links a {
+    color: #3498db;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-links a:hover {
+    background-color: #ecf0f1;
+    text-decoration: none;
+}
+
 /* Filters section */
 .filters {
     display: flex;
@@ -99,6 +186,35 @@ p {
 .cna-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Inactive CNA styling */
+.cna-inactive {
+    opacity: 0.6;
+    background: #f8f9fa;
+    border-left-color: #bdc3c7 !important;
+}
+
+.cna-inactive .cna-header {
+    opacity: 0.8;
+}
+
+.cna-inactive .cna-score {
+    background: #ecf0f1;
+    color: #7f8c8d;
+}
+
+.cna-inactive .detail-item .label {
+    color: #95a5a6;
+}
+
+.cna-inactive .detail-item .value {
+    color: #7f8c8d;
+}
+
+.cna-inactive:hover {
+    transform: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Score-based colors */
@@ -180,6 +296,19 @@ p {
         font-size: 2em;
     }
     
+    .intro-section {
+        padding: 20px;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .feature {
+        padding: 15px;
+    }
+    
     .filters {
         flex-direction: column;
         align-items: center;
@@ -209,6 +338,18 @@ p {
 @media (max-width: 480px) {
     .container {
         padding: 10px;
+    }
+    
+    .intro-section {
+        padding: 15px;
+    }
+    
+    .main-description {
+        font-size: 1.1em;
+    }
+    
+    .key-features h2 {
+        font-size: 1.5em;
     }
     
     .cna-card {
