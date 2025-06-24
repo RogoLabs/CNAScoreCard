@@ -1,57 +1,34 @@
 #!/usr/bin/env python3
 """
-CNA ScoreCard Build Script
-Generates static data files for the CNA ScoreCard web application.
+Main build script for CNA Score Card
 """
 
-import os
-import sys
 import subprocess
-import shutil
+import sys
+import os
 from pathlib import Path
 
-def run_command(cmd, cwd=None):
-    """Run a shell command and return the result."""
-    try:
-        result = subprocess.run(cmd, shell=True, cwd=cwd, capture_output=True, text=True)
-        if result.returncode != 0:
-            print(f"Error running command: {cmd}")
-            print(f"Error: {result.stderr}")
-            return False
-        return True
-    except Exception as e:
-        print(f"Exception running command {cmd}: {e}")
-        return False
-
 def main():
+    """Main build process"""
     print("Building CNA Score Card...")
     
-    # Get the script directory
-    script_dir = Path(__file__).parent.absolute()
-    project_root = script_dir.parent
-    
-    # Change to project root
+    # Ensure we're in the project root
+    project_root = Path(__file__).parent.parent
     os.chdir(project_root)
     
-    # Update CVE data repository
-    print("Updating CVE data repository...")
-    if not run_command("cd cve_data && git pull"):
-        print("Failed to update CVE data")
-        return 1
+    # Clone CVE data if not exists
+    if not os.path.exists("cve_data"):
+        print("Cloning CVE data repository...")
+        subprocess.run(["git", "clone", "https://github.com/CVEProject/cvelistV5.git", "cve_data"], check=True)
+    else:
+        print("Updating CVE data repository...")
+        subprocess.run(["git", "pull"], cwd="cve_data", check=True)
     
-    # Generate static data
+    # Generate static data using the main script
     print("Generating static data...")
-    if not run_command("python scripts/generate_static_data.py"):
-        print("Failed to generate static data")
-        return 1
-    
-    # Copy generated files to ensure they're available
-    web_dir = project_root / "web"
-    if web_dir.exists():
-        print("Web directory structure ready")
+    subprocess.run([sys.executable, "cnascorecard/generate_static_data.py"], check=True)
     
     print("Build completed successfully!")
-    return 0
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
