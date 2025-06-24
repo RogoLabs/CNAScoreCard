@@ -19,15 +19,19 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.13'
       
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests
       
+      - name: Clone CVE data repository
+        run: |
+          git clone https://github.com/CVEProject/cvelistV5.git cve_data
+      
       - name: Build complete project
-        run: python cnascorecard/generate_static_data.py
+        run: python scripts/build.py
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

@@ -10,12 +10,19 @@ from pathlib import Path
 import shutil
 
 def load_cve_data():
-    """Load CVE data from the JSON file"""
+    """Load CVE data from the generated JSON files"""
     try:
-        with open('data/cve_data.json', 'r') as f:
-            return json.load(f)
+        # Try to load the top CVEs data first
+        with open('web/data/top100_cves.json', 'r') as f:
+            top_cves = json.load(f)
+        
+        with open('web/data/bottom100_cves.json', 'r') as f:
+            bottom_cves = json.load(f)
+        
+        # Combine for processing
+        return top_cves + bottom_cves
     except FileNotFoundError:
-        print("CVE data file not found. Please run fetch_cve_data.py first.")
+        print("CVE data files not found. Please run cnascorecard/generate_static_data.py first.")
         return []
 
 def get_cnas_with_cves(cve_data):

@@ -85,11 +85,12 @@ Scores range from 0-10, with color coding:
 CNAScoreCard/
 ├── scripts/
 │   ├── build.py              # Main build script
-│   ├── fetch_cve_data.py     # CVE data fetching
 │   ├── generate_dashboard.py # Main dashboard generation
 │   └── generate_cna_pages.py # Individual CNA page generation
-├── data/
-│   └── cve_data.json        # CVE data cache
+├── cnascorecard/
+│   ├── main.py              # Core analysis engine
+│   ├── data_ingestor.py     # CVE data processing
+│   └── generate_static_data.py # Static data generation
 ├── web/
 │   ├── index.html           # Main dashboard
 │   ├── style.css            # Styling

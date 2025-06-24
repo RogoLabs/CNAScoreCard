@@ -16,17 +16,17 @@ def main():
     project_root = Path(__file__).parent.parent
     os.chdir(project_root)
     
-    # Fetch CVE data
-    print("Fetching CVE data...")
-    subprocess.run([sys.executable, "scripts/fetch_cve_data.py"], check=True)
+    # Clone CVE data if not exists
+    if not os.path.exists("cve_data"):
+        print("Cloning CVE data repository...")
+        subprocess.run(["git", "clone", "https://github.com/CVEProject/cvelistV5.git", "cve_data"], check=True)
+    else:
+        print("Updating CVE data repository...")
+        subprocess.run(["git", "pull"], cwd="cve_data", check=True)
     
-    # Generate main dashboard
-    print("Generating main dashboard...")
-    subprocess.run([sys.executable, "scripts/generate_dashboard.py"], check=True)
-    
-    # Generate individual CNA pages
-    print("Generating individual CNA pages...")
-    subprocess.run([sys.executable, "scripts/generate_cna_pages.py"], check=True)
+    # Generate static data using the main script
+    print("Generating static data...")
+    subprocess.run([sys.executable, "cnascorecard/generate_static_data.py"], check=True)
     
     print("Build completed successfully!")
 
