@@ -130,7 +130,7 @@ async function loadCNAData() {
             securityContext: cve.scoreBreakdown?.severityAndImpactContext || 0,
             actionableIntelligence: cve.scoreBreakdown?.actionableIntelligence || 0,
             dataFormatPrecision: cve.scoreBreakdown?.dataFormatAndPrecision || 0
-        ));
+        }));
         
         displayCNAHeader(overallScore, percentile, totalCVEs, breakdown);
         displayCVECards(cveScores);
