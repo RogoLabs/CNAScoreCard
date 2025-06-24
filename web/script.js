@@ -78,7 +78,8 @@ function displayCNAs(cnas) {
 // Create individual CNA card
 function createCNACard(cna) {
     const score = safeGet(cna, 'average_eas_score', 0);
-    const scoreClass = getScoreClass(score);
+    const percentile = safeGet(cna, 'percentile', 0);
+    const scoreClass = getPercentileClass(percentile);
     const cnaName = safeGet(cna, 'cna', 'Unknown CNA');
     const totalCVEs = safeGet(cna, 'total_cves_scored', 0);
     const avgFoundational = safeGet(cna, 'average_foundational_completeness', 0);
@@ -91,11 +92,17 @@ function createCNACard(cna) {
     const isInactive = totalCVEs === 0 || cna.message === "No CVEs published in the last 6 months";
     const inactiveClass = isInactive ? 'cna-inactive' : '';
     
+    // Format percentile display
+    const percentileText = isInactive ? 'N/A' : `${percentile.toFixed(1)}th percentile`;
+    
     return `
         <div class="cna-card ${scoreClass} ${inactiveClass}">
             <div class="cna-header">
                 <h3 class="cna-name">${escapeHtml(cnaName)}</h3>
-                <div class="cna-score">${score.toFixed(1)}/100</div>
+                <div class="cna-score-container">
+                    <div class="cna-score">${score.toFixed(1)}/100</div>
+                    <div class="cna-percentile">${percentileText}</div>
+                </div>
             </div>
             <div class="cna-details">
                 <div class="detail-item">
@@ -128,7 +135,15 @@ function createCNACard(cna) {
     `;
 }
 
-// Get CSS class based on score
+// Get CSS class based on percentile (relative ranking)
+function getPercentileClass(percentile) {
+    if (percentile >= 75) return 'percentile-top';      // Top 25%
+    if (percentile >= 50) return 'percentile-upper';    // Upper middle 25%
+    if (percentile >= 25) return 'percentile-lower';    // Lower middle 25%
+    return 'percentile-bottom';                          // Bottom 25%
+}
+
+// Get CSS class based on absolute score (kept for backward compatibility)
 function getScoreClass(score) {
     if (score >= 80) return 'score-excellent';
     if (score >= 60) return 'score-good';

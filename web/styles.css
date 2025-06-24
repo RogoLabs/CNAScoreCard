@@ -217,7 +217,7 @@ p {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Score-based colors */
+/* Score-based colors (kept for backward compatibility) */
 .score-excellent {
     border-left-color: #27ae60;
 }
@@ -232,6 +232,23 @@ p {
 
 .score-poor {
     border-left-color: #e74c3c;
+}
+
+/* Percentile-based colors (primary color scheme) */
+.percentile-top {
+    border-left-color: #27ae60;    /* Green - Top 25% */
+}
+
+.percentile-upper {
+    border-left-color: #3498db;    /* Blue - Upper middle 25% */
+}
+
+.percentile-lower {
+    border-left-color: #f39c12;    /* Orange - Lower middle 25% */
+}
+
+.percentile-bottom {
+    border-left-color: #e74c3c;    /* Red - Bottom 25% */
 }
 
 /* Card header */
@@ -252,6 +269,13 @@ p {
     margin-right: 10px;
 }
 
+.cna-score-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
 .cna-score {
     font-size: 1.8em;
     font-weight: bold;
@@ -261,6 +285,13 @@ p {
     border-radius: 20px;
     min-width: 60px;
     text-align: center;
+}
+
+.cna-percentile {
+    font-size: 0.8em;
+    color: #666;
+    text-align: center;
+    white-space: nowrap;
 }
 
 /* Card details */
@@ -330,7 +361,7 @@ p {
         gap: 10px;
     }
     
-    .cna-score {
+    .cna-score-container {
         align-self: flex-end;
     }
 }
