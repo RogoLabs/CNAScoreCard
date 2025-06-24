@@ -18,7 +18,7 @@ def load_cve_data():
         with open('web/data/bottom100_cves.json', 'r') as f:
             bottom_cves = json.load(f)
         
-        # Combine for dashboard display
+        # Combine for dashboard display - these should have EAS structure
         return top_cves + bottom_cves
     except FileNotFoundError:
         print("CVE data files not found. Please run cnascorecard/generate_static_data.py first.")
@@ -28,25 +28,36 @@ def calculate_statistics(cve_data):
     """Calculate overall statistics"""
     total_cves = len(cve_data)
     
-    # Count by severity
+    # Count by severity and collect scores
     severity_counts = {}
-    base_scores = []
+    eas_scores = []
     cna_counts = {}
     
     for cve in cve_data:
-        severity = cve.get('severity', 'Unknown')
+        # Try to determine severity from CVSS score if available
+        cvss_score = None
+        if 'scoreBreakdown' in cve and 'severityAndImpactContext' in cve['scoreBreakdown']:
+            # This indicates some severity context exists
+            pass
+        
+        # For now, use a simple severity classification
+        total_score = cve.get('totalEasScore', 0)
+        if total_score >= 80:
+            severity = 'Excellent'
+        elif total_score >= 60:
+            severity = 'Good' 
+        elif total_score >= 40:
+            severity = 'Fair'
+        else:
+            severity = 'Poor'
+        
         severity_counts[severity] = severity_counts.get(severity, 0) + 1
+        eas_scores.append(total_score)
         
-        if cve.get('base_score') and cve.get('base_score') != 'N/A':
-            try:
-                base_scores.append(float(cve.get('base_score')))
-            except ValueError:
-                pass
-        
-        cna = cve.get('cna', 'Unknown')
+        cna = cve.get('assigningCna', 'Unknown')
         cna_counts[cna] = cna_counts.get(cna, 0) + 1
     
-    avg_score = sum(base_scores) / len(base_scores) if base_scores else 0
+    avg_score = sum(eas_scores) / len(eas_scores) if eas_scores else 0
     
     return {
         'total_cves': total_cves,
@@ -68,7 +79,7 @@ def generate_dashboard():
     stats = calculate_statistics(cve_data)
     
     # Get recent CVEs (last 50)
-    recent_cves = sorted(cve_data, key=lambda x: x.get('published_date', ''), reverse=True)[:50]
+    recent_cves = sorted(cve_data, key=lambda x: x.get('datePublished', ''), reverse=True)[:50]
     
     # Generate HTML
     html_content = f"""<!DOCTYPE html>
@@ -134,59 +145,53 @@ def generate_dashboard():
 
     # Add recent CVE cards
     for cve in recent_cves:
-        base_score = cve.get('base_score', 'N/A')
-        severity = cve.get('severity', 'Unknown')
+        cve_id = cve.get('cveId', 'N/A')
+        total_score = cve.get('totalEasScore', 0)
         
-        # Determine card color based on severity
+        # Determine card color based on score
         card_class = "border-secondary"
-        if severity.lower() == "critical":
-            card_class = "border-danger"
-        elif severity.lower() == "high":
-            card_class = "border-warning"
-        elif severity.lower() == "medium":
-            card_class = "border-info"
-        elif severity.lower() == "low":
+        if total_score >= 80:
             card_class = "border-success"
+        elif total_score >= 60:
+            card_class = "border-info"
+        elif total_score >= 40:
+            card_class = "border-warning"
+        else:
+            card_class = "border-danger"
         
         html_content += f"""
                     <div class="col-md-6 col-lg-4 mb-3">
                         <div class="card {card_class}">
                             <div class="card-body">
                                 <h6 class="card-title">
-                                    <a href="https://www.cve.org/CVERecord?id={cve.get('cve_id', '')}" 
+                                    <a href="https://www.cve.org/CVERecord?id={cve_id}" 
                                        target="_blank" class="text-decoration-none">
-                                        {cve.get('cve_id', 'N/A')}
+                                        {cve_id}
                                     </a>
                                 </h6>
                                 <div class="row">
                                     <div class="col-6">
-                                        <small class="text-muted">Base Score</small>
-                                        <div class="fw-bold">{base_score}</div>
+                                        <small class="text-muted">EAS Score</small>
+                                        <div class="fw-bold">{total_score:.1f}/100</div>
                                     </div>
                                     <div class="col-6">
-                                        <small class="text-muted">Severity</small>
-                                        <div class="fw-bold text-{severity.lower() if severity.lower() in ['critical', 'high', 'medium', 'low'] else 'secondary'}">{severity}</div>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-6">
-                                        <small class="text-muted">Exploitability</small>
-                                        <div class="fw-bold">{cve.get('exploitability_score', 'N/A')}</div>
-                                    </div>
-                                    <div class="col-6">
-                                        <small class="text-muted">Impact</small>
-                                        <div class="fw-bold">{cve.get('impact_score', 'N/A')}</div>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-12">
                                         <small class="text-muted">CNA</small>
-                                        <div class="small">{cve.get('cna', 'Unknown')}</div>
+                                        <div class="fw-bold">{cve.get('assigningCna', 'Unknown')}</div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-6">
+                                        <small class="text-muted">Foundational</small>
+                                        <div class="fw-bold">{cve.get('scoreBreakdown', {}).get('foundationalCompleteness', 0):.1f}/30</div>
+                                    </div>
+                                    <div class="col-6">
+                                        <small class="text-muted">Root Cause</small>
+                                        <div class="fw-bold">{cve.get('scoreBreakdown', {}).get('rootCauseAnalysis', 0):.1f}/20</div>
                                     </div>
                                 </div>
                                 <div class="mt-2">
                                     <small class="text-muted">Published</small>
-                                    <div class="small">{cve.get('published_date', 'N/A')}</div>
+                                    <div class="small">{cve.get('datePublished', 'N/A')}</div>
                                 </div>
                             </div>
                         </div>

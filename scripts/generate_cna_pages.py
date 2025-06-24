@@ -19,7 +19,7 @@ def load_cve_data():
         with open('web/data/bottom100_cves.json', 'r') as f:
             bottom_cves = json.load(f)
         
-        # Combine for processing
+        # Combine for processing - these should already have the correct EAS structure
         return top_cves + bottom_cves
     except FileNotFoundError:
         print("CVE data files not found. Please run cnascorecard/generate_static_data.py first.")
@@ -30,111 +30,27 @@ def get_cnas_with_cves(cve_data):
     cna_cves = {}
     
     for cve in cve_data:
-        cna = cve.get('cna', 'Unknown')
+        cna = cve.get('assigningCna', 'Unknown')
         if cna not in cna_cves:
             cna_cves[cna] = []
         cna_cves[cna].append(cve)
     
-    # Sort CVEs by date (newest first) and limit to 100
+    # Sort CVEs by totalEasScore (highest first) and limit to 100
     for cna in cna_cves:
         cna_cves[cna] = sorted(
             cna_cves[cna], 
-            key=lambda x: x.get('published_date', ''), 
+            key=lambda x: x.get('totalEasScore', 0), 
             reverse=True
         )[:100]
     
     return cna_cves
 
-def calculate_foundational_score(cve):
-    """Calculate foundational completeness score for a CVE"""
-    score = 0
-    if cve.get('vendor') and cve.get('vendor') != 'N/A':
-        score += 10
-    if cve.get('product') and cve.get('product') != 'N/A':
-        score += 10
-    if cve.get('description') and len(cve.get('description', '')) > 40:
-        score += 10
-    return min(score, 30)  # Cap at 30
-
-def calculate_root_cause_score(cve):
-    """Calculate root cause analysis score for a CVE"""
-    if cve.get('cwe_id'):
-        return 20
-    return 0
-
-def calculate_severity_score(cve):
-    """Calculate severity context score for a CVE"""
-    score = 0
-    if cve.get('base_score'):
-        score += 15
-    if cve.get('cvss_vector'):
-        score += 10
-    return min(score, 25)  # Cap at 25
-
-def calculate_actionable_score(cve):
-    """Calculate actionable intelligence score for a CVE"""
-    score = 0
-    references = cve.get('references', [])
-    score += min(len(references) * 3, 12)  # Max 12 points for references
-    if any('exploit' in ref.get('url', '').lower() for ref in references):
-        score += 5
-    if cve.get('vex_data'):
-        score += 3
-    return min(score, 20)  # Cap at 20
-
-def calculate_format_score(cve):
-    """Calculate data format precision score for a CVE"""
-    if cve.get('cpe'):
-        return 5
-    return 0
-
-def calculate_cna_score(cves):
-    """Calculate overall CNA score from CVEs"""
-    if not cves:
-        return 0
-    
-    total_score = 0
-    for cve in cves:
-        cve_score = calculate_cve_score(cve)
-        total_score += cve_score
-    
-    return total_score / len(cves)
+# Remove the duplicate scoring functions since we're using EAS data directly
 
 def calculate_cve_score(cve):
     """Calculate individual CVE score based on EAS methodology"""
-    score = 0
-    
-    # Foundational Completeness (30 points max)
-    if cve.get('vendor') and cve.get('vendor') != 'N/A':
-        score += 10
-    if cve.get('product') and cve.get('product') != 'N/A':
-        score += 10
-    if cve.get('description') and len(cve.get('description', '')) > 40:
-        score += 10
-    
-    # Root Cause Analysis (20 points max)
-    if cve.get('cwe_id'):
-        score += 20
-    
-    # Severity Context (25 points max)
-    if cve.get('base_score'):
-        score += 15
-    if cve.get('cvss_vector'):
-        score += 10
-    
-    # Actionable Intelligence (20 points max)
-    references = cve.get('references', [])
-    score += min(len(references) * 3, 12)  # Max 12 points for references
-    if any('exploit' in ref.get('url', '').lower() for ref in references):
-        score += 5
-    if cve.get('vex_data'):
-        score += 3
-    
-    # Data Format Precision (5 points max)
-    if cve.get('cpe'):
-        score += 5
-    
-    return min(score, 100)  # Cap at 100
+    # Use the EAS score if available, otherwise return 0
+    return cve.get('totalEasScore', 0)
 
 def generate_cna_page(cna, cves, output_dir):
     """Generate HTML page for a specific CNA by copying and modifying the template"""
@@ -235,13 +151,46 @@ def generate_cna_data_files(cna_cves, data_dir):
         safe_cna_name = "".join(c for c in cna if c.isalnum() or c in (' ', '-', '_')).rstrip()
         filename = f"{safe_cna_name.replace(' ', '_')}.json"
         
+        # Calculate CNA info from CVEs
+        if cves:
+            total_cves = len(cves)
+            avg_total_eas = sum(c.get('totalEasScore', 0) for c in cves) / total_cves
+            avg_foundational = sum(c.get('scoreBreakdown', {}).get('foundationalCompleteness', 0) for c in cves) / total_cves
+            avg_root_cause = sum(c.get('scoreBreakdown', {}).get('rootCauseAnalysis', 0) for c in cves) / total_cves
+            avg_severity = sum(c.get('scoreBreakdown', {}).get('severityAndImpactContext', 0) for c in cves) / total_cves
+            avg_actionable = sum(c.get('scoreBreakdown', {}).get('actionableIntelligence', 0) for c in cves) / total_cves
+            avg_format = sum(c.get('scoreBreakdown', {}).get('dataFormatAndPrecision', 0) for c in cves) / total_cves
+            
+            cna_info = {
+                'cna': cna,
+                'total_cves_scored': total_cves,
+                'average_eas_score': round(avg_total_eas, 2),
+                'average_foundational_completeness': round(avg_foundational, 2),
+                'average_root_cause_analysis': round(avg_root_cause, 2),
+                'average_severity_context': round(avg_severity, 2),
+                'average_actionable_intelligence': round(avg_actionable, 2),
+                'average_data_format_precision': round(avg_format, 2),
+                'percentile': 50.0  # Placeholder - would need all CNAs to calculate real percentile
+            }
+        else:
+            cna_info = {
+                'cna': cna,
+                'total_cves_scored': 0,
+                'average_eas_score': 0,
+                'average_foundational_completeness': 0,
+                'average_root_cause_analysis': 0,
+                'average_severity_context': 0,
+                'average_actionable_intelligence': 0,
+                'average_data_format_precision': 0,
+                'percentile': 0
+            }
+        
         data_file = data_dir / filename
         with open(data_file, 'w', encoding='utf-8') as f:
             json.dump({
-                'cna': cna,
-                'cve_count': len(cves),
-                'last_updated': datetime.now().isoformat(),
-                'cves': cves
+                'cna_info': cna_info,
+                'recent_cves': cves,
+                'total_cves': len(cves)
             }, f, indent=2)
 
 def main():

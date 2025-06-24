@@ -74,9 +74,9 @@ def validate_cve_data():
                 
                 if len(data) > 0:
                     first_cve = data[0]
-                    print(f"  Sample CVE ID: {first_cve.get('cve_id', 'Unknown')}")
-                    print(f"  Sample CNA: {first_cve.get('cna', 'Unknown')}")
-                    print(f"  Sample Score: {first_cve.get('overall_score', 0)}")
+                    print(f"  Sample CVE ID: {first_cve.get('cveId', 'Unknown')}")
+                    print(f"  Sample CNA: {first_cve.get('assigningCna', 'Unknown')}")
+                    print(f"  Sample Score: {first_cve.get('totalEasScore', 0)}")
                     
             except Exception as e:
                 print(f"❌ Error validating {file_path}: {e}")
