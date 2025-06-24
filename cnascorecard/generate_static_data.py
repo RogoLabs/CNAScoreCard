@@ -119,11 +119,12 @@ def main():
         cves_by_cna[cna_name].append(cve)
     
     # Generate individual CNA pages and data
+    cna_pages_generated = 0
     for cna_name, cna_cves in cves_by_cna.items():
         # Sort CVEs by score (highest first)
         sorted_cna_cves = sorted(cna_cves, key=lambda x: x.get('totalEasScore', 0), reverse=True)
         
-        # Take last 100 CVEs (or all if less than 100)
+        # Take first 100 CVEs (highest scoring ones)
         recent_cves = sorted_cna_cves[:100]
         
         # Find CNA info from the main CNA data
@@ -138,33 +139,42 @@ def main():
             cna_info = {
                 'cna': cna_name,
                 'total_cves_scored': len(cna_cves),
-                'average_eas_score': sum(c.get('totalEasScore', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0
+                'average_eas_score': sum(c.get('totalEasScore', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
+                'percentile': 0,
+                'average_foundational_completeness': sum(c.get('foundationalCompletenesScore', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
+                'average_root_cause_analysis': sum(c.get('rootCauseAnalysisScore', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
+                'average_severity_context': sum(c.get('severityContextScore', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
+                'average_actionable_intelligence': sum(c.get('actionableIntelligenceScore', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
+                'average_data_format_precision': sum(c.get('dataFormatPrecisionScore', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0
             }
         
-        # Save CNA-specific data
-        cna_data_file = {
-            'cna_info': cna_info,
-            'recent_cves': recent_cves,
-            'total_cves': len(cna_cves)
-        }
-        
-        # Create safe filename
-        safe_filename = "".join(c for c in cna_name if c.isalnum() or c in (' ', '-', '_')).strip()
-        safe_filename = safe_filename.replace(' ', '_')
-        
-        with open(cna_data_dir / f"{safe_filename}.json", "w") as f:
-            json.dump(cna_data_file, f, indent=2)
-        
-        # Generate HTML page for this CNA
-        generate_cna_page(cna_name, safe_filename, cna_dir)
+        # Only generate pages for CNAs with CVEs
+        if len(cna_cves) > 0:
+            # Save CNA-specific data
+            cna_data_file = {
+                'cna_info': cna_info,
+                'recent_cves': recent_cves,
+                'total_cves': len(cna_cves)
+            }
+            
+            # Create safe filename
+            safe_filename = "".join(c for c in cna_name if c.isalnum() or c in (' ', '-', '_')).strip()
+            safe_filename = safe_filename.replace(' ', '_')
+            
+            with open(cna_data_dir / f"{safe_filename}.json", "w") as f:
+                json.dump(cna_data_file, f, indent=2)
+            
+            # Generate HTML page for this CNA
+            generate_cna_page(cna_name, safe_filename, cna_dir)
+            cna_pages_generated += 1
     
-    print(f"Generated individual pages for {len(cves_by_cna)} CNAs")
+    print(f"Generated individual pages for {cna_pages_generated} CNAs")
     
     print("Static data generation complete!")
-    print(f"- CNAs: {len(cna_data)}")
+    print(f"- CNAs: {len(cna_array)}")
     print(f"- Top 100 CVEs: {len(top_100)}") 
     print(f"- Bottom 100 CVEs: {len(bottom_100)}")
-    print(f"- Individual CNA pages: {len(cves_by_cna)}")
+    print(f"- Individual CNA pages: {cna_pages_generated}")
 
 
 if __name__ == "__main__":

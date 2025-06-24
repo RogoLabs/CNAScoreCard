@@ -4,26 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CNA ScoreCard</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="web/styles.css">
 </head>
 <body>
     <div class="container">
         <h1>CNA ScoreCard</h1>
-        <p>A comprehensive evaluation of CVE Numbering Authorities (CNAs) based on their CVE record quality.</p>
+        <div class="intro-section">
+            <p class="main-description">A comprehensive evaluation platform that scores CVE Numbering Authorities (CNAs) based on the quality and completeness of their vulnerability disclosures using the Enriched Actionability Score (EAS) methodology.</p>
+            
+            <div class="key-features">
+                <h2>What We Measure</h2>
+                <div class="features-grid">
+                    <div class="feature">
+                        <h3>🏗️ Foundational Completeness</h3>
+                        <p>Product identification, version details, and clear vulnerability descriptions</p>
+                    </div>
+                    <div class="feature">
+                        <h3>🔍 Root Cause Analysis</h3>
+                        <p>CWE classifications that help developers understand vulnerability patterns</p>
+                    </div>
+                    <div class="feature">
+                        <h3>⚡ Severity Context</h3>
+                        <p>CVSS scores and threat metrics for proper risk assessment</p>
+                    </div>
+                    <div class="feature">
+                        <h3>🎯 Actionable Intelligence</h3>
+                        <p>References, exploits, and VEX data for immediate security response</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="data-info">
+                <p><strong>Live Data:</strong> Automatically updated every 6 hours from the official CVE database • <strong>Time Range:</strong> Last 6 months of CVE publications • <strong>Methodology:</strong> Enriched Actionability Score (EAS) with 100-point scale</p>
+            </div>
+        </div>
         
-        <div class="controls">
+        <div class="nav-links">
+            <a href="web/scoring.html">📊 Detailed Scoring Methodology</a>
+        </div>
+
+        <div class="text-center mb-4">
+            <a href="web/cna/" class="btn btn-primary">Browse CNAs</a>
+        </div>
+        
+        <div class="filters">
             <input type="text" id="searchInput" placeholder="Search CNAs...">
             <select id="sortSelect">
-                <option value="overall">Sort by Overall Score</option>
+                <option value="score">Sort by Score</option>
                 <option value="name">Sort by Name</option>
-                <option value="count">Sort by CVE Count</option>
+                <option value="cveCount">Sort by CVE Count</option>
             </select>
         </div>
         
         <div id="loading">Loading CNA data...</div>
-        <div id="cnaGrid" class="cna-grid"></div>
+        <div id="cnaCards" class="cna-cards"></div>
     </div>
     
-    <script src="script.js"></script>
+    <script src="web/script.js"></script>
 </body>
 </html>
