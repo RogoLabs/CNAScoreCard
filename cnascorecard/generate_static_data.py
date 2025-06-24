@@ -7,6 +7,11 @@ Generates JSON files for the static website.
 import json
 import os
 from pathlib import Path
+import sys
+
+# Add the parent directory to the Python path to allow imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from cnascorecard.main import generate_reports
 
 
