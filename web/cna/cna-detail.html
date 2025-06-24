@@ -6,90 +6,119 @@
     <title>CNA Detail - CNA ScoreCard</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Header styling to match main page */
+        /* Modern header styling - professional clean design */
         .cna-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 3rem 0;
-            margin-bottom: 2rem;
+            background: #ffffff;
+            color: #2c3e50;
+            padding: 4rem 0;
+            margin-bottom: 3rem;
             text-align: center;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #e8ecf1;
+        }
+
+        .cna-header .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
         .cna-info h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
+            font-size: 4rem;
+            margin-bottom: 1rem;
             font-weight: 300;
+            letter-spacing: 2px;
         }
 
         .cna-subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             opacity: 0.9;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+            font-weight: 300;
         }
 
         .cna-stats-container {
             display: flex;
             justify-content: center;
-            gap: 3rem;
+            align-items: center;
+            gap: 4rem;
             flex-wrap: wrap;
-            margin-bottom: 2rem;
         }
 
         .main-score-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
+            background: #f8f9fa;
+            padding: 3rem 2rem;
+            border-radius: 20px;
             text-align: center;
-            min-width: 200px;
+            min-width: 250px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e8ecf1;
         }
 
         .score-display {
-            font-size: 3.5rem;
-            font-weight: 300;
+            font-size: 4.5rem;
+            font-weight: 200;
             line-height: 1;
             margin-bottom: 0.5rem;
+            letter-spacing: -2px;
         }
 
         .score-percentile {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             opacity: 0.9;
+            font-weight: 300;
         }
 
         .header-stats {
             display: flex;
+            flex-direction: column;
             gap: 2rem;
             align-items: center;
         }
 
         .stat-item {
             text-align: center;
+            background: #f8f9fa;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            min-width: 150px;
+            border: 1px solid #e8ecf1;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .stat-value {
-            font-size: 2rem;
-            font-weight: 600;
+            font-size: 2.5rem;
+            font-weight: 200;
             display: block;
+            margin-bottom: 0.5rem;
         }
 
         .stat-label {
             font-size: 0.9rem;
             opacity: 0.8;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            font-weight: 400;
         }
 
         .score-breakdown-header {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-            margin-top: 1rem;
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-top: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #e8ecf1;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .breakdown-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: 1fr;
             gap: 1rem;
             text-align: left;
         }
@@ -97,8 +126,9 @@
         .breakdown-item {
             display: flex;
             justify-content: space-between;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e8ecf1;
         }
 
         .breakdown-item:last-child {
@@ -106,102 +136,131 @@
         }
 
         .breakdown-label {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             opacity: 0.9;
+            font-weight: 400;
         }
 
         .breakdown-value {
             font-weight: 600;
+            font-size: 1.1rem;
         }
 
-        /* CVE Cards Grid Layout */
+        /* CVE Cards Grid Layout - matching main page design */
         .cve-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
             margin-top: 2rem;
+            padding: 0 1rem;
         }
 
         .cve-card {
             background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            border: 1px solid #e0e6ed;
+            border: 1px solid #e8ecf1;
             position: relative;
+            min-height: 320px;
         }
 
         .cve-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
         }
 
-        /* Percentile-based coloring */
+        /* Enhanced percentile-based coloring */
         .cve-card.percentile-top {
-            border-left: 4px solid #4CAF50;
+            border-left: 6px solid #4CAF50;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fff8 100%);
         }
 
         .cve-card.percentile-upper {
-            border-left: 4px solid #2196F3;
+            border-left: 6px solid #2196F3;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
         }
 
         .cve-card.percentile-lower {
-            border-left: 4px solid #FF9800;
+            border-left: 6px solid #FF9800;
+            background: linear-gradient(135deg, #ffffff 0%, #fffaf8 100%);
         }
 
         .cve-card.percentile-bottom {
-            border-left: 4px solid #f44336;
+            border-left: 6px solid #f44336;
+            background: linear-gradient(135deg, #ffffff 0%, #fff8f8 100%);
         }
 
         .cve-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #e0e6ed;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #f1f3f4;
         }
 
         .cve-name {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.3rem;
+            font-weight: 700;
             color: #2c3e50;
             margin: 0;
             flex: 1;
+            letter-spacing: 0.5px;
         }
 
         .cve-name a {
             color: #667eea;
             text-decoration: none;
+            transition: color 0.3s ease;
         }
 
         .cve-name a:hover {
+            color: #5a6fd8;
             text-decoration: underline;
         }
 
         .cve-score-container {
             text-align: right;
-            margin-left: 1rem;
+            margin-left: 1.5rem;
         }
 
         .cve-score {
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 2.5rem;
+            font-weight: 300;
             color: #2c3e50;
             display: block;
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .cve-score::after {
+            content: '/100';
+            font-size: 1rem;
+            color: #6c757d;
+            font-weight: 400;
         }
 
         .cve-details {
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
         .detail-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.4rem 0;
-            border-bottom: 1px solid #f1f3f4;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f8f9fa;
+            transition: background-color 0.2s ease;
+        }
+
+        .detail-item:hover {
+            background-color: rgba(102, 126, 234, 0.02);
+            margin: 0 -1rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            border-radius: 8px;
         }
 
         .detail-item:last-child {
@@ -209,15 +268,42 @@
         }
 
         .detail-item .label {
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             color: #6c757d;
             font-weight: 500;
+            letter-spacing: 0.3px;
         }
 
         .detail-item .value {
-            font-weight: 600;
+            font-weight: 700;
             color: #2c3e50;
-            font-size: 0.9rem;
+            font-size: 1rem;
+            background: #f8f9fa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        /* Score-based value coloring */
+        .detail-item .value.high-score {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .detail-item .value.medium-score {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .detail-item .value.low-score {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .detail-item .value.zero-score {
+            background: #ffebee;
+            color: #c62828;
         }
 
         /* Section header styling */
@@ -256,6 +342,88 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
+        /* Section header styling */
+        .section-header {
+            margin: 3rem 0 2rem 0;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .controls input, .controls select {
+            padding: 0.75rem 1.25rem;
+            border: 2px solid #e0e6ed;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            background: white;
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+
+        .controls input:focus, .controls select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Loading state */
+        #loading {
+            text-align: center;
+            padding: 4rem 2rem;
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+
+        /* Breadcrumb styling - modern professional design */
+        .breadcrumb {
+            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e8ecf1;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .breadcrumb a:hover {
+            color: #5a6fd8;
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateX(-2px);
+        }
+
+        .breadcrumb a::before {
+            content: '←';
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
         /* Responsive design */
         @media (max-width: 768px) {
             .cve-cards {
@@ -276,13 +444,21 @@
                 flex-direction: column;
                 gap: 0.5rem;
             }
+            
+            .cna-info h1 {
+                font-size: 3rem;
+            }
+            
+            .score-display {
+                font-size: 3.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <nav class="breadcrumb">
-            <a href="index.html">← Back to Home</a>
+            <a href="../index.html">Back to Home</a>
         </nav>
         
         <div id="loading">Loading CNA data...</div>

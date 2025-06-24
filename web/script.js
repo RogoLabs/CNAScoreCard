@@ -1,3 +1,75 @@
+// Main script file for CNA ScoreCard - fixing score calculation
+// Enhanced Aggregate Scoring (EAS) Implementation
+
+// Function to calculate Enhanced Aggregate Scoring (EAS)
+function calculateEAS(cveData) {
+    if (!cveData) return null;
+    
+    const cveId = cveData.CVE_data_meta?.ID || 'Unknown';
+    
+    // Scoring components (each out of 20 points for total of 100)
+    let foundationalCompleteness = 0;
+    let rootCauseAnalysis = 0;
+    let securityContext = 0;
+    let actionableIntelligence = 0;
+    let dataFormatPrecision = 0;
+    
+    // 1. Foundational Completeness (20 points)
+    if (cveData.description?.description_data?.[0]?.value) {
+        const desc = cveData.description.description_data[0].value;
+        if (desc.length > 50) foundationalCompleteness += 5;
+        if (desc.length > 100) foundationalCompleteness += 5;
+        if (desc.includes('vulnerability') || desc.includes('exploit')) foundationalCompleteness += 5;
+        if (desc.length > 200) foundationalCompleteness += 5;
+    }
+    
+    // 2. Root Cause Analysis (20 points)
+    if (cveData.problemtype?.problemtype_data?.[0]?.description?.[0]?.value) {
+        const problemType = cveData.problemtype.problemtype_data[0].description[0].value;
+        if (problemType && problemType !== 'NVD-CWE-Other') rootCauseAnalysis += 10;
+        if (problemType.includes('CWE-')) rootCauseAnalysis += 10;
+    }
+    
+    // 3. Security Context (20 points)
+    if (cveData.impact?.cvss?.vector_string) {
+        securityContext += 10;
+        const cvss = cveData.impact.cvss.vector_string;
+        if (cvss.includes('CVSS:3') || cvss.includes('CVSS:4')) securityContext += 5;
+        if (cveData.impact.cvss.base_score && cveData.impact.cvss.base_score > 0) securityContext += 5;
+    }
+    
+    // 4. Actionable Intelligence (20 points)
+    if (cveData.references?.reference_data?.length > 0) {
+        actionableIntelligence += 5;
+        if (cveData.references.reference_data.length > 2) actionableIntelligence += 5;
+        
+        const hasVendorAdvisory = cveData.references.reference_data.some(ref => 
+            ref.tags?.includes('Vendor Advisory') || 
+            ref.url?.includes('advisory') ||
+            ref.url?.includes('security')
+        );
+        if (hasVendorAdvisory) actionableIntelligence += 10;
+    }
+    
+    // 5. Data Format Precision (20 points)
+    if (cveData.data_format === 'MITRE') dataFormatPrecision += 5;
+    if (cveData.data_version) dataFormatPrecision += 5;
+    if (cveData.CVE_data_meta?.STATE === 'PUBLIC') dataFormatPrecision += 5;
+    if (cveData.CVE_data_meta?.ASSIGNER) dataFormatPrecision += 5;
+    
+    // Calculate overall score (sum of all components for total out of 100)
+    const overallScore = (foundationalCompleteness + rootCauseAnalysis + securityContext + actionableIntelligence + dataFormatPrecision);
+    
+    return {
+        overallScore: parseFloat(overallScore.toFixed(1)),
+        foundationalCompleteness,
+        rootCauseAnalysis,
+        securityContext,
+        actionableIntelligence,
+        dataFormatPrecision
+    };
+}
+
 // Global variables
 let allCNAs = [];
 let filteredCNAs = [];

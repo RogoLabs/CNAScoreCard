@@ -234,21 +234,21 @@ p {
     border-left-color: #e74c3c;
 }
 
-/* Percentile-based colors (primary color scheme) */
+/* Percentile-based colors (stoplight color scheme) */
 .percentile-top {
-    border-left-color: #27ae60;    /* Green - Top 25% */
+    border-left-color: #27ae60;    /* Green - Top performers (75th percentile and above) */
 }
 
 .percentile-upper {
-    border-left-color: #3498db;    /* Blue - Upper middle 25% */
+    border-left-color: #27ae60;    /* Green - Upper middle (50th-75th percentile) */
 }
 
 .percentile-lower {
-    border-left-color: #f39c12;    /* Orange - Lower middle 25% */
+    border-left-color: #f39c12;    /* Orange - Lower middle (25th-50th percentile) */
 }
 
 .percentile-bottom {
-    border-left-color: #e74c3c;    /* Red - Bottom 25% */
+    border-left-color: #e74c3c;    /* Red - Bottom performers (below 25th percentile) */
 }
 
 /* Card header */

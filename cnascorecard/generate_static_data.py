@@ -141,11 +141,11 @@ def main():
                 'total_cves_scored': len(cna_cves),
                 'average_eas_score': sum(c.get('totalEasScore', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
                 'percentile': 0,
-                'average_foundational_completeness': sum(c.get('foundationalCompletenesScore', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
-                'average_root_cause_analysis': sum(c.get('rootCauseAnalysisScore', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
-                'average_severity_context': sum(c.get('severityContextScore', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
-                'average_actionable_intelligence': sum(c.get('actionableIntelligenceScore', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
-                'average_data_format_precision': sum(c.get('dataFormatPrecisionScore', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0
+                'average_foundational_completeness': sum(c.get('scoreBreakdown', {}).get('foundationalCompleteness', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
+                'average_root_cause_analysis': sum(c.get('scoreBreakdown', {}).get('rootCauseAnalysis', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
+                'average_severity_context': sum(c.get('scoreBreakdown', {}).get('severityAndImpactContext', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
+                'average_actionable_intelligence': sum(c.get('scoreBreakdown', {}).get('actionableIntelligence', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
+                'average_data_format_precision': sum(c.get('scoreBreakdown', {}).get('dataFormatAndPrecision', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0
             }
         
         # Only generate pages for CNAs with CVEs
