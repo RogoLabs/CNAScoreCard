@@ -43,7 +43,7 @@ jobs:
     
     - name: Clone CVE data repository
       run: |
-        git clone https://github.com/CVEProject/cvelistV5.git cve_data
+        git clone --depth 1 https://github.com/CVEProject/cvelistV5.git cve_data
         echo "CVE data cloned successfully"
         ls -la cve_data/
     

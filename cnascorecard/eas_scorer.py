@@ -272,6 +272,13 @@ class EnhancedAggregateScorer:
         
         return min(score, max_score)
 
+def calculate_eas(cve_data):
+    """
+    Convenience function to calculate the Enhanced Aggregate Score (EAS) for a CVE record.
+    """
+    scorer = EnhancedAggregateScorer(cve_data)
+    return scorer.calculate_scores()
+
 def main():
     """
     Main execution block. Handles command-line arguments, file reading,
