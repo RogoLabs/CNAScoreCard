@@ -14,10 +14,17 @@
         
         <div id="loading">Loading CNA data...</div>
         
-        <!-- CNA Header Section -->
-        <div id="cnaHeader" class="intro-section" style="display: none;">
-            <h1 id="cnaTitle"></h1>
-            <div id="cnaStats"></div>
+        <!-- Modernized CNA Header Section -->
+        <div id="cnaHeader" class="intro-section modern-cna-header" style="display: none;">
+            <div class="cna-header-flex">
+                <div class="cna-header-title-block">
+                    <h1 id="cnaTitle"></h1>
+                    <div id="cnaStats"></div>
+                </div>
+                <div class="cna-header-logo-block">
+                    <!-- Optional: Add CNA logo or icon here in the future -->
+                </div>
+            </div>
         </div>
         
         <!-- CVE Filters and Cards -->
@@ -32,7 +39,7 @@
             </div>
         </div>
         
-        <div id="cveCards" class="cve-cards"></div>
+        <div id="cveCards" class="cna-cards"></div>
     </div>
     
     <script>

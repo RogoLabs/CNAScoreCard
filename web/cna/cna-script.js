@@ -130,7 +130,7 @@ async function loadCNAData() {
             securityContext: cve.scoreBreakdown?.severityAndImpactContext || 0,
             actionableIntelligence: cve.scoreBreakdown?.actionableIntelligence || 0,
             dataFormatPrecision: cve.scoreBreakdown?.dataFormatAndPrecision || 0
-        }));
+        ));
         
         displayCNAHeader(overallScore, percentile, totalCVEs, breakdown);
         displayCVECards(cveScores);
@@ -147,47 +147,37 @@ async function loadCNAData() {
     }
 }
 
+// Helper to format numbers (hide .0 if integer)
+function formatNumber(num) {
+    if (typeof num !== 'number') return num;
+    return num % 1 === 0 ? num.toString() : num.toFixed(1);
+}
+
 // Function to display CNA header
 function displayCNAHeader(overallScore, percentile, totalCVEs, breakdown) {
     document.getElementById('loading').style.display = 'none';
     document.getElementById('cnaHeader').style.display = 'block';
     document.getElementById('cveSection').style.display = 'block';
-    
+
     document.getElementById('cnaTitle').textContent = CNA_NAME.toUpperCase();
-    
+
+    // Modern, centered header card
     document.getElementById('cnaStats').innerHTML = `
-        <div class="main-score-card">
-            <div class="score-display">${overallScore}/100</div>
-            <div class="score-percentile">${percentile}th percentile</div>
-        </div>
-        <div class="header-stats">
-            <div class="stat-item">
-                <span class="stat-value">${totalCVEs}</span>
-                <span class="stat-label">CVEs Published In Last 6 Months</span>
+        <div class="cna-card modern-cna-header-card" style="max-width: 500px; margin: 0 auto 2rem auto;">
+            <div class="cna-header" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
+                <h3 class="cna-name" style="font-size:2rem; color:#2c3e50; margin-bottom: 0;">${CNA_NAME.toUpperCase()}</h3>
+                <div class="cna-score-container">
+                    <div class="cna-score">${formatNumber(overallScore)}/100</div>
+                    <div class="cna-percentile">${formatNumber(percentile)}th percentile</div>
+                </div>
             </div>
-        </div>
-        <div class="score-breakdown-header">
-            <div class="breakdown-grid">
-                <div class="breakdown-item">
-                    <span class="breakdown-label">Foundational Completeness</span>
-                    <span class="breakdown-value">${breakdown.foundational}/30</span>
-                </div>
-                <div class="breakdown-item">
-                    <span class="breakdown-label">Root Cause Analysis</span>
-                    <span class="breakdown-value">${breakdown.rootCause}/20</span>
-                </div>
-                <div class="breakdown-item">
-                    <span class="breakdown-label">Severity Context</span>
-                    <span class="breakdown-value">${breakdown.security}/25</span>
-                </div>
-                <div class="breakdown-item">
-                    <span class="breakdown-label">Actionable Intelligence</span>
-                    <span class="breakdown-value">${breakdown.actionable}/20</span>
-                </div>
-                <div class="breakdown-item">
-                    <span class="breakdown-label">Data Format Precision</span>
-                    <span class="breakdown-value">${breakdown.dataFormat}/5</span>
-                </div>
+            <div class="cna-details" style="margin-top: 1rem;">
+                <div class="detail-item"><span class="label">CVEs Published In Last 6 Months:</span><span class="value">${formatNumber(totalCVEs)}</span></div>
+                <div class="detail-item"><span class="label">Foundational Completeness:</span><span class="value">${formatNumber(breakdown.foundational)}/30</span></div>
+                <div class="detail-item"><span class="label">Root Cause Analysis:</span><span class="value">${formatNumber(breakdown.rootCause)}/20</span></div>
+                <div class="detail-item"><span class="label">Severity Context:</span><span class="value">${formatNumber(breakdown.security)}/25</span></div>
+                <div class="detail-item"><span class="label">Actionable Intelligence:</span><span class="value">${formatNumber(breakdown.actionable)}/20</span></div>
+                <div class="detail-item"><span class="label">Data Format Precision:</span><span class="value">${formatNumber(breakdown.dataFormat)}/5</span></div>
             </div>
         </div>
     `;
@@ -196,51 +186,50 @@ function displayCNAHeader(overallScore, percentile, totalCVEs, breakdown) {
 // Function to display CVE cards
 function displayCVECards(scores) {
     const container = document.getElementById('cveCards');
-    
     if (scores.length === 0) {
-        container.innerHTML = '<div style="text-align: center; padding: 2rem; color: #6c757d;">No CVE data available for this CNA.</div>';
+        container.innerHTML = '<p>No CVEs found for this CNA.</p>';
         return;
     }
-    
     // Sort scores by overall score (descending)
     const sortedScores = [...scores].sort((a, b) => b.overallScore - a.overallScore);
-    
-    container.innerHTML = sortedScores.map(score => `
-        <div class="cve-card ${getPercentileClass(score.percentile)}">
-            <div class="cve-header">
-                <h3 class="cve-name">
-                    <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=${score.cveId}" target="_blank">
-                        ${score.cveId}
-                    </a>
-                </h3>
-                <div class="cve-score-container">
-                    <span class="cve-score">${score.overallScore}</span>
+    container.innerHTML = sortedScores.map(score => {
+        const scoreClass = getPercentileClass(score.percentile);
+        return `
+            <div class="cna-card ${scoreClass}">
+                <div class="cna-header">
+                    <h3 class="cna-name">
+                        <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=${score.cveId}" target="_blank">${score.cveId}</a>
+                    </h3>
+                    <div class="cna-score-container">
+                        <div class="cna-score">${formatNumber(score.overallScore)}/100</div>
+                        <div class="cna-percentile">${formatNumber(score.percentile)}th percentile</div>
+                    </div>
+                </div>
+                <div class="cna-details">
+                    <div class="detail-item">
+                        <span class="label">Foundational Completeness:</span>
+                        <span class="value">${formatNumber(score.foundationalCompleteness)}/30</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Root Cause Analysis:</span>
+                        <span class="value">${formatNumber(score.rootCauseAnalysis)}/20</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Severity Context:</span>
+                        <span class="value">${formatNumber(score.securityContext)}/25</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Actionable Intelligence:</span>
+                        <span class="value">${formatNumber(score.actionableIntelligence)}/20</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">Data Format Precision:</span>
+                        <span class="value">${formatNumber(score.dataFormatPrecision)}/5</span>
+                    </div>
                 </div>
             </div>
-            <div class="cve-details">
-                <div class="detail-item">
-                    <span class="label">Foundational Completeness</span>
-                    <span class="value">${score.foundationalCompleteness}/30</span>
-                </div>
-                <div class="detail-item">
-                    <span class="label">Root Cause Analysis</span>
-                    <span class="value">${score.rootCauseAnalysis}/20</span>
-                </div>
-                <div class="detail-item">
-                    <span class="label">Security Context</span>
-                    <span class="value">${score.securityContext}/25</span>
-                </div>
-                <div class="detail-item">
-                    <span class="label">Actionable Intelligence</span>
-                    <span class="value">${score.actionableIntelligence}/20</span>
-                </div>
-                <div class="detail-item">
-                    <span class="label">Data Format Precision</span>
-                    <span class="value">${score.dataFormatPrecision}/5</span>
-                </div>
-            </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 // Function to filter and sort CVEs

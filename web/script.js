@@ -147,6 +147,12 @@ function displayCNAs(cnas) {
     container.innerHTML = activeCardsHTML + inactiveCardsHTML;
 }
 
+// Helper to format numbers: show as integer if .0, else one decimal
+function formatScore(num) {
+    if (typeof num !== 'number') return num;
+    return num % 1 === 0 ? num.toString() : num.toFixed(1);
+}
+
 // Create individual CNA card
 function createCNACard(cna) {
     const score = safeGet(cna, 'average_eas_score', 0);
@@ -165,7 +171,7 @@ function createCNACard(cna) {
     const inactiveClass = isInactive ? 'cna-inactive' : '';
     
     // Format percentile display
-    const percentileText = isInactive ? 'N/A' : `${percentile.toFixed(1)}th percentile`;
+    const percentileText = isInactive ? 'N/A' : `${formatScore(percentile)}th percentile`;
     
     // Create safe filename for CNA page link
     const safeFilename = cnaName.replace(/[^a-zA-Z0-9\s\-_]/g, '').trim().replace(/\s+/g, '_');
@@ -178,34 +184,34 @@ function createCNACard(cna) {
                     ${isInactive ? escapeHtml(cnaName) : `<a href="${cnaPageLink}" class="cna-link">${escapeHtml(cnaName)}</a>`}
                 </h3>
                 <div class="cna-score-container">
-                    <div class="cna-score">${score.toFixed(1)}/100</div>
+                    <div class="cna-score">${formatScore(score)}/100</div>
                     <div class="cna-percentile">${percentileText}</div>
                 </div>
             </div>
             <div class="cna-details">
                 <div class="detail-item">
                     <span class="label">CVE Count:</span>
-                    <span class="value">${totalCVEs}</span>
+                    <span class="value">${formatScore(totalCVEs)}</span>
                 </div>
                 <div class="detail-item">
                     <span class="label">Foundational Completeness:</span>
-                    <span class="value">${avgFoundational.toFixed(1)}/30</span>
+                    <span class="value">${formatScore(avgFoundational)}/30</span>
                 </div>
                 <div class="detail-item">
                     <span class="label">Root Cause Analysis:</span>
-                    <span class="value">${avgRootCause.toFixed(1)}/20</span>
+                    <span class="value">${formatScore(avgRootCause)}/20</span>
                 </div>
                 <div class="detail-item">
                     <span class="label">Severity Context:</span>
-                    <span class="value">${avgSeverity.toFixed(1)}/25</span>
+                    <span class="value">${formatScore(avgSeverity)}/25</span>
                 </div>
                 <div class="detail-item">
                     <span class="label">Actionable Intelligence:</span>
-                    <span class="value">${avgActionable.toFixed(1)}/20</span>
+                    <span class="value">${formatScore(avgActionable)}/20</span>
                 </div>
                 <div class="detail-item">
                     <span class="label">Data Format Precision:</span>
-                    <span class="value">${avgFormat.toFixed(1)}/5</span>
+                    <span class="value">${formatScore(avgFormat)}/5</span>
                 </div>
                 ${cna.message ? `<div class="detail-item"><span class="label">Status:</span><span class="value">${escapeHtml(cna.message)}</span></div>` : ''}
                 ${!isInactive ? `<div class="detail-item cna-view-details"><a href="${cnaPageLink}" class="view-details-link">View Individual CVEs →</a></div>` : ''}
