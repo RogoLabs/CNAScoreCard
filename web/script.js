@@ -271,6 +271,22 @@ function handleSearch(event) {
     displayCNAs(filteredCNAs);
 }
 
+// Modernized sorting logic
+const sortOptions = {
+    score: (a, b) => b.score - a.score,
+    name: (a, b) => a.name.localeCompare(b.name),
+    cveCount: (a, b) => b.cveCount - a.cveCount
+};
+
+function renderCnaCards(cnas, sortBy = 'score') {
+    const sortedCnas = [...cnas].sort(sortOptions[sortBy]);
+    // Create cards for active CNAs first, then inactive ones
+    const activeCardsHTML = activeCNAs.map(cna => createCNACard(cna)).join('');
+    const inactiveCardsHTML = inactiveCNAs.map(cna => createCNACard(cna)).join('');
+    
+    container.innerHTML = activeCardsHTML + inactiveCardsHTML;
+}
+
 // Handle sorting
 function handleSort(event) {
     const sortBy = event.target.value;
@@ -329,4 +345,8 @@ function formatPercentage(value) {
 }
 
 // Initialize the application
-document.addEventListener('DOMContentLoaded', loadCNAData);
+document.addEventListener('DOMContentLoaded', () => {
+    const sortSelect = document.getElementById('sortSelect');
+    sortSelect.value = 'score';
+    loadCNAData();
+});
