@@ -192,7 +192,7 @@
                     <tr>
                         <td>CVSS Base Score</td>
                         <td class="points">15</td>
-                        <td>CVSS v3.1/v3.0 base score provided</td>
+                        <td>CVSS v4.0/v3.1/v3.0 base score provided</td>
                     </tr>
                     <tr>
                         <td>CVSS Vector String</td>
@@ -208,7 +208,7 @@
             </table>
             
             <div class="example-cve">
-                <strong>Example:</strong> A CVE with CVSS v3.1 base score of 9.8, complete vector string, and description mentioning "remote code execution" would score 25 points.
+                <strong>Example:</strong> A CVE with CVSS v4.0 or v3.1 base score of 9.8, complete vector string, and description mentioning "remote code execution" would score 25 points.
             </div>
         </div>
 
@@ -292,6 +292,11 @@
             <div class="example-cve">
                 <strong>Data Freshness:</strong> Scores are updated every 6 hours using the latest CVE data from the official CVEProject repository.
             </div>
+        </div>
+
+        <div class="scoring-section">
+            <h2>Ranking</h2>
+            <p><strong>Ranking</strong> shows a CNA's position among all active CNAs based on their average EAS score. For example, "Rank: 12 of 150" means this CNA is 12th out of 150 active CNAs in the last 6 months.</p>
         </div>
 
         <div class="scoring-section">

@@ -108,7 +108,10 @@ async function loadCNAData() {
         const recentCVEs = data.recent_cves || [];
         // Use the correct total CVE count for the CNA
         const totalCVEs = data.total_cves || cnaInfo.total_cves_scored || recentCVEs.length;
-        
+
+        // Extract ranking and active CNA count if available
+        cnaData.ranking = (typeof cnaInfo.rank !== 'undefined' && typeof cnaInfo.active_cna_count !== 'undefined') ? `Rank: ${cnaInfo.rank} of ${cnaInfo.active_cna_count}` : 'N/A';
+
         // Use the pre-calculated scores from the EAS system
         const overallScore = cnaInfo.average_eas_score || 0;
         const percentile = cnaInfo.percentile || 0;
@@ -135,7 +138,7 @@ async function loadCNAData() {
             };
         });
         
-        displayCNAHeader(overallScore, percentile, totalCVEs, breakdown);
+        displayCNAHeader(overallScore, percentile, totalCVEs, breakdown, cnaData.ranking);
         displayCVECards(cveScores);
         
     } catch (error) {
@@ -157,7 +160,7 @@ function formatNumber(num) {
 }
 
 // Function to display CNA header
-function displayCNAHeader(overallScore, percentile, totalCVEs, breakdown) {
+function displayCNAHeader(overallScore, percentile, totalCVEs, breakdown, ranking) {
     document.getElementById('loading').style.display = 'none';
     document.getElementById('cnaHeader').style.display = 'block';
     document.getElementById('cveSection').style.display = 'block';
@@ -171,7 +174,7 @@ function displayCNAHeader(overallScore, percentile, totalCVEs, breakdown) {
                 <div style="display: flex; gap: 2.5rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; justify-content: center;">
                     <div style="text-align:center;">
                         <div style="font-size:2.5rem; font-weight:900; color: #222;">${formatNumber(overallScore)}<span style="font-size:1.2rem; font-weight:400; color: #888;">/100</span></div>
-                        <div style="font-size:1.1rem; opacity:0.9; color: #666; margin-top: 0.2rem;"><span style="font-weight:600; color:#007bff;">Ranking:</span> <span id="cnaRanking" style="font-weight:700; color:#222;">${typeof cnaData.ranking !== 'undefined' ? cnaData.ranking : 'N/A'}</span></div>
+                        <div style="font-size:1.1rem; opacity:0.9; color: #666; margin-top: 0.2rem;"><span style="font-weight:600; color:#007bff;">Ranking:</span> <span id="cnaRanking" style="font-weight:700; color:#222;">${ranking || 'N/A'}</span></div>
                     </div>
                     <div style="text-align:center;">
                         <div style="font-size:2.1rem; font-weight:700; color: #222;">${formatNumber(totalCVEs)}</div>

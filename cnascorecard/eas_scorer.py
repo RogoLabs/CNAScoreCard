@@ -145,9 +145,9 @@ class EnhancedAggregateScorer:
         if isinstance(metrics, list):
             for metric in metrics:
                 if isinstance(metric, dict):
-                    # Check for CVSS v3
-                    if 'cvssV3_1' in metric or 'cvssV3_0' in metric:
-                        cvss_data = metric.get('cvssV3_1') or metric.get('cvssV3_0')
+                    # Check for CVSS v4, v3.1, v3.0
+                    if 'cvssV4_0' in metric or 'cvssV3_1' in metric or 'cvssV3_0' in metric:
+                        cvss_data = metric.get('cvssV4_0') or metric.get('cvssV3_1') or metric.get('cvssV3_0')
                         if isinstance(cvss_data, dict):
                             if cvss_data.get('baseScore') is not None:
                                 score += 15
