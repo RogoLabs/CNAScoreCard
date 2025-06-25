@@ -17,144 +17,75 @@ KNOWN_EXPLOIT_DOMAINS = ['exploit-db.com']
 
 logger = logging.getLogger(__name__)
 
-class CWEValidator:
-    """Validates CWE IDs against the official CWE catalog"""
+class SimpleCWEValidator:
+    """Simple CWE validator using a prebuilt set of valid CWE IDs"""
     
-    def __init__(self, cwe_xml_path: Optional[str] = None):
-        """
-        Initialize the CWE validator
-        
-        Args:
-            cwe_xml_path: Path to the CWE XML file. If None, looks for cwec_v4.17.xml in current directory
-        """
-        if cwe_xml_path is None:
-            # Look in the same directory as this script, then parent directory
+    def __init__(self):
+        """Initialize with a simple set of valid CWE IDs"""
+        self.valid_cwes: Set[str] = set()
+        self._load_valid_cwes()
+    
+    def _load_valid_cwes(self):
+        """Load valid CWE IDs from XML file or use fallback list"""
+        try:
+            # Try to load from XML file
             script_dir = os.path.dirname(os.path.abspath(__file__))
             cwe_xml_path = os.path.join(script_dir, "cwec_v4.17.xml")
             if not os.path.exists(cwe_xml_path):
                 # Try parent directory
                 cwe_xml_path = os.path.join(os.path.dirname(script_dir), "cwec_v4.17.xml")
-        
-        self.cwe_xml_path = cwe_xml_path
-        self.valid_cwes: Set[str] = set()
-        self.cwe_details: Dict[str, Dict[str, str]] = {}
-        self.deprecated_cwes: Set[str] = set()
-        self._load_cwe_catalog()
+            
+            if os.path.exists(cwe_xml_path):
+                tree = ET.parse(cwe_xml_path)
+                root = tree.getroot()
+                
+                # Find all weakness IDs - try with and without namespace
+                for weakness in root.findall('.//{http://cwe.mitre.org/cwe-7}Weakness'):
+                    cwe_id = weakness.get('ID')
+                    if cwe_id and cwe_id.isdigit():
+                        self.valid_cwes.add(cwe_id)
+                
+                # Fallback without namespace
+                if not self.valid_cwes:
+                    for weakness in root.findall('.//Weakness'):
+                        cwe_id = weakness.get('ID')
+                        if cwe_id and cwe_id.isdigit():
+                            self.valid_cwes.add(cwe_id)
+                
+                logger.info(f"Loaded {len(self.valid_cwes)} valid CWE IDs from XML")
+            else:
+                # Use fallback list of common CWEs if XML not found
+                self._use_fallback_cwes()
+                logger.warning("CWE XML not found, using fallback list")
+                
+        except Exception as e:
+            logger.warning(f"Error loading CWE XML: {e}, using fallback list")
+            self._use_fallback_cwes()
     
-    def _load_cwe_catalog(self):
-        """Load and parse the CWE XML catalog"""
-        try:
-            tree = ET.parse(self.cwe_xml_path)
-            root = tree.getroot()
-            
-            # Handle XML namespace
-            namespace = {'cwe': 'http://cwe.mitre.org/cwe-7'}
-            
-            # Find weaknesses
-            weaknesses = root.findall('.//cwe:Weakness', namespace)
-            if not weaknesses:
-                # Try without namespace if namespaced search fails
-                weaknesses = root.findall('.//Weakness')
-            
-            for weakness in weaknesses:
-                cwe_id = weakness.get('ID')
-                if cwe_id:
-                    self.valid_cwes.add(cwe_id)
-                    
-                    # Store additional details
-                    name = weakness.get('Name', '')
-                    status = weakness.get('Status', '')
-                    abstraction = weakness.get('Abstraction', '')
-                    
-                    self.cwe_details[cwe_id] = {
-                        'name': name,
-                        'status': status,
-                        'abstraction': abstraction
-                    }
-                    
-                    # Track deprecated CWEs
-                    if status.lower() == 'deprecated':
-                        self.deprecated_cwes.add(cwe_id)
-            
-            logger.info(f"Loaded {len(self.valid_cwes)} CWEs from catalog")
-            
-        except FileNotFoundError:
-            logger.warning(f"CWE XML file not found: {self.cwe_xml_path}")
-            logger.warning("CWE validation will be disabled")
-        except ET.ParseError as e:
-            logger.warning(f"Error parsing CWE XML file: {e}")
-            logger.warning("CWE validation will be disabled")
-    
-    def validate_cwe_id(self, cwe_id: str) -> Dict[str, Any]:
-        """
-        Validate a single CWE ID
-        
-        Args:
-            cwe_id: CWE ID to validate (can be with or without CWE- prefix)
-        
-        Returns:
-            Dict with validation results
-        """
-        # Normalize CWE ID
-        normalized_id = self._normalize_cwe_id(cwe_id)
-        
-        result = {
-            'original': cwe_id,
-            'normalized': normalized_id,
-            'is_valid': False,
-            'is_deprecated': False,
-            'details': {},
-            'suggestions': []
-        }
-        
-        if normalized_id in self.valid_cwes:
-            result['is_valid'] = True
-            result['is_deprecated'] = normalized_id in self.deprecated_cwes
-            result['details'] = self.cwe_details.get(normalized_id, {})
-        else:
-            # Try to find similar CWEs
-            result['suggestions'] = self._find_similar_cwes(normalized_id)
-        
-        return result
-    
-    def _normalize_cwe_id(self, cwe_id: str) -> str:
-        """Normalize CWE ID to just the number"""
-        if not cwe_id:
-            return ""
-        
-        # Remove CWE- prefix if present and extract number
-        match = re.search(r'(\d+)', str(cwe_id))
-        return match.group(1) if match else ""
-    
-    def _find_similar_cwes(self, cwe_id: str, max_suggestions: int = 3) -> List[str]:
-        """Find similar CWE IDs based on numeric proximity"""
-        if not cwe_id.isdigit():
-            return []
-        
-        target_num = int(cwe_id)
-        suggestions = []
-        
-        # Look for CWEs within a range
-        for offset in range(1, 20):  # Check nearby numbers
-            for candidate_num in [target_num - offset, target_num + offset]:
-                if candidate_num > 0:
-                    candidate_id = str(candidate_num)
-                    if candidate_id in self.valid_cwes and candidate_id not in self.deprecated_cwes:
-                        suggestions.append(f"CWE-{candidate_id}")
-                        if len(suggestions) >= max_suggestions:
-                            return suggestions
-        
-        return suggestions
+    def _use_fallback_cwes(self):
+        """Use a fallback list of common valid CWE IDs"""
+        # Common CWEs from the official list - this covers most real-world usage
+        common_cwes = [
+            "20", "22", "78", "79", "89", "120", "125", "190", "200", "269", "284", "311", "326", 
+            "352", "362", "400", "401", "416", "476", "502", "611", "613", "617", "639", "665", 
+            "667", "672", "681", "682", "704", "732", "787", "798", "807", "862", "863", "918", 
+            "922", "1021", "1022", "1035", "1076", "1188", "1220", "1236", "1274", "1275", "1321"
+        ]
+        self.valid_cwes = set(common_cwes)
+        logger.info(f"Using fallback list of {len(self.valid_cwes)} common CWE IDs")
     
     def is_valid_cwe(self, cwe_id: str) -> bool:
-        """Check if a CWE ID is valid"""
-        normalized_id = self._normalize_cwe_id(cwe_id)
-        return normalized_id in self.valid_cwes
-    
-    def is_deprecated_cwe(self, cwe_id: str) -> bool:
-        """Check if a CWE ID is deprecated"""
-        normalized_id = self._normalize_cwe_id(cwe_id)
-        return normalized_id in self.deprecated_cwes
+        """Check if a CWE ID is valid (simple lookup)"""
+        if not cwe_id:
+            return False
+        
+        # Extract just the number part
+        match = re.search(r'(\d+)', str(cwe_id))
+        if match:
+            number = match.group(1)
+            return number in self.valid_cwes
+        
+        return False
 
 class EnhancedAggregateScorer:
     """
@@ -167,7 +98,7 @@ class EnhancedAggregateScorer:
         self.cna_container = self.cve_data.get('containers', {}).get('cna', {})
         # Initialize CWE validator
         try:
-            self.cwe_validator = CWEValidator()
+            self.cwe_validator = SimpleCWEValidator()
         except Exception as e:
             logger.warning(f"Failed to initialize CWE validator: {e}")
             self.cwe_validator = None
@@ -263,21 +194,13 @@ class EnhancedAggregateScorer:
                                 cwe_id = desc.get('cweId', '')
                                 if cwe_id and cwe_id.startswith('CWE-'):
                                     # If CWE validator is available, validate the CWE
-                                    if self.cwe_validator:
-                                        validation = self.cwe_validator.validate_cwe_id(cwe_id)
-                                        if validation['is_valid']:
-                                            if validation['is_deprecated']:
-                                                # Deprecated CWE gets partial credit
-                                                score = max(score, 5)
-                                                logger.warning(f"Deprecated CWE found: {cwe_id} - {validation['details'].get('name', 'N/A')}")
-                                            else:
-                                                # Valid CWE gets full credit
-                                                score = 10
-                                        else:
-                                            # Invalid CWE gets minimal credit
-                                            score = max(score, 2)
-                                            suggestions = ', '.join(validation['suggestions'][:3]) if validation['suggestions'] else 'None'
-                                            logger.warning(f"Invalid CWE found: {cwe_id}, suggestions: {suggestions}")
+                                    if self.cwe_validator and self.cwe_validator.is_valid_cwe(cwe_id):
+                                        # Valid CWE gets full credit
+                                        score = 10
+                                    elif self.cwe_validator:
+                                        # Invalid CWE gets minimal credit
+                                        score = max(score, 2)
+                                        logger.warning(f"Invalid CWE found: {cwe_id}")
                                     else:
                                         # No validator available, assume valid for backward compatibility
                                         score = 10
@@ -528,12 +451,10 @@ class EnhancedAggregateScorer:
                                     cwe_id.startswith('CWE-') and 
                                     cwe_id[4:].isdigit()):
                                     # Additional validation if CWE validator is available
-                                    if self.cwe_validator:
-                                        validation = self.cwe_validator.validate_cwe_id(cwe_id)
-                                        if validation['is_valid'] and not validation['is_deprecated']:
-                                            has_valid_cwe = True
-                                            break
-                                    else:
+                                    if self.cwe_validator and self.cwe_validator.is_valid_cwe(cwe_id):
+                                        has_valid_cwe = True
+                                        break
+                                    elif not self.cwe_validator:
                                         # Basic format check only
                                         has_valid_cwe = True
                                         break
