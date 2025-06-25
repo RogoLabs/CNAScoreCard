@@ -147,13 +147,43 @@ class EnhancedAggregateScorer:
         if isinstance(affected, list):
             for item in affected:
                 if isinstance(item, dict):
-                    cpes = item.get('cpe', [])
+                    # Check for 'cpes' (CVE 5.1 format - plural)
+                    cpes = item.get('cpes', [])
                     if isinstance(cpes, list) and len(cpes) > 0:
+                        # Validate that at least one CPE looks valid
+                        if any(cpe and isinstance(cpe, str) and cpe.startswith('cpe:') for cpe in cpes):
+                            score = max_score
+                            break
+                    
+                    # Check for 'cpe' (legacy format - singular)
+                    cpe = item.get('cpe', [])
+                    if isinstance(cpe, list) and len(cpe) > 0:
+                        # Validate that at least one CPE looks valid
+                        if any(c and isinstance(c, str) and c.startswith('cpe:') for c in cpe):
+                            score = max_score
+                            break
+                    
+                    # Some CNAs use 'cpe23Uri' or similar single string format
+                    cpe_uri = item.get('cpe23Uri', '')
+                    if cpe_uri and isinstance(cpe_uri, str) and cpe_uri.startswith('cpe:'):
                         score = max_score
                         break
-                    # Some CNAs use 'cpe23Uri' or similar
-                    if item.get('cpe23Uri'):
-                        score = max_score
+                    
+                    # Check for other potential CPE field names
+                    for field_name in ['cpeId', 'cpe_name', 'platformId']:
+                        cpe_value = item.get(field_name, '')
+                        if cpe_value and isinstance(cpe_value, str) and cpe_value.startswith('cpe:'):
+                            score = max_score
+                            break
+                    
+                    # Check for platformIds array
+                    platform_ids = item.get('platformIds', [])
+                    if isinstance(platform_ids, list) and len(platform_ids) > 0:
+                        if any(pid and isinstance(pid, str) and pid.startswith('cpe:') for pid in platform_ids):
+                            score = max_score
+                            break
+                    
+                    if score == max_score:
                         break
         return min(score, max_score)
 
