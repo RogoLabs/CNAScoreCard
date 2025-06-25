@@ -120,31 +120,39 @@ async function loadCNAData() {
     }
 }
 
-// Display CNAs as cards
-function displayCNAs(cnas) {
-    const container = document.getElementById('cnaCards');
-    
-    if (cnas.length === 0) {
-        container.innerHTML = '<p>No CNAs found matching your criteria.</p>';
-        return;
-    }
-    
+// Modernized sorting logic
+const sortOptions = {
+    score: (a, b) => safeGet(b, 'average_eas_score', 0) - safeGet(a, 'average_eas_score', 0),
+    name: (a, b) => safeGet(a, 'cna', '').localeCompare(safeGet(b, 'cna', '')),
+    cveCount: (a, b) => safeGet(b, 'total_cves_scored', 0) - safeGet(a, 'total_cves_scored', 0)
+};
+
+function getSortedCNAs(cnas, sortBy = 'score') {
     // Separate active and inactive CNAs
     const activeCNAs = cnas.filter(cna => {
         const totalCVEs = safeGet(cna, 'total_cves_scored', 0);
         return totalCVEs > 0 && cna.message !== "No CVEs published in the last 6 months";
     });
-    
     const inactiveCNAs = cnas.filter(cna => {
         const totalCVEs = safeGet(cna, 'total_cves_scored', 0);
         return totalCVEs === 0 || cna.message === "No CVEs published in the last 6 months";
     });
-    
-    // Create cards for active CNAs first, then inactive ones
-    const activeCardsHTML = activeCNAs.map(cna => createCNACard(cna)).join('');
-    const inactiveCardsHTML = inactiveCNAs.map(cna => createCNACard(cna)).join('');
-    
-    container.innerHTML = activeCardsHTML + inactiveCardsHTML;
+    // Sort active CNAs by selected sort
+    activeCNAs.sort(sortOptions[sortBy]);
+    // Always sort inactive CNAs by name
+    inactiveCNAs.sort(sortOptions['name']);
+    return [...activeCNAs, ...inactiveCNAs];
+}
+
+// Display CNAs as cards
+function displayCNAs(cnas, sortBy = 'score') {
+    const container = document.getElementById('cnaCards');
+    if (cnas.length === 0) {
+        container.innerHTML = '<p>No CNAs found matching your criteria.</p>';
+        return;
+    }
+    const sortedCNAs = getSortedCNAs(cnas, sortBy);
+    container.innerHTML = sortedCNAs.map(cna => createCNACard(cna)).join('');
 }
 
 // Helper to format numbers: show as integer if .0, else one decimal
@@ -158,7 +166,7 @@ function createCNACard(cna) {
     const score = safeGet(cna, 'average_eas_score', 0);
     const percentile = safeGet(cna, 'percentile', 0);
     const scoreClass = getPercentileClass(percentile);
-    const cnaName = safeGet(cna, 'cna', 'Unknown CNA');
+    const cnaName = safeGet(cna, 'cna', 'Unknown');
     const totalCVEs = safeGet(cna, 'total_cves_scored', 0);
     const avgFoundational = safeGet(cna, 'average_foundational_completeness', 0);
     const avgRootCause = safeGet(cna, 'average_root_cause_analysis', 0);
@@ -268,70 +276,14 @@ function handleSearch(event) {
         const cnaName = safeGet(cna, 'cna', '').toLowerCase();
         return cnaName.includes(searchTerm);
     });
-    displayCNAs(filteredCNAs);
-}
-
-// Modernized sorting logic
-const sortOptions = {
-    score: (a, b) => b.score - a.score,
-    name: (a, b) => a.name.localeCompare(b.name),
-    cveCount: (a, b) => b.cveCount - a.cveCount
-};
-
-function renderCnaCards(cnas, sortBy = 'score') {
-    const sortedCnas = [...cnas].sort(sortOptions[sortBy]);
-    // Create cards for active CNAs first, then inactive ones
-    const activeCardsHTML = activeCNAs.map(cna => createCNACard(cna)).join('');
-    const inactiveCardsHTML = inactiveCNAs.map(cna => createCNACard(cna)).join('');
-    
-    container.innerHTML = activeCardsHTML + inactiveCardsHTML;
+    const sortBy = document.getElementById('sortSelect').value;
+    displayCNAs(filteredCNAs, sortBy);
 }
 
 // Handle sorting
 function handleSort(event) {
     const sortBy = event.target.value;
-    
-    // Separate active and inactive CNAs for sorting
-    const activeCNAs = filteredCNAs.filter(cna => {
-        const totalCVEs = safeGet(cna, 'total_cves_scored', 0);
-        return totalCVEs > 0 && cna.message !== "No CVEs published in the last 6 months";
-    });
-    
-    const inactiveCNAs = filteredCNAs.filter(cna => {
-        const totalCVEs = safeGet(cna, 'total_cves_scored', 0);
-        return totalCVEs === 0 || cna.message === "No CVEs published in the last 6 months";
-    });
-    
-    // Sort only the active CNAs
-    activeCNAs.sort((a, b) => {
-        switch (sortBy) {
-            case 'name':
-                const nameA = safeGet(a, 'cna', '');
-                const nameB = safeGet(b, 'cna', '');
-                return nameA.localeCompare(nameB);
-            case 'cveCount':
-                const countA = safeGet(a, 'total_cves_scored', 0);
-                const countB = safeGet(b, 'total_cves_scored', 0);
-                return countB - countA;
-            case 'score':
-            default:
-                const scoreA = safeGet(a, 'average_eas_score', 0);
-                const scoreB = safeGet(b, 'average_eas_score', 0);
-                return scoreB - scoreA;
-        }
-    });
-    
-    // Keep inactive CNAs in alphabetical order
-    inactiveCNAs.sort((a, b) => {
-        const nameA = safeGet(a, 'cna', '');
-        const nameB = safeGet(b, 'cna', '');
-        return nameA.localeCompare(nameB);
-    });
-    
-    // Combine active CNAs first, then inactive CNAs
-    filteredCNAs = [...activeCNAs, ...inactiveCNAs];
-    
-    displayCNAs(filteredCNAs);
+    displayCNAs(filteredCNAs, sortBy);
 }
 
 // Safe property access helper
