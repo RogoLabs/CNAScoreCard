@@ -51,6 +51,18 @@ jobs:
       run: |
         python scripts/build.py
     
+    - name: Commit and push generated files
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add web/
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "Auto-update generated web files [skip ci]"
+          git push
+        fi
+    
     - name: Setup Pages
       uses: actions/configure-pages@v4
     
