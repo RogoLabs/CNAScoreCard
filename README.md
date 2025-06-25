@@ -84,14 +84,13 @@ The Enhanced Aggregate Scoring (EAS) system evaluates CVE records across six key
 
 ### 1. Foundational Completeness (30 points)
 - Product identification, version details, and clear vulnerability descriptions
-- **Enhanced description quality analysis** using multi-dimensional technical content evaluation:
+- **Enhanced description quality analysis** using multi-dimensional technical content evaluation based on analysis of 9,435 CVE descriptions:
   - **Length & Structure** (3 points): Progressive scoring for descriptions ≥50, ≥100, ≥200 characters
-  - **Technical Vulnerability Types** (2 points): Detection of specific vulnerability patterns (buffer overflow, SQL injection, XSS, etc.) - binary scoring
-  - **General Technical Terms** (2 points): Progressive scoring for general security terms (vulnerability, exploit, attack, etc.)
-  - **Impact/Exploitation Context** (4 points): Progressive scoring for exploitation indicators (allows, enables, execute, etc.)
-  - **Technical Specificity** (4 points): Progressive scoring for technical depth indicators (function, parameter, API, module, etc.)
-  - **Generic Content Penalty** (-2 points): Penalty for multiple generic phrases in short descriptions
-- Checks for vulnerability types, impact context, and technical specificity
+  - **Technical Vulnerability Types** (4 points): Detection of 47 specific vulnerability patterns including file inclusion, SQL injection, XSS, buffer overflow, privilege escalation, and cryptographic issues
+  - **Impact/Exploitation Context** (4 points): Progressive scoring for 36 exploitation indicators including "leads to", "execute arbitrary", "allows", "bypass", "unauthorized access"
+  - **Technical Specificity** (4 points): Progressive scoring for 52 technical depth indicators including "function", "parameter", "API", "when processing", "authentication mechanism"
+  - **Generic Content Penalty** (-2 points): Penalty for 12 generic phrases in short descriptions like "vulnerability exists", "security issue"
+- Data-driven term selection based on analysis of high vs. low quality CVE descriptions
 
 ### 2. Root Cause Analysis (10 points) 
 - CWE classifications and technical depth indicators

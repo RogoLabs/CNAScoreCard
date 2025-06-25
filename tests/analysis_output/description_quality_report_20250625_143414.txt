@@ -1,0 +1,135 @@
+============================================================
+CVE DESCRIPTION QUALITY ANALYSIS REPORT
+============================================================
+Total CVEs Analyzed: 9682
+Analysis Date: 2025-06-25 14:34:13
+
+📊 OVERALL SCORE DISTRIBUTION
+------------------------------
+Mean Score: 7.44/15
+Median Score: 8.00/15
+Standard Deviation: 2.60
+Min Score: 0.0
+Max Score: 15.0
+
+🎯 QUALITY CATEGORIES
+--------------------
+Excellent (12-15): 529 (5.5%)
+Good (8-11): 4401 (45.5%)
+Fair (4-7): 4108 (42.4%)
+Poor (0-3): 644 (6.7%)
+
+🔧 COMPONENT PERFORMANCE
+-------------------------
+Length Structure: 2.75
+Technical Types: 1.74
+Impact Context: 1.70
+Technical Specificity: 1.25
+
+📏 DESCRIPTION LENGTH ANALYSIS
+------------------------------
+Average Length: 427 characters
+Median Length: 294 characters
+Short (<50 chars): 7 (0.1%)
+Medium (50-199): 2266 (23.4%)
+Long (≥200): 7409 (76.5%)
+
+🏆 TOP PERFORMING CNAs (≥5 CVEs)
+-----------------------------------
+ 1. talos: 11.41 (n=41)
+ 2. zdi: 11.24 (n=55)
+ 3. WSO2: 10.29 (n=7)
+ 4. @huntr_ai: 10.23 (n=148)
+ 5. NI: 10.17 (n=6)
+ 6. juniper: 10.15 (n=13)
+ 7. Wordfence: 10.04 (n=722)
+ 8. adobe: 9.85 (n=172)
+ 9. cisco: 9.72 (n=54)
+10. autodesk: 9.55 (n=11)
+
+📉 BOTTOM PERFORMING CNAs (≥5 CVEs)
+--------------------------------------
+ 1. imaginationtech: 2.00 (n=9)
+ 2. JetBrains: 2.57 (n=21)
+ 3. INCD: 2.73 (n=11)
+ 4. SEL: 3.11 (n=9)
+ 5. qualcomm: 3.83 (n=70)
+ 6. Arista: 4.00 (n=13)
+ 7. apple: 4.07 (n=160)
+ 8. fedora: 4.21 (n=14)
+ 9. Hitachi: 4.50 (n=6)
+10. Go: 4.57 (n=7)
+
+📝 SAMPLE DESCRIPTIONS BY QUALITY
+-----------------------------------
+EXCELLENT (Score: 12-15):
+CVE: CVE-2025-1773
+Score: 12/15
+Description: The Traveler theme for WordPress is vulnerable to Reflected Cross-Site Scripting via multiple parameters in all versions up to, and including, 3.1.8 due to insufficient input sanitization and output e...
+
+POOR (Score: 0-3):
+CVE: CVE-2022-49405
+Score: 3/15
+Description: In the Linux kernel, the following vulnerability has been resolved:
+
+staging: r8188eu: prevent ->Ssid overflow in rtw_wx_set_scan()
+
+This code has a check to prevent read overflow but it needs another
+check to prevent writing beyond the end of the ->Ssid[] array.
+
+
+🤖 MACHINE LEARNING ANALYSIS
+===================================
+🔍 TOP TERMS ASSOCIATED WITH HIGH SCORES:
+  'makes': 9.86 avg score (n=752)
+  'including': 9.85 avg score (n=826)
+  'execute': 9.77 avg score (n=1160)
+  'critical': 9.67 avg score (n=885)
+  'attackers': 9.62 avg score (n=1399)
+  'classified': 9.61 avg score (n=906)
+  'disclosed': 9.49 avg score (n=1097)
+  'public': 9.43 avg score (n=1138)
+  'remotely': 9.43 avg score (n=1059)
+  'manipulation': 9.42 avg score (n=1193)
+  'arbitrary': 9.42 avg score (n=1415)
+  'component': 9.41 avg score (n=658)
+  'affected': 9.39 avg score (n=1278)
+  'argument': 9.37 avg score (n=894)
+  'leads': 9.30 avg score (n=1277)
+
+🎯 CLUSTERING ANALYSIS:
+  Cluster 0: 6.30 avg score (3018 CVEs)
+  Cluster 1: 8.40 avg score (1997 CVEs)
+  Cluster 2: 6.47 avg score (2605 CVEs)
+  Cluster 3: 9.47 avg score (1162 CVEs)
+  Cluster 4: 9.29 avg score (900 CVEs)
+
+
+💡 ALGORITHM IMPROVEMENT RECOMMENDATIONS
+=============================================
+Current average score: 7.44/15
+
+🎯 COMPONENT EFFECTIVENESS:
+  Length Structure: 99.9% of CVEs score points
+  Impact Context: 84.7% of CVEs score points
+  Technical Specificity: 64.6% of CVEs score points
+  Technical Types: 63.1% of CVEs score points
+
+📋 SPECIFIC RECOMMENDATIONS:
+
+4. GENERIC CONTENT DETECTION:
+   - Current penalty may be too narrow
+   - Consider ML-based generic content detection
+   - Expand generic phrase list
+
+5. CNA PERFORMANCE VARIANCE:
+   - Score variance across CNAs: 1.83
+
+6. OVERALL ALGORITHM TUNING:
+   - Current scoring distribution appears reasonable
+
+7. PROPOSED SCORING ADJUSTMENTS:
+   - Move from 15-point to 10-point scale for better distribution
+   - Implement progressive scoring within components
+   - Add bonus points for exceptional technical detail
+   - Consider machine learning for quality assessment

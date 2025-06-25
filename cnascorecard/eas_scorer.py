@@ -10,7 +10,8 @@ import sys
 import os
 import logging
 from typing import Dict, Any, List, Set, Optional
-# Add cvss library for CVSS vector validation
+# Add cvss library for         # Impact/exploitation context (4 points)
+
 try:
     from cvss import CVSS3, CVSS2, CVSS4
 except ImportError:
@@ -66,9 +67,57 @@ class SimpleCWEValidator:
         return False
 
 class EnhancedAggregateScorer:
-    """
-    A class to calculate the Enhanced Aggregate Score (EAS) for a CVE record.
-    """
+    """Enhanced scorer that combines multiple scoring approaches for comprehensive CVE assessment."""
+    
+    # Updated vulnerability types based on CVE description analysis
+    vuln_types = [
+        'file inclusion', 'sql injection', 'access control', 'local file inclusion',
+        'remote file inclusion', 'cross-site scripting', 'command injection', 
+        'buffer overflow', 'sanitization', 'authentication bypass',
+        'null pointer dereference', 'path traversal', 'improper validation',
+        'xss', 'denial of service', 'out-of-bounds', 'code injection',
+        'privilege escalation', 'xml external entity', 'double free',
+        'use after free', 'race condition', 'integer overflow', 'format string',
+        'heap overflow', 'stack overflow', 'type confusion', 'memory corruption',
+        'deserialization', 'directory traversal', 'xxe', 'server-side request forgery',
+        'ssrf', 'csrf', 'cross-site request forgery', 'remote code execution',
+        'arbitrary code execution', 'prototype pollution', 'insecure deserialization',
+        'ldap injection', 'xpath injection', 'template injection', 'header injection',
+        'clickjacking', 'certificate validation', 'weak encryption', 'cryptographic',
+        'resource exhaustion', 'infinite loop', 'zip slip', 'business logic',
+        'improper input validation', 'missing authentication', 'weak authentication',
+        'logic error'
+    ]
+    
+    impact_terms = [
+        'leads to', 'disclose', 'execute arbitrary', 'arbitrary code execution', 
+        'remote attackers', 'authenticated attackers', 'allows', 'bypass',
+        'can be exploited', 'remote code execution', 'unauthenticated attackers',
+        'attackers can', 'results in', 'manipulate', 'obtain', 'compromise',
+        'gain access', 'unauthorized access', 'enables', 'permits', 'facilitates',
+        'triggers', 'may allow', 'could allow', 'escalate privileges', 'circumvent',
+        'retrieve', 'expose', 'information disclosure', 'data exposure',
+        'sensitive information', 'leak', 'reveal', 'crash', 'hang', 'freeze',
+        'terminate', 'local attackers', 'malicious users', 'crafted',
+        'specially crafted', 'malicious', 'attacker', 'exploitation',
+        'exploitable', 'when processing', 'during processing', 'via the'
+    ]
+    
+    tech_terms = [
+        'argument', 'component', 'class', 'parameter', 'function', 'field',
+        'via the', 'within the', 'plugin', 'in the', 'api', 'service',
+        'endpoint', 'interface', 'handler', 'through the', 'buffer',
+        'library', 'method', 'variable', 'property', 'object', 'instance',
+        'request', 'response', 'header', 'cookie', 'session', 'module',
+        'framework', 'driver', 'daemon', 'process', 'thread', 'parser',
+        'processor', 'validator', 'serializer', 'deserializer', 'encoder',
+        'decoder', 'protocol', 'socket', 'connection', 'channel', 'stream',
+        'queue', 'when processing', 'during processing', 'while handling',
+        'when parsing', 'during parsing', 'application', 'implementation',
+        'configuration', 'initialization', 'authentication mechanism',
+        'authorization mechanism', 'validation routine', 'sanitization'
+    ]
+    
     def __init__(self, cve_data: Dict[str, Any]):
         if not cve_data:
             raise ValueError("CVE data cannot be empty")
@@ -176,13 +225,24 @@ class EnhancedAggregateScorer:
         if len(desc_lower) >= 200:
             quality_score += 1
         
-        # Technical vulnerability indicators (4 points)
+        # Technical vulnerability indicators (4 points) - Enhanced with data-driven analysis
         vuln_types = [
             'buffer overflow', 'sql injection', 'xss', 'cross-site scripting',
             'privilege escalation', 'code injection', 'path traversal',
             'denial of service', 'memory corruption', 'use after free',
-            'race condition', 'authentication bypass', 'authorization',
-            'deserialization', 'command injection', 'file inclusion'
+            'race condition', 'authentication bypass', 'authorization bypass',
+            'deserialization', 'command injection', 'file inclusion',
+            'directory traversal', 'format string', 'integer overflow',
+            'xml external entity', 'xxe', 'server-side request forgery', 'ssrf',
+            'csrf', 'cross-site request forgery', 'heap overflow', 'stack overflow',
+            'double free', 'out-of-bounds', 'type confusion', 'null pointer dereference',
+            'remote code execution', 'arbitrary code execution', 'local file inclusion',
+            'remote file inclusion', 'prototype pollution', 'insecure deserialization',
+            'ldap injection', 'xpath injection', 'template injection', 'header injection',
+            'clickjacking', 'certificate validation', 'weak encryption', 'cryptographic',
+            'resource exhaustion', 'infinite loop', 'zip slip', 'business logic',
+            'improper validation', 'improper input validation', 'missing authentication',
+            'weak authentication', 'access control', 'logic error'
         ]
         
         if any(vtype in desc_lower for vtype in vuln_types):
@@ -232,7 +292,13 @@ class EnhancedAggregateScorer:
         # Penalty for overly generic content
         generic_phrases = [
             'security issue', 'security problem', 'security flaw',
-            'may allow', 'could allow', 'might allow', 'possible to'
+            'may allow', 'could allow', 'might allow', 'possible to',
+            'vulnerability exists', 'security vulnerability', 'flaw exists',
+            'weakness in', 'issue in', 'vulnerability in the',
+            'issue has been identified', 'problem has been found',
+            'potential vulnerability', 'security weakness',
+            'it is possible', 'there is a vulnerability',
+            'vulnerability was found', 'vulnerability was discovered', 'security bug'
         ]
         
         generic_count = sum(1 for phrase in generic_phrases if phrase in desc_lower)

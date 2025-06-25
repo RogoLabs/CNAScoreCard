@@ -137,15 +137,24 @@ class DescriptionQualityAnalyzer:
         score += length_score
         
         # Technical vulnerability types (4 points max)
+        # Technical vulnerability types (4 points max)
         vuln_types = [
-            'buffer overflow', 'sql injection', 'xss', 'cross-site scripting',
-            'privilege escalation', 'code injection', 'path traversal',
-            'denial of service', 'memory corruption', 'use after free',
-            'race condition', 'authentication bypass', 'authorization',
-            'deserialization', 'command injection', 'file inclusion',
-            'directory traversal', 'format string', 'integer overflow',
-            'null pointer dereference', 'heap overflow', 'stack overflow',
-            'double free', 'csrf', 'ldap injection', 'xpath injection'
+            'file inclusion', 'sql injection', 'access control', 'local file inclusion',
+            'remote file inclusion', 'cross-site scripting', 'command injection', 
+            'buffer overflow', 'sanitization', 'authentication bypass',
+            'null pointer dereference', 'path traversal', 'improper validation',
+            'xss', 'denial of service', 'out-of-bounds', 'code injection',
+            'privilege escalation', 'xml external entity', 'double free',
+            'use after free', 'race condition', 'integer overflow', 'format string',
+            'heap overflow', 'stack overflow', 'type confusion', 'memory corruption',
+            'deserialization', 'directory traversal', 'xxe', 'server-side request forgery',
+            'ssrf', 'csrf', 'cross-site request forgery', 'remote code execution',
+            'arbitrary code execution', 'prototype pollution', 'insecure deserialization',
+            'ldap injection', 'xpath injection', 'template injection', 'header injection',
+            'clickjacking', 'certificate validation', 'weak encryption', 'cryptographic',
+            'resource exhaustion', 'infinite loop', 'zip slip', 'business logic',
+            'improper input validation', 'missing authentication', 'weak authentication',
+            'logic error'
         ]
         vuln_matches = sum(1 for vtype in vuln_types if vtype in desc_lower)
         tech_score = min(4, vuln_matches * 2)
@@ -154,11 +163,17 @@ class DescriptionQualityAnalyzer:
         
         # Impact/exploitation context (4 points max)
         impact_terms = [
-            'allows', 'enables', 'leads to', 'can be exploited',
-            'unauthorized access', 'execute', 'arbitrary code',
-            'remote attackers', 'local attackers', 'crafted',
-            'specially crafted', 'when processing', 'via the',
-            'malicious', 'attacker', 'exploit', 'compromise'
+            'leads to', 'disclose', 'execute arbitrary', 'arbitrary code execution', 
+            'remote attackers', 'authenticated attackers', 'allows', 'bypass',
+            'can be exploited', 'remote code execution', 'unauthenticated attackers',
+            'attackers can', 'results in', 'manipulate', 'obtain', 'compromise',
+            'gain access', 'unauthorized access', 'enables', 'permits', 'facilitates',
+            'triggers', 'may allow', 'could allow', 'escalate privileges', 'circumvent',
+            'retrieve', 'expose', 'information disclosure', 'data exposure',
+            'sensitive information', 'leak', 'reveal', 'crash', 'hang', 'freeze',
+            'terminate', 'local attackers', 'malicious users', 'crafted',
+            'specially crafted', 'malicious', 'attacker', 'exploitation',
+            'exploitable', 'when processing', 'during processing', 'via the'
         ]
         impact_matches = sum(1 for term in impact_terms if term in desc_lower)
         impact_score = min(4, impact_matches)
@@ -170,7 +185,10 @@ class DescriptionQualityAnalyzer:
             'function', 'parameter', 'api', 'endpoint', 'module',
             'component', 'library', 'service', 'method', 'routine',
             'handler', 'parser', 'application', 'when processing',
-            'variable', 'field', 'header', 'request', 'response'
+            'variable', 'field', 'header', 'request', 'response',
+            'protocol', 'interface', 'object', 'class', 'property',
+            'argument', 'buffer', 'stream', 'connection', 'socket',
+            'channel', 'thread', 'process'
         ]
         tech_matches = sum(1 for term in tech_terms if term in desc_lower)
         spec_score = min(4, tech_matches)

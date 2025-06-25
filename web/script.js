@@ -27,18 +27,22 @@ function calculateEAS(cveData) {
         
         // Technical vulnerability types (4 points max)
         const vulnTypes = [
-            'buffer overflow', 'sql injection', 'xss', 'cross-site scripting',
-            'privilege escalation', 'code injection', 'path traversal',
-            'denial of service', 'memory corruption', 'use after free',
-            'race condition', 'authentication bypass', 'authorization',
-            'deserialization', 'command injection', 'file inclusion',
-            'directory traversal', 'format string', 'integer overflow',
-            'xml external entity', 'xxe', 'server-side request forgery', 'ssrf',
-            'csrf', 'cross-site request forgery', 'heap overflow', 'stack overflow',
-            'double free', 'out-of-bounds', 'type confusion', 'logic error',
-            'access control', 'improper validation', 'improper input validation',
-            'missing authentication', 'weak encryption', 'cryptographic',
-            'certificate validation', 'tls', 'ssl'
+            'file inclusion', 'sql injection', 'access control', 'local file inclusion',
+            'remote file inclusion', 'cross-site scripting', 'command injection', 
+            'buffer overflow', 'sanitization', 'authentication bypass',
+            'null pointer dereference', 'path traversal', 'improper validation',
+            'xss', 'denial of service', 'out-of-bounds', 'code injection',
+            'privilege escalation', 'xml external entity', 'double free',
+            'use after free', 'race condition', 'integer overflow', 'format string',
+            'heap overflow', 'stack overflow', 'type confusion', 'memory corruption',
+            'deserialization', 'directory traversal', 'xxe', 'server-side request forgery',
+            'ssrf', 'csrf', 'cross-site request forgery', 'remote code execution',
+            'arbitrary code execution', 'prototype pollution', 'insecure deserialization',
+            'ldap injection', 'xpath injection', 'template injection', 'header injection',
+            'clickjacking', 'certificate validation', 'weak encryption', 'cryptographic',
+            'resource exhaustion', 'infinite loop', 'zip slip', 'business logic',
+            'improper input validation', 'missing authentication', 'weak authentication',
+            'logic error'
         ];
         
         if (vulnTypes.some(type => descLower.includes(type))) {
@@ -56,10 +60,17 @@ function calculateEAS(cveData) {
         
         // Impact/exploitation context (4 points max)
         const impactTerms = [
-            'allows', 'enables', 'leads to', 'results in', 'can be exploited',
-            'may allow', 'could allow', 'permits', 'expose', 'disclose',
-            'execute arbitrary', 'gain access', 'bypass', 'escalate',
-            'compromise', 'unauthorized', 'malicious', 'attacker'
+            'leads to', 'disclose', 'execute arbitrary', 'arbitrary code execution', 
+            'remote attackers', 'authenticated attackers', 'allows', 'bypass',
+            'can be exploited', 'remote code execution', 'unauthenticated attackers',
+            'attackers can', 'results in', 'manipulate', 'obtain', 'compromise',
+            'gain access', 'unauthorized access', 'enables', 'permits', 'facilitates',
+            'triggers', 'may allow', 'could allow', 'escalate privileges', 'circumvent',
+            'retrieve', 'expose', 'information disclosure', 'data exposure',
+            'sensitive information', 'leak', 'reveal', 'crash', 'hang', 'freeze',
+            'terminate', 'local attackers', 'malicious users', 'crafted',
+            'specially crafted', 'malicious', 'attacker', 'exploitation',
+            'exploitable', 'when processing', 'during processing', 'via the'
         ];
         const impactMatches = impactTerms.filter(term => descLower.includes(term)).length;
         if (impactMatches >= 1) descriptionQuality += 1;
@@ -68,10 +79,18 @@ function calculateEAS(cveData) {
         
         // Technical specificity (4 points max)
         const techTerms = [
-            'function', 'method', 'parameter', 'header', 'field', 'variable',
-            'endpoint', 'api', 'request', 'response', 'cookie', 'session',
-            'component', 'module', 'library', 'framework', 'protocol',
-            'when processing', 'during', 'while handling', 'in the', 'via the'
+            'argument', 'component', 'class', 'parameter', 'function', 'field',
+            'via the', 'within the', 'plugin', 'in the', 'api', 'service',
+            'endpoint', 'interface', 'handler', 'through the', 'buffer',
+            'library', 'method', 'variable', 'property', 'object', 'instance',
+            'request', 'response', 'header', 'cookie', 'session', 'module',
+            'framework', 'driver', 'daemon', 'process', 'thread', 'parser',
+            'processor', 'validator', 'serializer', 'deserializer', 'encoder',
+            'decoder', 'protocol', 'socket', 'connection', 'channel', 'stream',
+            'queue', 'when processing', 'during processing', 'while handling',
+            'when parsing', 'during parsing', 'application', 'implementation',
+            'configuration', 'initialization', 'authentication mechanism',
+            'authorization mechanism', 'validation routine', 'sanitization'
         ];
         const techMatches = techTerms.filter(term => descLower.includes(term)).length;
         if (techMatches >= 1) descriptionQuality += 1;
@@ -82,7 +101,11 @@ function calculateEAS(cveData) {
         const genericPhrases = [
             'vulnerability exists', 'security issue', 'security vulnerability',
             'issue has been identified', 'problem has been found', 'flaw exists',
-            'weakness in', 'issue in', 'vulnerability in the'
+            'weakness in', 'issue in', 'vulnerability in the', 'security flaw',
+            'security weakness', 'may allow', 'could allow', 'might allow',
+            'potential vulnerability', 'security problem', 'possible to',
+            'it is possible', 'there is a vulnerability', 'vulnerability was found',
+            'vulnerability was discovered', 'security bug'
         ];
         const genericCount = genericPhrases.filter(phrase => descLower.includes(phrase)).length;
         if (desc.length < 100 && genericCount >= 2) {
