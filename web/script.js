@@ -164,6 +164,8 @@ function formatScore(num) {
 // Create individual CNA card
 function createCNACard(cna) {
     const score = safeGet(cna, 'average_eas_score', 0);
+    const rank = safeGet(cna, 'rank', null);
+    const activeCount = safeGet(cna, 'active_cna_count', null);
     const percentile = safeGet(cna, 'percentile', 0);
     const scoreClass = getPercentileClass(percentile);
     const cnaName = safeGet(cna, 'cna', 'Unknown');
@@ -178,8 +180,11 @@ function createCNACard(cna) {
     const isInactive = totalCVEs === 0 || cna.message === "No CVEs published in the last 6 months";
     const inactiveClass = isInactive ? 'cna-inactive' : '';
     
-    // Format percentile display
-    const percentileText = isInactive ? 'N/A' : `${formatScore(percentile)}th percentile`;
+    // Format rank display
+    let rankText = 'N/A';
+    if (!isInactive && rank && activeCount) {
+        rankText = `Rank: ${rank} of ${activeCount}`;
+    }
     
     // Create safe filename for CNA page link
     const safeFilename = cnaName.replace(/[^a-zA-Z0-9\s\-_]/g, '').trim().replace(/\s+/g, '_');
@@ -193,7 +198,7 @@ function createCNACard(cna) {
                 </h3>
                 <div class="cna-score-container">
                     <div class="cna-score">${formatScore(score)}/100</div>
-                    <div class="cna-percentile">${percentileText}</div>
+                    <div class="cna-percentile">${rankText}</div>
                 </div>
             </div>
             <div class="cna-details">

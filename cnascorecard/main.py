@@ -94,18 +94,21 @@ def generate_reports():
             del data["scores"]
 
     print("Calculating percentiles for active CNAs...")
-    # Calculate percentiles for CNAs with recent CVEs
+    # Calculate percentiles and ranks for CNAs with recent CVEs
     active_cnas = [data for data in cna_reports.values() if data.get("total_cves_scored", 0) > 0]
-    active_scores = [data["average_eas_score"] for data in active_cnas]
-    
+    # Sort active CNAs by average_eas_score descending
+    sorted_active = sorted(active_cnas, key=lambda d: d["average_eas_score"], reverse=True)
+    # Assign rank (1 = best)
+    for idx, data in enumerate(sorted_active, 1):
+        data["rank"] = idx
+        data["active_cna_count"] = len(sorted_active)
+    active_scores = [data["average_eas_score"] for data in sorted_active]
     if active_scores:
         # Sort scores to calculate percentiles
         sorted_scores = sorted(active_scores)
-        
         for cna, data in cna_reports.items():
             if data.get("total_cves_scored", 0) > 0:
                 score = data["average_eas_score"]
-                # Calculate percentile (higher score = higher percentile)
                 rank = sum(1 for s in sorted_scores if s <= score)
                 percentile = (rank / len(sorted_scores)) * 100
                 data["percentile"] = round(percentile, 1)
