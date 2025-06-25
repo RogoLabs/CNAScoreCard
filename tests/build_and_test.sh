@@ -25,14 +25,10 @@ if [ ! -d "venv" ]; then
     python3 -m venv venv
 fi
 
-# Activate virtual environment
-echo "🔧 Activating virtual environment..."
-source venv/bin/activate
-
 # Install dependencies
 echo "📥 Installing Python dependencies..."
-pip install --upgrade pip
-pip install -r requirements.txt
+python3 -m pip install --upgrade pip
+python3 -m pip install -r requirements.txt
 
 # Clone CVE data if not already present
 if [ ! -d "cve_data" ]; then
@@ -47,7 +43,7 @@ fi
 
 # Generate static data
 echo "⚙️  Generating static data..."
-python cnascorecard/generate_static_data.py
+python3 cnascorecard/generate_static_data.py
 
 # Check if data was generated successfully
 if [ ! -f "web/data/cnas.json" ]; then

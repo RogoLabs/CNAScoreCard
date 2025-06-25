@@ -18,73 +18,41 @@ KNOWN_EXPLOIT_DOMAINS = ['exploit-db.com']
 logger = logging.getLogger(__name__)
 
 class SimpleCWEValidator:
-    """Simple CWE validator using a prebuilt set of valid CWE IDs"""
+    """Simple CWE validator using a prebuilt set of valid CWE IDs from cwe_ids.json"""
     
     def __init__(self):
-        """Initialize with a simple set of valid CWE IDs"""
+        """Initialize with a set of valid CWE IDs loaded from cwe_ids.json"""
         self.valid_cwes: Set[str] = set()
         self._load_valid_cwes()
     
     def _load_valid_cwes(self):
-        """Load valid CWE IDs from XML file or use fallback list"""
+        """Load valid CWE IDs from cwe_ids.json file"""
         try:
-            # Try to load from XML file
             script_dir = os.path.dirname(os.path.abspath(__file__))
-            cwe_xml_path = os.path.join(script_dir, "cwec_v4.17.xml")
-            if not os.path.exists(cwe_xml_path):
+            cwe_json_path = os.path.join(script_dir, "cwe_ids.json")
+            if not os.path.exists(cwe_json_path):
                 # Try parent directory
-                cwe_xml_path = os.path.join(os.path.dirname(script_dir), "cwec_v4.17.xml")
-            
-            if os.path.exists(cwe_xml_path):
-                tree = ET.parse(cwe_xml_path)
-                root = tree.getroot()
-                
-                # Find all weakness IDs - try with and without namespace
-                for weakness in root.findall('.//{http://cwe.mitre.org/cwe-7}Weakness'):
-                    cwe_id = weakness.get('ID')
-                    if cwe_id and cwe_id.isdigit():
-                        self.valid_cwes.add(cwe_id)
-                
-                # Fallback without namespace
-                if not self.valid_cwes:
-                    for weakness in root.findall('.//Weakness'):
-                        cwe_id = weakness.get('ID')
-                        if cwe_id and cwe_id.isdigit():
-                            self.valid_cwes.add(cwe_id)
-                
-                logger.info(f"Loaded {len(self.valid_cwes)} valid CWE IDs from XML")
+                cwe_json_path = os.path.join(os.path.dirname(script_dir), "cwe_ids.json")
+            if os.path.exists(cwe_json_path):
+                with open(cwe_json_path, 'r') as f:
+                    cwe_list = json.load(f)
+                    # Accept both string and int representations
+                    self.valid_cwes = set(str(cwe) for cwe in cwe_list)
+                logger.info(f"Loaded {len(self.valid_cwes)} valid CWE IDs from cwe_ids.json")
             else:
-                # Use fallback list of common CWEs if XML not found
-                self._use_fallback_cwes()
-                logger.warning("CWE XML not found, using fallback list")
-                
+                logger.warning("cwe_ids.json not found, no valid CWE IDs loaded")
         except Exception as e:
-            logger.warning(f"Error loading CWE XML: {e}, using fallback list")
-            self._use_fallback_cwes()
-    
-    def _use_fallback_cwes(self):
-        """Use a fallback list of common valid CWE IDs"""
-        # Common CWEs from the official list - this covers most real-world usage
-        common_cwes = [
-            "20", "22", "78", "79", "89", "120", "125", "190", "200", "269", "284", "311", "326", 
-            "352", "362", "400", "401", "416", "476", "502", "611", "613", "617", "639", "665", 
-            "667", "672", "681", "682", "704", "732", "787", "798", "807", "862", "863", "918", 
-            "922", "1021", "1022", "1035", "1076", "1188", "1220", "1236", "1274", "1275", "1321"
-        ]
-        self.valid_cwes = set(common_cwes)
-        logger.info(f"Using fallback list of {len(self.valid_cwes)} common CWE IDs")
+            logger.warning(f"Error loading cwe_ids.json: {e}, no valid CWE IDs loaded")
     
     def is_valid_cwe(self, cwe_id: str) -> bool:
         """Check if a CWE ID is valid (simple lookup)"""
         if not cwe_id:
             return False
-        
         # Extract just the number part
         match = re.search(r'(\d+)', str(cwe_id))
         if match:
             number = match.group(1)
             return number in self.valid_cwes
-        
         return False
 
 class EnhancedAggregateScorer:
