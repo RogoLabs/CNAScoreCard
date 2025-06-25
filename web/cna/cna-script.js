@@ -166,29 +166,51 @@ function displayCNAHeader(overallScore, percentile, totalCVEs, breakdown, rankin
     document.getElementById('cnaHeader').style.display = 'block';
     document.getElementById('cveSection').style.display = 'block';
 
-    // Modern, single card header layout (white card, dark text)
-    // Remove percentile, add Ranking, center content
+    // Professional CNA header card matching site style
     document.getElementById('cnaHeader').innerHTML = `
-        <div class="cna-header modern-cna-header-card" style="max-width: 700px; margin: 0 auto 2rem auto; border-radius: 18px; box-shadow: 0 4px 24px rgba(44,62,80,0.08); background: #fff; color: #222; padding: 2.5rem 2rem 2rem 2rem; border: 1px solid #e0e0e0; text-align: center;">
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <h1 id="cnaTitle" style="font-size:2.5rem; font-weight:800; margin-bottom: 0.5rem; letter-spacing: 1px; text-shadow: none; color: #222;">${CNA_NAME.toUpperCase()}</h1>
-                <div style="display: flex; gap: 2.5rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; justify-content: center;">
-                    <div style="text-align:center;">
-                        <div style="font-size:2.5rem; font-weight:900; color: #222;">${formatNumber(overallScore)}<span style="font-size:1.2rem; font-weight:400; color: #888;">/100</span></div>
-                        <div style="font-size:1.1rem; opacity:0.9; color: #666; margin-top: 0.2rem;"><span style="font-weight:600; color:#007bff;">Ranking:</span> <span id="cnaRanking" style="font-weight:700; color:#222;">${ranking || 'N/A'}</span></div>
-                    </div>
-                    <div style="text-align:center;">
-                        <div style="font-size:2.1rem; font-weight:700; color: #222;">${formatNumber(totalCVEs)}</div>
-                        <div style="font-size:1rem; opacity:0.9; color: #666;">CVEs Published (6mo)</div>
-                    </div>
+        <div class="cna-detail-card">
+            <div class="cna-title-section">
+                <h1 class="cna-title">${CNA_NAME.toUpperCase()}</h1>
+            </div>
+            
+            <div class="cna-metrics-section">
+                <div class="metric-item main-metric">
+                    <div class="metric-value">${formatNumber(overallScore)}<span class="metric-unit">/100</span></div>
+                    <div class="metric-label">EAS Score</div>
                 </div>
-                <div style="width:100%; max-width:500px; margin:0 auto;">
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.7rem;">
-                        <div class="detail-item"><span class="label">Foundational Completeness:</span><span class="value">${formatNumber(breakdown.foundational)}/30</span></div>
-                        <div class="detail-item"><span class="label">Root Cause Analysis:</span><span class="value">${formatNumber(breakdown.rootCause)}/20</span></div>
-                        <div class="detail-item"><span class="label">Severity Context:</span><span class="value">${formatNumber(breakdown.security)}/25</span></div>
-                        <div class="detail-item"><span class="label">Actionable Intelligence:</span><span class="value">${formatNumber(breakdown.actionable)}/20</span></div>
-                        <div class="detail-item"><span class="label">Data Format Precision:</span><span class="value">${formatNumber(breakdown.dataFormat)}/5</span></div>
+                
+                <div class="metric-item">
+                    <div class="metric-value">${formatNumber(totalCVEs)}</div>
+                    <div class="metric-label">CVEs Published (6mo)</div>
+                </div>
+                
+                <div class="metric-item">
+                    <div class="metric-value">${ranking || 'N/A'}</div>
+                    <div class="metric-label">Ranking</div>
+                </div>
+            </div>
+            
+            <div class="cna-breakdown-section">
+                <div class="breakdown-grid">
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Foundational Completeness:</span>
+                        <span class="breakdown-value">${formatNumber(breakdown.foundational)}/30</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Root Cause Analysis:</span>
+                        <span class="breakdown-value">${formatNumber(breakdown.rootCause)}/20</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Severity Context:</span>
+                        <span class="breakdown-value">${formatNumber(breakdown.security)}/25</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Actionable Intelligence:</span>
+                        <span class="breakdown-value">${formatNumber(breakdown.actionable)}/20</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Data Format Precision:</span>
+                        <span class="breakdown-value">${formatNumber(breakdown.dataFormat)}/5</span>
                     </div>
                 </div>
             </div>

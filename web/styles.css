@@ -398,6 +398,123 @@ p {
     box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
 }
 
+/* CNA Detail Header Styles */
+.cna-detail-header {
+    margin: 2rem 0;
+}
+
+.cna-detail-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.cna-title-section {
+    margin-bottom: 2rem;
+}
+
+.cna-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.cna-metrics-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.metric-item {
+    text-align: center;
+    min-width: 120px;
+}
+
+.metric-item.main-metric {
+    border-right: 2px solid #ecf0f1;
+    padding-right: 3rem;
+}
+
+.metric-value {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #2c3e50;
+    margin-bottom: 0.25rem;
+    line-height: 1;
+}
+
+.metric-unit {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #7f8c8d;
+}
+
+.metric-label {
+    font-size: 0.95rem;
+    color: #7f8c8d;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cna-breakdown-section {
+    border-top: 1px solid #ecf0f1;
+    padding-top: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.breakdown-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: center;
+}
+
+.breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 3px solid #3498db;
+}
+
+.breakdown-label {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 0.9rem;
+}
+
+.breakdown-value {
+    font-weight: 700;
+    color: #2c3e50;
+    font-size: 0.95rem;
+}
+
+.section-title {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.cve-section {
+    margin-top: 3rem;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .container {
@@ -445,6 +562,32 @@ p {
     .cna-score-container {
         align-self: flex-end;
     }
+    
+    .cna-detail-card {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+    }
+    
+    .cna-title {
+        font-size: 2rem;
+    }
+    
+    .cna-metrics-section {
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .metric-item.main-metric {
+        border-right: none;
+        border-bottom: 2px solid #ecf0f1;
+        padding-right: 0;
+        padding-bottom: 2rem;
+    }
+    
+    .breakdown-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -470,5 +613,30 @@ p {
     
     #searchInput {
         min-width: auto;
+    }
+    
+    .cna-detail-card {
+        padding: 1.5rem 1rem;
+        border-radius: 12px;
+    }
+    
+    .cna-title {
+        font-size: 1.8rem;
+    }
+    
+    .metric-value {
+        font-size: 1.8rem;
+    }
+    
+    .breakdown-item {
+        padding: 0.5rem 0.75rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+    
+    .breakdown-label,
+    .breakdown-value {
+        font-size: 0.85rem;
     }
 }
