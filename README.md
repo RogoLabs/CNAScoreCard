@@ -82,6 +82,12 @@ The Enhanced Aggregate Scoring (EAS) system evaluates CVE records across six key
 ### 6. Data Format & Precision (5 points)
 - Structured data formats and machine-readable content
 - Proper formatting of affected products and references
+- **All-or-nothing scoring**: Full 5 points only if ALL format requirements are met:
+  - Valid CPE identifiers in affected products
+  - Complete CVSS format with both baseScore and vectorString
+  - Valid CWE identifier format (e.g., CWE-120)
+  - Proper language tags in descriptions
+  - Well-structured affected products information
 
 CNAs are scored on a 0-100 scale with color coding:
 - 🟢 Excellent (80-100)

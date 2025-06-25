@@ -53,11 +53,65 @@ function calculateEAS(cveData) {
         if (hasVendorAdvisory) actionableIntelligence += 10;
     }
     
-    // 5. Data Format Precision (20 points)
-    if (cveData.data_format === 'MITRE') dataFormatPrecision += 5;
-    if (cveData.data_version) dataFormatPrecision += 5;
-    if (cveData.CVE_data_meta?.STATE === 'PUBLIC') dataFormatPrecision += 5;
-    if (cveData.CVE_data_meta?.ASSIGNER) dataFormatPrecision += 5;
+    // 5. Data Format Precision (5 points total - all or nothing)
+    let formatChecks = [];
+    
+    // Check 1: CPE format
+    let hasValidCpe = false;
+    if (cveData.affects?.vendor?.vendor_data) {
+        for (const vendor of cveData.affects.vendor.vendor_data) {
+            if (vendor.product?.product_data) {
+                for (const product of vendor.product.product_data) {
+                    if (product.version?.version_data) {
+                        for (const version of product.version.version_data) {
+                            if (version.platform && Array.isArray(version.platform)) {
+                                if (version.platform.some(p => p && p.startsWith('cpe:'))) {
+                                    hasValidCpe = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (hasValidCpe) break;
+                }
+            }
+            if (hasValidCpe) break;
+        }
+    }
+    formatChecks.push(hasValidCpe);
+    
+    // Check 2: CVSS format
+    let hasValidCvss = false;
+    if (cveData.impact?.cvss?.vector_string && cveData.impact?.cvss?.base_score) {
+        const cvss = cveData.impact.cvss.vector_string;
+        if (cvss.includes('CVSS:3') || cvss.includes('CVSS:4')) {
+            hasValidCvss = true;
+        }
+    }
+    formatChecks.push(hasValidCvss);
+    
+    // Check 3: CWE format
+    let hasValidCwe = false;
+    if (cveData.problemtype?.problemtype_data) {
+        for (const pt of cveData.problemtype.problemtype_data) {
+            if (pt.description) {
+                for (const desc of pt.description) {
+                    if (desc.value && desc.value.startsWith('CWE-') && 
+                        desc.value.substring(4).match(/^\d+$/)) {
+                        hasValidCwe = true;
+                        break;
+                    }
+                }
+            }
+            if (hasValidCwe) break;
+        }
+    }
+    formatChecks.push(hasValidCwe);
+    
+    // Only award points if ALL format checks pass
+    if (formatChecks.every(check => check)) {
+        dataFormatPrecision = 5;
+    }
     
     // Calculate overall score (sum of all components for total out of 100)
     const overallScore = (foundationalCompleteness + rootCauseAnalysis + securityContext + actionableIntelligence + dataFormatPrecision);

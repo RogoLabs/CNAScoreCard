@@ -1,21 +1,160 @@
 #!/usr/bin/env python3
 """
-Enhanc        # Calculate individual scores
-        foundational_score = self._calculate_foundational_completeness()
-        root_cause_score = self._calculate_root_cause_analysis()
-        software_identification_score = self._calculate_software_identification()
-        severity_score = self._calculate_severity_context()
-        actionable_score = self._calculate_actionable_intelligence()regate Scoring (EAS) system for CVE records.
+Enhanced Aggregate Scoring (EAS) system for CVE records.
 Evaluates CVE quality across multiple dimensions.
 """
 
 import re
 import json
 import sys
-from typing import Dict, Any, List
+import os
+import xml.etree.ElementTree as ET
+from typing import Dict, Any, List, Set, Optional
+import logging
 
 # A small, hardcoded list of known exploit database domains.
 KNOWN_EXPLOIT_DOMAINS = ['exploit-db.com']
+
+logger = logging.getLogger(__name__)
+
+class CWEValidator:
+    """Validates CWE IDs against the official CWE catalog"""
+    
+    def __init__(self, cwe_xml_path: Optional[str] = None):
+        """
+        Initialize the CWE validator
+        
+        Args:
+            cwe_xml_path: Path to the CWE XML file. If None, looks for cwec_v4.17.xml in current directory
+        """
+        if cwe_xml_path is None:
+            # Look in the same directory as this script, then parent directory
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            cwe_xml_path = os.path.join(script_dir, "cwec_v4.17.xml")
+            if not os.path.exists(cwe_xml_path):
+                # Try parent directory
+                cwe_xml_path = os.path.join(os.path.dirname(script_dir), "cwec_v4.17.xml")
+        
+        self.cwe_xml_path = cwe_xml_path
+        self.valid_cwes: Set[str] = set()
+        self.cwe_details: Dict[str, Dict[str, str]] = {}
+        self.deprecated_cwes: Set[str] = set()
+        self._load_cwe_catalog()
+    
+    def _load_cwe_catalog(self):
+        """Load and parse the CWE XML catalog"""
+        try:
+            tree = ET.parse(self.cwe_xml_path)
+            root = tree.getroot()
+            
+            # Handle XML namespace
+            namespace = {'cwe': 'http://cwe.mitre.org/cwe-7'}
+            
+            # Find weaknesses
+            weaknesses = root.findall('.//cwe:Weakness', namespace)
+            if not weaknesses:
+                # Try without namespace if namespaced search fails
+                weaknesses = root.findall('.//Weakness')
+            
+            for weakness in weaknesses:
+                cwe_id = weakness.get('ID')
+                if cwe_id:
+                    self.valid_cwes.add(cwe_id)
+                    
+                    # Store additional details
+                    name = weakness.get('Name', '')
+                    status = weakness.get('Status', '')
+                    abstraction = weakness.get('Abstraction', '')
+                    
+                    self.cwe_details[cwe_id] = {
+                        'name': name,
+                        'status': status,
+                        'abstraction': abstraction
+                    }
+                    
+                    # Track deprecated CWEs
+                    if status.lower() == 'deprecated':
+                        self.deprecated_cwes.add(cwe_id)
+            
+            logger.info(f"Loaded {len(self.valid_cwes)} CWEs from catalog")
+            
+        except FileNotFoundError:
+            logger.warning(f"CWE XML file not found: {self.cwe_xml_path}")
+            logger.warning("CWE validation will be disabled")
+        except ET.ParseError as e:
+            logger.warning(f"Error parsing CWE XML file: {e}")
+            logger.warning("CWE validation will be disabled")
+    
+    def validate_cwe_id(self, cwe_id: str) -> Dict[str, Any]:
+        """
+        Validate a single CWE ID
+        
+        Args:
+            cwe_id: CWE ID to validate (can be with or without CWE- prefix)
+        
+        Returns:
+            Dict with validation results
+        """
+        # Normalize CWE ID
+        normalized_id = self._normalize_cwe_id(cwe_id)
+        
+        result = {
+            'original': cwe_id,
+            'normalized': normalized_id,
+            'is_valid': False,
+            'is_deprecated': False,
+            'details': {},
+            'suggestions': []
+        }
+        
+        if normalized_id in self.valid_cwes:
+            result['is_valid'] = True
+            result['is_deprecated'] = normalized_id in self.deprecated_cwes
+            result['details'] = self.cwe_details.get(normalized_id, {})
+        else:
+            # Try to find similar CWEs
+            result['suggestions'] = self._find_similar_cwes(normalized_id)
+        
+        return result
+    
+    def _normalize_cwe_id(self, cwe_id: str) -> str:
+        """Normalize CWE ID to just the number"""
+        if not cwe_id:
+            return ""
+        
+        # Remove CWE- prefix if present and extract number
+        match = re.search(r'(\d+)', str(cwe_id))
+        return match.group(1) if match else ""
+    
+    def _find_similar_cwes(self, cwe_id: str, max_suggestions: int = 3) -> List[str]:
+        """Find similar CWE IDs based on numeric proximity"""
+        if not cwe_id.isdigit():
+            return []
+        
+        target_num = int(cwe_id)
+        suggestions = []
+        
+        # Look for CWEs within a range
+        for offset in range(1, 20):  # Check nearby numbers
+            for candidate_num in [target_num - offset, target_num + offset]:
+                if candidate_num > 0:
+                    candidate_id = str(candidate_num)
+                    if candidate_id in self.valid_cwes and candidate_id not in self.deprecated_cwes:
+                        suggestions.append(f"CWE-{candidate_id}")
+                        if len(suggestions) >= max_suggestions:
+                            return suggestions
+        
+        return suggestions
+    
+    def is_valid_cwe(self, cwe_id: str) -> bool:
+        """Check if a CWE ID is valid"""
+        normalized_id = self._normalize_cwe_id(cwe_id)
+        return normalized_id in self.valid_cwes
+    
+    def is_deprecated_cwe(self, cwe_id: str) -> bool:
+        """Check if a CWE ID is deprecated"""
+        normalized_id = self._normalize_cwe_id(cwe_id)
+        return normalized_id in self.deprecated_cwes
 
 class EnhancedAggregateScorer:
     """
@@ -26,6 +165,12 @@ class EnhancedAggregateScorer:
             raise ValueError("CVE data cannot be empty")
         self.cve_data = cve_data
         self.cna_container = self.cve_data.get('containers', {}).get('cna', {})
+        # Initialize CWE validator
+        try:
+            self.cwe_validator = CWEValidator()
+        except Exception as e:
+            logger.warning(f"Failed to initialize CWE validator: {e}")
+            self.cwe_validator = None
 
     def calculate_scores(self) -> Dict[str, Any]:
         """
@@ -106,7 +251,7 @@ class EnhancedAggregateScorer:
         score = 0
         max_score = 10
         
-        # Check problem types for technical detail
+        # Check problem types for CWE information
         problem_types = self.cna_container.get('problemTypes', [])
         if isinstance(problem_types, list):
             for pt in problem_types:
@@ -117,19 +262,37 @@ class EnhancedAggregateScorer:
                             if isinstance(desc, dict):
                                 cwe_id = desc.get('cweId', '')
                                 if cwe_id and cwe_id.startswith('CWE-'):
-                                    score = 10  # Full score for having CWE
+                                    # If CWE validator is available, validate the CWE
+                                    if self.cwe_validator:
+                                        validation = self.cwe_validator.validate_cwe_id(cwe_id)
+                                        if validation['is_valid']:
+                                            if validation['is_deprecated']:
+                                                # Deprecated CWE gets partial credit
+                                                score = max(score, 5)
+                                                logger.warning(f"Deprecated CWE found: {cwe_id} - {validation['details'].get('name', 'N/A')}")
+                                            else:
+                                                # Valid CWE gets full credit
+                                                score = 10
+                                        else:
+                                            # Invalid CWE gets minimal credit
+                                            score = max(score, 2)
+                                            suggestions = ', '.join(validation['suggestions'][:3]) if validation['suggestions'] else 'None'
+                                            logger.warning(f"Invalid CWE found: {cwe_id}, suggestions: {suggestions}")
+                                    else:
+                                        # No validator available, assume valid for backward compatibility
+                                        score = 10
                                     break
-                    if score > 0:
+                    if score >= 10:
                         break
         
-        # Check descriptions for technical depth (additional points)
-        descriptions = self.cna_container.get('descriptions', [])
-        if isinstance(descriptions, list):
-            for desc in descriptions:
-                if isinstance(desc, dict) and desc.get('lang') == 'en':
-                    text = desc.get('value', '').lower()
-                    # Look for technical indicators (no additional points if already have CWE)
-                    if score == 0:
+        # If no CWE found, check descriptions for technical depth
+        if score == 0:
+            descriptions = self.cna_container.get('descriptions', [])
+            if isinstance(descriptions, list):
+                for desc in descriptions:
+                    if isinstance(desc, dict) and desc.get('lang') == 'en':
+                        text = desc.get('value', '').lower()
+                        # Look for technical indicators
                         technical_terms = [
                             'buffer overflow', 'sql injection', 'cross-site scripting', 'xss',
                             'authentication', 'authorization', 'memory', 'heap', 'stack',
@@ -139,7 +302,7 @@ class EnhancedAggregateScorer:
                         found_terms = sum(1 for term in technical_terms if term in text)
                         if found_terms > 0:
                             score = min(5, found_terms * 1)  # Up to 5 points for technical terms
-                    break
+                        break
         
         return min(score, max_score)
 
@@ -282,31 +445,75 @@ class EnhancedAggregateScorer:
 
     def _calculate_data_format_precision(self) -> int:
         """Calculate data format and precision score (0-5)."""
-        score = 0
         max_score = 5
+        format_checks = []
         
-        # Check affected products structure
+        # Check 1: CPE format in affected products
+        has_valid_cpe = False
         affected = self.cna_container.get('affected', [])
         if isinstance(affected, list):
             for item in affected:
                 if isinstance(item, dict):
-                    # Check for vendor/product information
-                    if item.get('vendor') and item.get('product'):
-                        score += 1
+                    # Check for 'cpes' (CVE 5.1 format - plural)
+                    cpes = item.get('cpes', [])
+                    if isinstance(cpes, list) and len(cpes) > 0:
+                        if any(cpe and isinstance(cpe, str) and cpe.startswith('cpe:') for cpe in cpes):
+                            has_valid_cpe = True
+                            break
                     
-                    # Check for version information
-                    versions = item.get('versions', [])
-                    if isinstance(versions, list) and len(versions) > 0:
-                        score += 1
-                        # Check for detailed version info
-                        for version in versions:
-                            if isinstance(version, dict):
-                                if version.get('version') and version.get('status'):
-                                    score += 1
-                                    break
-                    break
+                    # Check for 'cpe' (legacy format - singular)
+                    cpe = item.get('cpe', [])
+                    if isinstance(cpe, list) and len(cpe) > 0:
+                        if any(c and isinstance(c, str) and c.startswith('cpe:') for c in cpe):
+                            has_valid_cpe = True
+                            break
+                    
+                    # Check for other CPE field formats
+                    for field_name in ['cpe23Uri', 'cpeId', 'cpe_name', 'platformId']:
+                        cpe_value = item.get(field_name, '')
+                        if cpe_value and isinstance(cpe_value, str) and cpe_value.startswith('cpe:'):
+                            has_valid_cpe = True
+                            break
+                    
+                    # Check for platformIds array
+                    platform_ids = item.get('platformIds', [])
+                    if isinstance(platform_ids, list) and len(platform_ids) > 0:
+                        if any(pid and isinstance(pid, str) and pid.startswith('cpe:') for pid in platform_ids):
+                            has_valid_cpe = True
+                            break
+                    
+                    if has_valid_cpe:
+                        break
+        format_checks.append(has_valid_cpe)
         
-        # Check for properly formatted problem types
+        # Check 2: CVSS format in metrics
+        has_valid_cvss = False
+        metrics = self.cna_container.get('metrics', [])
+        if isinstance(metrics, list):
+            for metric in metrics:
+                if isinstance(metric, dict):
+                    # Check for CVSS v4, v3.1, v3.0
+                    if 'cvssV4_0' in metric or 'cvssV3_1' in metric or 'cvssV3_0' in metric:
+                        cvss_data = metric.get('cvssV4_0') or metric.get('cvssV3_1') or metric.get('cvssV3_0')
+                        if isinstance(cvss_data, dict):
+                            # Must have both baseScore and vectorString for proper format
+                            vector_string = cvss_data.get('vectorString')
+                            if (cvss_data.get('baseScore') is not None and 
+                                vector_string and 
+                                isinstance(vector_string, str) and
+                                len(vector_string) > 0):
+                                has_valid_cvss = True
+                                break
+                    # Check for CVSS v2 (less strict as it's older)
+                    elif 'cvssV2' in metric:
+                        cvss_data = metric['cvssV2']
+                        if isinstance(cvss_data, dict) and cvss_data.get('baseScore') is not None:
+                            has_valid_cvss = True
+                            break
+        format_checks.append(has_valid_cvss)
+        
+        # Check 3: CWE format in problem types
+        has_valid_cwe = False
         problem_types = self.cna_container.get('problemTypes', [])
         if isinstance(problem_types, list):
             for pt in problem_types:
@@ -314,20 +521,53 @@ class EnhancedAggregateScorer:
                     descriptions = pt['descriptions']
                     if isinstance(descriptions, list):
                         for desc in descriptions:
-                            if isinstance(desc, dict) and desc.get('type') and desc.get('description'):
-                                score += 1
-                                break
-                    break
+                            if isinstance(desc, dict):
+                                cwe_id = desc.get('cweId', '')
+                                # Valid CWE format: starts with 'CWE-' followed by numbers
+                                if (cwe_id and isinstance(cwe_id, str) and 
+                                    cwe_id.startswith('CWE-') and 
+                                    cwe_id[4:].isdigit()):
+                                    # Additional validation if CWE validator is available
+                                    if self.cwe_validator:
+                                        validation = self.cwe_validator.validate_cwe_id(cwe_id)
+                                        if validation['is_valid'] and not validation['is_deprecated']:
+                                            has_valid_cwe = True
+                                            break
+                                    else:
+                                        # Basic format check only
+                                        has_valid_cwe = True
+                                        break
+                    if has_valid_cwe:
+                        break
+        format_checks.append(has_valid_cwe)
         
-        # Check for language consistency
+        # Check 4: Language consistency in descriptions
+        has_language_tags = False
         descriptions = self.cna_container.get('descriptions', [])
         if isinstance(descriptions, list):
             for desc in descriptions:
                 if isinstance(desc, dict) and desc.get('lang'):
-                    score += 1
+                    has_language_tags = True
                     break
+        format_checks.append(has_language_tags)
         
-        return min(score, max_score)
+        # Check 5: Affected products structure
+        has_structured_affected = False
+        if isinstance(affected, list):
+            for item in affected:
+                if isinstance(item, dict):
+                    # Check for basic vendor/product structure
+                    if item.get('vendor') and item.get('product'):
+                        has_structured_affected = True
+                        break
+        format_checks.append(has_structured_affected)
+        
+        # Award full points only if ALL format checks pass
+        # This ensures high-quality, well-structured CVE records get the full score
+        if all(format_checks):
+            return max_score
+        else:
+            return 0
 
 def calculate_eas(cve_data):
     """

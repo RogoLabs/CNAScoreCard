@@ -11,8 +11,25 @@ def detect_cvss(cve_record):
         for metric in cve_record['metrics']:
             # Each metric can have cvssV3_1, cvssV3_0, cvssV2_0, etc.
             if any(key.startswith('cvssV') for key in metric.keys()):
-                has_cvss = True
-                break
+                # For modern CVSS (v3+), require both baseScore and vectorString
+                for cvss_key in ['cvssV4_0', 'cvssV3_1', 'cvssV3_0']:
+                    if cvss_key in metric:
+                        cvss_data = metric[cvss_key]
+                        vector_string = cvss_data.get('vectorString')
+                        if (isinstance(cvss_data, dict) and 
+                            cvss_data.get('baseScore') is not None and
+                            vector_string and
+                            isinstance(vector_string, str) and
+                            len(vector_string) > 0):
+                            has_cvss = True
+                            break
+                # For CVSS v2, just require baseScore (less strict)
+                if not has_cvss and 'cvssV2' in metric:
+                    cvss_data = metric['cvssV2']
+                    if isinstance(cvss_data, dict) and cvss_data.get('baseScore') is not None:
+                        has_cvss = True
+                if has_cvss:
+                    break
     return has_cvss
 
 def detect_cwe(cve_record):
@@ -24,9 +41,11 @@ def detect_cwe(cve_record):
             if 'descriptions' in problem_type:
                 # descriptions is an array of description objects
                 for description in problem_type['descriptions']:
-                    # CWE references can be in 'cweId' field or 'references' with type 'CWE'
-                    if ('cweId' in description and description['cweId']) or \
-                       ('type' in description and description['type'] == 'CWE'):
+                    # CWE references should be in 'cweId' field with proper format
+                    cwe_id = description.get('cweId', '')
+                    if (cwe_id and isinstance(cwe_id, str) and 
+                        cwe_id.startswith('CWE-') and 
+                        cwe_id[4:].isdigit()):
                         has_cwe = True
                         break
             if has_cwe:
@@ -43,14 +62,19 @@ def test_cvss_detection():
             "cveId": "CVE-2023-TEST1",
             "assignerShortName": "test-cna"
         },
-        "metrics": [
-            {
-                "cvssV3_1": {
-                    "baseScore": 7.5,
-                    "baseSeverity": "HIGH"
-                }
+        "containers": {
+            "cna": {
+                "metrics": [
+                    {
+                        "cvssV3_1": {
+                            "baseScore": 7.5,
+                            "baseSeverity": "HIGH",
+                            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+                        }
+                    }
+                ]
             }
-        ]
+        }
     }
     
     # Test CVE without CVSS
@@ -58,6 +82,9 @@ def test_cvss_detection():
         "cveMetadata": {
             "cveId": "CVE-2023-TEST2",
             "assignerShortName": "test-cna"
+        },
+        "containers": {
+            "cna": {}
         }
     }
     
@@ -78,36 +105,44 @@ def test_cwe_detection():
             "cveId": "CVE-2023-TEST3",
             "assignerShortName": "test-cna"
         },
-        "problemTypes": [
-            {
-                "descriptions": [
+        "containers": {
+            "cna": {
+                "problemTypes": [
                     {
-                        "lang": "en",
-                        "description": "Buffer Overflow",
-                        "cweId": "CWE-120"
+                        "descriptions": [
+                            {
+                                "lang": "en",
+                                "description": "Buffer Overflow",
+                                "cweId": "CWE-120"
+                            }
+                        ]
                     }
                 ]
             }
-        ]
+        }
     }
     
-    # Test CVE with CWE type but no ID
-    cve_with_cwe_type = {
+    # Test CVE with invalid CWE format
+    cve_with_invalid_cwe = {
         "cveMetadata": {
             "cveId": "CVE-2023-TEST4",
             "assignerShortName": "test-cna"
         },
-        "problemTypes": [
-            {
-                "descriptions": [
+        "containers": {
+            "cna": {
+                "problemTypes": [
                     {
-                        "lang": "en",
-                        "description": "CWE-79",
-                        "type": "CWE"
+                        "descriptions": [
+                            {
+                                "lang": "en",
+                                "description": "CWE-79",
+                                "cweId": "Other"
+                            }
+                        ]
                     }
                 ]
             }
-        ]
+        }
     }
     
     # Test CVE without CWE
@@ -116,24 +151,28 @@ def test_cwe_detection():
             "cveId": "CVE-2023-TEST5",
             "assignerShortName": "test-cna"
         },
-        "problemTypes": [
-            {
-                "descriptions": [
+        "containers": {
+            "cna": {
+                "problemTypes": [
                     {
-                        "lang": "en",
-                        "description": "Some vulnerability"
+                        "descriptions": [
+                            {
+                                "lang": "en",
+                                "description": "Some vulnerability"
+                            }
+                        ]
                     }
                 ]
             }
-        ]
+        }
     }
     
     result1 = detect_cwe(cve_with_cwe)
-    result2 = detect_cwe(cve_with_cwe_type)
+    result2 = detect_cwe(cve_with_invalid_cwe)
     result3 = detect_cwe(cve_without_cwe)
     
     assert result1 == True, "Should detect CWE ID"
-    assert result2 == True, "Should detect CWE type"
+    assert result2 == False, "Should not detect invalid CWE format"
     assert result3 == False, "Should not detect CWE"
     print("✓ CWE detection tests passed")
 
@@ -147,22 +186,27 @@ def test_combined_scenarios():
             "cveId": "CVE-2023-TEST6",
             "assignerShortName": "test-cna"
         },
-        "metrics": [
-            {
-                "cvssV3_0": {
-                    "baseScore": 9.8
-                }
-            }
-        ],
-        "problemTypes": [
-            {
-                "descriptions": [
+        "containers": {
+            "cna": {
+                "metrics": [
                     {
-                        "cweId": "CWE-78"
+                        "cvssV3_0": {
+                            "baseScore": 9.8,
+                            "vectorString": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
+                        }
+                    }
+                ],
+                "problemTypes": [
+                    {
+                        "descriptions": [
+                            {
+                                "cweId": "CWE-78"
+                            }
+                        ]
                     }
                 ]
             }
-        ]
+        }
     }
     
     has_cvss = detect_cvss(cve_complete)
