@@ -1,10 +1,16 @@
 # CNA ScoreCard
 
-A static website that provides comprehensive scorecards for Certificate Numbering Authorities (CNAs) based on their CVE reporting quality.
+A static website that provides comprehensive scorecards for CVE Numbering Authorities (CNAs) based on their CVE reporting quality.
+
+## What is a CNA?
+A **CVE Numbering Authority (CNA)** is an organization authorized to assign CVE IDs and publish CVE records for vulnerabilities affecting products within their scope. Throughout this documentation, "CNA" refers to a CVE Numbering Authority.
 
 ## Overview
 
 CNA ScoreCard is a static website hosted on GitHub Pages that automatically updates every 6 hours with the latest CVE data. The site evaluates CNAs using the Enhanced Aggregate Scoring (EAS) methodology, which measures CVE record quality across five key dimensions: foundational completeness, root cause analysis, severity context, actionable intelligence, and data format precision.
+
+**Note:** This project was inspired by the [CNA Enrichment Recognition program](https://www.cve.org/About/Metrics#CNAEnrichmentRecognition).
+
 
 ## Architecture
 
@@ -141,3 +147,6 @@ Contributions are welcome! Please feel free to submit issues or pull requests to
 ## License
 
 This project is open source and available under the MIT License.
+
+## Inspiration
+This project and its scoring methodology were inspired by the [CNA Enrichment Recognition program](https://www.cve.org/About/Metrics#CNAEnrichmentRecognition).
