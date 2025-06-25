@@ -171,12 +171,12 @@ async function loadCNAData() {
         const percentile = cnaInfo.percentile || 0;
         
         const breakdown = {
-            foundational: (cnaInfo.average_foundational_completeness || 0).toFixed(1),
-            rootCause: (cnaInfo.average_root_cause_analysis || 0).toFixed(1),
-            softwareIdentification: (cnaInfo.average_software_identification || 0).toFixed(1),
-            security: (cnaInfo.average_severity_context || 0).toFixed(1),
-            actionable: (cnaInfo.average_actionable_intelligence || 0).toFixed(1),
-            dataFormat: (cnaInfo.average_data_format_precision || 0).toFixed(1)
+            foundational: (cnaInfo.average_foundational_completeness || 0),
+            rootCause: (cnaInfo.average_root_cause_analysis || 0),
+            softwareIdentification: (cnaInfo.average_software_identification || 0),
+            security: (cnaInfo.average_severity_context || 0),
+            actionable: (cnaInfo.average_actionable_intelligence || 0),
+            dataFormat: (cnaInfo.average_data_format_precision || 0)
         };
         
         // Convert CVE data to display format
@@ -310,7 +310,7 @@ function displayCVECards(scores) {
                     </div>
                     <div class="detail-item">
                         <span class="label">Software Identification:</span>
-                        <span class="value">${formatNumber(score.softwareIdentification || 0)}/10</span>
+                        <span class="value">${formatNumber(score.softwareIdentification)}/10</span>
                     </div>
                     <div class="detail-item">
                         <span class="label">Severity Context:</span>
