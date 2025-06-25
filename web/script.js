@@ -211,8 +211,11 @@ function displayCNAs(cnas, sortBy = 'score') {
 
 // Helper to format numbers: show as integer if .0, else one decimal (handles string '100.0' too)
 function formatScore(num) {
-    if (typeof num === 'string' && num.match(/^\d+\.0$/)) return num.replace('.0', '');
-    if (typeof num === 'number') return num % 1 === 0 ? num.toString() : num.toFixed(1);
+    // Convert to number if possible
+    const n = (typeof num === 'string') ? Number(num) : num;
+    if (typeof n === 'number' && !isNaN(n)) {
+        return n % 1 === 0 ? n.toString() : n.toFixed(1);
+    }
     return num;
 }
 
