@@ -8,9 +8,15 @@ import re
 import json
 import sys
 import os
-import xml.etree.ElementTree as ET
-from typing import Dict, Any, List, Set, Optional
 import logging
+from typing import Dict, Any, List, Set, Optional
+# Add cvss library for CVSS vector validation
+try:
+    from cvss import CVSS3, CVSS2, CVSS4
+except ImportError:
+    CVSS3 = None
+    CVSS2 = None
+    CVSS4 = None
 
 # A small, hardcoded list of known exploit database domains.
 KNOWN_EXPLOIT_DOMAINS = ['exploit-db.com']
@@ -246,30 +252,54 @@ class EnhancedAggregateScorer:
                         break
         return min(score, max_score)
 
+    def _is_valid_cvss_vector(self, vector_string: str) -> bool:
+        """Validate CVSS vector string using the cvss library (supports v2, v3, v4)"""
+        if not vector_string or not isinstance(vector_string, str):
+            return False
+        try:
+            if vector_string.startswith('CVSS:3.') and CVSS3:
+                CVSS3(vector_string)
+                return True
+            elif vector_string.startswith('CVSS:4.') and CVSS4:
+                CVSS4(vector_string)
+                return True
+            elif vector_string.startswith('(') or vector_string.startswith('AV:'):
+                # Some v2 vectors are in legacy format
+                if CVSS2:
+                    CVSS2(vector_string)
+                    return True
+            elif vector_string.startswith('CVSS:2.') and CVSS2:
+                CVSS2(vector_string)
+                return True
+        except Exception:
+            return False
+        return False
+
     def _calculate_severity_context(self) -> int:
-        """Calculate severity and impact context score (0-25)."""
+        """Calculate severity and impact context score (0-25), using cvss lib for vector validation."""
         score = 0
         max_score = 25
-        
-        # Check for CVSS metrics
         metrics = self.cna_container.get('metrics', [])
         if isinstance(metrics, list):
             for metric in metrics:
                 if isinstance(metric, dict):
-                    # Check for CVSS v4, v3.1, v3.0
-                    if 'cvssV4_0' in metric or 'cvssV3_1' in metric or 'cvssV3_0' in metric:
-                        cvss_data = metric.get('cvssV4_0') or metric.get('cvssV3_1') or metric.get('cvssV3_0')
-                        if isinstance(cvss_data, dict):
-                            if cvss_data.get('baseScore') is not None:
-                                score += 15
-                            if cvss_data.get('vectorString'):
-                                score += 5
-                            break
-                    # Check for CVSS v2
-                    elif 'cvssV2' in metric:
+                    for key in ['cvssV4_0', 'cvssV3_1', 'cvssV3_0']:
+                        if key in metric:
+                            cvss_data = metric.get(key)
+                            if isinstance(cvss_data, dict):
+                                if cvss_data.get('baseScore') is not None:
+                                    score += 15
+                                vector = cvss_data.get('vectorString')
+                                if vector and self._is_valid_cvss_vector(vector):
+                                    score += 5
+                                break
+                    if 'cvssV2' in metric:
                         cvss_data = metric['cvssV2']
                         if isinstance(cvss_data, dict) and cvss_data.get('baseScore') is not None:
                             score += 10
+                            vector = cvss_data.get('vectorString')
+                            if vector and self._is_valid_cvss_vector(vector):
+                                score += 2  # Optionally, partial credit for v2 vector
                             break
         
         # Check descriptions for impact information
@@ -335,7 +365,7 @@ class EnhancedAggregateScorer:
         return min(score, max_score)
 
     def _calculate_data_format_precision(self) -> int:
-        """Calculate data format and precision score (0-5)."""
+        """Calculate data format and precision score (0-5), using cvss lib for vector validation."""
         max_score = 5
         format_checks = []
         penalize = False
@@ -386,14 +416,13 @@ class EnhancedAggregateScorer:
             )) for item in affected
         ))
         
-        # Check 2: CVSS format in metrics
+        # Check 2: CVSS format in metrics (use cvss lib)
         has_valid_cvss = False
         metrics = self.cna_container.get('metrics', [])
         if isinstance(metrics, list):
             for metric in metrics:
                 if isinstance(metric, dict):
-                    # Check for CVSS v4, v3.1, v3.0
-                    for cvss_key in ['cvssV4_0', 'cvssV3_1', 'cvssV3_0']:
+                    for cvss_key in ['cvssV4_0', 'cvssV3_1', 'cvssV3_0', 'cvssV2']:
                         if cvss_key in metric:
                             cvss_data = metric.get(cvss_key)
                             if isinstance(cvss_data, dict):
@@ -401,17 +430,10 @@ class EnhancedAggregateScorer:
                                 if (cvss_data.get('baseScore') is not None and 
                                     vector_string and 
                                     isinstance(vector_string, str) and
-                                    len(vector_string) > 0):
+                                    self._is_valid_cvss_vector(vector_string)):
                                     has_valid_cvss = True
                                 else:
                                     penalize = True
-                    # Check for CVSS v2 (less strict as it's older)
-                    if 'cvssV2' in metric:
-                        cvss_data = metric['cvssV2']
-                        if isinstance(cvss_data, dict) and cvss_data.get('baseScore') is not None:
-                            has_valid_cvss = True
-                        elif 'cvssV2' in metric:
-                            penalize = True
         format_checks.append(has_valid_cvss or not metrics)
         
         # Check 3: CWE format in problem types
