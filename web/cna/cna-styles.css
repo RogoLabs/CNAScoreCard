@@ -424,6 +424,57 @@
 .grade-d { background-color: #dc3545; }
 .grade-f { background-color: #6c757d; }
 
+/* Modernized CNA Header Section */
+.modern-cna-header {
+    margin: 40px auto 32px auto;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    padding: 36px 32px 28px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.modern-cna-header h1, .modern-cna-header .cna-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+}
+.modern-cna-header .cna-score {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #2d5bff;
+    margin-bottom: 6px;
+}
+.modern-cna-header .cna-meta {
+    font-size: 1.1rem;
+    color: #888;
+    margin-bottom: 18px;
+}
+.modern-cna-header .cna-breakdown {
+    width: 100%;
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 18px;
+    font-size: 1.05rem;
+    color: #222;
+    justify-items: start;
+}
+@media (max-width: 600px) {
+    .modern-cna-header {
+        max-width: 98vw;
+        padding: 18px 6vw 18px 6vw;
+    }
+    .modern-cna-header .cna-breakdown {
+        grid-template-columns: 1fr;
+        gap: 8px 0;
+    }
+}
+
 @media (max-width: 768px) {
     .summary-main {
         flex-direction: column;
