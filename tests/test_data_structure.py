@@ -86,14 +86,35 @@ def validate_cve_data():
     
     return True
 
+def validate_cve_pages():
+    """Validate the CVE pages exist"""
+    pages_to_check = [
+        "web/cves/index.html",
+        "web/cves/top100.html", 
+        "web/cves/bottom100.html",
+        "web/cves/cve-script.js",
+        "web/cves/cve-styles.css"
+    ]
+    
+    for page_path in pages_to_check:
+        page_file = Path(page_path)
+        if page_file.exists():
+            print(f"✅ {page_path} exists")
+        else:
+            print(f"❌ {page_path} not found")
+            return False
+    
+    return True
+
 def main():
     """Run all validation tests"""
     print("🔍 Validating generated data structure...\n")
     
     cna_valid = validate_cna_data()
     cve_valid = validate_cve_data()
+    pages_valid = validate_cve_pages()
     
-    if cna_valid and cve_valid:
+    if cna_valid and cve_valid and pages_valid:
         print("\n🎉 All data validation tests passed!")
         print("The generated data structure is compatible with the frontend.")
         return True

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVE Lists - CNA ScoreCard</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="cve-styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="nav-links">
+            <a href="../index.html">🏠 Back to Home</a>
+        </div>
+        
+        <h1>CVE Score Lists</h1>
+        <p class="description">Explore the highest and lowest scoring CVE records from the last 6 months based on Enhanced Aggregate Scoring (EAS) methodology.</p>
+        
+        <div class="cve-list-grid">
+            <div class="cve-list-option">
+                <h2>🏆 Top 100 CVEs</h2>
+                <p>The highest-scoring CVE records demonstrating excellence in vulnerability disclosure quality across all EAS dimensions.</p>
+                <a href="top100.html" class="cve-list-link">View Top 100 CVEs →</a>
+            </div>
+            
+            <div class="cve-list-option">
+                <h2>📉 Bottom 100 CVEs</h2>
+                <p>CVE records with the lowest EAS scores, highlighting opportunities for improvement in vulnerability disclosure quality.</p>
+                <a href="bottom100.html" class="cve-list-link">View Bottom 100 CVEs →</a>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <h3>About EAS Scoring</h3>
+            <p>The Enhanced Aggregate Scoring (EAS) methodology evaluates CVE records across six key dimensions:</p>
+            <ul>
+                <li><strong>Foundational Completeness (30 points):</strong> Basic information quality and completeness</li>
+                <li><strong>Root Cause Analysis (10 points):</strong> CWE classifications and technical depth</li>
+                <li><strong>Software Identification (10 points):</strong> CPE identifiers for affected products</li>
+                <li><strong>Severity Context (25 points):</strong> CVSS scores and impact information</li>
+                <li><strong>Actionable Intelligence (20 points):</strong> Solutions, patches, and references</li>
+                <li><strong>Data Format Precision (5 points):</strong> Structured, machine-readable content</li>
+            </ul>
+            <p><a href="../scoring.html">Learn more about the EAS methodology →</a></p>
+        </div>
+    </div>
+    
+    <style>
+        .cve-list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .cve-list-option {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        
+        .cve-list-option:hover {
+            transform: translateY(-2px);
+        }
+        
+        .cve-list-option h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        
+        .cve-list-option p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .cve-list-link {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        
+        .cve-list-link:hover {
+            background: #2980b9;
+        }
+        
+        .info-section {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+        
+        .info-section h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        
+        .info-section ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .info-section li {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+    </style>
+</body>
+</html>
