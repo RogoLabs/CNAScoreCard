@@ -296,7 +296,7 @@
 
         <div class="scoring-section">
             <h2>6. Data Format & Precision (5 points)</h2>
-            <p>Evaluates the use of structured, machine-readable formats. <strong>Points are awarded only if <u>all present fields</u> are correctly formatted.</strong><br><strong>Missing fields do not penalize the score, but if a field is present and incorrectly formatted, the score is 0.</strong></p>
+            <p>Evaluates the use of structured, machine-readable formats using an <strong>all-or-nothing scoring approach</strong>. Missing fields do not penalize the score, but any incorrectly formatted field results in 0 points.</p>
             
             <table class="metric-table">
                 <thead>
@@ -310,46 +310,42 @@
                     <tr>
                         <td>All Format Checks Pass</td>
                         <td class="points">5</td>
-                        <td>CPE identifiers, proper CVSS format with vector string, valid CWE format, language tags, and structured affected products (if present)</td>
+                        <td>All present fields must pass validation: CPE identifiers, CVSS format, CWE format, language tags, and structured data</td>
+                    </tr>
+                    <tr>
+                        <td>Any Format Error</td>
+                        <td class="points">0</td>
+                        <td>If any present field is incorrectly formatted</td>
                     </tr>
                 </tbody>
             </table>
             
             <div class="scoring-subsection">
-                <h3>Format Requirements (All Present Must Pass for Points):</h3>
+                <h3>Format Requirements:</h3>
                 <ul>
-                    <li><strong>CPE Usage:</strong> If present, must be a valid <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir7695.pdf" target="_blank">Common Platform Enumeration</a> identifier (e.g., cpe:2.3:a:apache:http_server:2.4.52:*)<br>
-                        <em>Validation performed using the <a href="https://pypi.org/project/cpe/" target="_blank">python-cpe</a> library.</em></li>
-                    <li><strong>CVSS Format:</strong> If present, must be a complete CVSS score with both baseScore and vectorString<br>
-                        <em>Validation performed using the <a href="https://pypi.org/project/cvss/" target="_blank">python-cvss</a> library (supports v2, v3, v4).</em></li>
-                    <li><strong>CWE Format:</strong> If present, must be a valid CWE identifier (e.g., CWE-120, CWE-787)<br>
-                        <em>Validation performed using a prebuilt list from <a href="https://cwe.mitre.org/" target="_blank">MITRE CWE</a> and checked with a local validator.</em></li>
-                    <li><strong>Language Tags:</strong> If descriptions are present, must include proper language identification (e.g., <code>"lang": "en"</code>)</li>
-                    <li><strong>Structured Data:</strong> If affected products are present, must be well-formed with vendor and product fields</li>
+                    <li><strong>CPE Identifiers:</strong> Valid <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir7695.pdf" target="_blank">Common Platform Enumeration</a> format (e.g., <code>cpe:2.3:a:apache:http_server:2.4.52:*</code>)</li>
+                    <li><strong>CVSS Scoring:</strong> Complete score with both baseScore and vectorString (supports v2, v3, v4)</li>
+                    <li><strong>CWE Classification:</strong> Valid weakness identifier from <a href="https://cwe.mitre.org/" target="_blank">MITRE CWE</a> (e.g., <code>CWE-120</code>, <code>CWE-787</code>)</li>
+                    <li><strong>Language Tags:</strong> Proper language identification in descriptions (e.g., <code>"lang": "en"</code>)</li>
+                    <li><strong>Structured Products:</strong> Well-formed affected products with vendor and product fields</li>
                 </ul>
             </div>
             
             <div class="scoring-subsection">
-                <h3>External Libraries Used for Verification:</h3>
+                <h3>Validation Libraries:</h3>
                 <ul>
-                    <li><a href="https://pypi.org/project/cvss/" target="_blank">python-cvss</a> &mdash; for CVSS vector and score validation</li>
-                    <li><a href="https://pypi.org/project/cpe/" target="_blank">python-cpe</a> &mdash; for CPE identifier validation</li>
-                    <li><a href="https://cwe.mitre.org/" target="_blank">MITRE CWE Catalog</a> &mdash; for CWE ID validation</li>
-                </ul>
-            </div>
-            
-            <div class="scoring-subsection">
-                <h3>Important Notes:</h3>
-                <ul>
-                    <li><strong>Data Format & Precision uses all-or-nothing scoring:</strong> A CVE must meet <u>all format requirements for present fields</u> to receive any points in this category</li>
-                    <li><strong>Missing fields do not penalize the score, but present and incorrectly formatted fields result in 0 points.</strong></li>
-                    <li><strong>Scores are calculated for the last 6 months:</strong> Only CVEs published in the most recent 6-month period are included</li>
-                    <li><strong>Machine-readable format emphasis:</strong> Higher scores favor CVEs with structured, automation-friendly data</li>
+                    <li><a href="https://pypi.org/project/cvss/" target="_blank">python-cvss</a> — CVSS vector and score validation</li>
+                    <li><a href="https://pypi.org/project/cpe/" target="_blank">python-cpe</a> — CPE identifier validation</li>
+                    <li>Local CWE validator using MITRE's official catalog</li>
                 </ul>
             </div>
             
             <div class="example-cve">
-                <strong>Example:</strong> A CVE record that includes "cpe:2.3:a:apache:http_server:2.4.52:*:*:*:*:*:*:*", "CWE-787", and "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H" with proper language tags and structured data would receive the full 5 points. <strong>If any present field is incorrectly formatted, the score is 0. Missing fields do not penalize.</strong>
+                <strong>Perfect Example:</strong> A CVE with valid CPE (<code>cpe:2.3:a:apache:http_server:2.4.52:*:*:*:*:*:*:*</code>), proper CWE (<code>CWE-787</code>), complete CVSS (<code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H</code>), language tags, and structured data receives 5 points.
+            </div>
+            
+            <div class="example-cve" style="background: #fff2f2; border-left: 4px solid #e74c3c;">
+                <strong>Failed Example:</strong> The same CVE with an invalid CPE format (<code>cpe:apache:http_server:2.4.52</code>) would receive 0 points, even if all other fields are perfect.
             </div>
         </div>
 
@@ -368,6 +364,10 @@
             </div>
             <div class="example-cve" style="background:#fffbe6; border-left:4px solid #f1c40f; margin-top:20px;">
                 <strong>Note:</strong> This project and scoring methodology were inspired by the <a href="https://www.cve.org/About/Metrics#CNAEnrichmentRecognition" target="_blank">CNA Enrichment Recognition program</a>.
+            </div>
+            
+            <div class="example-cve" style="background:#f0f8ff; border-left:4px solid #3498db; margin-top:15px;">
+                <strong>Related Work:</strong> For additional research on CVE performance measurement, see <a href="https://bjedwards.observablehq.cloud/measuring-cna-performance/" target="_blank">"Measuring CVE Performance"</a> by Ben Edwards (<a href="https://www.bitsight.com/trace/team/ben-edwards" target="_blank">BitSight</a>), which provides complementary analysis of CNA effectiveness and vulnerability disclosure quality.
             </div>
         </div>
 
