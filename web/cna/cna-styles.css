@@ -351,55 +351,57 @@
 
 .cna-card h3 {
     margin: 0 0 15px 0;
-    font-size: 1.2em;
+    font-size: 1.35em;
+    font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
 .cna-card h3 a {
-    color: #333;
+    color: #222;
     text-decoration: none;
+    font-size: 1.25em;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    word-break: break-all;
 }
 
 .cna-card h3 a:hover {
     color: #007bff;
 }
 
+.cna-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    gap: 10px;
+}
+
+.cna-score-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
 .cna-score {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: bold;
-    font-size: 14px;
+    font-size: 2.1em;
+    font-weight: 900;
+    color: #2d5bff;
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    text-align: right;
+    line-height: 1.1;
 }
 
-.cna-grade {
-    position: absolute;
-    top: 70px;
-    right: 15px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: #666;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 12px;
-}
-
-.cna-stats {
-    display: flex;
-    gap: 15px;
-    margin-top: 15px;
-    color: #666;
-    font-size: 14px;
+.cna-percentile {
+    font-size: 1em;
+    color: #888;
+    font-weight: 600;
+    text-align: right;
+    margin-top: 0.1em;
 }
 
 .cve-count,
