@@ -122,16 +122,18 @@ async function loadCNAData() {
         };
         
         // Convert CVE data to display format
-        cveScores = recentCVEs.map(cve => ({
-            cveId: cve.cveId,
-            overallScore: cve.totalEasScore || 0,
-            percentile: calculatePercentile(cve.totalEasScore || 0),
-            foundationalCompleteness: cve.scoreBreakdown?.foundationalCompleteness || 0,
-            rootCauseAnalysis: cve.scoreBreakdown?.rootCauseAnalysis || 0,
-            securityContext: cve.scoreBreakdown?.severityAndImpactContext || 0,
-            actionableIntelligence: cve.scoreBreakdown?.actionableIntelligence || 0,
-            dataFormatPrecision: cve.scoreBreakdown?.dataFormatAndPrecision || 0,
-        ));
+        cveScores = recentCVEs.map(cve => {
+            return {
+                cveId: cve.cveId,
+                overallScore: cve.totalEasScore || 0,
+                percentile: calculatePercentile(cve.totalEasScore || 0),
+                foundationalCompleteness: cve.scoreBreakdown?.foundationalCompleteness || 0,
+                rootCauseAnalysis: cve.scoreBreakdown?.rootCauseAnalysis || 0,
+                securityContext: cve.scoreBreakdown?.severityAndImpactContext || 0,
+                actionableIntelligence: cve.scoreBreakdown?.actionableIntelligence || 0,
+                dataFormatPrecision: cve.scoreBreakdown?.dataFormatAndPrecision || 0,
+            };
+        });
         
         displayCNAHeader(overallScore, percentile, totalCVEs, breakdown);
         displayCVECards(cveScores);
