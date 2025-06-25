@@ -39,7 +39,7 @@ function testCreateCNACard() {
             } else if (typeof cna.score !== 'number') {
                 console.error(`❌ Error: CNA ${index + 1} score is not a number:`, typeof cna.score);
             } else {
-                console.log(`✅ CNA ${index + 1} score valid:`, cna.score.toFixed(1));
+                console.log(`✅ CNA ${index + 1} score valid:`, cna.score % 1 === 0 ? cna.score.toString() : cna.score.toFixed(1));
             }
             
         } catch (error) {

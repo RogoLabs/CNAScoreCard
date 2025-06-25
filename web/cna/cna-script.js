@@ -212,7 +212,10 @@ async function loadCNAData() {
 // Helper to format numbers (hide .0 if integer, even if string)
 function formatNumber(num) {
     if (typeof num === 'string' && num.match(/^\d+\.0$/)) return num.replace('.0', '');
-    if (typeof num === 'number') return num % 1 === 0 ? num.toString() : num.toFixed(1);
+    if (typeof num === 'number') {
+        if (num % 1 === 0) return num.toString();
+        return parseFloat(num.toFixed(1)).toString();
+    }
     return num;
 }
 
