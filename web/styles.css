@@ -58,7 +58,7 @@ p {
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 15px;
     margin-bottom: 30px;
 }
@@ -517,6 +517,13 @@ p {
 }
 
 /* Responsive design */
+@media (max-width: 1200px) {
+    .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 15px;
@@ -530,13 +537,18 @@ p {
         padding: 20px;
     }
     
+    .main-description {
+        font-size: 1.1em;
+    }
+    
     .features-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 15px;
     }
     
-    .feature {
-        padding: 15px;
+    .cna-cards {
+        grid-template-columns: 1fr;
+        gap: 15px;
     }
     
     .filters {
@@ -550,44 +562,19 @@ p {
         max-width: 400px;
     }
     
-    .cna-cards {
-        grid-template-columns: 1fr;
-    }
-    
     .cna-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
     }
     
+    .cna-name {
+        max-width: none;
+        white-space: normal;
+    }
+    
     .cna-score-container {
-        align-self: flex-end;
-    }
-    
-    .cna-detail-card {
-        padding: 2rem 1.5rem;
-        margin: 1rem;
-    }
-    
-    .cna-title {
-        font-size: 2rem;
-    }
-    
-    .cna-metrics-section {
-        flex-direction: column;
-        gap: 2rem;
-    }
-    
-    .metric-item.main-metric {
-        border-right: none;
-        border-bottom: 2px solid #ecf0f1;
-        padding-right: 0;
-        padding-bottom: 2rem;
-    }
-    
-    .breakdown-grid {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
+        align-items: flex-start;
     }
 }
 
@@ -596,48 +583,41 @@ p {
         padding: 10px;
     }
     
+    h1 {
+        font-size: 1.8em;
+    }
+    
     .intro-section {
         padding: 15px;
     }
     
-    .main-description {
-        font-size: 1.1em;
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
     }
     
-    .key-features h2 {
-        font-size: 1.5em;
+    .feature {
+        padding: 12px;
+    }
+    
+    .feature h3 {
+        font-size: 1em;
+    }
+    
+    .feature p {
+        font-size: 0.9em;
     }
     
     .cna-card {
         padding: 15px;
     }
     
+    .cna-score {
+        font-size: 1.5rem;
+        padding: 4px 10px;
+    }
+    
     #searchInput {
-        min-width: auto;
-    }
-    
-    .cna-detail-card {
-        padding: 1.5rem 1rem;
-        border-radius: 12px;
-    }
-    
-    .cna-title {
-        font-size: 1.8rem;
-    }
-    
-    .metric-value {
-        font-size: 1.8rem;
-    }
-    
-    .breakdown-item {
-        padding: 0.5rem 0.75rem;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.25rem;
-    }
-    
-    .breakdown-label,
-    .breakdown-value {
-        font-size: 0.85rem;
+        min-width: 200px;
     }
 }
