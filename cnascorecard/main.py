@@ -77,6 +77,7 @@ def generate_reports():
             avg_total_eas = sum(s["totalEasScore"] for s in scores) / total_cves
             avg_foundational = sum(s["scoreBreakdown"]["foundationalCompleteness"] for s in scores) / total_cves
             avg_root_cause = sum(s["scoreBreakdown"]["rootCauseAnalysis"] for s in scores) / total_cves
+            avg_cpe_identifier = sum(s["scoreBreakdown"]["cpeIdentifier"] for s in scores) / total_cves
             avg_severity = sum(s["scoreBreakdown"]["severityAndImpactContext"] for s in scores) / total_cves
             avg_actionable = sum(s["scoreBreakdown"]["actionableIntelligence"] for s in scores) / total_cves
             avg_format = sum(s["scoreBreakdown"]["dataFormatAndPrecision"] for s in scores) / total_cves
@@ -86,6 +87,7 @@ def generate_reports():
             data["overall_average_score"] = round(avg_total_eas, 2)  # For compatibility
             data["average_foundational_completeness"] = round(avg_foundational, 2)
             data["average_root_cause_analysis"] = round(avg_root_cause, 2)
+            data["average_cpe_identifier"] = round(avg_cpe_identifier, 2)
             data["average_severity_context"] = round(avg_severity, 2)
             data["average_actionable_intelligence"] = round(avg_actionable, 2)
             data["average_data_format_precision"] = round(avg_format, 2)
@@ -129,6 +131,7 @@ def generate_reports():
                     "overall_average_score": 0,
                     "average_foundational_completeness": 0,
                     "average_root_cause_analysis": 0,
+                    "average_cpe_identifier": 0,
                     "average_severity_context": 0,
                     "average_actionable_intelligence": 0,
                     "average_data_format_precision": 0,

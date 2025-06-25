@@ -213,7 +213,11 @@ function createCNACard(cna) {
                 </div>
                 <div class="detail-item">
                     <span class="label">Root Cause Analysis:</span>
-                    <span class="value">${formatScore(avgRootCause)}/20</span>
+                    <span class="value">${formatScore(avgRootCause)}/10</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Software Identification (CPE):</span>
+                    <span class="value">${formatScore(safeGet(cna, 'average_cpe_identifier', 0))}/10</span>
                 </div>
                 <div class="detail-item">
                     <span class="label">Severity Context:</span>

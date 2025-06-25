@@ -186,7 +186,7 @@ def generate_dashboard():
                                     </div>
                                     <div class="col-6">
                                         <small class="text-muted">Root Cause</small>
-                                        <div class="fw-bold">{cve.get('scoreBreakdown', {}).get('rootCauseAnalysis', 0):.1f}/20</div>
+                                        <div class="fw-bold">{cve.get('scoreBreakdown', {}).get('rootCauseAnalysis', 0):.1f}/10</div>
                                     </div>
                                 </div>
                                 <div class="mt-2">

@@ -143,6 +143,7 @@ def main():
                 'percentile': 0,
                 'average_foundational_completeness': sum(c.get('scoreBreakdown', {}).get('foundationalCompleteness', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
                 'average_root_cause_analysis': sum(c.get('scoreBreakdown', {}).get('rootCauseAnalysis', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
+                'average_cpe_identifier': sum(c.get('scoreBreakdown', {}).get('cpeIdentifier', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
                 'average_severity_context': sum(c.get('scoreBreakdown', {}).get('severityAndImpactContext', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
                 'average_actionable_intelligence': sum(c.get('scoreBreakdown', {}).get('actionableIntelligence', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
                 'average_data_format_precision': sum(c.get('scoreBreakdown', {}).get('dataFormatAndPrecision', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0
