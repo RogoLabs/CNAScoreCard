@@ -406,7 +406,7 @@ function displayCVECards(scores) {
             <div class="cna-card ${scoreClass}">
                 <div class="cna-header">
                     <h3 class="cna-name">
-                        <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=${score.cveId}" target="_blank">${score.cveId}</a>
+                        <a href="https://cve.org/CVERecord?id=${score.cveId}" target="_blank">${score.cveId}</a>
                     </h3>
                     <div class="cna-score-container">
                         <div class="cna-score">${formatNumber(score.overallScore)}/100</div>
