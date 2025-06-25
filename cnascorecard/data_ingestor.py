@@ -51,6 +51,14 @@ def get_cve_records():
     recent_cves = []
     cves_path = os.path.join(clone_path, 'cves')
 
+    file_count = 0
+    for root, _, files in os.walk(cves_path):
+        for file in files:
+            if file.startswith('CVE-') and file.endswith('.json'):
+                file_count += 1
+    print(f"Found {file_count} CVE JSON files in cve_data/cves")
+
+    processed = 0
     for root, _, files in os.walk(cves_path):
         for file in files:
             if file.startswith('CVE-') and file.endswith('.json'):
@@ -71,6 +79,9 @@ def get_cve_records():
                         continue
                     except Exception as e:
                         print(f"Error processing file {file_path}: {e}")
+                processed += 1
+                if processed % 1000 == 0:
+                    print(f"Processed {processed} files...")
 
     print(f"Found {len(recent_cves)} recent CVEs.")
     return recent_cves
