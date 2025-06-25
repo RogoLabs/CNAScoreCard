@@ -279,7 +279,7 @@
 
         <div class="scoring-section">
             <h2>6. Data Format & Precision (5 points)</h2>
-            <p>Evaluates the use of structured, machine-readable formats. Points are awarded only if <strong>ALL</strong> format requirements are met.</p>
+            <p>Evaluates the use of structured, machine-readable formats. <strong>Points are awarded only if <u>all present fields</u> are correctly formatted.</strong> <br> <strong>Missing fields do not penalize the score, but if a field is present and incorrectly formatted, the score is 0.</strong></p>
             
             <table class="metric-table">
                 <thead>
@@ -293,33 +293,34 @@
                     <tr>
                         <td>All Format Checks Pass</td>
                         <td class="points">5</td>
-                        <td>CPE identifiers, proper CVSS format with vector string, valid CWE format, language tags, and structured affected products</td>
+                        <td>CPE identifiers, proper CVSS format with vector string, valid CWE format, language tags, and structured affected products (if present)</td>
                     </tr>
                 </tbody>
             </table>
             
             <div class="scoring-subsection">
-                <h3>Format Requirements (All Must Pass for Points):</h3>
+                <h3>Format Requirements (All Present Must Pass for Points):</h3>
                 <ul>
-                    <li><strong>CPE Usage:</strong> Valid Common Platform Enumeration identifiers (e.g., cpe:2.3:a:apache:http_server:2.4.52:*)</li>
-                    <li><strong>CVSS Format:</strong> Complete CVSS score with both baseScore and vectorString</li>
-                    <li><strong>CWE Format:</strong> Valid CWE identifier (e.g., CWE-120, CWE-787)</li>
-                    <li><strong>Language Tags:</strong> Proper language identification in descriptions</li>
-                    <li><strong>Structured Data:</strong> Well-formed affected products structure</li>
+                    <li><strong>CPE Usage:</strong> If present, must be a valid Common Platform Enumeration identifier (e.g., cpe:2.3:a:apache:http_server:2.4.52:*)</li>
+                    <li><strong>CVSS Format:</strong> If present, must be a complete CVSS score with both baseScore and vectorString</li>
+                    <li><strong>CWE Format:</strong> If present, must be a valid CWE identifier (e.g., CWE-120, CWE-787)</li>
+                    <li><strong>Language Tags:</strong> If descriptions are present, must include proper language identification</li>
+                    <li><strong>Structured Data:</strong> If affected products are present, must be well-formed with vendor and product</li>
                 </ul>
             </div>
             
             <div class="scoring-subsection">
                 <h3>Important Notes:</h3>
                 <ul>
-                    <li><strong>Data Format & Precision uses all-or-nothing scoring:</strong> A CVE must meet ALL format requirements to receive any points in this category</li>
+                    <li><strong>Data Format & Precision uses all-or-nothing scoring:</strong> A CVE must meet <u>all format requirements for present fields</u> to receive any points in this category</li>
+                    <li><strong>Missing fields do not penalize the score, but present and incorrectly formatted fields result in 0 points.</strong></li>
                     <li><strong>Scores are calculated for the last 6 months:</strong> Only CVEs published in the most recent 6-month period are included</li>
                     <li><strong>Machine-readable format emphasis:</strong> Higher scores favor CVEs with structured, automation-friendly data</li>
                 </ul>
             </div>
             
             <div class="example-cve">
-                <strong>Example:</strong> A CVE record that includes "cpe:2.3:a:apache:http_server:2.4.52:*:*:*:*:*:*:*", "CWE-787", and "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H" with proper language tags and structured data would receive the full 5 points. <strong>Missing any one requirement results in 0 points.</strong>
+                <strong>Example:</strong> A CVE record that includes "cpe:2.3:a:apache:http_server:2.4.52:*:*:*:*:*:*:*", "CWE-787", and "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H" with proper language tags and structured data would receive the full 5 points. <strong>If any present field is incorrectly formatted, the score is 0. Missing fields do not penalize.</strong>
             </div>
         </div>
 

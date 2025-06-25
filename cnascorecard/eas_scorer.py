@@ -338,6 +338,7 @@ class EnhancedAggregateScorer:
         """Calculate data format and precision score (0-5)."""
         max_score = 5
         format_checks = []
+        penalize = False
         
         # Check 1: CPE format in affected products
         has_valid_cpe = False
@@ -346,36 +347,44 @@ class EnhancedAggregateScorer:
             for item in affected:
                 if isinstance(item, dict):
                     # Check for 'cpes' (CVE 5.1 format - plural)
-                    cpes = item.get('cpes', [])
-                    if isinstance(cpes, list) and len(cpes) > 0:
-                        if any(cpe and isinstance(cpe, str) and cpe.startswith('cpe:') for cpe in cpes):
-                            has_valid_cpe = True
-                            break
-                    
+                    if 'cpes' in item:
+                        cpes = item.get('cpes', [])
+                        if isinstance(cpes, list) and len(cpes) > 0:
+                            if any(cpe and isinstance(cpe, str) and cpe.startswith('cpe:') for cpe in cpes):
+                                has_valid_cpe = True
+                            else:
+                                penalize = True
+                        # If present but empty, do not penalize
                     # Check for 'cpe' (legacy format - singular)
-                    cpe = item.get('cpe', [])
-                    if isinstance(cpe, list) and len(cpe) > 0:
-                        if any(c and isinstance(c, str) and c.startswith('cpe:') for c in cpe):
-                            has_valid_cpe = True
-                            break
-                    
+                    elif 'cpe' in item:
+                        cpe = item.get('cpe', [])
+                        if isinstance(cpe, list) and len(cpe) > 0:
+                            if any(c and isinstance(c, str) and c.startswith('cpe:') for c in cpe):
+                                has_valid_cpe = True
+                            else:
+                                penalize = True
                     # Check for other CPE field formats
                     for field_name in ['cpe23Uri', 'cpeId', 'cpe_name', 'platformId']:
-                        cpe_value = item.get(field_name, '')
-                        if cpe_value and isinstance(cpe_value, str) and cpe_value.startswith('cpe:'):
-                            has_valid_cpe = True
-                            break
-                    
+                        if field_name in item:
+                            cpe_value = item.get(field_name, '')
+                            if cpe_value and isinstance(cpe_value, str):
+                                if cpe_value.startswith('cpe:'):
+                                    has_valid_cpe = True
+                                else:
+                                    penalize = True
                     # Check for platformIds array
-                    platform_ids = item.get('platformIds', [])
-                    if isinstance(platform_ids, list) and len(platform_ids) > 0:
-                        if any(pid and isinstance(pid, str) and pid.startswith('cpe:') for pid in platform_ids):
-                            has_valid_cpe = True
-                            break
-                    
-                    if has_valid_cpe:
-                        break
-        format_checks.append(has_valid_cpe)
+                    if 'platformIds' in item:
+                        platform_ids = item.get('platformIds', [])
+                        if isinstance(platform_ids, list) and len(platform_ids) > 0:
+                            if any(pid and isinstance(pid, str) and pid.startswith('cpe:') for pid in platform_ids):
+                                has_valid_cpe = True
+                            else:
+                                penalize = True
+        format_checks.append(has_valid_cpe or not any(
+            (isinstance(item, dict) and (
+                'cpes' in item or 'cpe' in item or any(f in item for f in ['cpe23Uri', 'cpeId', 'cpe_name', 'platformId', 'platformIds'])
+            )) for item in affected
+        ))
         
         # Check 2: CVSS format in metrics
         has_valid_cvss = False
@@ -384,24 +393,26 @@ class EnhancedAggregateScorer:
             for metric in metrics:
                 if isinstance(metric, dict):
                     # Check for CVSS v4, v3.1, v3.0
-                    if 'cvssV4_0' in metric or 'cvssV3_1' in metric or 'cvssV3_0' in metric:
-                        cvss_data = metric.get('cvssV4_0') or metric.get('cvssV3_1') or metric.get('cvssV3_0')
-                        if isinstance(cvss_data, dict):
-                            # Must have both baseScore and vectorString for proper format
-                            vector_string = cvss_data.get('vectorString')
-                            if (cvss_data.get('baseScore') is not None and 
-                                vector_string and 
-                                isinstance(vector_string, str) and
-                                len(vector_string) > 0):
-                                has_valid_cvss = True
-                                break
+                    for cvss_key in ['cvssV4_0', 'cvssV3_1', 'cvssV3_0']:
+                        if cvss_key in metric:
+                            cvss_data = metric.get(cvss_key)
+                            if isinstance(cvss_data, dict):
+                                vector_string = cvss_data.get('vectorString')
+                                if (cvss_data.get('baseScore') is not None and 
+                                    vector_string and 
+                                    isinstance(vector_string, str) and
+                                    len(vector_string) > 0):
+                                    has_valid_cvss = True
+                                else:
+                                    penalize = True
                     # Check for CVSS v2 (less strict as it's older)
-                    elif 'cvssV2' in metric:
+                    if 'cvssV2' in metric:
                         cvss_data = metric['cvssV2']
                         if isinstance(cvss_data, dict) and cvss_data.get('baseScore') is not None:
                             has_valid_cvss = True
-                            break
-        format_checks.append(has_valid_cvss)
+                        elif 'cvssV2' in metric:
+                            penalize = True
+        format_checks.append(has_valid_cvss or not metrics)
         
         # Check 3: CWE format in problem types
         has_valid_cwe = False
@@ -413,47 +424,52 @@ class EnhancedAggregateScorer:
                     if isinstance(descriptions, list):
                         for desc in descriptions:
                             if isinstance(desc, dict):
-                                cwe_id = desc.get('cweId', '')
-                                # Valid CWE format: starts with 'CWE-' followed by numbers
-                                if (cwe_id and isinstance(cwe_id, str) and 
-                                    cwe_id.startswith('CWE-') and 
-                                    cwe_id[4:].isdigit()):
-                                    # Additional validation if CWE validator is available
-                                    if self.cwe_validator and self.cwe_validator.is_valid_cwe(cwe_id):
-                                        has_valid_cwe = True
-                                        break
-                                    elif not self.cwe_validator:
-                                        # Basic format check only
-                                        has_valid_cwe = True
-                                        break
-                    if has_valid_cwe:
-                        break
-        format_checks.append(has_valid_cwe)
+                                if 'cweId' in desc:
+                                    cwe_id = desc.get('cweId', '')
+                                    # Valid CWE format: starts with 'CWE-' followed by numbers
+                                    if (cwe_id and isinstance(cwe_id, str) and 
+                                        cwe_id.startswith('CWE-') and 
+                                        cwe_id[4:].isdigit()):
+                                        if self.cwe_validator and self.cwe_validator.is_valid_cwe(cwe_id):
+                                            has_valid_cwe = True
+                                        elif not self.cwe_validator:
+                                            has_valid_cwe = True
+                                        else:
+                                            penalize = True
+                                    else:
+                                        penalize = True
+        format_checks.append(has_valid_cwe or not any(
+            isinstance(pt, dict) and any(isinstance(desc, dict) and 'cweId' in desc for desc in pt.get('descriptions', []))
+            for pt in problem_types
+        ))
         
         # Check 4: Language consistency in descriptions
         has_language_tags = False
         descriptions = self.cna_container.get('descriptions', [])
         if isinstance(descriptions, list):
             for desc in descriptions:
-                if isinstance(desc, dict) and desc.get('lang'):
-                    has_language_tags = True
-                    break
-        format_checks.append(has_language_tags)
+                if isinstance(desc, dict) and 'lang' in desc:
+                    if desc.get('lang'):
+                        has_language_tags = True
+                        break
+                elif isinstance(desc, dict) and 'lang' in desc and not desc.get('lang'):
+                    penalize = True
+        format_checks.append(has_language_tags or not descriptions)
         
         # Check 5: Affected products structure
         has_structured_affected = False
         if isinstance(affected, list):
             for item in affected:
                 if isinstance(item, dict):
-                    # Check for basic vendor/product structure
+                    if ('vendor' in item and not item.get('vendor')) or ('product' in item and not item.get('product')):
+                        penalize = True
                     if item.get('vendor') and item.get('product'):
                         has_structured_affected = True
                         break
-        format_checks.append(has_structured_affected)
+        format_checks.append(has_structured_affected or not affected)
         
-        # Award full points only if ALL format checks pass
-        # This ensures high-quality, well-structured CVE records get the full score
-        if all(format_checks):
+        # Award full points only if ALL format checks pass and no penalize
+        if all(format_checks) and not penalize:
             return max_score
         else:
             return 0
