@@ -377,58 +377,46 @@ class EnhancedAggregateScorer:
             return False
 
     def _calculate_data_format_precision(self) -> int:
-        """Calculate data format and precision score (0-5), using cvss lib for vector validation."""
+        """Calculate data format and precision score (0 or 5). All present CPE, CVSS, and CWE strings must be valid for 5 points. If none are present, or any are invalid, score is 0."""
         max_score = 5
-        format_checks = []
-        penalize = False
-        
-        # Check 1: CPE format in affected products
-        has_valid_cpe = False
+        # Track if we have any fields to check and if all are valid
+        has_any = False
+        all_valid = True
+
+        # Check CPEs in affected products
         affected = self.cna_container.get('affected', [])
         if isinstance(affected, list):
             for item in affected:
                 if isinstance(item, dict):
                     # Check for 'cpes' (CVE 5.1 format - plural)
-                    if 'cpes' in item:
-                        cpes = item.get('cpes', [])
-                        if isinstance(cpes, list) and len(cpes) > 0:
-                            if any(self._is_valid_cpe(cpe) for cpe in cpes):
-                                has_valid_cpe = True
-                            else:
-                                penalize = True
+                    cpes = item.get('cpes', [])
+                    if isinstance(cpes, list):
+                        for cpe in cpes:
+                            has_any = True
+                            if not self._is_valid_cpe(cpe):
+                                all_valid = False
                     # Check for 'cpe' (legacy format - singular)
-                    elif 'cpe' in item:
-                        cpe = item.get('cpe', [])
-                        if isinstance(cpe, list) and len(cpe) > 0:
-                            if any(self._is_valid_cpe(c) for c in cpe):
-                                has_valid_cpe = True
-                            else:
-                                penalize = True
+                    cpe = item.get('cpe', [])
+                    if isinstance(cpe, list):
+                        for c in cpe:
+                            has_any = True
+                            if not self._is_valid_cpe(c):
+                                all_valid = False
                     # Check for other CPE field formats
                     for field_name in ['cpe23Uri', 'cpeId', 'cpe_name', 'platformId']:
-                        if field_name in item:
-                            cpe_value = item.get(field_name, '')
-                            if cpe_value and isinstance(cpe_value, str):
-                                if self._is_valid_cpe(cpe_value):
-                                    has_valid_cpe = True
-                                else:
-                                    penalize = True
+                        cpe_value = item.get(field_name, '')
+                        if cpe_value and isinstance(cpe_value, str):
+                            has_any = True
+                            if not self._is_valid_cpe(cpe_value):
+                                all_valid = False
                     # Check for platformIds array
-                    if 'platformIds' in item:
-                        platform_ids = item.get('platformIds', [])
-                        if isinstance(platform_ids, list) and len(platform_ids) > 0:
-                            if any(self._is_valid_cpe(pid) for pid in platform_ids):
-                                has_valid_cpe = True
-                            else:
-                                penalize = True
-        format_checks.append(has_valid_cpe or not any(
-            (isinstance(item, dict) and (
-                'cpes' in item or 'cpe' in item or any(f in item for f in ['cpe23Uri', 'cpeId', 'cpe_name', 'platformId', 'platformIds'])
-            )) for item in affected
-        ))
-        
-        # Check 2: CVSS format in metrics (use cvss lib)
-        has_valid_cvss = False
+                    platform_ids = item.get('platformIds', [])
+                    if isinstance(platform_ids, list):
+                        for pid in platform_ids:
+                            has_any = True
+                            if not self._is_valid_cpe(pid):
+                                all_valid = False
+        # Check CVSS in metrics
         metrics = self.cna_container.get('metrics', [])
         if isinstance(metrics, list):
             for metric in metrics:
@@ -438,17 +426,14 @@ class EnhancedAggregateScorer:
                             cvss_data = metric.get(cvss_key)
                             if isinstance(cvss_data, dict):
                                 vector_string = cvss_data.get('vectorString')
-                                if (cvss_data.get('baseScore') is not None and 
-                                    vector_string and 
-                                    isinstance(vector_string, str) and
-                                    self._is_valid_cvss_vector(vector_string)):
-                                    has_valid_cvss = True
-                                else:
-                                    penalize = True
-        format_checks.append(has_valid_cvss or not metrics)
-        
-        # Check 3: CWE format in problem types
-        has_valid_cwe = False
+                                base_score = cvss_data.get('baseScore')
+                                if vector_string is not None or base_score is not None:
+                                    has_any = True
+                                # If either is present, both must be present and valid
+                                if (vector_string is not None or base_score is not None):
+                                    if not (vector_string and base_score is not None and self._is_valid_cvss_vector(vector_string)):
+                                        all_valid = False
+        # Check CWE in problem types
         problem_types = self.cna_container.get('problemTypes', [])
         if isinstance(problem_types, list):
             for pt in problem_types:
@@ -457,56 +442,32 @@ class EnhancedAggregateScorer:
                     if isinstance(descriptions, list):
                         for desc in descriptions:
                             if isinstance(desc, dict):
-                                if 'cweId' in desc:
-                                    cwe_id = desc.get('cweId', '')
-                                    # Valid CWE format: starts with 'CWE-' followed by numbers
-                                    if (cwe_id and isinstance(cwe_id, str) and 
-                                        cwe_id.startswith('CWE-') and 
-                                        cwe_id[4:].isdigit()):
-                                        if self.cwe_validator and self.cwe_validator.is_valid_cwe(cwe_id):
-                                            has_valid_cwe = True
-                                        elif not self.cwe_validator:
-                                            has_valid_cwe = True
-                                        else:
-                                            penalize = True
-                                    else:
-                                        penalize = True
-        format_checks.append(has_valid_cwe or not any(
-            isinstance(pt, dict) and any(isinstance(desc, dict) and 'cweId' in desc for desc in pt.get('descriptions', []))
-            for pt in problem_types
-        ))
-        
-        # Check 4: Language consistency in descriptions
-        has_language_tags = False
+                                cwe_id = desc.get('cweId', '')
+                                if cwe_id:
+                                    has_any = True
+                                    if not (cwe_id.startswith('CWE-') and cwe_id[4:].isdigit() and (self.cwe_validator is None or self.cwe_validator.is_valid_cwe(cwe_id))):
+                                        all_valid = False
+        # Check language tags in descriptions
         descriptions = self.cna_container.get('descriptions', [])
         if isinstance(descriptions, list):
             for desc in descriptions:
-                if isinstance(desc, dict) and 'lang' in desc:
-                    if desc.get('lang'):
-                        has_language_tags = True
-                        break
-                elif isinstance(desc, dict) and 'lang' in desc and not desc.get('lang'):
-                    penalize = True
-        format_checks.append(has_language_tags or not descriptions)
-        
-        # Check 5: Affected products structure
-        has_structured_affected = False
+                if isinstance(desc, dict):
+                    if 'lang' in desc:
+                        has_any = True
+                        if not desc.get('lang'):
+                            all_valid = False
+        # Check affected products structure
         if isinstance(affected, list):
             for item in affected:
                 if isinstance(item, dict):
-                    if ('vendor' in item and not item.get('vendor')) or ('product' in item and not item.get('product')):
-                        penalize = True
-                    if item.get('vendor') and item.get('product'):
-                        has_structured_affected = True
-                        break
-        format_checks.append(has_structured_affected or not affected)
-        
-        # Award full points only if ALL format checks pass and no penalize
-        if all(format_checks) and not penalize:
+                    if item.get('vendor') or item.get('product'):
+                        has_any = True
+                        if not (item.get('vendor') and item.get('product')):
+                            all_valid = False
+        # Only award points if at least one field is present and all are valid
+        if has_any and all_valid:
             return max_score
-        else:
-            return 0
-
+        return 0
 def calculate_eas(cve_data):
     """
     Convenience function to calculate the Enhanced Aggregate Score (EAS) for a CVE record.
