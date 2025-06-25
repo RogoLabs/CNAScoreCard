@@ -58,6 +58,10 @@ def get_cve_records():
                 with open(file_path, 'r') as f:
                     try:
                         cve_data = json.load(f)
+                        # Skip REJECTED CVEs
+                        state = cve_data.get('cveMetadata', {}).get('state', '').upper()
+                        if state == 'REJECTED':
+                            continue
                         date_published_str = cve_data.get('cveMetadata', {}).get('datePublished')
                         if date_published_str:
                             date_published = datetime.fromisoformat(date_published_str.replace('Z', '+00:00'))
