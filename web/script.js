@@ -218,19 +218,19 @@ function formatScore(num) {
 
 // Create individual CNA card
 function createCNACard(cna) {
-    const score = safeGet(cna, 'average_eas_score', 0);
+    const score = Number(safeGet(cna, 'average_eas_score', 0));
     const rank = safeGet(cna, 'rank', null);
     const activeCount = safeGet(cna, 'active_cna_count', null);
     const percentile = safeGet(cna, 'percentile', 0);
     const scoreClass = getPercentileClass(percentile);
     const cnaName = safeGet(cna, 'cna', 'Unknown');
-    const totalCVEs = safeGet(cna, 'total_cves_scored', 0);
-    const avgFoundational = safeGet(cna, 'average_foundational_completeness', 0);
-    const avgRootCause = safeGet(cna, 'average_root_cause_analysis', 0);
-    const avgSoftwareId = safeGet(cna, 'average_software_identification', 0);
-    const avgSeverity = safeGet(cna, 'average_severity_context', 0);
-    const avgActionable = safeGet(cna, 'average_actionable_intelligence', 0);
-    const avgFormat = safeGet(cna, 'average_data_format_precision', 0);
+    const totalCVEs = Number(safeGet(cna, 'total_cves_scored', 0));
+    const avgFoundational = Number(safeGet(cna, 'average_foundational_completeness', 0));
+    const avgRootCause = Number(safeGet(cna, 'average_root_cause_analysis', 0));
+    const avgSoftwareId = Number(safeGet(cna, 'average_software_identification', 0));
+    const avgSeverity = Number(safeGet(cna, 'average_severity_context', 0));
+    const avgActionable = Number(safeGet(cna, 'average_actionable_intelligence', 0));
+    const avgFormat = Number(safeGet(cna, 'average_data_format_precision', 0));
     
     // Check if CNA is inactive (no recent CVEs)
     const isInactive = totalCVEs === 0 || cna.message === "No CVEs published in the last 6 months";
