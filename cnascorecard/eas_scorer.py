@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """
-Enhanced Aggregate Scoring (EAS) system for CVE records.
+Enhanc        # Calculate individual scores
+        foundational_score = self._calculate_foundational_completeness()
+        root_cause_score = self._calculate_root_cause_analysis()
+        software_identification_score = self._calculate_software_identification()
+        severity_score = self._calculate_severity_context()
+        actionable_score = self._calculate_actionable_intelligence()regate Scoring (EAS) system for CVE records.
 Evaluates CVE quality across multiple dimensions.
 """
 
@@ -34,7 +39,7 @@ class EnhancedAggregateScorer:
         # Calculate individual scores
         foundational_score = self._calculate_foundational_completeness()
         root_cause_score = self._calculate_root_cause_analysis()
-        cpe_identifier_score = self._calculate_cpe_identifier()
+        software_identification_score = self._calculate_software_identification()
         severity_score = self._calculate_severity_context()
         actionable_score = self._calculate_actionable_intelligence()
         format_score = self._calculate_data_format_precision()
@@ -43,7 +48,7 @@ class EnhancedAggregateScorer:
         total_eas_score = (
             foundational_score +
             root_cause_score +
-            cpe_identifier_score +
+            software_identification_score +
             severity_score +
             actionable_score +
             format_score
@@ -57,7 +62,7 @@ class EnhancedAggregateScorer:
             'scoreBreakdown': {
                 'foundationalCompleteness': round(foundational_score, 2),
                 'rootCauseAnalysis': round(root_cause_score, 2),
-                'cpeIdentifier': round(cpe_identifier_score, 2),
+                'softwareIdentification': round(software_identification_score, 2),
                 'severityAndImpactContext': round(severity_score, 2),
                 'actionableIntelligence': round(actionable_score, 2),
                 'dataFormatAndPrecision': round(format_score, 2)
@@ -138,8 +143,8 @@ class EnhancedAggregateScorer:
         
         return min(score, max_score)
 
-    def _calculate_cpe_identifier(self) -> int:
-        """Calculate CPE identifier score (0-10)."""
+    def _calculate_software_identification(self) -> int:
+        """Calculate software identification score (0-10)."""
         score = 0
         max_score = 10
         # Check for CPE in affected products

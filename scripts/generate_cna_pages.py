@@ -157,7 +157,7 @@ def generate_cna_data_files(cna_cves, data_dir):
             avg_total_eas = sum(c.get('totalEasScore', 0) for c in cves) / total_cves
             avg_foundational = sum(c.get('scoreBreakdown', {}).get('foundationalCompleteness', 0) for c in cves) / total_cves
             avg_root_cause = sum(c.get('scoreBreakdown', {}).get('rootCauseAnalysis', 0) for c in cves) / total_cves
-            avg_cpe_identifier = sum(c.get('scoreBreakdown', {}).get('cpeIdentifier', 0) for c in cves) / total_cves
+            avg_software_identification = sum(c.get('scoreBreakdown', {}).get('softwareIdentification', 0) for c in cves) / total_cves
             avg_severity = sum(c.get('scoreBreakdown', {}).get('severityAndImpactContext', 0) for c in cves) / total_cves
             avg_actionable = sum(c.get('scoreBreakdown', {}).get('actionableIntelligence', 0) for c in cves) / total_cves
             avg_format = sum(c.get('scoreBreakdown', {}).get('dataFormatAndPrecision', 0) for c in cves) / total_cves
@@ -168,7 +168,7 @@ def generate_cna_data_files(cna_cves, data_dir):
                 'average_eas_score': round(avg_total_eas, 2),
                 'average_foundational_completeness': round(avg_foundational, 2),
                 'average_root_cause_analysis': round(avg_root_cause, 2),
-                'average_cpe_identifier': round(avg_cpe_identifier, 2),
+                'average_software_identification': round(avg_software_identification, 2),
                 'average_severity_context': round(avg_severity, 2),
                 'average_actionable_intelligence': round(avg_actionable, 2),
                 'average_data_format_precision': round(avg_format, 2),
@@ -181,7 +181,7 @@ def generate_cna_data_files(cna_cves, data_dir):
                 'average_eas_score': 0,
                 'average_foundational_completeness': 0,
                 'average_root_cause_analysis': 0,
-                'average_cpe_identifier': 0,
+                'average_software_identification': 0,
                 'average_severity_context': 0,
                 'average_actionable_intelligence': 0,
                 'average_data_format_precision': 0,

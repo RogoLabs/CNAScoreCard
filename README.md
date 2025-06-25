@@ -67,7 +67,7 @@ The Enhanced Aggregate Scoring (EAS) system evaluates CVE records across six key
 - CWE classifications and technical depth indicators
 - Evaluates presence of proper problem type identification
 
-### 3. Software Identification (CPE) (10 points)
+### 3. Software Identification: (10 points)
 - Awarded if a valid CPE identifier is present in the CVE record
 - Enables precise product targeting for automation
 

@@ -119,7 +119,7 @@ async function loadCNAData() {
         const breakdown = {
             foundational: (cnaInfo.average_foundational_completeness || 0).toFixed(1),
             rootCause: (cnaInfo.average_root_cause_analysis || 0).toFixed(1),
-            cpeIdentifier: (cnaInfo.average_cpe_identifier || 0).toFixed(1),
+            softwareIdentification: (cnaInfo.average_software_identification || 0).toFixed(1),
             security: (cnaInfo.average_severity_context || 0).toFixed(1),
             actionable: (cnaInfo.average_actionable_intelligence || 0).toFixed(1),
             dataFormat: (cnaInfo.average_data_format_precision || 0).toFixed(1)
@@ -133,7 +133,7 @@ async function loadCNAData() {
                 percentile: calculatePercentile(cve.totalEasScore || 0),
                 foundationalCompleteness: cve.scoreBreakdown?.foundationalCompleteness || 0,
                 rootCauseAnalysis: cve.scoreBreakdown?.rootCauseAnalysis || 0,
-                cpeIdentifier: cve.scoreBreakdown?.cpeIdentifier || 0,
+                softwareIdentification: cve.scoreBreakdown?.softwareIdentification || 0,
                 securityContext: cve.scoreBreakdown?.severityAndImpactContext || 0,
                 actionableIntelligence: cve.scoreBreakdown?.actionableIntelligence || 0,
                 dataFormatPrecision: cve.scoreBreakdown?.dataFormatAndPrecision || 0,
@@ -203,8 +203,8 @@ function displayCNAHeader(overallScore, percentile, totalCVEs, breakdown, rankin
                         <span class="breakdown-value">${formatNumber(breakdown.rootCause)}/10</span>
                     </div>
                     <div class="breakdown-item">
-                        <span class="breakdown-label">Software Identification (CPE):</span>
-                        <span class="breakdown-value">${formatNumber(breakdown.cpeIdentifier)}/10</span>
+                        <span class="breakdown-label">Software Identification:</span>
+                        <span class="breakdown-value">${formatNumber(breakdown.softwareIdentification)}/10</span>
                     </div>
                     <div class="breakdown-item">
                         <span class="breakdown-label">Severity Context:</span>
@@ -255,8 +255,8 @@ function displayCVECards(scores) {
                         <span class="value">${formatNumber(score.rootCauseAnalysis)}/10</span>
                     </div>
                     <div class="detail-item">
-                        <span class="label">Software Identification (CPE):</span>
-                        <span class="value">${formatNumber(score.cpeIdentifier || 0)}/10</span>
+                        <span class="label">Software Identification:</span>
+                        <span class="value">${formatNumber(score.softwareIdentification || 0)}/10</span>
                     </div>
                     <div class="detail-item">
                         <span class="label">Severity Context:</span>
