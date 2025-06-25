@@ -280,7 +280,6 @@
         <div class="scoring-section">
             <h2>6. Data Format & Precision (5 points)</h2>
             <p>Evaluates the use of structured, machine-readable formats. <strong>Points are awarded only if <u>all present fields</u> are correctly formatted.</strong> <br> <strong>Missing fields do not penalize the score, but if a field is present and incorrectly formatted, the score is 0.</strong></p>
-            
             <table class="metric-table">
                 <thead>
                     <tr>
@@ -297,18 +296,27 @@
                     </tr>
                 </tbody>
             </table>
-            
             <div class="scoring-subsection">
                 <h3>Format Requirements (All Present Must Pass for Points):</h3>
                 <ul>
-                    <li><strong>CPE Usage:</strong> If present, must be a valid Common Platform Enumeration identifier (e.g., cpe:2.3:a:apache:http_server:2.4.52:*)</li>
-                    <li><strong>CVSS Format:</strong> If present, must be a complete CVSS score with both baseScore and vectorString</li>
-                    <li><strong>CWE Format:</strong> If present, must be a valid CWE identifier (e.g., CWE-120, CWE-787)</li>
-                    <li><strong>Language Tags:</strong> If descriptions are present, must include proper language identification</li>
-                    <li><strong>Structured Data:</strong> If affected products are present, must be well-formed with vendor and product</li>
+                    <li><strong>CPE Usage:</strong> If present, must be a valid <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir7695.pdf" target="_blank">Common Platform Enumeration</a> identifier (e.g., cpe:2.3:a:apache:http_server:2.4.52:*)<br>
+                        <em>Validation performed using the <a href="https://pypi.org/project/cpe/" target="_blank">python-cpe</a> library.</em></li>
+                    <li><strong>CVSS Format:</strong> If present, must be a complete CVSS score with both baseScore and vectorString<br>
+                        <em>Validation performed using the <a href="https://pypi.org/project/cvss/" target="_blank">python-cvss</a> library (supports v2, v3, v4).</em></li>
+                    <li><strong>CWE Format:</strong> If present, must be a valid CWE identifier (e.g., CWE-120, CWE-787)<br>
+                        <em>Validation performed using a prebuilt list from <a href="https://cwe.mitre.org/" target="_blank">MITRE CWE</a> and checked with a local validator.</em></li>
+                    <li><strong>Language Tags:</strong> If descriptions are present, must include proper language identification (e.g., <code>"lang": "en"</code>)</li>
+                    <li><strong>Structured Data:</strong> If affected products are present, must be well-formed with vendor and product fields</li>
                 </ul>
             </div>
-            
+            <div class="scoring-subsection">
+                <h3>External Libraries Used for Verification:</h3>
+                <ul>
+                    <li><a href="https://pypi.org/project/cvss/" target="_blank">python-cvss</a> &mdash; for CVSS vector and score validation</li>
+                    <li><a href="https://pypi.org/project/cpe/" target="_blank">python-cpe</a> &mdash; for CPE identifier validation</li>
+                    <li><a href="https://cwe.mitre.org/" target="_blank">MITRE CWE Catalog</a> &mdash; for CWE ID validation</li>
+                </ul>
+            </div>
             <div class="scoring-subsection">
                 <h3>Important Notes:</h3>
                 <ul>
@@ -318,7 +326,6 @@
                     <li><strong>Machine-readable format emphasis:</strong> Higher scores favor CVEs with structured, automation-friendly data</li>
                 </ul>
             </div>
-            
             <div class="example-cve">
                 <strong>Example:</strong> A CVE record that includes "cpe:2.3:a:apache:http_server:2.4.52:*:*:*:*:*:*:*", "CWE-787", and "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H" with proper language tags and structured data would receive the full 5 points. <strong>If any present field is incorrectly formatted, the score is 0. Missing fields do not penalize.</strong>
             </div>
