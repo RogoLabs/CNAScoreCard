@@ -1,262 +1,6 @@
-// CNA Detail Page Script - Enhanced Aggregate Scoring (EAS) Implementation
+// CNA Detail Page Script - Minimal version (EAS scoring handled in backend)
 let cnaData = {};
 let cveScores = [];
-let allCVEs = [];
-
-// Function to calculate Enhanced Aggregate Scoring (EAS)
-function calculateEAS(cveData) {
-    if (!cveData) return null;
-    
-    const cveId = cveData.CVE_data_meta?.ID || 'Unknown';
-    
-    // Scoring components (each out of 20 points for total of 100)
-    let foundationalCompleteness = 0;
-    let rootCauseAnalysis = 0;
-    let securityContext = 0;
-    let actionableIntelligence = 0;
-    let dataFormatPrecision = 0;
-    
-    // 1. Foundational Completeness (30 points: 15 for description + 10 for products + 5 for versions)
-    if (cveData.description?.description_data?.[0]?.value) {
-        const desc = cveData.description.description_data[0].value;
-        const descLower = desc.toLowerCase();
-        let descriptionQuality = 0;
-        
-        // Basic length and structure (3 points max)
-        if (desc.length >= 50) descriptionQuality += 1;
-        if (desc.length >= 100) descriptionQuality += 1;
-        if (desc.length >= 200) descriptionQuality += 1;
-        
-        // Technical vulnerability types (4 points max)
-        // Technical vulnerability types (4 points max)
-        const vulnTypes = [
-            'file inclusion', 'sql injection', 'access control', 'local file inclusion',
-            'remote file inclusion', 'cross-site scripting', 'command injection', 
-            'buffer overflow', 'sanitization', 'authentication bypass',
-            'null pointer dereference', 'path traversal', 'improper validation',
-            'xss', 'denial of service', 'out-of-bounds', 'code injection',
-            'privilege escalation', 'xml external entity', 'double free',
-            'use after free', 'race condition', 'integer overflow', 'format string',
-            'heap overflow', 'stack overflow', 'type confusion', 'memory corruption',
-            'deserialization', 'directory traversal', 'xxe', 'server-side request forgery',
-            'ssrf', 'csrf', 'cross-site request forgery', 'remote code execution',
-            'arbitrary code execution', 'prototype pollution', 'insecure deserialization',
-            'ldap injection', 'xpath injection', 'template injection', 'header injection',
-            'clickjacking', 'certificate validation', 'weak encryption', 'cryptographic',
-            'resource exhaustion', 'infinite loop', 'zip slip', 'business logic',
-            'improper input validation', 'missing authentication', 'weak authentication',
-            'logic error'
-        ];
-        
-        if (vulnTypes.some(type => descLower.includes(type))) {
-            descriptionQuality += 2;
-        }
-        
-        // Additional technical terms for more granular scoring
-        const techTerms2 = [
-            'vulnerability', 'exploit', 'attack', 'malicious', 'crafted',
-            'arbitrary code', 'remote', 'local', 'authenticated', 'unauthenticated'
-        ];
-        const techMatches2 = techTerms2.filter(term => descLower.includes(term)).length;
-        if (techMatches2 >= 2) descriptionQuality += 1;
-        if (techMatches2 >= 4) descriptionQuality += 1;
-        
-        // Impact/exploitation context (4 points max)
-        const impactTerms = [
-            'leads to', 'disclose', 'execute arbitrary', 'arbitrary code execution', 
-            'remote attackers', 'authenticated attackers', 'allows', 'bypass',
-            'can be exploited', 'remote code execution', 'unauthenticated attackers',
-            'attackers can', 'results in', 'manipulate', 'obtain', 'compromise',
-            'gain access', 'unauthorized access', 'enables', 'permits', 'facilitates',
-            'triggers', 'may allow', 'could allow', 'escalate privileges', 'circumvent',
-            'retrieve', 'expose', 'information disclosure', 'data exposure',
-            'sensitive information', 'leak', 'reveal', 'crash', 'hang', 'freeze',
-            'terminate', 'local attackers', 'malicious users', 'crafted',
-            'specially crafted', 'malicious', 'attacker', 'exploitation',
-            'exploitable', 'when processing', 'during processing', 'via the'
-        ];
-        const impactMatches = impactTerms.filter(term => descLower.includes(term)).length;
-        if (impactMatches >= 1) descriptionQuality += 1;
-        if (impactMatches >= 2) descriptionQuality += 1;
-        if (impactMatches >= 3) descriptionQuality += 2;
-        
-        // Technical specificity (4 points max)
-        const techTerms = [
-            'argument', 'component', 'class', 'parameter', 'function', 'field',
-            'via the', 'within the', 'plugin', 'in the', 'api', 'service',
-            'endpoint', 'interface', 'handler', 'through the', 'buffer',
-            'library', 'method', 'variable', 'property', 'object', 'instance',
-            'request', 'response', 'header', 'cookie', 'session', 'module',
-            'framework', 'driver', 'daemon', 'process', 'thread', 'parser',
-            'processor', 'validator', 'serializer', 'deserializer', 'encoder',
-            'decoder', 'protocol', 'socket', 'connection', 'channel', 'stream',
-            'queue', 'when processing', 'during processing', 'while handling',
-            'when parsing', 'during parsing', 'application', 'implementation',
-            'configuration', 'initialization', 'authentication mechanism',
-            'authorization mechanism', 'validation routine', 'sanitization'
-        ];
-        const techMatches = techTerms.filter(term => descLower.includes(term)).length;
-        if (techMatches >= 1) descriptionQuality += 1;
-        if (techMatches >= 3) descriptionQuality += 1;
-        if (techMatches >= 5) descriptionQuality += 2;
-        
-        // Generic content penalty (max -2 points)
-        const genericPhrases = [
-            'vulnerability exists', 'security issue', 'security vulnerability',
-            'issue has been identified', 'problem has been found', 'flaw exists',
-            'weakness in', 'issue in', 'vulnerability in the', 'security flaw',
-            'security weakness', 'may allow', 'could allow', 'might allow',
-            'potential vulnerability', 'security problem', 'possible to',
-            'it is possible', 'there is a vulnerability', 'vulnerability was found',
-            'vulnerability was discovered', 'security bug'
-        ];
-        const genericCount = genericPhrases.filter(phrase => descLower.includes(phrase)).length;
-        if (desc.length < 100 && genericCount >= 2) {
-            descriptionQuality -= 2;
-        }
-        
-        foundationalCompleteness += Math.max(0, Math.min(15, descriptionQuality));
-    }
-    
-    // Check for affected products (10 points)
-    if (cveData.affects?.vendor?.vendor_data && cveData.affects.vendor.vendor_data.length > 0) {
-        foundationalCompleteness += 10;
-        
-        // Check for version information (5 points)
-        const hasVersionInfo = cveData.affects.vendor.vendor_data.some(vendor =>
-            vendor.product?.product_data?.some(product =>
-                product.version?.version_data?.some(version =>
-                    version.version_value && version.version_value !== 'n/a'
-                )
-            )
-        );
-        if (hasVersionInfo) {
-            foundationalCompleteness += 5;
-        }
-    }
-    
-    // 2. Root Cause Analysis (20 points)
-    if (cveData.problemtype?.problemtype_data?.[0]?.description?.[0]?.value) {
-        const problemType = cveData.problemtype.problemtype_data[0].description[0].value;
-        if (problemType && problemType !== 'NVD-CWE-Other') rootCauseAnalysis += 10;
-        if (problemType.includes('CWE-')) rootCauseAnalysis += 10;
-    }
-    
-    // 3. Security Context (20 points)
-    if (cveData.impact?.cvss?.vector_string) {
-        securityContext += 10;
-        const cvss = cveData.impact.cvss.vector_string;
-        if (cvss.includes('CVSS:3') || cvss.includes('CVSS:4')) securityContext += 5;
-        if (cveData.impact.cvss.base_score && cveData.impact.cvss.base_score > 0) securityContext += 5;
-    }
-    
-    // 4. Actionable Intelligence (20 points)
-    if (cveData.references?.reference_data?.length > 0) {
-        actionableIntelligence += 5;
-        if (cveData.references.reference_data.length > 2) actionableIntelligence += 5;
-        
-        const hasVendorAdvisory = cveData.references.reference_data.some(ref => 
-            ref.tags?.includes('Vendor Advisory') || 
-            ref.url?.includes('advisory') ||
-            ref.url?.includes('security')
-        );
-        if (hasVendorAdvisory) actionableIntelligence += 10;
-    }
-    
-    // 5. Data Format Precision (5 points total - all or nothing)
-    let formatChecks = [];
-    
-    // Check 1: CPE format
-    let hasValidCpe = false;
-    if (cveData.affects?.vendor?.vendor_data) {
-        for (const vendor of cveData.affects.vendor.vendor_data) {
-            if (vendor.product?.product_data) {
-                for (const product of vendor.product.product_data) {
-                    if (product.version?.version_data) {
-                        for (const version of product.version.version_data) {
-                            if (version.platform && Array.isArray(version.platform)) {
-                                if (version.platform.some(p => p && p.startsWith('cpe:'))) {
-                                    hasValidCpe = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    if (hasValidCpe) break;
-                }
-            }
-            if (hasValidCpe) break;
-        }
-    }
-    formatChecks.push(hasValidCpe);
-    
-    // Check 2: CVSS format
-    let hasValidCvss = false;
-    if (cveData.impact?.cvss?.vector_string && cveData.impact?.cvss?.base_score) {
-        const cvss = cveData.impact.cvss.vector_string;
-        if (cvss.includes('CVSS:3') || cvss.includes('CVSS:4')) {
-            hasValidCvss = true;
-        }
-    }
-    formatChecks.push(hasValidCvss);
-    
-    // Check 3: CWE format
-    let hasValidCwe = false;
-    if (cveData.problemtype?.problemtype_data) {
-        for (const pt of cveData.problemtype.problemtype_data) {
-            if (pt.description) {
-                for (const desc of pt.description) {
-                    if (desc.value && desc.value.startsWith('CWE-') && 
-                        desc.value.substring(4).match(/^\d+$/)) {
-                        hasValidCwe = true;
-                        break;
-                    }
-                }
-            }
-            if (hasValidCwe) break;
-        }
-    }
-    formatChecks.push(hasValidCwe);
-    
-    // Only award points if ALL format checks pass
-    if (formatChecks.every(check => check)) {
-        dataFormatPrecision = 5;
-    }
-    
-    // Calculate overall score (sum of all components for total out of 100)
-    const overallScore = (foundationalCompleteness + rootCauseAnalysis + securityContext + actionableIntelligence + dataFormatPrecision);
-    
-    // Calculate percentile based on score ranges
-    const percentile = calculatePercentile(overallScore);
-    
-    return {
-        cveId,
-        overallScore: parseFloat(overallScore.toFixed(1)),
-        percentile,
-        foundationalCompleteness,
-        rootCauseAnalysis,
-        securityContext,
-        actionableIntelligence,
-        dataFormatPrecision
-    };
-}
-
-// Function to calculate percentile based on score
-function calculatePercentile(score) {
-    if (score >= 80) return 90;
-    if (score >= 60) return 70;
-    if (score >= 40) return 50;
-    if (score >= 20) return 30;
-    return 10;
-}
-
-// Function to get percentile class for styling
-function getPercentileClass(percentile) {
-    if (percentile >= 80) return 'percentile-top';
-    if (percentile >= 60) return 'percentile-upper';
-    if (percentile >= 40) return 'percentile-lower';
-    return 'percentile-bottom';
-}
 
 // Function to load CNA data
 async function loadCNAData() {
@@ -266,20 +10,12 @@ async function loadCNAData() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        
-        // Use the EAS data structure directly
         const cnaInfo = data.cna_info || {};
         const recentCVEs = data.recent_cves || [];
-        // Use the correct total CVE count for the CNA
         const totalCVEs = data.total_cves || cnaInfo.total_cves_scored || recentCVEs.length;
-
-        // Extract ranking and active CNA count if available
         cnaData.ranking = (typeof cnaInfo.rank !== 'undefined' && typeof cnaInfo.active_cna_count !== 'undefined') ? `Rank: ${cnaInfo.rank} of ${cnaInfo.active_cna_count}` : 'N/A';
-
-        // Use the pre-calculated scores from the EAS system
         const overallScore = cnaInfo.average_eas_score || 0;
         const percentile = cnaInfo.percentile || 0;
-        
         const breakdown = {
             foundational: (cnaInfo.average_foundational_completeness || 0),
             rootCause: (cnaInfo.average_root_cause_analysis || 0),
@@ -288,13 +24,11 @@ async function loadCNAData() {
             actionable: (cnaInfo.average_actionable_intelligence || 0),
             dataFormat: (cnaInfo.average_data_format_precision || 0)
         };
-        
-        // Convert CVE data to display format
         cveScores = recentCVEs.map(cve => {
             return {
                 cveId: cve.cveId,
                 overallScore: cve.totalEasScore || 0,
-                percentile: calculatePercentile(cve.totalEasScore || 0),
+                percentile: cve.percentile || 0,
                 foundationalCompleteness: cve.scoreBreakdown?.foundationalCompleteness || 0,
                 rootCauseAnalysis: cve.scoreBreakdown?.rootCauseAnalysis || 0,
                 softwareIdentification: cve.scoreBreakdown?.softwareIdentification || 0,
@@ -303,10 +37,8 @@ async function loadCNAData() {
                 dataFormatPrecision: cve.scoreBreakdown?.dataFormatAndPrecision || 0,
             };
         });
-        
         displayCNAHeader(overallScore, percentile, totalCVEs, breakdown, cnaData.ranking);
         displayCVECards(cveScores);
-        
     } catch (error) {
         console.error('Error loading CNA data:', error);
         document.getElementById('loading').innerHTML = `
@@ -321,12 +53,20 @@ async function loadCNAData() {
 
 // Helper to format numbers (hide .0 if integer, even if string)
 function formatNumber(num) {
-    if (typeof num === 'string' && num.match(/^\d+\.0$/)) return num.replace('.0', '');
+    if (typeof num === 'string' && num.match(/^[0-9]+\.0$/)) return num.replace('.0', '');
     if (typeof num === 'number') {
         if (num % 1 === 0) return num.toString();
         return parseFloat(num.toFixed(1)).toString();
     }
     return num;
+}
+
+// Function to get percentile class for styling
+function getPercentileClass(percentile) {
+    if (percentile >= 80) return 'percentile-top';
+    if (percentile >= 60) return 'percentile-upper';
+    if (percentile >= 40) return 'percentile-lower';
+    return 'percentile-bottom';
 }
 
 // Function to display CNA header
@@ -354,7 +94,7 @@ function displayCNAHeader(overallScore, percentile, totalCVEs, breakdown, rankin
                 </div>
                 
                 <div class="metric-item">
-                    <div class="metric-value">${ranking || 'N/A'}</div>
+                    <div class="metric-value">${formatNumber(ranking || 'N/A')}</div>
                     <div class="metric-label">Ranking</div>
                 </div>
             </div>

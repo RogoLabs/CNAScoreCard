@@ -583,97 +583,101 @@ class EnhancedAggregateScorer:
             return False
 
     def _calculate_data_format_precision(self) -> int:
-        """Calculate data format and precision score (0 or 5). All present CPE, CVSS, and CWE strings must be valid for 5 points. If none are present, or any are invalid, score is 0."""
+        """
+        Calculate Data Format & Precision score (0-5).
+        Only penalize for explicitly invalid or wrong values, not for missing/absent fields.
+        """
+        score = 0
         max_score = 5
-        # Track if we have any fields to check and if all are valid
-        has_any = False
-        all_valid = True
+        cna = self.cna_container
 
-        # Check CPEs in affected products
-        affected = self.cna_container.get('affected', [])
-        if isinstance(affected, list):
-            for item in affected:
-                if isinstance(item, dict):
-                    # Check for 'cpes' (CVE 5.1 format - plural)
-                    cpes = item.get('cpes', [])
-                    if isinstance(cpes, list):
-                        for cpe in cpes:
-                            has_any = True
-                            if not self._is_valid_cpe(cpe):
-                                all_valid = False
-                    # Check for 'cpe' (legacy format - singular)
-                    cpe = item.get('cpe', [])
-                    if isinstance(cpe, list):
-                        for c in cpe:
-                            has_any = True
-                            if not self._is_valid_cpe(c):
-                                all_valid = False
-                    # Check for other CPE field formats
-                    for field_name in ['cpe23Uri', 'cpeId', 'cpe_name', 'platformId']:
-                        cpe_value = item.get(field_name, '')
-                        if cpe_value and isinstance(cpe_value, str):
-                            has_any = True
-                            if not self._is_valid_cpe(cpe_value):
-                                all_valid = False
-                    # Check for platformIds array
-                    platform_ids = item.get('platformIds', [])
-                    if isinstance(platform_ids, list):
-                        for pid in platform_ids:
-                            has_any = True
-                            if not self._is_valid_cpe(pid):
-                                all_valid = False
-        # Check CVSS in metrics
-        metrics = self.cna_container.get('metrics', [])
-        if isinstance(metrics, list):
-            for metric in metrics:
-                if isinstance(metric, dict):
-                    for cvss_key in ['cvssV4_0', 'cvssV3_1', 'cvssV3_0', 'cvssV2']:
-                        if cvss_key in metric:
-                            cvss_data = metric.get(cvss_key)
-                            if isinstance(cvss_data, dict):
-                                vector_string = cvss_data.get('vectorString')
-                                base_score = cvss_data.get('baseScore')
-                                if vector_string is not None or base_score is not None:
-                                    has_any = True
-                                # If either is present, both must be present and valid
-                                if (vector_string is not None or base_score is not None):
-                                    if not (vector_string and base_score is not None and self._is_valid_cvss_vector(vector_string)):
-                                        all_valid = False
-        # Check CWE in problem types
-        problem_types = self.cna_container.get('problemTypes', [])
-        if isinstance(problem_types, list):
-            for pt in problem_types:
-                if isinstance(pt, dict) and pt.get('descriptions'):
-                    descriptions = pt['descriptions']
-                    if isinstance(descriptions, list):
-                        for desc in descriptions:
-                            if isinstance(desc, dict):
-                                cwe_id = desc.get('cweId', '')
-                                if cwe_id:
-                                    has_any = True
-                                    if not (cwe_id.startswith('CWE-') and cwe_id[4:].isdigit() and (self.cwe_validator is None or self.cwe_validator.is_valid_cwe(cwe_id))):
-                                        all_valid = False
-        # Check language tags in descriptions
-        descriptions = self.cna_container.get('descriptions', [])
-        if isinstance(descriptions, list):
-            for desc in descriptions:
-                if isinstance(desc, dict):
-                    if 'lang' in desc:
-                        has_any = True
-                        if not desc.get('lang'):
-                            all_valid = False
-        # Check affected products structure
-        if isinstance(affected, list):
-            for item in affected:
-                if isinstance(item, dict):
-                    if item.get('vendor') or item.get('product'):
-                        has_any = True
-                        if not (item.get('vendor') and item.get('product')):
-                            all_valid = False
-        # Only award points if at least one field is present and all are valid
-        if has_any and all_valid:
-            return max_score
-        return 0
+        # 1. CPE present and valid (1 point)
+        has_cpe = False
+        affected = cna.get('affected', [])
+        for entry in affected:
+            cpes = entry.get('cpes') or entry.get('cpe') or []
+            if isinstance(cpes, str):
+                cpes = [cpes]
+            if any(isinstance(cpe, str) and cpe.startswith('cpe:') for cpe in cpes):
+                has_cpe = True
+                break
+        if has_cpe:
+            score += 1
+
+        # 2. CVSS vector string present and valid (1 point)
+        has_cvss_vector = False
+        metrics = cna.get('metrics', [])
+        for metric in metrics:
+            for key in metric:
+                if key.startswith('cvssV'):
+                    cvss = metric[key]
+                    if isinstance(cvss, dict) and cvss.get('vectorString'):
+                        has_cvss_vector = True
+                        break
+            if has_cvss_vector:
+                break
+        if has_cvss_vector:
+            score += 1
+
+        # 3. CVSS baseScore present and valid (1 point)
+        has_cvss_score = False
+        for metric in metrics:
+            for key in metric:
+                if key.startswith('cvssV'):
+                    cvss = metric[key]
+                    if isinstance(cvss, dict) and cvss.get('baseScore') is not None:
+                        has_cvss_score = True
+                        break
+            if has_cvss_score:
+                break
+        if has_cvss_score:
+            score += 1
+
+        # 4. CWE present and valid (1 point)
+        has_cwe = False
+        problem_types = cna.get('problemTypes', [])
+        for pt in problem_types:
+            for desc in pt.get('descriptions', []):
+                cwe_id = desc.get('cweId')
+                if cwe_id and isinstance(cwe_id, str) and cwe_id.startswith('CWE-') and cwe_id[4:].isdigit():
+                    has_cwe = True
+                    break
+            if has_cwe:
+                break
+        if has_cwe:
+            score += 1
+
+        # 5. No invalid/explicitly wrong values (1 point)
+        # Only penalize if a value is present and clearly wrong (e.g., cweId='Other', cpe is not a string, etc.)
+        invalid = False
+        # Check for invalid CWE
+        for pt in problem_types:
+            for desc in pt.get('descriptions', []):
+                cwe_id = desc.get('cweId')
+                if cwe_id and (not cwe_id.startswith('CWE-') or not cwe_id[4:].isdigit()):
+                    invalid = True
+        # Check for invalid CPE
+        for entry in affected:
+            cpes = entry.get('cpes') or entry.get('cpe') or []
+            if isinstance(cpes, str):
+                cpes = [cpes]
+            for cpe in cpes:
+                if cpe and not (isinstance(cpe, str) and cpe.startswith('cpe:')):
+                    invalid = True
+        # Check for invalid CVSS
+        for metric in metrics:
+            for key in metric:
+                if key.startswith('cvssV'):
+                    cvss = metric[key]
+                    if isinstance(cvss, dict):
+                        if 'baseScore' in cvss and not isinstance(cvss['baseScore'], (int, float)):
+                            invalid = True
+                        if 'vectorString' in cvss and not isinstance(cvss['vectorString'], str):
+                            invalid = True
+        if not invalid:
+            score += 1
+
+        return min(score, max_score)
 def calculate_eas(cve_data):
     """
     Convenience function to calculate the Enhanced Aggregate Score (EAS) for a CVE record.
