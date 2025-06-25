@@ -211,7 +211,6 @@ function displayCVECards(scores) {
                     </h3>
                     <div class="cna-score-container">
                         <div class="cna-score">${formatNumber(score.overallScore)}/100</div>
-                        <div class="cna-percentile">${formatNumber(score.percentile)}th percentile</div>
                     </div>
                 </div>
                 <div class="cna-details">
