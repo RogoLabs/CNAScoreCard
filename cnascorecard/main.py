@@ -77,14 +77,14 @@ def generate_reports():
             avg_format = sum(s["scoreBreakdown"]["dataFormatAndPrecision"] for s in scores) / total_cves
             
             data["total_cves_scored"] = total_cves
-            data["average_eas_score"] = round(avg_total_eas, 2)
-            data["overall_average_score"] = round(avg_total_eas, 2)  # For compatibility
-            data["average_foundational_completeness"] = round(avg_foundational, 2)
-            data["average_root_cause_analysis"] = round(avg_root_cause, 2)
-            data["average_software_identification"] = round(avg_software_identification, 2)
-            data["average_severity_context"] = round(avg_severity, 2)
-            data["average_actionable_intelligence"] = round(avg_actionable, 2)
-            data["average_data_format_precision"] = round(avg_format, 2)
+            data["average_eas_score"] = int(round(avg_total_eas, 2)) if round(avg_total_eas, 2) % 1 == 0 else round(avg_total_eas, 2)
+            data["overall_average_score"] = int(round(avg_total_eas, 2)) if round(avg_total_eas, 2) % 1 == 0 else round(avg_total_eas, 2)  # For compatibility
+            data["average_foundational_completeness"] = int(round(avg_foundational, 2)) if round(avg_foundational, 2) % 1 == 0 else round(avg_foundational, 2)
+            data["average_root_cause_analysis"] = int(round(avg_root_cause, 2)) if round(avg_root_cause, 2) % 1 == 0 else round(avg_root_cause, 2)
+            data["average_software_identification"] = int(round(avg_software_identification, 2)) if round(avg_software_identification, 2) % 1 == 0 else round(avg_software_identification, 2)
+            data["average_severity_context"] = int(round(avg_severity, 2)) if round(avg_severity, 2) % 1 == 0 else round(avg_severity, 2)
+            data["average_actionable_intelligence"] = int(round(avg_actionable, 2)) if round(avg_actionable, 2) % 1 == 0 else round(avg_actionable, 2)
+            data["average_data_format_precision"] = int(round(avg_format, 2)) if round(avg_format, 2) % 1 == 0 else round(avg_format, 2)
             
             # Clean up the individual scores from the final report
             del data["scores"]

@@ -136,17 +136,25 @@ def main():
         
         if not cna_info:
             # Create basic info for unknown CNAs
+            # Helper function to format averages consistently
+            def format_avg(values, count):
+                if not count:
+                    return 0
+                avg = sum(values) / count
+                rounded = round(avg, 2)
+                return int(rounded) if rounded % 1 == 0 else rounded
+            
             cna_info = {
                 'cna': cna_name,
                 'total_cves_scored': len(cna_cves),
-                'average_eas_score': sum(c.get('totalEasScore', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
+                'average_eas_score': format_avg([c.get('totalEasScore', 0) for c in cna_cves], len(cna_cves)),
                 'percentile': 0,
-                'average_foundational_completeness': sum(c.get('scoreBreakdown', {}).get('foundationalCompleteness', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
-                'average_root_cause_analysis': sum(c.get('scoreBreakdown', {}).get('rootCauseAnalysis', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
-                'average_software_identification': sum(c.get('scoreBreakdown', {}).get('softwareIdentification', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
-                'average_severity_context': sum(c.get('scoreBreakdown', {}).get('severityAndImpactContext', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
-                'average_actionable_intelligence': sum(c.get('scoreBreakdown', {}).get('actionableIntelligence', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0,
-                'average_data_format_precision': sum(c.get('scoreBreakdown', {}).get('dataFormatAndPrecision', 0) for c in cna_cves) / len(cna_cves) if cna_cves else 0
+                'average_foundational_completeness': format_avg([c.get('scoreBreakdown', {}).get('foundationalCompleteness', 0) for c in cna_cves], len(cna_cves)),
+                'average_root_cause_analysis': format_avg([c.get('scoreBreakdown', {}).get('rootCauseAnalysis', 0) for c in cna_cves], len(cna_cves)),
+                'average_software_identification': format_avg([c.get('scoreBreakdown', {}).get('softwareIdentification', 0) for c in cna_cves], len(cna_cves)),
+                'average_severity_context': format_avg([c.get('scoreBreakdown', {}).get('severityAndImpactContext', 0) for c in cna_cves], len(cna_cves)),
+                'average_actionable_intelligence': format_avg([c.get('scoreBreakdown', {}).get('actionableIntelligence', 0) for c in cna_cves], len(cna_cves)),
+                'average_data_format_precision': format_avg([c.get('scoreBreakdown', {}).get('dataFormatAndPrecision', 0) for c in cna_cves], len(cna_cves))
             }
         
         # Only generate pages for CNAs with CVEs
