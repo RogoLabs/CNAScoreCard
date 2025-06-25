@@ -113,14 +113,9 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>English Description</td>
-                        <td class="points">10</td>
-                        <td>Presence of English language description</td>
-                    </tr>
-                    <tr>
                         <td>Description Quality</td>
-                        <td class="points">5</td>
-                        <td>Meaningful description (>50 characters)</td>
+                        <td class="points">15</td>
+                        <td>Advanced content analysis evaluating technical depth, specificity, and clarity</td>
                     </tr>
                     <tr>
                         <td>Affected Products</td>
@@ -136,7 +131,86 @@
             </table>
             
             <div class="example-cve">
-                <strong>Example:</strong> A CVE that specifies "Apache HTTP Server versions 2.4.0 through 2.4.52" with a detailed description of the buffer overflow vulnerability would score the full 30 points.
+                <strong>Example:</strong> A CVE that specifies "Apache HTTP Server versions 2.4.0 through 2.4.52" with a detailed description like "A buffer overflow vulnerability in the mod_rewrite module allows remote attackers to execute arbitrary code via crafted HTTP requests when processing malformed URL patterns" would score the full 30 points.
+            </div>
+        </div>
+        
+        <div class="scoring-section">
+            <h2>2. Root Cause Analysis (10 points)</h2>
+            <p>Evaluates the technical depth of vulnerability classification and problem type identification.</p>
+            
+            <table class="metric-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Points</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CWE Classification</td>
+                        <td class="points">5</td>
+                        <td>Valid CWE (Common Weakness Enumeration) identifier</td>
+                    </tr>
+                    <tr>
+                        <td>Problem Type Detail</td>
+                        <td class="points">5</td>
+                        <td>Additional technical context or detailed problem classification</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="example-cve">
+                <strong>Example:</strong> A CVE with CWE-120 (Buffer Copy without Checking Size of Input) provides clear categorization for developers to understand the vulnerability pattern.
+            </div>
+        </div>
+        
+        <div class="scoring-section">
+            <h2>Description Quality Evaluation</h2>
+            <p>The system uses advanced content analysis to evaluate description quality across multiple dimensions (15 points total):</p>
+            
+            <table class="metric-table">
+                <thead>
+                    <tr>
+                        <th>Quality Indicator</th>
+                        <th>Points</th>
+                        <th>Examples</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Basic Length & Structure</td>
+                        <td class="points">3</td>
+                        <td>Progressive scoring for descriptions ≥50, ≥100, ≥200 characters</td>
+                    </tr>
+                    <tr>
+                        <td>Technical Vulnerability Type</td>
+                        <td class="points">4</td>
+                        <td>"buffer overflow", "SQL injection", "XSS", "privilege escalation", "code injection"</td>
+                    </tr>
+                    <tr>
+                        <td>Impact/Exploitation Context</td>
+                        <td class="points">4</td>
+                        <td>"allows", "enables", "leads to", "can be exploited", "unauthorized access", "execute"</td>
+                    </tr>
+                    <tr>
+                        <td>Technical Specificity</td>
+                        <td class="points">4</td>
+                        <td>"function", "parameter", "API endpoint", "when processing", "via the", "module"</td>
+                    </tr>
+                    <tr>
+                        <td>Generic Content Penalty</td>
+                        <td class="points">-2</td>
+                        <td>Multiple generic phrases in short descriptions are penalized</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="example-cve">
+                <strong>High Quality (12-15 points):</strong> "A buffer overflow vulnerability in the mod_rewrite module of Apache HTTP Server allows remote attackers to execute arbitrary code via crafted HTTP requests when processing malformed URL patterns in .htaccess files."<br><br>
+                <strong>Medium Quality (6-11 points):</strong> "A SQL injection vulnerability in the user login function allows authenticated users to execute arbitrary SQL commands."<br><br>
+                <strong>Low Quality (1-5 points):</strong> "A security vulnerability exists in the application that may allow unauthorized access."
             </div>
         </div>
 

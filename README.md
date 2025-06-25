@@ -61,13 +61,37 @@ python cnascorecard/generate_static_data.py
 
 This will create the necessary JSON files in the `web/data/` directory.
 
+### Testing Description Quality Algorithm
+To test and analyze the description quality scoring algorithm:
+```bash
+# Install test dependencies
+pip install -r tests/test-requirements.txt
+
+# Run the analysis
+python tests/run_description_analysis.py
+```
+
+This will analyze 10,000 CVE descriptions and provide:
+- Statistical analysis of scoring distribution
+- Quality category breakdowns
+- Component-specific performance metrics
+- ML-based clustering analysis (if libraries available)
+- Recommendations for algorithm improvements
+
 ## Scoring Methodology
 
 The Enhanced Aggregate Scoring (EAS) system evaluates CVE records across six key dimensions:
 
 ### 1. Foundational Completeness (30 points)
 - Product identification, version details, and clear vulnerability descriptions
-- Checks for basic required fields and description quality
+- **Enhanced description quality analysis** using multi-dimensional technical content evaluation:
+  - **Length & Structure** (3 points): Progressive scoring for descriptions ≥50, ≥100, ≥200 characters
+  - **Technical Vulnerability Types** (2 points): Detection of specific vulnerability patterns (buffer overflow, SQL injection, XSS, etc.) - binary scoring
+  - **General Technical Terms** (2 points): Progressive scoring for general security terms (vulnerability, exploit, attack, etc.)
+  - **Impact/Exploitation Context** (4 points): Progressive scoring for exploitation indicators (allows, enables, execute, etc.)
+  - **Technical Specificity** (4 points): Progressive scoring for technical depth indicators (function, parameter, API, module, etc.)
+  - **Generic Content Penalty** (-2 points): Penalty for multiple generic phrases in short descriptions
+- Checks for vulnerability types, impact context, and technical specificity
 
 ### 2. Root Cause Analysis (10 points) 
 - CWE classifications and technical depth indicators

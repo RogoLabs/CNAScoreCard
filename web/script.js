@@ -14,13 +14,99 @@ function calculateEAS(cveData) {
     let actionableIntelligence = 0;
     let dataFormatPrecision = 0;
     
-    // 1. Foundational Completeness (20 points)
+    // 1. Foundational Completeness (30 points: 15 for description + 10 for products + 5 for versions)
     if (cveData.description?.description_data?.[0]?.value) {
         const desc = cveData.description.description_data[0].value;
-        if (desc.length > 50) foundationalCompleteness += 5;
-        if (desc.length > 100) foundationalCompleteness += 5;
-        if (desc.includes('vulnerability') || desc.includes('exploit')) foundationalCompleteness += 5;
-        if (desc.length > 200) foundationalCompleteness += 5;
+        const descLower = desc.toLowerCase();
+        let descriptionQuality = 0;
+        
+        // Basic length and structure (3 points max)
+        if (desc.length >= 50) descriptionQuality += 1;
+        if (desc.length >= 100) descriptionQuality += 1;
+        if (desc.length >= 200) descriptionQuality += 1;
+        
+        // Technical vulnerability types (4 points max)
+        const vulnTypes = [
+            'buffer overflow', 'sql injection', 'xss', 'cross-site scripting',
+            'privilege escalation', 'code injection', 'path traversal',
+            'denial of service', 'memory corruption', 'use after free',
+            'race condition', 'authentication bypass', 'authorization',
+            'deserialization', 'command injection', 'file inclusion',
+            'directory traversal', 'format string', 'integer overflow',
+            'xml external entity', 'xxe', 'server-side request forgery', 'ssrf',
+            'csrf', 'cross-site request forgery', 'heap overflow', 'stack overflow',
+            'double free', 'out-of-bounds', 'type confusion', 'logic error',
+            'access control', 'improper validation', 'improper input validation',
+            'missing authentication', 'weak encryption', 'cryptographic',
+            'certificate validation', 'tls', 'ssl'
+        ];
+        
+        if (vulnTypes.some(type => descLower.includes(type))) {
+            descriptionQuality += 2;
+        }
+        
+        // Additional technical terms for more granular scoring
+        const techTerms2 = [
+            'vulnerability', 'exploit', 'attack', 'malicious', 'crafted',
+            'arbitrary code', 'remote', 'local', 'authenticated', 'unauthenticated'
+        ];
+        const techMatches2 = techTerms2.filter(term => descLower.includes(term)).length;
+        if (techMatches2 >= 2) descriptionQuality += 1;
+        if (techMatches2 >= 4) descriptionQuality += 1;
+        
+        // Impact/exploitation context (4 points max)
+        const impactTerms = [
+            'allows', 'enables', 'leads to', 'results in', 'can be exploited',
+            'may allow', 'could allow', 'permits', 'expose', 'disclose',
+            'execute arbitrary', 'gain access', 'bypass', 'escalate',
+            'compromise', 'unauthorized', 'malicious', 'attacker'
+        ];
+        const impactMatches = impactTerms.filter(term => descLower.includes(term)).length;
+        if (impactMatches >= 1) descriptionQuality += 1;
+        if (impactMatches >= 2) descriptionQuality += 1;
+        if (impactMatches >= 3) descriptionQuality += 2;
+        
+        // Technical specificity (4 points max)
+        const techTerms = [
+            'function', 'method', 'parameter', 'header', 'field', 'variable',
+            'endpoint', 'api', 'request', 'response', 'cookie', 'session',
+            'component', 'module', 'library', 'framework', 'protocol',
+            'when processing', 'during', 'while handling', 'in the', 'via the'
+        ];
+        const techMatches = techTerms.filter(term => descLower.includes(term)).length;
+        if (techMatches >= 1) descriptionQuality += 1;
+        if (techMatches >= 3) descriptionQuality += 1;
+        if (techMatches >= 5) descriptionQuality += 2;
+        
+        // Generic content penalty (max -2 points)
+        const genericPhrases = [
+            'vulnerability exists', 'security issue', 'security vulnerability',
+            'issue has been identified', 'problem has been found', 'flaw exists',
+            'weakness in', 'issue in', 'vulnerability in the'
+        ];
+        const genericCount = genericPhrases.filter(phrase => descLower.includes(phrase)).length;
+        if (desc.length < 100 && genericCount >= 2) {
+            descriptionQuality -= 2;
+        }
+        
+        foundationalCompleteness += Math.max(0, Math.min(15, descriptionQuality));
+    }
+    
+    // Check for affected products (10 points)
+    if (cveData.affects?.vendor?.vendor_data && cveData.affects.vendor.vendor_data.length > 0) {
+        foundationalCompleteness += 10;
+        
+        // Check for version information (5 points)
+        const hasVersionInfo = cveData.affects.vendor.vendor_data.some(vendor =>
+            vendor.product?.product_data?.some(product =>
+                product.version?.version_data?.some(version =>
+                    version.version_value && version.version_value !== 'n/a'
+                )
+            )
+        );
+        if (hasVersionInfo) {
+            foundationalCompleteness += 5;
+        }
     }
     
     // 2. Root Cause Analysis (20 points)

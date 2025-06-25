@@ -1,0 +1,138 @@
+============================================================
+CVE DESCRIPTION QUALITY ANALYSIS REPORT
+============================================================
+Total CVEs Analyzed: 9695
+Analysis Date: 2025-06-25 13:56:45
+
+📊 OVERALL SCORE DISTRIBUTION
+------------------------------
+Mean Score: 6.45/15
+Median Score: 6.00/15
+Standard Deviation: 2.36
+Min Score: 0.0
+Max Score: 15.0
+
+🎯 QUALITY CATEGORIES
+--------------------
+Excellent (12-15): 183 (1.9%)
+Good (8-11): 3243 (33.5%)
+Fair (4-7): 5050 (52.1%)
+Poor (0-3): 1219 (12.6%)
+
+🔧 COMPONENT PERFORMANCE
+-------------------------
+Length Structure: 2.75
+Technical Types: 1.45
+Impact Context: 1.42
+Technical Specificity: 0.84
+
+📏 DESCRIPTION LENGTH ANALYSIS
+------------------------------
+Average Length: 431 characters
+Median Length: 295 characters
+Short (<50 chars): 7 (0.1%)
+Medium (50-199): 2257 (23.3%)
+Long (≥200): 7431 (76.6%)
+
+🏆 TOP PERFORMING CNAs (≥5 CVEs)
+-----------------------------------
+ 1. Gridware: 10.71 (n=7)
+ 2. talos: 10.23 (n=39)
+ 3. WSO2: 9.78 (n=9)
+ 4. eclipse: 9.50 (n=6)
+ 5. 3DS: 9.40 (n=10)
+ 6. NLOK: 9.33 (n=6)
+ 7. adobe: 9.24 (n=203)
+ 8. siemens: 9.08 (n=71)
+ 9. VulnCheck: 9.05 (n=21)
+10. @huntr_ai: 8.77 (n=150)
+
+📉 BOTTOM PERFORMING CNAs (≥5 CVEs)
+--------------------------------------
+ 1. imaginationtech: 2.36 (n=11)
+ 2. JetBrains: 2.47 (n=17)
+ 3. qualcomm: 3.15 (n=65)
+ 4. Arista: 3.25 (n=8)
+ 5. apple: 3.55 (n=143)
+ 6. lenovo: 3.67 (n=6)
+ 7. Go: 3.67 (n=6)
+ 8. intel: 3.81 (n=72)
+ 9. fedora: 3.90 (n=10)
+10. Zoom: 4.00 (n=18)
+
+📝 SAMPLE DESCRIPTIONS BY QUALITY
+-----------------------------------
+EXCELLENT (Score: 12-15):
+CVE: CVE-2025-46341
+Score: 15/15
+Description: FreshRSS is a self-hosted RSS feed aggregator. Prior to version 1.26.2, when the server is using HTTP auth via reverse proxy, it's possible to impersonate any user either via the `Remote-User` header ...
+
+POOR (Score: 0-3):
+CVE: CVE-2022-49386
+Score: 3/15
+Description: In the Linux kernel, the following vulnerability has been resolved:
+
+net: ethernet: ti: am65-cpsw-nuss: Fix some refcount leaks
+
+of_get_child_by_name() returns a node pointer with refcount
+incremented, we should use of_node_put() on it when not need anymore.
+am65_cpsw_init_cpts() and am65_cpsw_nuss_probe() don't release
+the refcount in error case.
+Add missing of_node_put() to avoid refcount leak.
+
+
+🤖 MACHINE LEARNING ANALYSIS
+===================================
+🔍 TOP TERMS ASSOCIATED WITH HIGH SCORES:
+  'execute': 8.91 avg score (n=1192)
+  'xss': 8.40 avg score (n=1390)
+  'stored': 8.33 avg score (n=1149)
+  'malicious': 8.30 avg score (n=727)
+  'site scripting': 8.19 avg score (n=1826)
+  'scripting': 8.18 avg score (n=1833)
+  'service': 8.16 avg score (n=751)
+  'affected': 8.09 avg score (n=1260)
+  'critical': 8.00 avg score (n=906)
+  'arbitrary': 7.94 avg score (n=1387)
+  'cross': 7.92 avg score (n=2362)
+  'input': 7.88 avg score (n=1480)
+  'web': 7.84 avg score (n=1814)
+  'page generation': 7.84 avg score (n=829)
+  'web page': 7.82 avg score (n=846)
+
+🎯 CLUSTERING ANALYSIS:
+  Cluster 0: 6.02 avg score (2193 CVEs)
+  Cluster 1: 7.75 avg score (1642 CVEs)
+  Cluster 2: 7.55 avg score (758 CVEs)
+  Cluster 3: 6.14 avg score (4492 CVEs)
+  Cluster 4: 5.49 avg score (610 CVEs)
+
+
+💡 ALGORITHM IMPROVEMENT RECOMMENDATIONS
+=============================================
+Current average score: 6.45/15
+
+🎯 COMPONENT EFFECTIVENESS:
+  Length Structure: 99.9% of CVEs score points
+  Impact Context: 75.5% of CVEs score points
+  Technical Types: 57.4% of CVEs score points
+  Technical Specificity: 54.2% of CVEs score points
+
+📋 SPECIFIC RECOMMENDATIONS:
+
+4. GENERIC CONTENT DETECTION:
+   - Current penalty may be too narrow
+   - Consider ML-based generic content detection
+   - Expand generic phrase list
+
+5. CNA PERFORMANCE VARIANCE:
+   - Score variance across CNAs: 1.67
+
+6. OVERALL ALGORITHM TUNING:
+   - Current scoring distribution appears reasonable
+
+7. PROPOSED SCORING ADJUSTMENTS:
+   - Move from 15-point to 10-point scale for better distribution
+   - Implement progressive scoring within components
+   - Add bonus points for exceptional technical detail
+   - Consider machine learning for quality assessment

@@ -129,31 +129,171 @@ class EnhancedAggregateScorer:
         max_score = 30
         
         # Check for basic required fields
-        if self.cna_container.get('descriptions'):
-            descriptions = self.cna_container['descriptions']
-            if isinstance(descriptions, list) and len(descriptions) > 0:
-                # Check for English description
-                has_english = any(d.get('lang') == 'en' for d in descriptions if isinstance(d, dict))
-                if has_english:
-                    score += 10
-                    # Check description quality
-                    en_desc = next((d.get('value', '') for d in descriptions if d.get('lang') == 'en'), '')
-                    if len(en_desc) > 50:
-                        score += 5
+        descriptions = self.cna_container.get('descriptions', [])
+        if descriptions:
+            # Find English description and evaluate quality (15 points max)
+            english_desc = None
+            for desc in descriptions:
+                if desc.get('lang', '').lower() in ['en', 'eng', 'english']:
+                    english_desc = desc.get('value', '')
+                    break
+            
+            # Evaluate description quality (15 points max)
+            if english_desc:
+                quality_score = self._evaluate_description_quality(english_desc)
+                score += quality_score
         
-        # Check for affected products
-        if self.cna_container.get('affected'):
-            affected = self.cna_container['affected']
-            if isinstance(affected, list) and len(affected) > 0:
-                score += 10
-                # Check for version information
-                has_versions = any(
-                    item.get('versions') for item in affected if isinstance(item, dict)
-                )
-                if has_versions:
+        # Check for affected products (10 points)
+        affected = self.cna_container.get('affected', [])
+        if affected and len(affected) > 0:
+            score += 10
+            
+            # Check for version information (5 points)
+            for product in affected:
+                versions = product.get('versions', [])
+                if versions and any(v.get('version') or v.get('versionType') or v.get('status') for v in versions):
                     score += 5
+                    break
         
         return min(score, max_score)
+    
+    def _evaluate_description_quality(self, description: str) -> int:
+        """
+        Evaluate the quality of a vulnerability description.
+        Returns 0-15 points based on content depth and technical relevance.
+        """
+        if not description or len(description.strip()) < 20:
+            return 0
+        
+        desc_lower = description.lower().strip()
+        quality_score = 0
+        
+        # Basic length and structure check (3 points)
+        if len(desc_lower) >= 50:
+            quality_score += 1
+        if len(desc_lower) >= 100:
+            quality_score += 1
+        if len(desc_lower) >= 200:
+            quality_score += 1
+        
+        # Technical vulnerability indicators (4 points)
+        vuln_types = [
+            'buffer overflow', 'sql injection', 'xss', 'cross-site scripting',
+            'privilege escalation', 'code injection', 'path traversal',
+            'denial of service', 'memory corruption', 'use after free',
+            'race condition', 'authentication bypass', 'authorization',
+            'deserialization', 'command injection', 'file inclusion'
+        ]
+        
+        if any(vtype in desc_lower for vtype in vuln_types):
+            quality_score += 2
+        
+        # Additional technical terms
+        tech_terms = [
+            'vulnerability', 'exploit', 'attack', 'malicious', 'crafted',
+            'arbitrary code', 'remote', 'local', 'authenticated', 'unauthenticated'
+        ]
+        tech_matches = sum(1 for term in tech_terms if term in desc_lower)
+        if tech_matches >= 2:
+            quality_score += 1
+        if tech_matches >= 4:
+            quality_score += 1
+        
+        # Impact/exploitation context (4 points)
+        impact_terms = [
+            'allows', 'enables', 'leads to', 'can be exploited',
+            'unauthorized access', 'execute', 'obtain', 'bypass',
+            'gain access', 'escalate', 'compromise', 'manipulate'
+        ]
+        
+        impact_matches = sum(1 for term in impact_terms if term in desc_lower)
+        if impact_matches >= 1:
+            quality_score += 1
+        if impact_matches >= 2:
+            quality_score += 1
+        if impact_matches >= 3:
+            quality_score += 2
+        
+        # Technical specificity (4 points)
+        specific_terms = [
+            'function', 'parameter', 'variable', 'field', 'method',
+            'api', 'endpoint', 'when processing', 'via the', 'through the',
+            'in the', 'module', 'component', 'library', 'parser'
+        ]
+        
+        specific_matches = sum(1 for term in specific_terms if term in desc_lower)
+        if specific_matches >= 1:
+            quality_score += 1
+        if specific_matches >= 3:
+            quality_score += 1
+        if specific_matches >= 5:
+            quality_score += 2
+        
+        # Penalty for overly generic content
+        generic_phrases = [
+            'security issue', 'security problem', 'security flaw',
+            'may allow', 'could allow', 'might allow', 'possible to'
+        ]
+        
+        generic_count = sum(1 for phrase in generic_phrases if phrase in desc_lower)
+        if generic_count >= 2 and len(desc_lower) < 100:
+            quality_score = max(0, quality_score - 2)
+        
+        return min(quality_score, 15)
+        vuln_keywords = [
+            'buffer overflow', 'sql injection', 'cross-site scripting', 'xss',
+            'remote code execution', 'rce', 'privilege escalation', 'authentication bypass',
+            'path traversal', 'directory traversal', 'arbitrary file', 'code injection',
+            'command injection', 'memory corruption', 'use after free', 'null pointer',
+            'integer overflow', 'format string', 'race condition', 'deserialization',
+            'xml external entity', 'xxe', 'server-side request forgery', 'ssrf',
+            'csrf', 'cross-site request forgery', 'denial of service', 'dos',
+            'heap overflow', 'stack overflow', 'double free', 'out-of-bounds',
+            'type confusion', 'logic error', 'access control', 'improper validation',
+            'improper input validation', 'missing authentication', 'weak encryption',
+            'cryptographic', 'certificate validation', 'tls', 'ssl'
+        ]
+        
+        if any(keyword in desc_lower for keyword in vuln_keywords):
+            quality_score += 1
+        
+        # Impact or exploitation context (1 point)
+        impact_keywords = [
+            'allows', 'enables', 'leads to', 'results in', 'can be exploited',
+            'may allow', 'could allow', 'permits', 'expose', 'disclose',
+            'execute arbitrary', 'gain access', 'bypass', 'escalate',
+            'compromise', 'unauthorized', 'malicious', 'attacker'
+        ]
+        
+        if any(keyword in desc_lower for keyword in impact_keywords):
+            quality_score += 1
+        
+        # Technical specificity (1 point)
+        # Look for specific component, function, or technical details
+        specific_indicators = [
+            'function', 'method', 'parameter', 'header', 'field', 'variable',
+            'endpoint', 'api', 'request', 'response', 'cookie', 'session',
+            'component', 'module', 'library', 'framework', 'protocol',
+            'when processing', 'during', 'while handling', 'in the', 'via the'
+        ]
+        
+        if any(indicator in desc_lower for indicator in specific_indicators):
+            quality_score += 1
+        
+        # Avoid generic/low-quality descriptions (penalty)
+        generic_phrases = [
+            'vulnerability exists', 'security issue', 'security vulnerability',
+            'issue has been identified', 'problem has been found', 'flaw exists',
+            'weakness in', 'issue in', 'vulnerability in the'
+        ]
+        
+        # If description is mostly generic phrases and short, reduce score
+        if len(desc_lower) < 100 and any(phrase in desc_lower for phrase in generic_phrases):
+            generic_count = sum(1 for phrase in generic_phrases if phrase in desc_lower)
+            if generic_count >= 2:  # Multiple generic phrases in short description
+                quality_score = max(0, quality_score - 1)
+        
+        return min(quality_score, 5)
 
     def _calculate_root_cause_analysis(self) -> int:
         """Calculate root cause analysis score (0-10)."""
