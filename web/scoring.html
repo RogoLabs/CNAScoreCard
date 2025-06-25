@@ -151,7 +151,7 @@
         </div>
 
         <div class="scoring-section">
-            <h2>2. Root Cause Analysis (20 points)</h2>
+            <h2>2. Root Cause Analysis (10 points)</h2>
             <p>Evaluates whether the CVE provides insight into the underlying weakness type.</p>
             
             <table class="metric-table">
@@ -165,7 +165,7 @@
                 <tbody>
                     <tr>
                         <td>CWE ID Provided</td>
-                        <td class="points">20</td>
+                        <td class="points">10</td>
                         <td>Valid CWE identifier (e.g., CWE-79, CWE-120)</td>
                     </tr>
                 </tbody>
@@ -177,7 +177,31 @@
         </div>
 
         <div class="scoring-section">
-            <h2>3. Severity & Impact Context (25 points)</h2>
+            <h2>3. Software Identification (CPE) (10 points)</h2>
+            <p>Assesses whether the CVE record includes a valid CPE identifier for affected products, enabling precise software identification and automation.</p>
+            <table class="metric-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Points</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CPE Present</td>
+                        <td class="points">10</td>
+                        <td>Valid CPE identifier (e.g., cpe:2.3:a:apache:http_server:2.4.52:*)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="example-cve">
+                <strong>Example:</strong> Including "cpe:2.3:a:apache:http_server:2.4.52:*:*:*:*:*:*:*" enables automated vulnerability scanning tools to identify affected systems.
+            </div>
+        </div>
+
+        <div class="scoring-section">
+            <h2>4. Severity & Impact Context (25 points)</h2>
             <p>Assesses the quality and completeness of severity scoring information.</p>
             
             <table class="metric-table">
@@ -213,7 +237,7 @@
         </div>
 
         <div class="scoring-section">
-            <h2>4. Actionable Intelligence (20 points)</h2>
+            <h2>5. Actionable Intelligence (20 points)</h2>
             <p>Measures the availability of information that enables immediate action by security teams.</p>
             
             <table class="metric-table">
@@ -254,7 +278,7 @@
         </div>
 
         <div class="scoring-section">
-            <h2>5. Data Format & Precision (5 points)</h2>
+            <h2>6. Data Format & Precision (5 points)</h2>
             <p>Evaluates the use of structured, machine-readable formats.</p>
             
             <table class="metric-table">

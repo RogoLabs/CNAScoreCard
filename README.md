@@ -57,25 +57,29 @@ This will create the necessary JSON files in the `web/data/` directory.
 
 ## Scoring Methodology
 
-The Enhanced Aggregate Scoring (EAS) system evaluates CVE records across five key dimensions:
+The Enhanced Aggregate Scoring (EAS) system evaluates CVE records across six key dimensions:
 
-### 1. Foundational Completeness (25% weight)
+### 1. Foundational Completeness (30 points)
 - Product identification, version details, and clear vulnerability descriptions
 - Checks for basic required fields and description quality
 
-### 2. Root Cause Analysis (20% weight) 
+### 2. Root Cause Analysis (10 points) 
 - CWE classifications and technical depth indicators
 - Evaluates presence of proper problem type identification
 
-### 3. Severity & Impact Context (20% weight)
-- CVSS metrics (v2, v3.0, v3.1) with base scores and vector strings
+### 3. Software Identification (CPE) (10 points)
+- Awarded if a valid CPE identifier is present in the CVE record
+- Enables precise product targeting for automation
+
+### 4. Severity & Impact Context (25 points)
+- CVSS metrics (v2, v3.0, v3.1, v4.0) with base scores and vector strings
 - Impact information and exploitation indicators
 
-### 4. Actionable Intelligence (20% weight)
+### 5. Actionable Intelligence (20% weight)
 - Solution information, patch references, and workarounds
 - Quality and actionability of reference materials
 
-### 5. Data Format & Precision (15% weight)
+### 6. Data Format & Precision (5 points)
 - Structured data formats and machine-readable content
 - Proper formatting of affected products and references
 

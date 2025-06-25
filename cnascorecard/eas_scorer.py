@@ -34,6 +34,7 @@ class EnhancedAggregateScorer:
         # Calculate individual scores
         foundational_score = self._calculate_foundational_completeness()
         root_cause_score = self._calculate_root_cause_analysis()
+        cpe_identifier_score = self._calculate_cpe_identifier()
         severity_score = self._calculate_severity_context()
         actionable_score = self._calculate_actionable_intelligence()
         format_score = self._calculate_data_format_precision()
@@ -42,6 +43,7 @@ class EnhancedAggregateScorer:
         total_eas_score = (
             foundational_score +
             root_cause_score +
+            cpe_identifier_score +
             severity_score +
             actionable_score +
             format_score
@@ -55,6 +57,7 @@ class EnhancedAggregateScorer:
             'scoreBreakdown': {
                 'foundationalCompleteness': round(foundational_score, 2),
                 'rootCauseAnalysis': round(root_cause_score, 2),
+                'cpeIdentifier': round(cpe_identifier_score, 2),
                 'severityAndImpactContext': round(severity_score, 2),
                 'actionableIntelligence': round(actionable_score, 2),
                 'dataFormatAndPrecision': round(format_score, 2)
@@ -94,9 +97,9 @@ class EnhancedAggregateScorer:
         return min(score, max_score)
 
     def _calculate_root_cause_analysis(self) -> int:
-        """Calculate root cause analysis score (0-20)."""
+        """Calculate root cause analysis score (0-10)."""
         score = 0
-        max_score = 20
+        max_score = 10
         
         # Check problem types for technical detail
         problem_types = self.cna_container.get('problemTypes', [])
@@ -109,7 +112,7 @@ class EnhancedAggregateScorer:
                             if isinstance(desc, dict):
                                 cwe_id = desc.get('cweId', '')
                                 if cwe_id and cwe_id.startswith('CWE-'):
-                                    score = 20  # Full score for having CWE
+                                    score = 10  # Full score for having CWE
                                     break
                     if score > 0:
                         break
@@ -130,9 +133,28 @@ class EnhancedAggregateScorer:
                         ]
                         found_terms = sum(1 for term in technical_terms if term in text)
                         if found_terms > 0:
-                            score = min(10, found_terms * 2)  # Up to 10 points for technical terms
+                            score = min(5, found_terms * 1)  # Up to 5 points for technical terms
                     break
         
+        return min(score, max_score)
+
+    def _calculate_cpe_identifier(self) -> int:
+        """Calculate CPE identifier score (0-10)."""
+        score = 0
+        max_score = 10
+        # Check for CPE in affected products
+        affected = self.cna_container.get('affected', [])
+        if isinstance(affected, list):
+            for item in affected:
+                if isinstance(item, dict):
+                    cpes = item.get('cpe', [])
+                    if isinstance(cpes, list) and len(cpes) > 0:
+                        score = max_score
+                        break
+                    # Some CNAs use 'cpe23Uri' or similar
+                    if item.get('cpe23Uri'):
+                        score = max_score
+                        break
         return min(score, max_score)
 
     def _calculate_severity_context(self) -> int:
