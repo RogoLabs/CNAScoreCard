@@ -17,6 +17,10 @@ except ImportError:
     CVSS3 = None
     CVSS2 = None
     CVSS4 = None
+try:
+    from cpe import CPE
+except ImportError:
+    CPE = None
 
 # A small, hardcoded list of known exploit database domains.
 KNOWN_EXPLOIT_DOMAINS = ['exploit-db.com']
@@ -215,39 +219,33 @@ class EnhancedAggregateScorer:
                     # Check for 'cpes' (CVE 5.1 format - plural)
                     cpes = item.get('cpes', [])
                     if isinstance(cpes, list) and len(cpes) > 0:
-                        # Validate that at least one CPE looks valid
-                        if any(cpe and isinstance(cpe, str) and cpe.startswith('cpe:') for cpe in cpes):
+                        # Validate that at least one CPE is valid using cpe lib
+                        if any(self._is_valid_cpe(cpe) for cpe in cpes):
                             score = max_score
                             break
-                    
                     # Check for 'cpe' (legacy format - singular)
                     cpe = item.get('cpe', [])
                     if isinstance(cpe, list) and len(cpe) > 0:
-                        # Validate that at least one CPE looks valid
-                        if any(c and isinstance(c, str) and c.startswith('cpe:') for c in cpe):
+                        if any(self._is_valid_cpe(c) for c in cpe):
                             score = max_score
                             break
-                    
                     # Some CNAs use 'cpe23Uri' or similar single string format
                     cpe_uri = item.get('cpe23Uri', '')
-                    if cpe_uri and isinstance(cpe_uri, str) and cpe_uri.startswith('cpe:'):
+                    if cpe_uri and isinstance(cpe_uri, str) and self._is_valid_cpe(cpe_uri):
                         score = max_score
                         break
-                    
                     # Check for other potential CPE field names
                     for field_name in ['cpeId', 'cpe_name', 'platformId']:
                         cpe_value = item.get(field_name, '')
-                        if cpe_value and isinstance(cpe_value, str) and cpe_value.startswith('cpe:'):
+                        if cpe_value and isinstance(cpe_value, str) and self._is_valid_cpe(cpe_value):
                             score = max_score
                             break
-                    
                     # Check for platformIds array
                     platform_ids = item.get('platformIds', [])
                     if isinstance(platform_ids, list) and len(platform_ids) > 0:
-                        if any(pid and isinstance(pid, str) and pid.startswith('cpe:') for pid in platform_ids):
+                        if any(self._is_valid_cpe(pid) for pid in platform_ids):
                             score = max_score
                             break
-                    
                     if score == max_score:
                         break
         return min(score, max_score)
@@ -364,6 +362,20 @@ class EnhancedAggregateScorer:
         
         return min(score, max_score)
 
+    def _is_valid_cpe(self, cpe_string: str) -> bool:
+        """Validate CPE string using the cpe library (supports CPE 2.2 and 2.3)"""
+        if not cpe_string or not isinstance(cpe_string, str):
+            return False
+        if CPE is None:
+            # Fallback: basic string check if cpe lib not available
+            return cpe_string.startswith('cpe:')
+        try:
+            cpe_obj = CPE(cpe_string)
+            # If parsing does not raise, consider valid
+            return True
+        except Exception:
+            return False
+
     def _calculate_data_format_precision(self) -> int:
         """Calculate data format and precision score (0-5), using cvss lib for vector validation."""
         max_score = 5
@@ -380,16 +392,15 @@ class EnhancedAggregateScorer:
                     if 'cpes' in item:
                         cpes = item.get('cpes', [])
                         if isinstance(cpes, list) and len(cpes) > 0:
-                            if any(cpe and isinstance(cpe, str) and cpe.startswith('cpe:') for cpe in cpes):
+                            if any(self._is_valid_cpe(cpe) for cpe in cpes):
                                 has_valid_cpe = True
                             else:
                                 penalize = True
-                        # If present but empty, do not penalize
                     # Check for 'cpe' (legacy format - singular)
                     elif 'cpe' in item:
                         cpe = item.get('cpe', [])
                         if isinstance(cpe, list) and len(cpe) > 0:
-                            if any(c and isinstance(c, str) and c.startswith('cpe:') for c in cpe):
+                            if any(self._is_valid_cpe(c) for c in cpe):
                                 has_valid_cpe = True
                             else:
                                 penalize = True
@@ -398,7 +409,7 @@ class EnhancedAggregateScorer:
                         if field_name in item:
                             cpe_value = item.get(field_name, '')
                             if cpe_value and isinstance(cpe_value, str):
-                                if cpe_value.startswith('cpe:'):
+                                if self._is_valid_cpe(cpe_value):
                                     has_valid_cpe = True
                                 else:
                                     penalize = True
@@ -406,7 +417,7 @@ class EnhancedAggregateScorer:
                     if 'platformIds' in item:
                         platform_ids = item.get('platformIds', [])
                         if isinstance(platform_ids, list) and len(platform_ids) > 0:
-                            if any(pid and isinstance(pid, str) and pid.startswith('cpe:') for pid in platform_ids):
+                            if any(self._is_valid_cpe(pid) for pid in platform_ids):
                                 has_valid_cpe = True
                             else:
                                 penalize = True
