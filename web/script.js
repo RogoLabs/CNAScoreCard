@@ -227,7 +227,7 @@ function createCNACard(cna) {
                     <span class="value">${formatScore(avgFormat)}/5</span>
                 </div>
                 ${cna.message ? `<div class="detail-item"><span class="label">Status:</span><span class="value">${escapeHtml(cna.message)}</span></div>` : ''}
-                ${!isInactive ? `<div class="detail-item cna-view-details"><a href="${cnaPageLink}" class="view-details-link">View Individual CVEs →</a></div>` : ''}
+                ${!isInactive ? `<div class="detail-item cna-view_details"><a href="${cnaPageLink}" class="view-details-link">View Individual CVEs →</a></div>` : ''}
             </div>
         </div>
     `;
