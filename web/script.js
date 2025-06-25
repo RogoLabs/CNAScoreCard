@@ -155,10 +155,11 @@ function displayCNAs(cnas, sortBy = 'score') {
     container.innerHTML = sortedCNAs.map(cna => createCNACard(cna)).join('');
 }
 
-// Helper to format numbers: show as integer if .0, else one decimal
+// Helper to format numbers: show as integer if .0, else one decimal (handles string '100.0' too)
 function formatScore(num) {
-    if (typeof num !== 'number') return num;
-    return num % 1 === 0 ? num.toString() : num.toFixed(1);
+    if (typeof num === 'string' && num.match(/^\d+\.0$/)) return num.replace('.0', '');
+    if (typeof num === 'number') return num % 1 === 0 ? num.toString() : num.toFixed(1);
+    return num;
 }
 
 // Create individual CNA card

@@ -429,7 +429,7 @@
 /* Modernized CNA Header Section */
 .modern-cna-header {
     margin: 40px auto 32px auto;
-    max-width: 420px;
+    max-width: 700px;
     background: #fff;
     border-radius: 18px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.07);
@@ -438,23 +438,30 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    justify-content: center;
 }
 .modern-cna-header h1, .modern-cna-header .cna-title {
     font-size: 2.2rem;
     font-weight: 700;
     margin-bottom: 12px;
     letter-spacing: 0.5px;
+    width: 100%;
+    text-align: center;
 }
 .modern-cna-header .cna-score {
     font-size: 2.6rem;
     font-weight: 800;
     color: #2d5bff;
     margin-bottom: 6px;
+    text-align: center;
+    width: 100%;
 }
 .modern-cna-header .cna-meta {
     font-size: 1.1rem;
     color: #888;
     margin-bottom: 18px;
+    text-align: center;
+    width: 100%;
 }
 .modern-cna-header .cna-breakdown {
     width: 100%;
@@ -464,7 +471,7 @@
     gap: 10px 18px;
     font-size: 1.05rem;
     color: #222;
-    justify-items: start;
+    justify-items: center;
 }
 @media (max-width: 600px) {
     .modern-cna-header {

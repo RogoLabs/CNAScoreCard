@@ -153,10 +153,11 @@ async function loadCNAData() {
     }
 }
 
-// Helper to format numbers (hide .0 if integer)
+// Helper to format numbers (hide .0 if integer, even if string)
 function formatNumber(num) {
-    if (typeof num !== 'number') return num;
-    return num % 1 === 0 ? num.toString() : num.toFixed(1);
+    if (typeof num === 'string' && num.match(/^\d+\.0$/)) return num.replace('.0', '');
+    if (typeof num === 'number') return num % 1 === 0 ? num.toString() : num.toFixed(1);
+    return num;
 }
 
 // Function to display CNA header
