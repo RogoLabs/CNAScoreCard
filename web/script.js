@@ -173,6 +173,7 @@ function createCNACard(cna) {
     const totalCVEs = safeGet(cna, 'total_cves_scored', 0);
     const avgFoundational = safeGet(cna, 'average_foundational_completeness', 0);
     const avgRootCause = safeGet(cna, 'average_root_cause_analysis', 0);
+    const avgSoftwareId = safeGet(cna, 'average_software_identification', 0);
     const avgSeverity = safeGet(cna, 'average_severity_context', 0);
     const avgActionable = safeGet(cna, 'average_actionable_intelligence', 0);
     const avgFormat = safeGet(cna, 'average_data_format_precision', 0);
@@ -217,7 +218,7 @@ function createCNACard(cna) {
                 </div>
                 <div class="detail-item">
                     <span class="label">Software Identification:</span>
-                    <span class="value">${formatScore(safeGet(cna, 'average_software_identification', 0))}/10</span>
+                    <span class="value">${formatScore(avgSoftwareId)}/10</span>
                 </div>
                 <div class="detail-item">
                     <span class="label">Severity Context:</span>
