@@ -1,210 +1,180 @@
-// CNA Detail Page Script - Minimal version (EAS scoring handled in backend)
-let cnaData = {};
-let cveScores = [];
+let allCNAs = [];
 
-// Function to load CNA data
+// Fetch CNA data and render cards
 async function loadCNAData() {
     try {
-        const response = await fetch(`data/${SAFE_FILENAME}.json`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        const cnaInfo = data.cna_info || {};
-        const recentCVEs = data.recent_cves || [];
-        const totalCVEs = data.total_cves || cnaInfo.total_cves_scored || recentCVEs.length;
-        cnaData.ranking = (typeof cnaInfo.rank !== 'undefined' && typeof cnaInfo.active_cna_count !== 'undefined') ? `Rank: ${cnaInfo.rank} of ${cnaInfo.active_cna_count}` : 'N/A';
-        const overallScore = cnaInfo.average_eas_score || 0;
-        const percentile = cnaInfo.percentile || 0;
-        const breakdown = {
-            foundational: (cnaInfo.average_foundational_completeness || 0),
-            rootCause: (cnaInfo.average_root_cause_analysis || 0),
-            softwareIdentification: (cnaInfo.average_software_identification || 0),
-            security: (cnaInfo.average_severity_context || 0),
-            actionable: (cnaInfo.average_actionable_intelligence || 0),
-            dataFormat: (cnaInfo.average_data_format_precision || 0)
-        };
-        cveScores = recentCVEs.map(cve => {
+        // Fetch both CNA scores and CNAs list data
+        const [scoresResponse, cnasListResponse] = await Promise.all([
+            fetch('../data/cna-scores.json'),
+            fetch('https://raw.githubusercontent.com/CVEProject/cve-website/dev/src/assets/data/CNAsList.json')
+        ]);
+        
+        const scoresData = await scoresResponse.json();
+        const cnasListData = await cnasListResponse.json();
+        
+        // Create a map of CNA details for quick lookup
+        const cnaDetailsMap = new Map();
+        
+        // Handle different possible structures in the CNAs list data
+        const cnasArray = cnasListData.CNAs || cnasListData.cnas || cnasListData.data || [];
+        cnasArray.forEach(cna => {
+            // Try different possible field names for shortname
+            const shortname = cna.shortname || cna.short_name || cna.name;
+            if (shortname) {
+                cnaDetailsMap.set(shortname, cna);
+                // Also map by lowercase for better matching
+                cnaDetailsMap.set(shortname.toLowerCase(), cna);
+            }
+        });
+        
+        // Merge the data
+        allCNAs = (scoresData.cnas || []).map(cna => {
+            const details = cnaDetailsMap.get(cna.name) || cnaDetailsMap.get(cna.name.toLowerCase());
             return {
-                cveId: cve.cveId,
-                overallScore: cve.totalEasScore || 0,
-                percentile: cve.percentile || 0,
-                foundationalCompleteness: cve.scoreBreakdown?.foundationalCompleteness || 0,
-                rootCauseAnalysis: cve.scoreBreakdown?.rootCauseAnalysis || 0,
-                softwareIdentification: cve.scoreBreakdown?.softwareIdentification || 0,
-                securityContext: cve.scoreBreakdown?.severityAndImpactContext || 0,
-                actionableIntelligence: cve.scoreBreakdown?.actionableIntelligence || 0,
-                dataFormatPrecision: cve.scoreBreakdown?.dataFormatAndPrecision || 0,
+                ...cna,
+                details: details || null
             };
         });
-        displayCNAHeader(overallScore, percentile, totalCVEs, breakdown, cnaData.ranking);
-        displayCVECards(cveScores);
+        
+        renderCNAs(allCNAs);
+        
+        document.getElementById('loading').style.display = 'none';
     } catch (error) {
         console.error('Error loading CNA data:', error);
-        document.getElementById('loading').innerHTML = `
-            <div style="text-align: center; padding: 2rem; color: #dc3545;">
-                <h3>Error Loading Data</h3>
-                <p>Could not load data for ${CNA_NAME}. Please check if the CNA name is correct.</p>
-                <p><small>Error: ${error.message}</small></p>
-            </div>
-        `;
+        document.getElementById('loading').innerHTML = 'Error loading CNA data';
     }
 }
 
-// Helper to format numbers (hide .0 if integer, even if string)
-function formatNumber(num) {
-    if (typeof num === 'string' && num.match(/^[0-9]+\.0$/)) return num.replace('.0', '');
-    if (typeof num === 'number') {
-        if (num % 1 === 0) return num.toString();
-        return parseFloat(num.toFixed(1)).toString();
-    }
-    return num;
+// Render CNA cards
+function renderCNAs(cnas) {
+    const container = document.getElementById('cnaList');
+    container.innerHTML = '';
+    
+    cnas.forEach(cna => {
+        const card = createCNACard(cna);
+        container.appendChild(card);
+    });
 }
 
-// Function to get percentile class for styling
-function getPercentileClass(percentile) {
-    if (percentile >= 80) return 'percentile-top';
-    if (percentile >= 60) return 'percentile-upper';
-    if (percentile >= 40) return 'percentile-lower';
-    return 'percentile-bottom';
-}
-
-// Function to display CNA header
-function displayCNAHeader(overallScore, percentile, totalCVEs, breakdown, ranking) {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('cnaHeader').style.display = 'block';
-    document.getElementById('cveSection').style.display = 'block';
-
-    // Professional CNA header card matching site style
-    document.getElementById('cnaHeader').innerHTML = `
-        <div class="cna-detail-card">
-            <div class="cna-title-section">
-                <h1 class="cna-title">${CNA_NAME.toUpperCase()}</h1>
+// Create individual CNA card
+function createCNACard(cna) {
+    const card = document.createElement('div');
+    card.className = 'cna-card';
+    
+    const details = cna.details;
+    const scoreClass = getScoreClass(cna.overallScore);
+    
+    card.innerHTML = `
+        <div class="cna-header">
+            <h3 class="cna-name">${cna.name}</h3>
+            <div class="cna-score ${scoreClass}">${cna.overallScore?.toFixed(1) || 'N/A'}</div>
+        </div>
+        
+        ${details?.name ? `<div class="cna-long-name">${details.name}</div>` : ''}
+        
+        <div class="cna-stats">
+            <div class="stat">
+                <span class="stat-label">CVEs:</span>
+                <span class="stat-value">${cna.cveCount || 0}</span>
             </div>
-            
-            <div class="cna-metrics-section">
-                <div class="metric-item main-metric">
-                    <div class="metric-value">${formatNumber(overallScore)}<span class="metric-unit">/100</span></div>
-                    <div class="metric-label">EAS Score</div>
-                </div>
-                
-                <div class="metric-item">
-                    <div class="metric-value">${formatNumber(totalCVEs)}</div>
-                    <div class="metric-label">CVEs Published (6mo)</div>
-                </div>
-                
-                <div class="metric-item">
-                    <div class="metric-value">${formatNumber(ranking || 'N/A')}</div>
-                    <div class="metric-label">Ranking</div>
-                </div>
-            </div>
-            
-            <div class="cna-breakdown-section">
-                <div class="breakdown-grid">
-                    <div class="breakdown-item">
-                        <span class="breakdown-label">Foundational Completeness:</span>
-                        <span class="breakdown-value">${formatNumber(breakdown.foundational)}/30</span>
-                    </div>
-                    <div class="breakdown-item">
-                        <span class="breakdown-label">Root Cause Analysis:</span>
-                        <span class="breakdown-value">${formatNumber(breakdown.rootCause)}/10</span>
-                    </div>
-                    <div class="breakdown-item">
-                        <span class="breakdown-label">Software Identification:</span>
-                        <span class="breakdown-value">${formatNumber(breakdown.softwareIdentification)}/10</span>
-                    </div>
-                    <div class="breakdown-item">
-                        <span class="breakdown-label">Severity Context:</span>
-                        <span class="breakdown-value">${formatNumber(breakdown.security)}/25</span>
-                    </div>
-                    <div class="breakdown-item">
-                        <span class="breakdown-label">Actionable Intelligence:</span>
-                        <span class="breakdown-value">${formatNumber(breakdown.actionable)}/20</span>
-                    </div>
-                    <div class="breakdown-item">
-                        <span class="breakdown-label">Data Format Precision:</span>
-                        <span class="breakdown-value">${formatNumber(breakdown.dataFormat)}/5</span>
-                    </div>
-                </div>
+            <div class="stat">
+                <span class="stat-label">Recent CVEs:</span>
+                <span class="stat-value">${cna.recentCveCount || 0}</span>
             </div>
         </div>
-    `;
-}
-
-// Function to display CVE cards
-function displayCVECards(scores) {
-    const container = document.getElementById('cveCards');
-    if (scores.length === 0) {
-        container.innerHTML = '<p>No CVEs found for this CNA.</p>';
-        return;
-    }
-    // Sort scores by overall score (descending)
-    const sortedScores = [...scores].sort((a, b) => b.overallScore - a.overallScore);
-    container.innerHTML = sortedScores.map(score => {
-        const scoreClass = getPercentileClass(score.percentile);
-        return `
-            <div class="cna-card ${scoreClass}">
-                <div class="cna-header">
-                    <h3 class="cna-name">
-                        <a href="https://cve.org/CVERecord?id=${score.cveId}" target="_blank">${score.cveId}</a>
-                    </h3>
-                    <div class="cna-score-container">
-                        <div class="cna-score">${formatNumber(score.overallScore)}/100</div>
-                    </div>
-                </div>
-                <div class="cna-details">
-                    <div class="detail-item">
-                        <span class="label">Foundational Completeness:</span>
-                        <span class="value">${formatNumber(score.foundationalCompleteness)}/30</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="label">Root Cause Analysis:</span>
-                        <span class="value">${formatNumber(score.rootCauseAnalysis)}/10</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="label">Software Identification:</span>
-                        <span class="value">${formatNumber(score.softwareIdentification)}/10</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="label">Severity Context:</span>
-                        <span class="value">${formatNumber(score.securityContext)}/25</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="label">Actionable Intelligence:</span>
-                        <span class="value">${formatNumber(score.actionableIntelligence)}/20</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="label">Data Format Precision:</span>
-                        <span class="value">${formatNumber(score.dataFormatPrecision)}/5</span>
-                    </div>
+        
+        ${details?.scope ? `
+            <div class="cna-scope">
+                <span class="scope-label">Scope:</span>
+                <span class="scope-value">${details.scope}</span>
+            </div>
+        ` : ''}
+        
+        ${details?.advisory_links && details.advisory_links.length > 0 ? `
+            <div class="cna-advisories">
+                <span class="advisories-label">Advisory Links:</span>
+                <div class="advisory-links">
+                    ${details.advisory_links.map(link => `
+                        <a href="${link.url}" target="_blank" class="advisory-link" title="${link.description || link.url}">
+                            ${link.name || new URL(link.url).hostname}
+                        </a>
+                    `).join('')}
                 </div>
             </div>
-        `;
-    }).join('');
+        ` : ''}
+        
+        <div class="cna-scores">
+            <div class="score-item">
+                <span>CVSS Completeness:</span>
+                <span class="${getScoreClass(cna.cvssCompletenessScore)}">${cna.cvssCompletenessScore?.toFixed(1) || 'N/A'}</span>
+            </div>
+            <div class="score-item">
+                <span>Description Quality:</span>
+                <span class="${getScoreClass(cna.descriptionQualityScore)}">${cna.descriptionQualityScore?.toFixed(1) || 'N/A'}</span>
+            </div>
+            <div class="score-item">
+                <span>Reference Quality:</span>
+                <span class="${getScoreClass(cna.referenceQualityScore)}">${cna.referenceQualityScore?.toFixed(1) || 'N/A'}</span>
+            </div>
+        </div>
+        
+        <div class="cna-actions">
+            <a href="../cna-detail.html?cna=${encodeURIComponent(cna.name)}" class="view-details-btn">View Details</a>
+        </div>
+    `;
+    
+    return card;
 }
 
-// Function to filter and sort CVEs
-function filterAndSortCVEs() {
+// Get CSS class based on score
+function getScoreClass(score) {
+    if (!score) return 'score-na';
+    if (score >= 8) return 'score-excellent';
+    if (score >= 6) return 'score-good';
+    if (score >= 4) return 'score-average';
+    return 'score-poor';
+}
+
+// Search and filter functionality
+function setupFilters() {
+    const searchInput = document.getElementById('searchInput');
+    const sortSelect = document.getElementById('sortSelect');
+    
+    searchInput.addEventListener('input', filterAndSort);
+    sortSelect.addEventListener('change', filterAndSort);
+}
+
+function filterAndSort() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
     const sortBy = document.getElementById('sortSelect').value;
     
-    let filteredScores = cveScores.filter(score => 
-        score.cveId.toLowerCase().includes(searchTerm)
-    );
+    let filteredCNAs = allCNAs.filter(cna => {
+        const searchableText = [
+            cna.name,
+            cna.details?.name,
+            cna.details?.scope
+        ].filter(Boolean).join(' ').toLowerCase();
+        
+        return searchableText.includes(searchTerm);
+    });
     
-    if (sortBy === 'score') {
-        filteredScores.sort((a, b) => b.overallScore - a.overallScore);
-    } else if (sortBy === 'cveId') {
-        filteredScores.sort((a, b) => a.cveId.localeCompare(b.cveId));
-    }
+    filteredCNAs.sort((a, b) => {
+        switch (sortBy) {
+            case 'score':
+                return (b.overallScore || 0) - (a.overallScore || 0);
+            case 'cveCount':
+                return (b.cveCount || 0) - (a.cveCount || 0);
+            case 'name':
+            default:
+                return a.name.localeCompare(b.name);
+        }
+    });
     
-    displayCVECards(filteredScores);
+    renderCNAs(filteredCNAs);
 }
 
-// Event listeners
+// Initialize when page loads
 document.addEventListener('DOMContentLoaded', () => {
     loadCNAData();
-    
-    document.getElementById('searchInput').addEventListener('input', filterAndSortCVEs);
-    document.getElementById('sortSelect').addEventListener('change', filterAndSortCVEs);
+    setupFilters();
 });
