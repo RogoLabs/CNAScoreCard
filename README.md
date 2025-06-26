@@ -1,8 +1,5 @@
 # CNA ScoreCard
 
-[![Build Status](https://github.com/gamblin/CNAScoreCard/actions/workflows/main.yml/badge.svg)](https://github.com/gamblin/CNAScoreCard/actions)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-
 **Comprehensive, data-driven scorecards for CVE Numbering Authorities (CNAs) — empowering transparency and quality in vulnerability reporting.**
 
 **🌐 Live Site:** [cnascorecard.org](https://cnascorecard.org)
@@ -228,3 +225,6 @@ This project and its scoring methodology were inspired by the [CNA Enrichment Re
 ## Contact & Support
 
 For questions, feedback, or support, please open an [issue](https://github.com/gamblin/CNAScoreCard/issues) or contact the maintainer via GitHub.
+
+[![Build Status](https://github.com/gamblin/CNAScoreCard/actions/workflows/main.yml/badge.svg)](https://github.com/gamblin/CNAScoreCard/actions)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
