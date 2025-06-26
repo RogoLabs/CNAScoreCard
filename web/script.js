@@ -1,5 +1,16 @@
 // Main script file for CNA ScoreCard - fixing score calculation
 // Enhanced Aggregate Scoring (EAS) Implementation
+// Accessibility and modularity improvements
+
+// Function to escape HTML for XSS prevention
+function escapeHtml(unsafe) {
+    return String(unsafe)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
 // Function to calculate Enhanced Aggregate Scoring (EAS)
 function calculateEAS(cveData) {
@@ -419,20 +430,6 @@ function getScoreClass(score) {
     if (score >= 60) return 'score-good';
     if (score >= 40) return 'score-fair';
     return 'score-poor';
-}
-
-// Escape HTML to prevent XSS
-function escapeHtml(unsafe) {
-    if (unsafe === null || unsafe === undefined) {
-        return '';
-    }
-    return unsafe
-        .toString()
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
 }
 
 // Setup event listeners

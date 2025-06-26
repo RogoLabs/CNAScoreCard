@@ -52,7 +52,7 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
     line-height: 1.6;
-    color: #333;
+    color: #222;
     background-color: #f5f5f5;
 }
 
@@ -62,11 +62,9 @@ body {
     padding: 20px;
 }
 
-h1 {
-    text-align: center;
+h1, h2, h3, h4, h5, h6 {
     color: #2c3e50;
-    margin-bottom: 10px;
-    font-size: 2.5em;
+    font-weight: 700;
 }
 
 p {
@@ -74,6 +72,16 @@ p {
     color: #666;
     margin-bottom: 30px;
     font-size: 1.1em;
+}
+
+/* Accessibility: High contrast for links */
+a {
+    color: #0056b3;
+    text-decoration: underline;
+}
+a:focus, a:hover {
+    color: #003366;
+    outline: 2px solid #0056b3;
 }
 
 /* Introduction section */
@@ -100,9 +108,10 @@ p {
     font-size: 1.8em;
 }
 
+/* Responsive grid for features */
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 15px;
     margin-bottom: 30px;
 }
@@ -628,6 +637,21 @@ p {
     .hero-subtitle {
         font-size: 1.1rem;
     }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 8px;
+    }
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Accessibility: Focus styles for all interactive elements */
+button:focus, input:focus, select:focus {
+    outline: 2px solid #0056b3;
+    outline-offset: 2px;
 }
 
 /* Reset and base styles */

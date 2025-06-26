@@ -209,6 +209,12 @@ CNAScoreCard/
 
 Contributions are welcome! Please open issues or pull requests to improve scoring, add features, or enhance the UI. See [CONTRIBUTING.md](CONTRIBUTING.md) if available.
 
+## Security Best Practices
+- All user input and dynamic content is escaped to prevent XSS.
+- Dependencies are kept up to date to avoid known vulnerabilities.
+- File and network resources are managed with context managers.
+- No sensitive data is stored or processed.
+
 ## License
 
 This project is open source under the MIT License.

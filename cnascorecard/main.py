@@ -37,7 +37,7 @@ def generate_reports():
         cve_score = calculate_eas(cve)
         if cve_score:
             all_scores.append(cve_score)
-            cna = cve_score["assigningCna"]
+            cna = cve_score.get("assigningCna", "Unknown")
             if cna not in cna_reports:
                 cna_reports[cna] = {
                     "cna": cna,
@@ -54,7 +54,6 @@ def generate_reports():
         cna_name = score.get("assigningCna")
         if not cna_name or cna_name == "N/A":
             continue
-        
         if cna_name not in cna_reports:
             cna_reports[cna_name] = {"scores": []}
         # Score is already added above, no need to add again
@@ -78,29 +77,25 @@ def generate_reports():
             
             data["total_cves_scored"] = total_cves
             data["average_eas_score"] = int(round(avg_total_eas, 2)) if round(avg_total_eas, 2) % 1 == 0 else round(avg_total_eas, 2)
-            data["overall_average_score"] = int(round(avg_total_eas, 2)) if round(avg_total_eas, 2) % 1 == 0 else round(avg_total_eas, 2)  # For compatibility
+            data["overall_average_score"] = data["average_eas_score"]  # For compatibility
             data["average_foundational_completeness"] = int(round(avg_foundational, 2)) if round(avg_foundational, 2) % 1 == 0 else round(avg_foundational, 2)
             data["average_root_cause_analysis"] = int(round(avg_root_cause, 2)) if round(avg_root_cause, 2) % 1 == 0 else round(avg_root_cause, 2)
             data["average_software_identification"] = int(round(avg_software_identification, 2)) if round(avg_software_identification, 2) % 1 == 0 else round(avg_software_identification, 2)
             data["average_severity_context"] = int(round(avg_severity, 2)) if round(avg_severity, 2) % 1 == 0 else round(avg_severity, 2)
             data["average_actionable_intelligence"] = int(round(avg_actionable, 2)) if round(avg_actionable, 2) % 1 == 0 else round(avg_actionable, 2)
             data["average_data_format_precision"] = int(round(avg_format, 2)) if round(avg_format, 2) % 1 == 0 else round(avg_format, 2)
-            
             # Clean up the individual scores from the final report
             del data["scores"]
 
     print("Calculating percentiles for active CNAs...")
     # Calculate percentiles and ranks for CNAs with recent CVEs
     active_cnas = [data for data in cna_reports.values() if data.get("total_cves_scored", 0) > 0]
-    # Sort active CNAs by average_eas_score descending
     sorted_active = sorted(active_cnas, key=lambda d: d["average_eas_score"], reverse=True)
-    # Assign rank (1 = best)
     for idx, data in enumerate(sorted_active, 1):
         data["rank"] = idx
         data["active_cna_count"] = len(sorted_active)
     active_scores = [data["average_eas_score"] for data in sorted_active]
     if active_scores:
-        # Sort scores to calculate percentiles
         sorted_scores = sorted(active_scores)
         for cna, data in cna_reports.items():
             if data.get("total_cves_scored", 0) > 0:

@@ -3,14 +3,25 @@ import requests
 import json
 import subprocess
 from datetime import datetime, timedelta
+from contextlib import contextmanager
+
+# Context manager for safe file opening
+@contextmanager
+def safe_open(filename, mode):
+    f = open(filename, mode)
+    try:
+        yield f
+    finally:
+        f.close()
 
 def get_cna_list():
     """
-    Downloads the master CNA list.
+    Downloads the master CNA list securely.
+    Returns: List of CNA dicts or None on error.
     """
     url = "https://raw.githubusercontent.com/CVEProject/cve-website/dev/src/assets/data/CNAsList.json"
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=10)
         response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException as e:
@@ -21,15 +32,14 @@ def get_cve_records():
     """
     Reads CVE records from the local cve_data directory and filters them for the last 6 months.
     Clones the repository if it doesn't exist.
+    Returns: List of recent CVE dicts.
     """
-    # Path to the data directory, which is mapped from the host
     clone_path = os.path.join(os.path.dirname(__file__), '..', 'cve_data')
 
     if not os.path.exists(clone_path):
         print(f"CVE data directory not found at {clone_path}")
         print("Cloning CVE data repository...")
         try:
-            # Clone the CVE data repository
             parent_dir = os.path.dirname(clone_path)
             subprocess.run([
                 'git', 'clone', '--depth', '1',
@@ -63,8 +73,8 @@ def get_cve_records():
         for file in files:
             if file.startswith('CVE-') and file.endswith('.json'):
                 file_path = os.path.join(root, file)
-                with open(file_path, 'r') as f:
-                    try:
+                try:
+                    with safe_open(file_path, 'r') as f:
                         cve_data = json.load(f)
                         # Skip REJECTED CVEs
                         state = cve_data.get('cveMetadata', {}).get('state', '').upper()
@@ -75,10 +85,11 @@ def get_cve_records():
                             date_published = datetime.fromisoformat(date_published_str.replace('Z', '+00:00'))
                             if date_published.replace(tzinfo=None) >= six_months_ago:
                                 recent_cves.append(cve_data)
-                    except json.JSONDecodeError:
-                        continue
-                    except Exception as e:
-                        print(f"Error processing file {file_path}: {e}")
+                except (json.JSONDecodeError, OSError) as e:
+                    print(f"Error processing file {file_path}: {e}")
+                    continue
+                except Exception as e:
+                    print(f"Unexpected error processing file {file_path}: {e}")
                 processed += 1
                 if processed % 1000 == 0:
                     print(f"Processed {processed} files...")
@@ -90,6 +101,5 @@ if __name__ == '__main__':
     cna_list = get_cna_list()
     if cna_list:
         print(f"Successfully downloaded {len(cna_list)} CNA records.")
-    
     cve_records = get_cve_records()
-    # You can add further processing here if needed
+    # Further processing can be added here
