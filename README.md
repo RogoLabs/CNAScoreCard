@@ -186,18 +186,18 @@ CNAScoreCard/
 │   └── generate_static_data.py # Static data generation
 ├── scripts/
 │   ├── build.py              # Main build script
-│   ├── generate_dashboard.py # Main dashboard generation
-│   └── generate_cna_pages.py # Individual CNA page generation
+│   └── generate_dashboard.py # Main dashboard generation
 ├── web/
 │   ├── index.html           # Main dashboard
 │   ├── styles.css           # Main styling
 │   ├── script.js            # Dashboard functionality
 │   ├── scoring.html         # EAS methodology documentation
-│   └── cna/                 # Individual CNA pages
+│   └── cna/                 # CNA pages
+│       ├── cna-detail.html  # Unified CNA detail page
 │       ├── cna-styles.css   # CNA page styling
 │       ├── cna-script.js    # CNA page functionality
-│       ├── data/            # Individual CNA data files
-│       └── *.html           # Individual CNA pages
+│       ├── index.html       # CNA directory page
+│       └── data/            # Individual CNA data files
 ├── tests/
 │   ├── test_data_structure.py
 │   ├── test_integration.py

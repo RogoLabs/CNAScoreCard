@@ -15,54 +15,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from cnascorecard.main import generate_reports
 
 
-def generate_cna_page(cna_name, safe_filename, cna_dir):
-    """Generate an individual HTML page for a CNA."""
-    html_content = f'''<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{cna_name} - CNA ScoreCard</title>
-    <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="cna-styles.css">
-</head>
-<body>
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="../index.html">← Back to All CNAs</a>
-        </div>
-        
-        <div id="cnaHeader">
-            <h1 id="cnaTitle">{cna_name}</h1>
-            <div id="cnaStats" class="cna-stats">
-                <!-- Stats will be loaded dynamically -->
-            </div>
-        </div>
-        
-        <div class="filters">
-            <input type="text" id="searchInput" placeholder="Search CVEs...">
-            <select id="sortSelect">
-                <option value="score">Sort by EAS Score</option>
-                <option value="cveId">Sort by CVE ID</option>
-                <option value="date">Sort by Date</option>
-            </select>
-        </div>
-        
-        <div id="loading">Loading CVE data...</div>
-        <div id="cveCards" class="cve-cards"></div>
-    </div>
-    
-    <script>
-        const CNA_NAME = "{cna_name}";
-        const SAFE_FILENAME = "{safe_filename}";
-    </script>
-    <script src="cna-script.js"></script>
-</body>
-</html>'''
-    
-    # Write the HTML file
-    with open(cna_dir / f"{safe_filename}.html", "w") as f:
-        f.write(html_content)
+
 
 
 def main():
@@ -173,17 +126,15 @@ def main():
             with open(cna_data_dir / f"{safe_filename}.json", "w") as f:
                 json.dump(cna_data_file, f, indent=2)
             
-            # Generate HTML page for this CNA
-            generate_cna_page(cna_name, safe_filename, cna_dir)
             cna_pages_generated += 1
     
-    print(f"Generated individual pages for {cna_pages_generated} CNAs")
+    print(f"Generated individual data files for {cna_pages_generated} CNAs")
     
     print("Static data generation complete!")
     print(f"- CNAs: {len(cna_array)}")
     print(f"- Top 100 CVEs: {len(top_100)}") 
     print(f"- Bottom 100 CVEs: {len(bottom_100)}")
-    print(f"- Individual CNA pages: {cna_pages_generated}")
+    print(f"- Individual CNA data files: {cna_pages_generated}")
 
 
 if __name__ == "__main__":
