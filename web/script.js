@@ -447,7 +447,7 @@ function setupEventListeners() {
     
     // Hide inactive toggle functionality
     const hideInactiveToggle = document.getElementById('hideInactiveToggle');
-    hideInactiveToggle.addEventListener('change', handleFilter);
+    hideInactiveToggle.addEventListener('click', handleFilter);
 }
 
 // Handle search
@@ -463,13 +463,29 @@ function handleSort(event) {
 
 // Handle filter toggle
 function handleFilter() {
+    const button = document.getElementById('hideInactiveToggle');
+    const isActive = button.getAttribute('data-active') === 'true';
+    
+    // Toggle the state
+    const newState = !isActive;
+    button.setAttribute('data-active', newState.toString());
+    
+    // Update button appearance
+    if (newState) {
+        button.classList.add('active');
+        button.textContent = 'Hide CNAs with 0 CVEs';
+    } else {
+        button.classList.remove('active');
+        button.textContent = 'Show CNAs with 0 CVEs';
+    }
+    
     applyFilters();
 }
 
 // Apply all filters (search + hide inactive toggle)
 function applyFilters() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    const hideInactive = document.getElementById('hideInactiveToggle').checked;
+    const hideInactive = document.getElementById('hideInactiveToggle').getAttribute('data-active') === 'true';
     
     filteredCNAs = allCNAs.filter(cna => {
         // Apply search filter

@@ -64,10 +64,9 @@
                 <option value="name">Sort by Name</option>
                 <option value="cveCount">Sort by CVE Count</option>
             </select>
-            <label class="filter-toggle">
-                <input type="checkbox" id="hideInactiveToggle" checked>
+            <button type="button" id="hideInactiveToggle" class="filter-button active" data-active="true">
                 Hide CNAs with 0 CVEs
-            </label>
+            </button>
         </div>
         
         <div id="loading">Loading CNA data...</div>

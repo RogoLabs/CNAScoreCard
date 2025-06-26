@@ -158,6 +158,46 @@ p {
     border-color: #3498db;
 }
 
+/* Filter button styling */
+.filter-button {
+    padding: 10px 20px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: white;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-align: center;
+    min-width: 160px;
+}
+
+.filter-button:hover {
+    border-color: #3498db;
+    color: #3498db;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+}
+
+.filter-button.active {
+    background-color: #3498db;
+    border-color: #3498db;
+    color: white;
+}
+
+.filter-button.active:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+    color: white;
+}
+
+.filter-button:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
 /* Loading and error states */
 #loading {
     text-align: center;
