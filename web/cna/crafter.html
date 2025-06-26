@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>crafter - CNA ScoreCard</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="cna-styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../index.html">← Back to All CNAs</a>
+        </div>
+        
+        <div id="cnaHeader">
+            <h1 id="cnaTitle">crafter</h1>
+            <div id="cnaStats" class="cna-stats">
+                <!-- Stats will be loaded dynamically -->
+            </div>
+        </div>
+        
+        <div class="filters">
+            <input type="text" id="searchInput" placeholder="Search CVEs...">
+            <select id="sortSelect">
+                <option value="score">Sort by EAS Score</option>
+                <option value="cveId">Sort by CVE ID</option>
+                <option value="date">Sort by Date</option>
+            </select>
+        </div>
+        
+        <div id="loading">Loading CVE data...</div>
+        <div id="cveCards" class="cve-cards"></div>
+    </div>
+    
+    <script>
+        const CNA_NAME = "crafter";
+        const SAFE_FILENAME = "crafter";
+    </script>
+    <script src="cna-script.js"></script>
+</body>
+</html>
