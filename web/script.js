@@ -444,22 +444,47 @@ function setupEventListeners() {
     // Sort functionality
     const sortSelect = document.getElementById('sortSelect');
     sortSelect.addEventListener('change', handleSort);
+    
+    // Hide inactive toggle functionality
+    const hideInactiveToggle = document.getElementById('hideInactiveToggle');
+    hideInactiveToggle.addEventListener('change', handleFilter);
 }
 
 // Handle search
 function handleSearch(event) {
-    const searchTerm = event.target.value.toLowerCase();
-    filteredCNAs = allCNAs.filter(cna => {
-        const cnaName = safeGet(cna, 'cna', '').toLowerCase();
-        return cnaName.includes(searchTerm);
-    });
-    const sortBy = document.getElementById('sortSelect').value;
-    displayCNAs(filteredCNAs, sortBy);
+    applyFilters();
 }
 
 // Handle sorting
 function handleSort(event) {
     const sortBy = event.target.value;
+    displayCNAs(filteredCNAs, sortBy);
+}
+
+// Handle filter toggle
+function handleFilter() {
+    applyFilters();
+}
+
+// Apply all filters (search + hide inactive toggle)
+function applyFilters() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const hideInactive = document.getElementById('hideInactiveToggle').checked;
+    
+    filteredCNAs = allCNAs.filter(cna => {
+        // Apply search filter
+        const cnaName = safeGet(cna, 'cna', '').toLowerCase();
+        const matchesSearch = cnaName.includes(searchTerm);
+        
+        // Apply inactive filter
+        const totalCVEs = safeGet(cna, 'total_cves_scored', 0);
+        const isInactive = totalCVEs === 0 || cna.message === "No CVEs published in the last 6 months";
+        const showInactive = !hideInactive || !isInactive;
+        
+        return matchesSearch && showInactive;
+    });
+    
+    const sortBy = document.getElementById('sortSelect').value;
     displayCNAs(filteredCNAs, sortBy);
 }
 
