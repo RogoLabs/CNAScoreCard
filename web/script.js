@@ -465,20 +465,17 @@ function handleSort(event) {
 function handleFilter() {
     const button = document.getElementById('hideInactiveToggle');
     const isActive = button.getAttribute('data-active') === 'true';
-    
     // Toggle the state
     const newState = !isActive;
     button.setAttribute('data-active', newState.toString());
-    
     // Update button appearance
     if (newState) {
         button.classList.add('active');
-        button.textContent = 'Hide CNAs with 0 CVEs';
+        button.textContent = 'Show CNAs with 0 CVEs';
     } else {
         button.classList.remove('active');
-        button.textContent = 'Show CNAs with 0 CVEs';
+        button.textContent = 'Hide CNAs with 0 CVEs';
     }
-    
     applyFilters();
 }
 
@@ -491,15 +488,12 @@ function applyFilters() {
         // Apply search filter
         const cnaName = safeGet(cna, 'cna', '').toLowerCase();
         const matchesSearch = cnaName.includes(searchTerm);
-        
         // Apply inactive filter
         const totalCVEs = safeGet(cna, 'total_cves_scored', 0);
         const isInactive = totalCVEs === 0 || cna.message === "No CVEs published in the last 6 months";
         const showInactive = !hideInactive || !isInactive;
-        
         return matchesSearch && showInactive;
     });
-    
     const sortBy = document.getElementById('sortSelect').value;
     displayCNAs(filteredCNAs, sortBy);
 }
@@ -518,5 +512,10 @@ function formatPercentage(value) {
 document.addEventListener('DOMContentLoaded', () => {
     const sortSelect = document.getElementById('sortSelect');
     sortSelect.value = 'score';
+    // Set initial state: hide inactive CNAs
+    const hideInactiveToggle = document.getElementById('hideInactiveToggle');
+    hideInactiveToggle.setAttribute('data-active', 'true');
+    hideInactiveToggle.classList.add('active');
+    hideInactiveToggle.textContent = 'Show CNAs with 0 CVEs';
     loadCNAData();
 });
