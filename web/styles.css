@@ -329,6 +329,7 @@ a:focus, a:hover {
 }
 
 /* Percentile-based colors (stoplight color scheme) */
+/* Primary percentile classes for card borders */
 .percentile-top {
     border-left-color: #27ae60;    /* Green - Top performers (75th percentile and above) */
 }
@@ -343,6 +344,74 @@ a:focus, a:hover {
 
 .percentile-bottom {
     border-left-color: #e74c3c;    /* Red - Bottom performers (below 25th percentile) */
+}
+
+/* Percentile badge classes for text labels */
+.percentile-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+}
+
+.percentile-badge.percentile-top {
+    background: #27ae60;
+}
+
+.percentile-badge.percentile-upper {
+    background: #27ae60;
+}
+
+.percentile-badge.percentile-lower {
+    background: #f39c12;
+}
+
+.percentile-badge.percentile-bottom {
+    background: #e74c3c;
+}
+
+/* Progress bar percentile classes */
+.progress-fill.percentile-excellent,
+.progress-fill.percentile-top {
+    background: #27ae60;
+}
+
+.progress-fill.percentile-good,
+.progress-fill.percentile-high {
+    background: #27ae60;
+}
+
+.progress-fill.percentile-fair,
+.progress-fill.percentile-medium {
+    background: #f39c12;
+}
+
+.progress-fill.percentile-poor,
+.progress-fill.percentile-low {
+    background: #e74c3c;
+}
+
+/* CVE card percentile classes */
+.cve-card.percentile-top,
+.cve-card.percentile-excellent {
+    border-left-color: #27ae60;
+}
+
+.cve-card.percentile-high,
+.cve-card.percentile-good {
+    border-left-color: #27ae60;
+}
+
+.cve-card.percentile-medium,
+.cve-card.percentile-fair {
+    border-left-color: #f39c12;
+}
+
+.cve-card.percentile-low,
+.cve-card.percentile-poor {
+    border-left-color: #e74c3c;
 }
 
 /* Card header */
@@ -771,3 +840,63 @@ button:focus, input:focus, select:focus {
 }
 
 /* Reset and base styles */
+
+/* ===== MERGED FROM style.css ===== */
+/* Custom styles for CNA Score Card (Bootstrap-related) */
+
+.card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.text-critical {
+    color: #dc3545 !important;
+}
+
+.text-high {
+    color: #fd7e14 !important;
+}
+
+.text-medium {
+    color: #20c997 !important;
+}
+
+.text-low {
+    color: #198754 !important;
+}
+
+.breadcrumb {
+    background-color: #f8f9fa;
+    border-radius: 0.375rem;
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+}
+
+.btn-outline-primary:hover {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+/* Responsive card sizing */
+@media (max-width: 768px) {
+    .col-md-6.col-lg-4 {
+        margin-bottom: 1rem;
+    }
+}
+
+/* CVE ID links */
+.card-title a {
+    color: inherit;
+    font-weight: 600;
+}
+
+.card-title a:hover {
+    color: #0d6efd;
+}

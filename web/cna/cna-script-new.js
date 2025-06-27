@@ -277,10 +277,10 @@ function getScoreClass(score) {
 }
 
 function getPercentileClass(percentile) {
-    if (percentile >= 75) return 'percentile-top';      // Top 25%
-    if (percentile >= 50) return 'percentile-upper';    // Upper middle 25%
-    if (percentile >= 25) return 'percentile-lower';    // Lower middle 25%
-    return 'percentile-bottom';                          // Bottom 25%
+    if (percentile >= 75) return 'percentile-top';
+    if (percentile >= 50) return 'percentile-upper';
+    if (percentile >= 25) return 'percentile-lower';
+    return 'percentile-bottom';
 }
 
 function formatNumber(num) {

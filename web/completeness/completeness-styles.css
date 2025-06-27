@@ -178,7 +178,7 @@ h1 {
 }
 
 .progress-fill.good {
-    background: #3498db;
+    background: #27ae60;
 }
 
 .progress-fill.fair {
@@ -186,6 +186,27 @@ h1 {
 }
 
 .progress-fill.poor {
+    background: #e74c3c;
+}
+
+/* Progress bar percentile classes */
+.progress-fill.percentile-excellent,
+.progress-fill.percentile-top {
+    background: #27ae60;
+}
+
+.progress-fill.percentile-good,
+.progress-fill.percentile-high {
+    background: #27ae60;
+}
+
+.progress-fill.percentile-fair,
+.progress-fill.percentile-medium {
+    background: #f39c12;
+}
+
+.progress-fill.percentile-poor,
+.progress-fill.percentile-low {
     background: #e74c3c;
 }
 
@@ -198,19 +219,19 @@ h1 {
     color: white;
 }
 
-.percentile-badge.top {
+.percentile-badge.percentile-top {
     background: #27ae60;
 }
 
-.percentile-badge.high {
-    background: #3498db;
+.percentile-badge.percentile-upper {
+    background: #27ae60;
 }
 
-.percentile-badge.medium {
+.percentile-badge.percentile-lower {
     background: #f39c12;
 }
 
-.percentile-badge.low {
+.percentile-badge.percentile-bottom {
     background: #e74c3c;
 }
 
@@ -466,6 +487,27 @@ h1 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Field card percentile classes (stoplight color scheme) */
+.field-card.percentile-top,
+.field-card.percentile-excellent {
+    border-left: 4px solid #27ae60;    /* Green - Top performers (75th percentile and above) */
+}
+
+.field-card.percentile-upper,
+.field-card.percentile-high {
+    border-left: 4px solid #27ae60;    /* Green - Upper middle (50th-75th percentile) */
+}
+
+.field-card.percentile-lower,
+.field-card.percentile-medium {
+    border-left: 4px solid #f39c12;    /* Orange - Lower middle (25th-50th percentile) */
+}
+
+.field-card.percentile-bottom,
+.field-card.percentile-low {
+    border-left: 4px solid #e74c3c;    /* Red - Bottom performers (below 25th percentile) */
+}
+
 .field-name {
     font-weight: 600;
     color: #2c3e50;
@@ -507,11 +549,11 @@ h1 {
 }
 
 .field-progress-fill.excellent {
-    background: #7f8c8d;
+    background: #27ae60;
 }
 
 .field-progress-fill.good {
-    background: #3498db;
+    background: #27ae60;
 }
 
 .field-progress-fill.fair {

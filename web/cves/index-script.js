@@ -60,12 +60,20 @@ function formatNumber(num) {
     return num;
 }
 
-// Function to get score class for styling
+// Function to get score class for styling (backward compatibility)
 function getScoreClass(score) {
     if (score >= 80) return 'score-excellent';
     if (score >= 60) return 'score-good';
     if (score >= 40) return 'score-fair';
     return 'score-poor';
+}
+
+// Function to get percentile class for styling (preferred method)
+function getPercentileClass(percentile) {
+    if (percentile >= 75) return 'percentile-top';      // Top 25%
+    if (percentile >= 50) return 'percentile-upper';    // Upper middle 25%
+    if (percentile >= 25) return 'percentile-lower';    // Lower middle 25%
+    return 'percentile-bottom';                          // Bottom 25%
 }
 
 // Function to format date
@@ -94,7 +102,8 @@ function displayCVECards(cves, containerId) {
     
     container.innerHTML = cves.map(cve => {
         const score = cve.totalEasScore || 0;
-        const scoreClass = getScoreClass(score);
+        const percentile = cve.percentile || 0;
+        const scoreClass = getPercentileClass(percentile);
         const breakdown = cve.scoreBreakdown || {};
         
         return `

@@ -275,8 +275,7 @@ function renderTable(data = completenessData) {
     data.forEach((cna, index) => {
         const row = document.createElement('tr');
         
-        // Determine score class for styling
-        const scoreClass = getScoreClass(cna.completeness_score);
+        // Determine percentile class for styling
         const percentileClass = getPercentileClass(cna.percentile);
         
         row.innerHTML = `
@@ -286,7 +285,7 @@ function renderTable(data = completenessData) {
                 <div class="score-bar">
                     <span class="score-value">${cna.completeness_score}%</span>
                     <div class="progress-bar">
-                        <div class="progress-fill ${scoreClass}" style="width: ${cna.completeness_score}%"></div>
+                        <div class="progress-fill ${percentileClass}" style="width: ${cna.completeness_score}%"></div>
                     </div>
                 </div>
             </td>
@@ -520,10 +519,10 @@ function getScoreClass(score) {
 }
 
 function getPercentileClass(percentile) {
-    if (percentile >= 90) return 'top';
-    if (percentile >= 70) return 'high';
-    if (percentile >= 40) return 'medium';
-    return 'low';
+    if (percentile >= 75) return 'percentile-top';      // Top 25%
+    if (percentile >= 50) return 'percentile-upper';    // Upper middle 25%
+    if (percentile >= 25) return 'percentile-lower';    // Lower middle 25%
+    return 'percentile-bottom';                          // Bottom 25%
 }
 
 function getFieldDescription(fieldName) {
