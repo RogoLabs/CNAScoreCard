@@ -5,28 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CVE Lists - CNA ScoreCard</title>
     <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="cve-styles.css">
 </head>
 <body>
-    <div class="container">
+    <main class="container" role="main">
         <div class="nav-links">
-            <a href="../index.html">🏠 Back to Home</a>
+            <a href="../index.html">🏠 Home</a>
         </div>
         
-        <h1>CVE Score Lists</h1>
-        <p class="description">Explore the highest and lowest scoring CVE records from the last 6 months based on Enhanced Aggregate Scoring (EAS) methodology. Each CVE is associated with a CNA (CVE Numbering Authority).</p>
+        <div class="intro-section">
+            <h1>CVE Score Lists</h1>
+            <p class="main-description">Explore the highest and lowest scoring CVE records from the last 6 months based on Enhanced Aggregate Scoring (EAS) methodology. Each CVE is associated with a CNA (CVE Numbering Authority).</p>
+            
+            <div class="cve-navigation">
+                <div class="nav-card">
+                    <h2>🏆 Top 100 CVEs</h2>
+                    <p>The highest-scoring CVE records demonstrating excellence in vulnerability disclosure quality across all EAS dimensions.</p>
+                    <a href="top100.html" class="btn btn-primary">View Top 100 CVEs →</a>
+                </div>
+                
+                <div class="nav-card">
+                    <h2>📉 Bottom 100 CVEs</h2>
+                    <p>CVE records with the lowest EAS scores, highlighting opportunities for improvement in vulnerability disclosure quality.</p>
+                    <a href="bottom100.html" class="btn btn-primary">View Bottom 100 CVEs →</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading">Loading CVE data...</div>
         
-        <div class="cve-list-grid">
-            <div class="cve-list-option">
-                <h2>🏆 Top 100 CVEs</h2>
-                <p>The highest-scoring CVE records demonstrating excellence in vulnerability disclosure quality across all EAS dimensions.</p>
-                <a href="top100.html" class="cve-list-link">View Top 100 CVEs →</a>
+        <div id="cvePreview" style="display: none;">
+            <div class="preview-section">
+                <h2>🏆 Top 10 CVEs</h2>
+                <div id="topCveCards" class="cve-cards"></div>
+                <div class="text-center mb-4">
+                    <a href="top100.html" class="btn btn-primary">View All Top 100 CVEs →</a>
+                </div>
             </div>
             
-            <div class="cve-list-option">
-                <h2>📉 Bottom 100 CVEs</h2>
-                <p>CVE records with the lowest EAS scores, highlighting opportunities for improvement in vulnerability disclosure quality.</p>
-                <a href="bottom100.html" class="cve-list-link">View Bottom 100 CVEs →</a>
+            <div class="preview-section">
+                <h2>📉 Bottom 10 CVEs</h2>
+                <div id="bottomCveCards" class="cve-cards"></div>
+                <div class="text-center mb-4">
+                    <a href="bottom100.html" class="btn btn-primary">View All Bottom 100 CVEs →</a>
+                </div>
             </div>
         </div>
         
@@ -43,76 +64,8 @@
             </ul>
             <p><a href="../scoring.html">Learn more about the EAS methodology →</a></p>
         </div>
-    </div>
+    </main>
     
-    <style>
-        .cve-list-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-        
-        .cve-list-option {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.2s;
-        }
-        
-        .cve-list-option:hover {
-            transform: translateY(-2px);
-        }
-        
-        .cve-list-option h2 {
-            color: #2c3e50;
-            margin-bottom: 1rem;
-        }
-        
-        .cve-list-option p {
-            color: #666;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-        
-        .cve-list-link {
-            display: inline-block;
-            background: #3498db;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background 0.2s;
-        }
-        
-        .cve-list-link:hover {
-            background: #2980b9;
-        }
-        
-        .info-section {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-top: 2rem;
-        }
-        
-        .info-section h3 {
-            color: #2c3e50;
-            margin-bottom: 1rem;
-        }
-        
-        .info-section ul {
-            margin: 1rem 0;
-            padding-left: 1.5rem;
-        }
-        
-        .info-section li {
-            margin-bottom: 0.5rem;
-            line-height: 1.5;
-        }
-    </style>
+    <script src="index-script.js"></script>
 </body>
 </html>

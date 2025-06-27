@@ -54,6 +54,10 @@ jobs:
       run: |
         python scripts/build.py
     
+    - name: Run completeness analysis
+      run: |
+        python -m cnacompletness.main
+    
     - name: Commit and push generated files
       run: |
         git config --local user.email "action@github.com"

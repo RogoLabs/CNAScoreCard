@@ -608,6 +608,119 @@ a:focus, a:hover {
     margin-top: 3rem;
 }
 
+/* CVE Navigation Cards */
+.cve-navigation {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.nav-card {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    border-left: 4px solid #3498db;
+    transition: transform 0.2s ease;
+}
+
+.nav-card:hover {
+    transform: translateY(-2px);
+}
+
+.nav-card h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.4em;
+}
+
+.nav-card p {
+    color: #666;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    text-align: left;
+}
+
+/* CVE Preview Sections */
+.preview-section {
+    margin-bottom: 3rem;
+}
+
+.preview-section h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.8em;
+    text-align: center;
+}
+
+/* Info Section Styling */
+.info-section {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-top: 2rem;
+    border-left: 4px solid #27ae60;
+}
+
+.info-section h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.4em;
+}
+
+.info-section p {
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.info-section ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.info-section li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+    text-align: left;
+}
+
+/* Error Message Styling */
+.error-message {
+    background: #fff5f5;
+    border: 1px solid #fed7d7;
+    border-radius: 8px;
+    padding: 1rem;
+    color: #c53030;
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.no-results {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 40px;
+    grid-column: 1 / -1;
+}
+
+/* Data Stats Section */
+.data-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.stat-item {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.9em;
+    border-left: 3px solid #3498db;
+}
+
 /* Hero Section Responsive Styles */
 @media (max-width: 768px) {
     .hero-section {

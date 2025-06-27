@@ -28,10 +28,13 @@ A **CVE Numbering Authority (CNA)** is an organization authorized to assign CVE 
 
 CNA ScoreCard is an open-source, fully automated static website that evaluates and visualizes the quality of CVE reporting by CNAs worldwide. Updated every 6 hours, it leverages the Enhanced Aggregate Scoring (EAS) methodology to provide transparent, actionable insights into CVE record quality across six key dimensions.
 
+**NEW: Data Completeness Analysis** - We now include comprehensive CVE schema completeness analysis, evaluating how well CNAs populate all available fields and arrays in CVE records according to the official [CVE 5.1 Schema](https://github.com/CVEProject/cve-schema/blob/main/schema/CVE_Record_Format.json).
+
 **Why CNA ScoreCard?**
 - **Transparency:** Shine a light on the quality of vulnerability reporting across the ecosystem.
 - **Accountability:** Help CNAs identify strengths and areas for improvement.
 - **Automation:** No manual intervention required—always up to date.
+- **Schema Compliance:** Evaluate completeness against the official CVE schema structure.
 
 **Note:** Inspired by the [CNA Enrichment Recognition program](https://www.cve.org/About/Metrics#CNAEnrichmentRecognition).
 
@@ -166,11 +169,55 @@ The Enhanced Aggregate Scoring (EAS) system evaluates CVE records across six key
 - 🟠 Fair (40-59)
 - 🔴 Needs Improvement (0-39)
 
+## CVE Schema Completeness Analysis
+
+In addition to the EAS scoring methodology, CNA ScoreCard now includes comprehensive **Data Completeness Analysis** that evaluates how well CNAs populate all available fields and arrays in CVE records according to the official [CVE 5.1 Schema](https://github.com/CVEProject/cve-schema/blob/main/schema/CVE_Record_Format.json).
+
+### Completeness Methodology
+
+**Schema Field Analysis:** Each CVE record is evaluated against 60+ schema fields including:
+- **Core Metadata:** CVE ID, assigner information, state, timestamps
+- **Vulnerability Information:** Descriptions, affected products, problem types
+- **Technical Details:** CVSS metrics, CPE identifiers, CWE classifications  
+- **Actionable Information:** References, solutions, workarounds, exploits
+- **Enhanced Data:** Timeline, credits, source information, taxonomy mappings
+
+**Scoring Algorithm:** 
+- Required fields contribute 70% of the completeness score
+- Optional fields contribute 30% of the completeness score
+- Custom validation for complex nested structures (e.g., English descriptions, structured references)
+
+**Key Features:**
+- Field-by-field presence analysis
+- CNA completeness rankings and percentiles
+- Visual charts and progress indicators
+- Identification of most commonly missing required fields
+- Best practices highlighting through optional field utilization
+
+### Running Completeness Analysis
+
+```bash
+# Run completeness analysis
+python -m cnacompletness.main
+
+# Output files generated:
+# - web/completeness/cna_completeness.json
+# - web/completeness/completeness_summary.json
+# - cnacompletness/output/completeness_analysis_[timestamp].json
+```
+
+The completeness analysis runs daily via GitHub Actions and integrates seamlessly with the existing CNA ScoreCard infrastructure.
+
 ## Features
 
 - **Main Dashboard:** Overview of CVE statistics and recent vulnerabilities with EAS scores
 - **Individual CNA Pages:** Dedicated pages for each CNA showing their last 100 CVEs with detailed EAS breakdowns
 - **CVE Cards:** Display CVE ID, EAS score, and detailed score breakdown
+- **Data Completeness Analysis:** Comprehensive evaluation of CVE records against the official CVE 5.1 Schema
+  - Field-by-field completeness assessment
+  - Required vs optional field analysis
+  - CNA completeness rankings
+  - Visual completeness metrics and charts
 - **Direct CVE Links:** CVE IDs link directly to CVE.org
 - **Responsive Design:** Works on desktop and mobile
 - **Real-time Data:** Updated every 6 hours from the official CVE repository
@@ -184,14 +231,22 @@ CNAScoreCard/
 │   ├── data_ingestor.py     # CVE data processing
 │   ├── eas_scorer.py        # Enhanced Aggregate Scoring implementation
 │   └── generate_static_data.py # Static data generation
+├── cnacompletness/          # CVE Schema Completeness Analysis
+│   ├── main.py              # Completeness analysis main script
+│   ├── completeness_analyzer.py # Schema completeness evaluation
+│   └── output/              # Analysis output files
 ├── scripts/
-│   ├── build.py              # Main build script
+│   ├── build.py             # Main build script
 │   └── generate_dashboard.py # Main dashboard generation
 ├── web/
 │   ├── index.html           # Main dashboard
 │   ├── styles.css           # Main styling
 │   ├── script.js            # Dashboard functionality
 │   ├── scoring.html         # EAS methodology documentation
+│   ├── completeness/        # Schema completeness analysis
+│   │   ├── index.html       # Completeness analysis dashboard
+│   │   ├── completeness-styles.css # Completeness page styling
+│   │   └── completeness-script.js  # Completeness functionality
 │   └── cna/                 # CNA pages
 │       ├── cna-detail.html  # Unified CNA detail page
 │       ├── cna-styles.css   # CNA page styling
