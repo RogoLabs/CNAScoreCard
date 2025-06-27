@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 20px;
+        }
+        .test-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .test-table th, .test-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        .test-table th {
+            background: #f5f5f5;
+        }
+        .score-value {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .progress-bar {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            width: 100px;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #27ae60;
+            border-radius: 4px;
+        }
+        .percentile-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            background: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Page - Number Display</h1>
+    <p>Testing number formatting and display</p>
+    
+    <table class="test-table">
+        <thead>
+            <tr>
+                <th>CNA</th>
+                <th>Completeness Score</th>
+                <th>Required Fields</th>
+                <th>Optional Fields</th>
+                <th>Percentile</th>
+            </tr>
+        </thead>
+        <tbody id="test-body">
+        </tbody>
+    </table>
+
+    <script>
+        // Test data
+        const testData = [
+            {
+                cna: "palo_alto",
+                completeness_score: 86.13,
+                required_fields_completeness: 100.0,
+                optional_fields_completeness: 53.76,
+                percentile: 100.0
+            },
+            {
+                cna: "juniper",
+                completeness_score: 84.81,
+                required_fields_completeness: 100.0,
+                optional_fields_completeness: 49.38,
+                percentile: 99.7
+            }
+        ];
+
+        function renderTestTable() {
+            const tbody = document.getElementById('test-body');
+            tbody.innerHTML = '';
+            
+            testData.forEach(cna => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${cna.cna}</td>
+                    <td>
+                        <span class="score-value">${cna.completeness_score.toFixed(1)}%</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${cna.completeness_score}%"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="score-value">${cna.required_fields_completeness.toFixed(1)}%</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${cna.required_fields_completeness}%"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="score-value">${cna.optional_fields_completeness.toFixed(1)}%</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${cna.optional_fields_completeness}%"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="percentile-badge">${cna.percentile.toFixed(1)}%</span>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Render the test table
+        renderTestTable();
+    </script>
+</body>
+</html>

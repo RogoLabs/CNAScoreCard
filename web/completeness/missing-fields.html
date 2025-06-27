@@ -15,16 +15,16 @@
         <a href="../cna/index.html">🏛️ CNAs</a>
         <a href="../cves/index.html">🔍 CVEs</a>
         <a href="index.html">📋 Completeness</a>
-        <a href="missing-fields.html" style="background-color: #ecf0f1;">⚠️ Missing Fields</a>
+        <a href="missing-fields.html" style="background-color: #ecf0f1;">⚠️ Bad CVEs</a>
     </div>
 
     <main class="container" role="main" aria-label="CVEs Missing Required Fields">
         <h1>CNA ScoreCard</h1>
         <div class="header-section">
-            <h2>⚠️ CVEs Missing Required Fields</h2>
+            <h2>⚠️ CVEs with Missing Required Fields</h2>
             <p class="main-description">
-                Published CVEs that lack schema-required fields that CNAs are responsible for completing. 
-                This analysis identifies CVE records missing critical data elements defined as required by the 
+                Individual CVE records that lack schema-required fields that CNAs are responsible for completing. 
+                This is a comprehensive list of problematic CVE records missing critical data elements defined as required by the 
                 <a href="https://github.com/CVEProject/cve-schema/blob/main/schema/CVE_Record_Format.json" target="_blank" rel="noopener noreferrer">CVE JSON Schema</a>.
                 Each CVE entry links directly to the official CVE record for detailed review and verification.
             </p>
@@ -54,7 +54,55 @@
             </div>
         </div>
 
-        <!-- Excluded Fields Information -->
+        <!-- Search and Filter Controls -->
+        <div class="analysis-controls">
+            <div class="search-filter">
+                <input type="text" id="missing-cves-search" placeholder="🔍 Search CVEs, CNAs, or fields..." aria-label="Search CVEs">
+                <select id="missing-cves-sort" aria-label="Sort CVEs">
+                    <option value="date">Sort by Date Published</option>
+                    <option value="cve">Sort by CVE ID</option>
+                    <option value="cna">Sort by CNA</option>
+                    <option value="fields">Sort by Missing Fields Count</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Missing Required Fields Section -->
+        <div class="missing-fields-section" id="missing-fields-section">
+            <div id="missing-cves-table" class="cna-table-container">
+                <div class="table-header">
+                    <h2>List of CVEs Missing Required Fields</h2>
+                    <p>Complete inventory of problematic CVE records missing schema-required fields, with direct links and detailed field information.</p>
+                </div>
+                <div class="table-wrapper">
+                    <table class="cna-table" id="missing-cves-main-table">
+                        <thead>
+                            <tr>
+                                <th>CVE ID</th>
+                                <th>CNA</th>
+                                <th>Date Published</th>
+                                <th>Missing Required Fields</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="missing-cves-table-body">
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Common Missing Fields Analysis -->
+        <div class="field-analysis-section">
+            <h2>📊 Most Common Missing Fields</h2>
+            <p>Analysis of which required fields are most frequently missing across all CVE records.</p>
+            <div id="common-missing-fields" class="field-grid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Excluded Fields Information (moved below) -->
         <div class="info-section">
             <h3>📝 Analysis Scope</h3>
             <p>This analysis excludes the following 10 fields that are automatically added by the CVE Program and are not CNA responsibilities:</p>
@@ -69,45 +117,6 @@
                 <span class="field-tag">cveMetadata.dateUpdated</span>
                 <span class="field-tag">cveMetadata.datePublished</span>
                 <span class="field-tag">cveMetadata.dateReserved</span>
-            </div>
-        </div>
-
-        <!-- Missing Required Fields Section -->
-        <div class="missing-fields-section" id="missing-fields-section">
-            <div class="missing-fields-container">
-                <div class="missing-fields-filter">
-                    <input type="text" id="missing-cves-search" placeholder="🔍 Search CVEs..." aria-label="Search CVEs with missing fields">
-                    <select id="missing-cves-sort" aria-label="Sort missing CVEs">
-                        <option value="date">Sort by Date Published</option>
-                        <option value="cve">Sort by CVE ID</option>
-                        <option value="cna">Sort by CNA</option>
-                        <option value="fields">Sort by Missing Fields Count</option>
-                    </select>
-                    <div class="results-info">
-                        <span id="filtered-count">0</span> of <span id="total-missing-count">0</span> CVEs shown
-                    </div>
-                </div>
-                <div id="missing-cves-table" class="missing-cves-table">
-                    <div class="loading">Loading CVEs with missing required fields...</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Common Missing Fields Analysis -->
-        <div class="field-analysis-section">
-            <h2>📊 Most Common Missing Fields</h2>
-            <p>Analysis of which required fields are most frequently missing across all CVE records.</p>
-            <div id="common-missing-fields" class="field-grid">
-                <!-- Populated by JavaScript -->
-            </div>
-        </div>
-
-        <!-- CNA Performance on Required Fields -->
-        <div class="cna-performance-section">
-            <h2>🏛️ CNA Performance on Required Fields</h2>
-            <p>CNAs ranked by their compliance with required field completion.</p>
-            <div id="cna-required-performance" class="performance-table-container">
-                <div class="loading">Loading CNA performance data...</div>
             </div>
         </div>
     </main>

@@ -123,6 +123,8 @@ h1 {
     padding: 0.75rem;
     border-bottom: 1px solid #f3f4f6;
     vertical-align: middle;
+    color: #2c3e50;
+    font-size: 0.95rem;
 }
 
 .completeness-table tbody tr:hover {
@@ -130,16 +132,18 @@ h1 {
 }
 
 .rank-cell {
-    font-weight: 600;
+    font-weight: 700;
     color: #3498db;
     width: 60px;
     text-align: center;
+    font-size: 1rem;
 }
 
 .cna-cell {
     font-weight: 600;
     color: #2c3e50;
     min-width: 150px;
+    font-size: 0.95rem;
 }
 
 .score-cell {
@@ -154,8 +158,45 @@ h1 {
 }
 
 .score-value {
-    font-weight: 600;
-    min-width: 50px;
+    font-weight: 700;
+    color: #1a1a1a;
+    font-size: 1rem;
+    min-width: 60px;
+    display: inline-block;
+    background: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    opacity: 1;
+}
+
+/* Specific styling for score values in tables */
+.completeness-table .score-value {
+    font-weight: 700;
+    color: #1a1a1a;
+    font-size: 1rem;
+    min-width: 60px;
+    display: inline-block;
+    background: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    opacity: 1;
+}
+
+.completeness-table .score-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.completeness-table td .score-value {
+    /* Ensure score values are highly visible in table cells */
+    background: transparent;
+    text-shadow: none;
+    opacity: 1;
 }
 
 .progress-bar {
@@ -172,19 +213,15 @@ h1 {
     border-radius: 4px;
     transition: width 0.3s ease;
 }
-
 .progress-fill.excellent {
     background: #27ae60;
 }
-
 .progress-fill.good {
     background: #27ae60;
 }
-
 .progress-fill.fair {
     background: #f39c12;
 }
-
 .progress-fill.poor {
     background: #e74c3c;
 }
@@ -210,13 +247,53 @@ h1 {
     background: #e74c3c;
 }
 
+/* Score bar styles for CNA performance table */
+.score-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.score-bar {
+    flex: 1;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+    max-width: 100px;
+}
+
+.score-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.score-fill.excellent {
+    background: #27ae60;
+}
+
+.score-fill.good {
+    background: #27ae60;
+}
+
+.score-fill.fair {
+    background: #f39c12;
+}
+
+.score-fill.poor {
+    background: #e74c3c;
+}
+
 .percentile-badge {
     display: inline-block;
     padding: 0.25rem 0.5rem;
     border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.8rem;
+    font-weight: 700;
     color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .percentile-badge.percentile-top {
@@ -241,8 +318,10 @@ h1 {
     border: none;
     padding: 0.375rem 0.75rem;
     border-radius: 6px;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
     cursor: pointer;
+    transition: background-color 0.2s ease;
     transition: background 0.2s;
 }
 
@@ -408,6 +487,12 @@ h1 {
 .chart {
     height: 300px;
     width: 100%;
+    position: relative;
+}
+
+.chart canvas {
+    width: 100% !important;
+    height: 100% !important;
 }
 
 .field-analysis-section {
@@ -802,6 +887,27 @@ h1 {
     margin-left: auto;
 }
 
+/* CVE Link styling for missing fields table */
+.cve-link {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+    transition: color 0.2s ease;
+}
+
+.cve-link:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+.cve-link:focus {
+    outline: 2px solid #3498db;
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* Enhanced missing fields cell styling */
 .missing-fields-cell {
     max-width: 300px;
 }
@@ -810,136 +916,29 @@ h1 {
     display: inline-block;
     background: #e74c3c;
     color: white;
-    padding: 0.2rem 0.4rem;
+    padding: 0.25rem 0.5rem;
     border-radius: 12px;
-    font-size: 0.7rem;
-    margin-right: 0.25rem;
-    margin-bottom: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin: 0.1rem;
     white-space: nowrap;
 }
 
 .count-cell {
     text-align: center;
+    width: 80px;
 }
 
 .field-count {
-    background: #95a5a6;
+    display: inline-block;
+    background: #3498db;
     color: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.performance-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.performance-table th,
-.performance-table td {
-    padding: 0.75rem;
-    text-align: left;
-    border-bottom: 1px solid #ecf0f1;
-}
-
-.performance-table th {
-    background: #f8f9fa;
-    font-weight: 600;
-    color: #2c3e50;
-}
-
-.performance-table tr:hover {
-    background: #f8f9fa;
-}
-
-.rank-cell {
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    min-width: 30px;
     text-align: center;
-    font-weight: 600;
-    color: #7f8c8d;
-}
-
-.cna-name {
-    font-weight: 500;
-    color: #2c3e50;
-}
-
-.score-container {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.score {
-    font-weight: 600;
-    min-width: 50px;
-}
-
-.score-bar {
-    flex: 1;
-    height: 6px;
-    background: #e5e7eb;
-    border-radius: 3px;
-    overflow: hidden;
-    max-width: 100px;
-}
-
-.score-fill {
-    height: 100%;
-    border-radius: 3px;
-    transition: width 0.3s ease;
-}
-
-.missing-count {
-    font-weight: 600;
-}
-
-.missing-count.has-missing {
-    color: #e74c3c;
-}
-
-.missing-count.no-missing {
-    color: #27ae60;
-}
-
-.compliance-rate {
-    font-weight: 600;
-}
-
-.compliance-cell {
-    text-align: center;
-}
-
-.cna-performance-section {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 2rem 0;
-    overflow: hidden;
-}
-
-.cna-performance-section h2 {
-    background: #f8f9fa;
-    color: #2c3e50;
-    margin: 0;
-    padding: 1.5rem;
-    border-top: 4px solid #3498db;
-    font-weight: 600;
-}
-
-.cna-performance-section p {
-    padding: 0 1.5rem 1rem;
-    margin: 0;
-    color: #7f8c8d;
-    background: #f8f9fa;
-}
-
-.performance-table-container {
-    padding: 1.5rem;
 }
 
 /* Missing Fields Link Section */
@@ -955,8 +954,8 @@ h1 {
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    border-left: 5px solid #e74c3c;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-left: 4px solid #e74c3c;
 }
 
 .link-card:hover {
@@ -977,27 +976,31 @@ h1 {
     margin: 0 0 0.5rem 0;
     color: #2c3e50;
     font-size: 1.3rem;
+    font-weight: 600;
 }
 
 .link-content p {
     margin: 0 0 1rem 0;
-    color: #7f8c8d;
+    color: #666;
     line-height: 1.5;
 }
 
 .link-button {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     background: #e74c3c;
     color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 6px;
     text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
     font-weight: 500;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s ease;
 }
 
 .link-button:hover {
     background: #c0392b;
+    color: white;
     text-decoration: none;
 }
 
@@ -1007,27 +1010,39 @@ h1 {
 }
 
 .quick-stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem;
-    background: #fdf2f2;
+    background: #f8f9fa;
     border-radius: 8px;
+    padding: 1rem;
     min-width: 120px;
+    border: 1px solid #e5e7eb;
 }
 
 .quick-stat .stat-value {
-    font-size: 1.8rem;
+    display: block;
+    font-size: 2rem;
     font-weight: 700;
-    color: #c0392b;
+    color: #e74c3c;
     margin-bottom: 0.25rem;
 }
 
 .quick-stat .stat-label {
-    font-size: 0.8rem;
-    color: #7f8c8d;
-    text-align: center;
-    line-height: 1.2;
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Responsive adjustments for missing fields table */
+@media (max-width: 768px) {
+    .missing-fields-cell {
+        max-width: 200px;
+    }
+    
+    .missing-fields-badge {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.4rem;
+        margin: 0.05rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1176,4 +1191,76 @@ h1 {
     .missing-fields-cell {
         max-width: 200px;
     }
+}
+
+/* Missing Fields Table Specific Styling - High Priority Overrides */
+#missing-cves-table .cna-table-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+    overflow: hidden;
+}
+
+#missing-cves-table .cna-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    table-layout: fixed; /* Ensures even spacing across columns */
+}
+
+#missing-cves-table .cna-table th {
+    background: #f8fafc !important; /* Grey header */
+    color: #2c3e50;
+    font-weight: 600;
+    padding: 1rem 0.75rem;
+    text-align: left;
+    border-bottom: 2px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+#missing-cves-table .cna-table td {
+    background: white !important; /* Explicitly white background for data rows */
+    padding: 0.75rem;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: middle;
+    color: #2c3e50;
+    word-wrap: break-word; /* Handle long content */
+}
+
+#missing-cves-table .cna-table tbody tr {
+    background: white !important; /* Ensure entire row is white */
+}
+
+#missing-cves-table .cna-table tbody tr:hover {
+    background: #f8fafc !important; /* Light grey on hover, but still distinguishable from header */
+}
+
+/* Specific column widths for even spacing */
+#missing-cves-table .cna-table th:nth-child(1), /* CVE ID */
+#missing-cves-table .cna-table td:nth-child(1) {
+    width: 15%;
+}
+
+#missing-cves-table .cna-table th:nth-child(2), /* CNA */
+#missing-cves-table .cna-table td:nth-child(2) {
+    width: 20%;
+}
+
+#missing-cves-table .cna-table th:nth-child(3), /* Date Published */
+#missing-cves-table .cna-table td:nth-child(3) {
+    width: 15%;
+}
+
+#missing-cves-table .cna-table th:nth-child(4), /* Missing Required Fields */
+#missing-cves-table .cna-table td:nth-child(4) {
+    width: 40%;
+}
+
+#missing-cves-table .cna-table th:nth-child(5), /* Count */
+#missing-cves-table .cna-table td:nth-child(5) {
+    width: 10%;
+    text-align: center;
 }

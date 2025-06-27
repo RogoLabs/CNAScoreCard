@@ -28,8 +28,8 @@ async function loadMissingFieldsData() {
         }
         const completenessData = await completenessResponse.json();
         
-        // Extract missing CVEs data from completeness data
-        extractMissingCvesData(completenessData);
+        // Extract missing CVEs data from summary data and CNA completeness data
+        extractMissingCvesData(summaryData, completenessData);
         
         // Update the UI with loaded data
         updateOverviewStats();
@@ -44,13 +44,30 @@ async function loadMissingFieldsData() {
     }
 }
 
-// Extract missing CVEs data from completeness data
-function extractMissingCvesData(completenessData) {
+// Extract missing CVEs data from summary and completeness data
+function extractMissingCvesData(summaryData, completenessData) {
     missingCvesData = [];
     const fieldCounts = {};
     const cnaRequiredPerformance = {};
     
-    // Process each CNA's data
+    // First, extract missing CVEs from summary data
+    if (summaryData.cves_missing_required_fields) {
+        summaryData.cves_missing_required_fields.forEach(cve => {
+            missingCvesData.push({
+                cveId: cve.cveId,
+                assigningCna: cve.assigningCna,
+                datePublished: cve.datePublished,
+                missingRequiredFields: cve.missingRequiredFields || []
+            });
+            
+            // Count frequency of missing fields
+            cve.missingRequiredFields?.forEach(field => {
+                fieldCounts[field] = (fieldCounts[field] || 0) + 1;
+            });
+        });
+    }
+    
+    // Process CNA performance data from completeness data
     completenessData.forEach(cna => {
         // Track CNA performance on required fields
         cnaRequiredPerformance[cna.cna] = {
@@ -60,24 +77,9 @@ function extractMissingCvesData(completenessData) {
             missingFieldsCves: 0
         };
         
-        // Extract CVEs with missing required fields
-        if (cna.cves_missing_required_fields) {
-            cna.cves_missing_required_fields.forEach(cve => {
-                missingCvesData.push({
-                    cveId: cve.cve_id,
-                    assigningCna: cna.cna,
-                    datePublished: cve.date_published,
-                    missingRequiredFields: cve.missing_required_fields || []
-                });
-                
-                cnaRequiredPerformance[cna.cna].missingFieldsCves++;
-                
-                // Count frequency of missing fields
-                cve.missing_required_fields?.forEach(field => {
-                    fieldCounts[field] = (fieldCounts[field] || 0) + 1;
-                });
-            });
-        }
+        // Count how many CVEs from this CNA have missing fields
+        const cnaMissingCves = missingCvesData.filter(cve => cve.assigningCna === cna.cna);
+        cnaRequiredPerformance[cna.cna].missingFieldsCves = cnaMissingCves.length;
     });
     
     // Convert field counts to sorted array
@@ -133,8 +135,8 @@ function filterAndRenderMissingCves() {
 
 // Render missing CVEs table
 function renderMissingCvesTable() {
-    const container = document.getElementById('missing-cves-table');
-    if (!container) return;
+    const tableBody = document.getElementById('missing-cves-table-body');
+    if (!tableBody) return;
     
     const searchTerm = document.getElementById('missing-cves-search')?.value.toLowerCase() || '';
     const sortBy = document.getElementById('missing-cves-sort')?.value || 'date';
@@ -163,68 +165,54 @@ function renderMissingCvesTable() {
         }
     });
     
-    // Update filtered count
-    const filteredCountEl = document.getElementById('filtered-count');
-    const totalMissingCountEl = document.getElementById('total-missing-count');
-    if (filteredCountEl) filteredCountEl.textContent = filteredCves.length.toLocaleString();
-    if (totalMissingCountEl) totalMissingCountEl.textContent = missingCvesData.length.toLocaleString();
+    // Clear table body
+    tableBody.innerHTML = '';
     
     if (filteredCves.length === 0) {
-        container.innerHTML = `
-            <div class="empty-missing-fields">
-                <div class="icon">🎉</div>
-                <h3>No CVEs Found</h3>
-                <p>No CVEs match your search criteria${searchTerm ? ` for "${searchTerm}"` : ''}.</p>
-                ${searchTerm ? '<p>Try adjusting your search terms or clearing the search.</p>' : ''}
-            </div>
+        const emptyRow = document.createElement('tr');
+        emptyRow.innerHTML = `
+            <td colspan="5" class="empty-state">
+                <div class="empty-state-content">
+                    <div class="empty-state-icon">🎉</div>
+                    <h3>No CVEs Found</h3>
+                    <p>No CVEs match your search criteria${searchTerm ? ` for "${searchTerm}"` : ''}.</p>
+                    ${searchTerm ? '<p>Try adjusting your search terms or clearing the search.</p>' : ''}
+                </div>
+            </td>
         `;
+        tableBody.appendChild(emptyRow);
         return;
     }
     
-    // Create table
-    const tableHTML = `
-        <table>
-            <thead>
-                <tr>
-                    <th>CVE ID</th>
-                    <th>CNA</th>
-                    <th>Date Published</th>
-                    <th>Missing Required Fields</th>
-                    <th>Count</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${filteredCves.map(cve => `
-                    <tr>
-                        <td>
-                            <a href="https://cve.org/CVERecord?id=${cve.cveId}" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
-                               class="cve-link">
-                                ${cve.cveId}
-                            </a>
-                        </td>
-                        <td>
-                            <span class="cna-badge">${escapeHtml(cve.assigningCna)}</span>
-                        </td>
-                        <td class="date-cell">
-                            ${cve.datePublished ? new Date(cve.datePublished).toLocaleDateString() : 'Unknown'}
-                        </td>
-                        <td class="missing-fields-cell">
-                            ${cve.missingRequiredFields.map(field => 
-                                `<span class="missing-fields-badge">${escapeHtml(formatFieldName(field))}</span>`
-                            ).join('')}
-                        </td>
-                        <td class="count-cell">
-                            <span class="field-count">${cve.missingRequiredFields.length}</span>
-                        </td>
-                    </tr>
-                `).join('')}
-            </tbody>
-        </table>
-    `;
-    
-    container.innerHTML = tableHTML;
+    // Populate table rows
+    filteredCves.forEach(cve => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td class="cna-cell">
+                <a href="https://cve.org/CVERecord?id=${cve.cveId}" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="cve-link">
+                    ${cve.cveId}
+                </a>
+            </td>
+            <td class="cna-cell">
+                ${escapeHtml(cve.assigningCna)}
+            </td>
+            <td>
+                ${cve.datePublished ? new Date(cve.datePublished).toLocaleDateString() : 'Unknown'}
+            </td>
+            <td class="missing-fields-cell">
+                ${cve.missingRequiredFields.map(field => 
+                    `<span class="missing-fields-badge">${escapeHtml(formatFieldName(field))}</span>`
+                ).join('')}
+            </td>
+            <td class="count-cell">
+                <span class="field-count">${cve.missingRequiredFields.length}</span>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
 }
 
 // Update common missing fields section

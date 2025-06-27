@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="completeness-styles.css">
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="nav-links">
@@ -15,7 +16,7 @@
         <a href="../cna/index.html">🏛️ CNAs</a>
         <a href="../cves/index.html">🔍 CVEs</a>
         <a href="index.html" style="background-color: #ecf0f1;">📋 Completeness</a>
-        <a href="missing-fields.html">⚠️ Missing Fields</a>
+        <a href="missing-fields.html">⚠️ Bad CVEs</a>
     </div>
 
     <main class="container" role="main" aria-label="CVE Data Completeness Analysis">
@@ -53,24 +54,6 @@
             </div>
         </div>
 
-        <!-- Quick Link to Missing Fields Analysis -->
-        <div class="missing-fields-link-section">
-            <div class="link-card">
-                <div class="link-icon">⚠️</div>
-                <div class="link-content">
-                    <h3>CVEs Missing Required Fields</h3>
-                    <p>View detailed analysis of CVE records that lack schema-required fields</p>
-                    <a href="missing-fields.html" class="link-button">View Missing Fields Analysis →</a>
-                </div>
-                <div class="link-stats">
-                    <div class="quick-stat">
-                        <span class="stat-value" id="quick-missing-count">Loading...</span>
-                        <span class="stat-label">CVEs with missing fields</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="analysis-controls">
             <div class="search-filter">
                 <input type="text" id="cna-search" placeholder="🔍 Search CNAs..." aria-label="Search CNAs">
@@ -105,7 +88,7 @@
                             <th>Optional Fields</th>
                             <th>CVE Count</th>
                             <th>Percentile</th>
-                            <th>Details</th>
+                            <!-- Removed Details column header -->
                         </tr>
                     </thead>
                     <tbody id="completeness-table-body">
@@ -124,29 +107,39 @@
             <div class="chart-grid">
                 <div class="chart-item">
                     <h3>Completeness Score Distribution</h3>
-                    <div id="completeness-histogram" class="chart"></div>
+                    <div class="chart">
+                        <canvas id="completeness-histogram"></canvas>
+                    </div>
                 </div>
                 
                 <div class="chart-item">
                     <h3>Required vs Optional Fields</h3>
-                    <div id="required-vs-optional-scatter" class="chart"></div>
+                    <div class="chart">
+                        <canvas id="required-vs-optional-scatter"></canvas>
+                    </div>
                 </div>
                 
                 <div class="chart-item">
                     <h3>Top Performing CNAs</h3>
-                    <div id="top-cnas-bar" class="chart"></div>
+                    <div class="chart">
+                        <canvas id="top-cnas-bar"></canvas>
+                    </div>
                 </div>
                 
                 <div class="chart-item">
                     <h3>Field Utilization Heatmap</h3>
-                    <div id="field-utilization-heatmap" class="chart"></div>
+                    <div class="chart">
+                        <canvas id="field-utilization-heatmap"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="field-analysis-section">
             <h2>📋 Schema Field Analysis</h2>
-            <p>Detailed analysis of individual CVE schema fields and their utilization across all records.</p>
+            <p class="main-description">
+                Detailed analysis of individual CVE schema fields and their utilization across all records.
+            </p>
             
             <div class="field-tabs">
                 <button class="tab-btn active" data-tab="required">Required Fields</button>
@@ -180,33 +173,20 @@
             </div>
         </div>
 
-        <div class="methodology-section">
-            <h2>📖 Completeness Methodology</h2>
-            <div class="methodology-content">
-                <div class="methodology-item">
-                    <h3>🎯 Analysis Scope</h3>
-                    <p>This analysis evaluates CVE records against the official CVE JSON Schema, measuring the presence and utilization of both required and optional fields. We assess over 50 different schema elements including core metadata, affected products, problem types, references, and metrics.</p>
+        <!-- Quick Link to Missing Fields Analysis (now outside the Schema Field Analysis box) -->
+        <div class="missing-fields-link-section">
+            <div class="link-card">
+                <div class="link-icon">⚠️</div>
+                <div class="link-content">
+                    <h3>Problematic CVEs: Missing Required Fields</h3>
+                    <p>Browse the complete list of problematic CVE records that lack schema-required fields. These CVE entries fail to meet basic completeness standards and require CNA attention to resolve data quality issues.</p>
+                    <a href="missing-fields.html" class="link-button">View Bad CVEs List →</a>
                 </div>
-                
-                <div class="methodology-item">
-                    <h3>📊 Scoring Algorithm</h3>
-                    <p>Completeness scores are calculated using a weighted approach: required fields contribute 70% of the score while optional fields contribute 30%. This reflects the critical importance of required fields while still rewarding comprehensive use of optional schema elements.</p>
-                </div>
-                
-                <div class="methodology-item">
-                    <h3>🔍 Field Categories</h3>
-                    <ul>
-                        <li><strong>Core Metadata:</strong> CVE ID, assigner information, state, and timestamps</li>
-                        <li><strong>Vulnerability Information:</strong> Descriptions, affected products, problem types</li>
-                        <li><strong>Technical Details:</strong> CVSS metrics, CPE identifiers, CWE classifications</li>
-                        <li><strong>Actionable Information:</strong> References, solutions, workarounds, exploits</li>
-                        <li><strong>Enhanced Data:</strong> Timeline, credits, source information, taxonomy mappings</li>
-                    </ul>
-                </div>
-                
-                <div class="methodology-item">
-                    <h3>🎯 Quality Indicators</h3>
-                    <p>Beyond simple presence/absence, our analysis includes quality checks such as English language descriptions, named references, version-specific information, and the use of structured identifiers like CPE and CWE.</p>
+                <div class="link-stats">
+                    <div class="quick-stat">
+                        <span class="stat-value" id="quick-missing-count">Loading...</span>
+                        <span class="stat-label">Bad CVE records</span>
+                    </div>
                 </div>
             </div>
         </div>
