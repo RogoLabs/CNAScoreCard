@@ -273,6 +273,8 @@ Contributions are welcome! Please open issues or pull requests to improve scorin
 ## License
 
 This project is open source under the MIT License.
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 
 ## Related Resources
 
@@ -287,5 +289,4 @@ This project and its scoring methodology were inspired by the [CNA Enrichment Re
 
 For questions, feedback, or support, please open an [issue](https://github.com/gamblin/CNAScoreCard/issues) or contact the maintainer via GitHub.
 
-[![Build Status](https://github.com/gamblin/CNAScoreCard/actions/workflows/main.yml/badge.svg)](https://github.com/gamblin/CNAScoreCard/actions)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
