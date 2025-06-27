@@ -1,546 +1,913 @@
 {
-  "generated_at": "2025-06-27T18:49:17.845489",
-  "total_cves_analyzed": 23649,
+  "generated_at": "2025-06-27T14:22:35.147818",
+  "total_cves_analyzed": 23654,
   "total_cnas": 298,
   "global_completeness": {
-    "overall_completeness": 79.89248492056852,
-    "required_fields_completeness": 99.96335292542321,
-    "optional_fields_completeness": 33.06045957590758,
+    "overall_completeness": 77.99942058736971,
+    "required_fields_completeness": 99.92672134381782,
+    "optional_fields_completeness": 26.835718822324164,
     "required_fields": [
       {
         "field": "affected.vendor",
         "required": true,
-        "percentage": 99.78011755253921,
-        "present": 23597,
-        "total": 23649
+        "percentage": 99.78016403145345,
+        "present": 23602,
+        "total": 23654
       },
       {
         "field": "affected.product",
         "required": true,
-        "percentage": 99.78011755253921,
-        "present": 23597,
-        "total": 23649
-      },
-      {
-        "field": "dataType",
-        "required": true,
-        "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
-      },
-      {
-        "field": "dataVersion",
-        "required": true,
-        "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
-      },
-      {
-        "field": "cveMetadata.cveId",
-        "required": true,
-        "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
-      },
-      {
-        "field": "cveMetadata.assignerOrgId",
-        "required": true,
-        "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
-      },
-      {
-        "field": "cveMetadata.state",
-        "required": true,
-        "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
-      },
-      {
-        "field": "containers.cna.providerMetadata",
-        "required": true,
-        "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
+        "percentage": 99.78016403145345,
+        "present": 23602,
+        "total": 23654
       },
       {
         "field": "containers.cna.descriptions",
         "required": true,
         "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
+        "present": 23654,
+        "total": 23654
       },
       {
         "field": "containers.cna.affected",
         "required": true,
         "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
+        "present": 23654,
+        "total": 23654
       },
       {
         "field": "containers.cna.references",
         "required": true,
         "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
+        "present": 23654,
+        "total": 23654
       },
       {
         "field": "descriptions.english",
         "required": true,
         "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
+        "present": 23654,
+        "total": 23654
       }
     ],
     "optional_fields": [
       {
-        "field": "cveMetadata.assignerShortName",
-        "required": false,
-        "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
-      },
-      {
-        "field": "cveMetadata.dateUpdated",
-        "required": false,
-        "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
-      },
-      {
-        "field": "cveMetadata.datePublished",
-        "required": false,
-        "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
-      },
-      {
-        "field": "cveMetadata.dateReserved",
-        "required": false,
-        "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
-      },
-      {
         "field": "affected.versions",
         "required": false,
-        "percentage": 99.83931667300942,
-        "present": 23611,
-        "total": 23649
+        "percentage": 99.83935063836982,
+        "present": 23616,
+        "total": 23654
       },
       {
         "field": "containers.adp",
         "required": false,
-        "percentage": 89.77546619307371,
-        "present": 21231,
-        "total": 23649
+        "percentage": 89.74803415912743,
+        "present": 21229,
+        "total": 23654
       },
       {
         "field": "containers.cna.problemTypes",
         "required": false,
-        "percentage": 88.1136623113028,
-        "present": 20838,
-        "total": 23649
+        "percentage": 88.11617485414729,
+        "present": 20843,
+        "total": 23654
       },
       {
         "field": "problemTypes.type",
         "required": false,
-        "percentage": 84.11772167956362,
-        "present": 19893,
-        "total": 23649
+        "percentage": 84.12107888729179,
+        "present": 19898,
+        "total": 23654
       },
       {
         "field": "containers.cna.title",
         "required": false,
-        "percentage": 77.7199881601759,
-        "present": 18380,
-        "total": 23649
+        "percentage": 77.72469772554325,
+        "present": 18385,
+        "total": 23654
       },
       {
         "field": "containers.cna.metrics",
         "required": false,
-        "percentage": 73.09822825489451,
-        "present": 17287,
-        "total": 23649
+        "percentage": 73.10391477128604,
+        "present": 17292,
+        "total": 23654
       },
       {
         "field": "problemTypes.cwe",
         "required": false,
-        "percentage": 72.84874624719862,
-        "present": 17228,
-        "total": 23649
+        "percentage": 72.85448549928131,
+        "present": 17233,
+        "total": 23654
       },
       {
         "field": "affected.defaultStatus",
         "required": false,
-        "percentage": 65.08097593978603,
+        "percentage": 65.06721907499788,
         "present": 15391,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "metrics.cvssV3_1",
         "required": false,
-        "percentage": 63.93082159922196,
-        "present": 15119,
-        "total": 23649
+        "percentage": 63.93844592880696,
+        "present": 15124,
+        "total": 23654
       },
       {
         "field": "containers.cna.credits",
         "required": false,
-        "percentage": 48.15848450251596,
-        "present": 11389,
-        "total": 23649
+        "percentage": 48.17367041515177,
+        "present": 11395,
+        "total": 23654
       },
       {
         "field": "containers.cna.source",
         "required": false,
-        "percentage": 46.653135439130615,
+        "percentage": 46.64327386488543,
         "present": 11033,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "metrics.scenarios",
         "required": false,
-        "percentage": 39.908664214131676,
+        "percentage": 39.90022829119811,
         "present": 9438,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "descriptions.supporting_media",
         "required": false,
-        "percentage": 35.24461922280012,
+        "percentage": 35.237169189143486,
         "present": 8335,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "references.named",
         "required": false,
-        "percentage": 24.728318322127784,
-        "present": 5848,
-        "total": 23649
+        "percentage": 24.74422930582565,
+        "present": 5853,
+        "total": 23654
       },
       {
         "field": "containers.cna.impacts",
         "required": false,
-        "percentage": 24.220897289525983,
+        "percentage": 24.215777458357994,
         "present": 5728,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "references.advisory",
         "required": false,
-        "percentage": 22.89314558755127,
-        "present": 5414,
-        "total": 23649
+        "percentage": 22.90944449141794,
+        "present": 5419,
+        "total": 23654
       },
       {
         "field": "metrics.cvssV4",
         "required": false,
-        "percentage": 21.0706583787898,
-        "present": 4983,
-        "total": 23649
+        "percentage": 21.087342521349456,
+        "present": 4988,
+        "total": 23654
       },
       {
         "field": "containers.cna.timeline",
         "required": false,
-        "percentage": 20.072730348006257,
-        "present": 4747,
-        "total": 23649
+        "percentage": 20.089625433330514,
+        "present": 4752,
+        "total": 23654
       },
       {
         "field": "containers.cna.cpeApplicability",
         "required": false,
-        "percentage": 14.647553807771999,
+        "percentage": 14.644457597023758,
         "present": 3464,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "metrics.cvssV3_0",
         "required": false,
-        "percentage": 14.448813903336294,
-        "present": 3417,
-        "total": 23649
+        "percentage": 14.466897776274626,
+        "present": 3422,
+        "total": 23654
       },
       {
         "field": "references.exploit",
         "required": false,
-        "percentage": 13.201403864856864,
-        "present": 3122,
-        "total": 23649
+        "percentage": 13.194385727572502,
+        "present": 3121,
+        "total": 23654
       },
       {
         "field": "affected.repo",
         "required": false,
-        "percentage": 12.634783711784852,
+        "percentage": 12.632112961866914,
         "present": 2988,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "references.technical",
         "required": false,
-        "percentage": 12.326102583618757,
-        "present": 2915,
-        "total": 23649
+        "percentage": 12.344635156844507,
+        "present": 2920,
+        "total": 23654
       },
       {
         "field": "containers.cna.datePublic",
         "required": false,
-        "percentage": 11.827138568226985,
+        "percentage": 11.824638538936332,
         "present": 2797,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "descriptions.multiple_languages",
         "required": false,
-        "percentage": 11.717197344496597,
-        "present": 2771,
-        "total": 23649
+        "percentage": 11.735858628561765,
+        "present": 2776,
+        "total": 23654
       },
       {
         "field": "metrics.cvssV2",
         "required": false,
-        "percentage": 11.717197344496597,
-        "present": 2771,
-        "total": 23649
+        "percentage": 11.735858628561765,
+        "present": 2776,
+        "total": 23654
       },
       {
         "field": "affected.programFiles",
         "required": false,
-        "percentage": 11.04486447629921,
+        "percentage": 11.042529804684197,
         "present": 2612,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "containers.cna.solutions",
         "required": false,
-        "percentage": 10.947608778383865,
+        "percentage": 10.945294664750147,
         "present": 2589,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "references.vendor",
         "required": false,
-        "percentage": 9.860882066895007,
+        "percentage": 9.858797666356642,
         "present": 2332,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "affected.platforms",
         "required": false,
-        "percentage": 5.556260306989725,
+        "percentage": 5.555085820580029,
         "present": 1314,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "affected.modules",
         "required": false,
-        "percentage": 4.680959025751617,
-        "present": 1107,
-        "total": 23649
+        "percentage": 4.688424790733069,
+        "present": 1109,
+        "total": 23654
       },
       {
         "field": "affected.cpes",
         "required": false,
-        "percentage": 3.425091970062159,
+        "percentage": 3.4243679715904287,
         "present": 810,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "containers.cna.tags",
         "required": false,
-        "percentage": 2.0339126390122204,
+        "percentage": 2.0334827090555505,
         "present": 481,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "containers.cna.workarounds",
         "required": false,
-        "percentage": 1.6575753731658844,
+        "percentage": 1.657224993658578,
         "present": 392,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "metrics.other",
         "required": false,
-        "percentage": 1.2854666159245636,
+        "percentage": 1.285194893041346,
         "present": 304,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "references.patch",
         "required": false,
-        "percentage": 1.0740411856738128,
+        "percentage": 1.0738141540542825,
         "present": 254,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "containers.cna.exploits",
         "required": false,
-        "percentage": 0.9133578586832425,
+        "percentage": 0.9131647924241143,
         "present": 216,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "containers.cna.dateAssigned",
         "required": false,
-        "percentage": 0.765360057507717,
+        "percentage": 0.7651982751331698,
         "present": 181,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "containers.cna.configurations",
         "required": false,
-        "percentage": 0.49896401539177127,
+        "percentage": 0.4988585440094699,
         "present": 118,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "affected.programRoutines",
         "required": false,
-        "percentage": 0.10148420652036026,
+        "percentage": 0.10146275471379047,
         "present": 24,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "cveMetadata.serial",
         "required": false,
         "percentage": 0.0,
         "present": 0,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "containers.cna.taxonomyMappings",
         "required": false,
         "percentage": 0.0,
         "present": 0,
-        "total": 23649
+        "total": 23654
       },
       {
         "field": "problemTypes.references",
         "required": false,
         "percentage": 0.0,
         "present": 0,
-        "total": 23649
+        "total": 23654
       }
     ],
     "top_missing_required": [],
     "top_present_optional": [
       {
-        "field": "cveMetadata.assignerShortName",
-        "required": false,
-        "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
-      },
-      {
-        "field": "cveMetadata.dateUpdated",
-        "required": false,
-        "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
-      },
-      {
-        "field": "cveMetadata.datePublished",
-        "required": false,
-        "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
-      },
-      {
-        "field": "cveMetadata.dateReserved",
-        "required": false,
-        "percentage": 100.0,
-        "present": 23649,
-        "total": 23649
-      },
-      {
         "field": "affected.versions",
         "required": false,
-        "percentage": 99.83931667300942,
-        "present": 23611,
-        "total": 23649
+        "percentage": 99.83935063836982,
+        "present": 23616,
+        "total": 23654
       },
       {
         "field": "containers.adp",
         "required": false,
-        "percentage": 89.77546619307371,
-        "present": 21231,
-        "total": 23649
+        "percentage": 89.74803415912743,
+        "present": 21229,
+        "total": 23654
       },
       {
         "field": "containers.cna.problemTypes",
         "required": false,
-        "percentage": 88.1136623113028,
-        "present": 20838,
-        "total": 23649
+        "percentage": 88.11617485414729,
+        "present": 20843,
+        "total": 23654
       },
       {
         "field": "problemTypes.type",
         "required": false,
-        "percentage": 84.11772167956362,
-        "present": 19893,
-        "total": 23649
+        "percentage": 84.12107888729179,
+        "present": 19898,
+        "total": 23654
       },
       {
         "field": "containers.cna.title",
         "required": false,
-        "percentage": 77.7199881601759,
-        "present": 18380,
-        "total": 23649
+        "percentage": 77.72469772554325,
+        "present": 18385,
+        "total": 23654
       },
       {
         "field": "containers.cna.metrics",
         "required": false,
-        "percentage": 73.09822825489451,
-        "present": 17287,
-        "total": 23649
+        "percentage": 73.10391477128604,
+        "present": 17292,
+        "total": 23654
+      },
+      {
+        "field": "problemTypes.cwe",
+        "required": false,
+        "percentage": 72.85448549928131,
+        "present": 17233,
+        "total": 23654
+      },
+      {
+        "field": "affected.defaultStatus",
+        "required": false,
+        "percentage": 65.06721907499788,
+        "present": 15391,
+        "total": 23654
+      },
+      {
+        "field": "metrics.cvssV3_1",
+        "required": false,
+        "percentage": 63.93844592880696,
+        "present": 15124,
+        "total": 23654
+      },
+      {
+        "field": "containers.cna.credits",
+        "required": false,
+        "percentage": 48.17367041515177,
+        "present": 11395,
+        "total": 23654
       }
     ]
   },
+  "cves_missing_required_fields": [
+    {
+      "cveId": "CVE-2025-6547",
+      "assigningCna": "harborist",
+      "datePublished": "2025-06-23T19:00:45.472Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-6087",
+      "assigningCna": "cloudflare",
+      "datePublished": "2025-06-16T18:30:44.180Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-6545",
+      "assigningCna": "harborist",
+      "datePublished": "2025-06-23T18:41:18.771Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-3647",
+      "assigningCna": "fedora",
+      "datePublished": "2025-04-25T14:43:18.135Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-3627",
+      "assigningCna": "fedora",
+      "datePublished": "2025-04-25T14:42:42.646Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-3641",
+      "assigningCna": "fedora",
+      "datePublished": "2025-04-25T14:43:04.861Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-3636",
+      "assigningCna": "fedora",
+      "datePublished": "2025-04-25T14:42:54.270Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-3637",
+      "assigningCna": "fedora",
+      "datePublished": "2025-04-25T14:42:56.775Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-3640",
+      "assigningCna": "fedora",
+      "datePublished": "2025-04-25T14:43:02.110Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-3638",
+      "assigningCna": "fedora",
+      "datePublished": "2025-04-25T14:42:59.376Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-3643",
+      "assigningCna": "fedora",
+      "datePublished": "2025-04-25T14:43:10.125Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-3634",
+      "assigningCna": "fedora",
+      "datePublished": "2025-04-25T14:02:05.222Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-3635",
+      "assigningCna": "fedora",
+      "datePublished": "2025-04-25T14:42:51.572Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-3642",
+      "assigningCna": "fedora",
+      "datePublished": "2025-04-25T14:43:07.535Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-3628",
+      "assigningCna": "fedora",
+      "datePublished": "2025-04-25T14:42:45.242Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-3645",
+      "assigningCna": "fedora",
+      "datePublished": "2025-04-25T14:43:15.306Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-3644",
+      "assigningCna": "fedora",
+      "datePublished": "2025-04-25T14:43:12.816Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-3625",
+      "assigningCna": "fedora",
+      "datePublished": "2025-04-25T14:42:39.887Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-46803",
+      "assigningCna": "suse",
+      "datePublished": "2025-05-26T15:06:04.339Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-46804",
+      "assigningCna": "suse",
+      "datePublished": "2025-05-26T13:31:17.792Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-46805",
+      "assigningCna": "suse",
+      "datePublished": "2025-05-26T13:16:40.969Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-23395",
+      "assigningCna": "suse",
+      "datePublished": "2025-05-26T15:18:46.694Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-27552",
+      "assigningCna": "CPANSec",
+      "datePublished": "2025-03-26T11:08:11.434Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-27551",
+      "assigningCna": "CPANSec",
+      "datePublished": "2025-03-26T11:07:43.089Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-26869",
+      "assigningCna": "Patchstack",
+      "datePublished": "2025-03-26T14:48:53.951Z",
+      "missingRequiredFields": [
+        "affected.vendor"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-32045",
+      "assigningCna": "fedora",
+      "datePublished": "2025-04-25T14:43:54.071Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-32946",
+      "assigningCna": "JFROG",
+      "datePublished": "2025-04-15T12:58:08.024Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-32044",
+      "assigningCna": "fedora",
+      "datePublished": "2025-04-25T14:43:22.142Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-32947",
+      "assigningCna": "JFROG",
+      "datePublished": "2025-04-15T14:45:29.905Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-32943",
+      "assigningCna": "JFROG",
+      "datePublished": "2025-04-15T10:24:00.296Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-32948",
+      "assigningCna": "JFROG",
+      "datePublished": "2025-04-15T14:50:09.204Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-32944",
+      "assigningCna": "JFROG",
+      "datePublished": "2025-04-15T12:50:38.735Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-32945",
+      "assigningCna": "JFROG",
+      "datePublished": "2025-04-15T12:56:32.873Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-32949",
+      "assigningCna": "JFROG",
+      "datePublished": "2025-04-15T14:57:57.207Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-4366",
+      "assigningCna": "cloudflare",
+      "datePublished": "2025-05-22T15:50:20.789Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-4144",
+      "assigningCna": "cloudflare",
+      "datePublished": "2025-05-01T00:50:27.543Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-4143",
+      "assigningCna": "cloudflare",
+      "datePublished": "2025-05-01T00:19:52.737Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-0769",
+      "assigningCna": "Fluid Attacks",
+      "datePublished": "2025-02-28T20:01:30.324Z",
+      "missingRequiredFields": [
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2025-0825",
+      "assigningCna": "Checkmarx",
+      "datePublished": "2025-02-04T14:11:51.741Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2024-25133",
+      "assigningCna": "redhat",
+      "datePublished": "2024-12-31T14:25:19.455Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2024-25132",
+      "assigningCna": "redhat",
+      "datePublished": "2025-03-19T17:57:14.659Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2024-12905",
+      "assigningCna": "seal",
+      "datePublished": "2025-03-27T16:25:34.410Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2024-47516",
+      "assigningCna": "redhat",
+      "datePublished": "2025-03-25T23:21:52.492Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2024-47092",
+      "assigningCna": "Checkmk",
+      "datePublished": "2025-03-03T13:47:18.887Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2024-4982",
+      "assigningCna": "fedora",
+      "datePublished": "2025-05-12T19:01:45.824Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2024-4981",
+      "assigningCna": "fedora",
+      "datePublished": "2025-05-12T18:55:08.744Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2023-6604",
+      "assigningCna": "fedora",
+      "datePublished": "2025-01-06T16:41:42.345Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2023-6605",
+      "assigningCna": "fedora",
+      "datePublished": "2025-01-06T16:42:04.611Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2023-6602",
+      "assigningCna": "redhat",
+      "datePublished": "2024-12-31T14:20:07.379Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2023-6603",
+      "assigningCna": "redhat",
+      "datePublished": "2024-12-31T14:20:10.690Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2023-6601",
+      "assigningCna": "fedora",
+      "datePublished": "2025-01-06T16:41:14.621Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2023-1907",
+      "assigningCna": "redhat",
+      "datePublished": "2025-01-09T07:26:48.686Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    },
+    {
+      "cveId": "CVE-2018-25110",
+      "assigningCna": "Checkmarx",
+      "datePublished": "2025-05-23T14:53:43.335Z",
+      "missingRequiredFields": [
+        "affected.vendor",
+        "affected.product"
+      ]
+    }
+  ],
   "field_definitions": {
-    "dataType": {
-      "required": true,
-      "description": "Indicates the type of information (CVE_RECORD)"
-    },
-    "dataVersion": {
-      "required": true,
-      "description": "Version of the CVE schema used"
-    },
-    "cveMetadata.cveId": {
-      "required": true,
-      "description": "The CVE identifier"
-    },
-    "cveMetadata.assignerOrgId": {
-      "required": true,
-      "description": "UUID of the assigning organization"
-    },
-    "cveMetadata.assignerShortName": {
-      "required": false,
-      "description": "Short name of the assigning organization"
-    },
-    "cveMetadata.state": {
-      "required": true,
-      "description": "State of the CVE (PUBLISHED/REJECTED)"
-    },
-    "cveMetadata.dateUpdated": {
-      "required": false,
-      "description": "Date the record was last updated"
-    },
-    "cveMetadata.datePublished": {
-      "required": false,
-      "description": "Date the CVE was published"
-    },
-    "cveMetadata.dateReserved": {
-      "required": false,
-      "description": "Date the CVE ID was reserved"
-    },
     "cveMetadata.serial": {
       "required": false,
       "description": "Serial number for record versioning"
-    },
-    "containers.cna.providerMetadata": {
-      "required": true,
-      "description": "Information about the CNA"
     },
     "containers.cna.descriptions": {
       "required": true,

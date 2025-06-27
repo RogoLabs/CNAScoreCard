@@ -17,7 +17,7 @@ def test_completeness_analyzer():
     """Test the completeness analyzer with sample CVE data."""
     print("Testing CVE Completeness Analyzer...")
     
-    # Sample CVE data
+    # Sample CVE data (excluding automatically tracked fields)
     complete_cve = {
         "dataType": "CVE_RECORD",
         "dataVersion": "5.1.1",

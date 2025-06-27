@@ -124,6 +124,7 @@ def generate_completeness_reports():
         "total_cves_analyzed": analysis_results["total_records"],
         "total_cnas": len(cna_completeness_data),
         "global_completeness": analysis_results["completeness_summary"],
+        "cves_missing_required_fields": analysis_results.get("cves_missing_required_fields", []),
         "field_definitions": {
             field_name: {
                 "required": config["required"],
@@ -148,6 +149,14 @@ def generate_completeness_reports():
     print(f"Required fields completeness: {analysis_results['completeness_summary']['required_fields_completeness']:.1f}%")
     print(f"Optional fields completeness: {analysis_results['completeness_summary']['optional_fields_completeness']:.1f}%")
     
+    # Print CVEs with missing required fields summary
+    missing_cves = analysis_results.get("cves_missing_required_fields", [])
+    if missing_cves:
+        print(f"\n⚠️  CVEs with missing required fields: {len(missing_cves)}")
+        print("   (These CVEs are published but lack schema-required fields)")
+    else:
+        print("\n✅ All CVEs have required fields present")
+    
     print("\nTop 10 CNAs by completeness:")
     for i, cna in enumerate(cna_completeness_data[:10], 1):
         print(f"{i:2d}. {cna['cna']}: {cna['completeness_score']:.1f}% (CVEs: {cna['total_cves']})")
@@ -159,19 +168,17 @@ def generate_completeness_reports():
     print("\nAnalysis complete!")
 
 def _get_field_description(field_name: str) -> str:
-    """Get a human-readable description for a field."""
+    """Get a human-readable description for a field.
+    
+    Note: The following fields are automatically added by the CVE program
+    and are excluded from completeness tracking:
+    - dataType, dataVersion, cveMetadata.cveId, cveMetadata.assignerOrgId
+    - cveMetadata.state, containers.cna.providerMetadata
+    - cveMetadata.assignerShortName, cveMetadata.dateUpdated
+    - cveMetadata.datePublished, cveMetadata.dateReserved
+    """
     descriptions = {
-        "dataType": "Indicates the type of information (CVE_RECORD)",
-        "dataVersion": "Version of the CVE schema used",
-        "cveMetadata.cveId": "The CVE identifier",
-        "cveMetadata.assignerOrgId": "UUID of the assigning organization",
-        "cveMetadata.assignerShortName": "Short name of the assigning organization",
-        "cveMetadata.state": "State of the CVE (PUBLISHED/REJECTED)",
-        "cveMetadata.dateUpdated": "Date the record was last updated",
-        "cveMetadata.datePublished": "Date the CVE was published",
-        "cveMetadata.dateReserved": "Date the CVE ID was reserved",
         "cveMetadata.serial": "Serial number for record versioning",
-        "containers.cna.providerMetadata": "Information about the CNA",
         "containers.cna.descriptions": "Vulnerability descriptions",
         "containers.cna.affected": "Affected products and versions",
         "containers.cna.references": "Reference URLs and documentation",

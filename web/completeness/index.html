@@ -52,6 +52,38 @@
             </div>
         </div>
 
+        <!-- Missing Required Fields Section -->
+        <div class="missing-fields-section" id="missing-fields-section">
+            <div class="section-header">
+                <h2>⚠️ CVEs Missing Required Fields</h2>
+                <p>Published CVEs that lack schema-required fields that CNAs are responsible for completing. This analysis excludes the 10 fields automatically added by the CVE Program: <code>dataType</code>, <code>dataVersion</code>, <code>cveMetadata.cveId</code>, <code>cveMetadata.assignerOrgId</code>, <code>cveMetadata.state</code>, <code>containers.cna.providerMetadata</code>, <code>cveMetadata.assignerShortName</code>, <code>cveMetadata.dateUpdated</code>, <code>cveMetadata.datePublished</code>, and <code>cveMetadata.dateReserved</code>. Each CVE entry links directly to the official CVE record for detailed review.</p>
+            </div>
+            <div class="missing-fields-stats">
+                <div class="stat-item">
+                    <strong id="missing-cves-count">Loading...</strong>
+                    <span>CVEs with missing required fields</span>
+                </div>
+                <div class="stat-item">
+                    <strong id="missing-percentage">Loading...</strong>
+                    <span>Percentage of total CVEs</span>
+                </div>
+            </div>
+            <div class="missing-fields-container">
+                <div class="missing-fields-filter">
+                    <input type="text" id="missing-cves-search" placeholder="🔍 Search CVEs..." aria-label="Search CVEs with missing fields">
+                    <select id="missing-cves-sort" aria-label="Sort missing CVEs">
+                        <option value="date">Sort by Date Published</option>
+                        <option value="cve">Sort by CVE ID</option>
+                        <option value="cna">Sort by CNA</option>
+                        <option value="fields">Sort by Missing Fields Count</option>
+                    </select>
+                </div>
+                <div id="missing-cves-table" class="missing-cves-table">
+                    <div class="loading">Loading CVEs with missing required fields...</div>
+                </div>
+            </div>
+        </div>
+
         <div class="analysis-controls">
             <div class="search-filter">
                 <input type="text" id="cna-search" placeholder="🔍 Search CNAs..." aria-label="Search CNAs">
@@ -166,7 +198,7 @@
             <div class="methodology-content">
                 <div class="methodology-item">
                     <h3>🎯 Analysis Scope</h3>
-                    <p>This analysis evaluates CVE records against the official CVE JSON Schema, measuring the presence and utilization of both required and optional fields. We assess over 60 different schema elements including core metadata, affected products, problem types, references, and metrics.</p>
+                    <p>This analysis evaluates CVE records against the official CVE JSON Schema, measuring the presence and utilization of both required and optional fields. We assess over 50 different schema elements including core metadata, affected products, problem types, references, and metrics.</p>
                 </div>
                 
                 <div class="methodology-item">

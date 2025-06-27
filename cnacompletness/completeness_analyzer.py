@@ -25,24 +25,26 @@ class CVECompletenessAnalyzer:
         self.field_stats = defaultdict(lambda: {"present": 0, "total": 0, "percentage": 0.0})
         
     def _get_schema_fields(self) -> Dict[str, Dict]:
-        """Define the key CVE schema fields for completeness analysis."""
+        """Define the key CVE schema fields for completeness analysis.
+        
+        Note: The following 10 fields are automatically added by the CVE program
+        and are excluded from completeness tracking:
+        - dataType
+        - dataVersion 
+        - cveMetadata.cveId
+        - cveMetadata.assignerOrgId
+        - cveMetadata.state 
+        - containers.cna.providerMetadata
+        - cveMetadata.assignerShortName
+        - cveMetadata.dateUpdated 
+        - cveMetadata.datePublished 
+        - cveMetadata.dateReserved
+        """
         return {
-            # Core metadata fields
-            "dataType": {"required": True, "path": ["dataType"]},
-            "dataVersion": {"required": True, "path": ["dataVersion"]},
-            
-            # CVE Metadata
-            "cveMetadata.cveId": {"required": True, "path": ["cveMetadata", "cveId"]},
-            "cveMetadata.assignerOrgId": {"required": True, "path": ["cveMetadata", "assignerOrgId"]},
-            "cveMetadata.assignerShortName": {"required": False, "path": ["cveMetadata", "assignerShortName"]},
-            "cveMetadata.state": {"required": True, "path": ["cveMetadata", "state"]},
-            "cveMetadata.dateUpdated": {"required": False, "path": ["cveMetadata", "dateUpdated"]},
-            "cveMetadata.datePublished": {"required": False, "path": ["cveMetadata", "datePublished"]},
-            "cveMetadata.dateReserved": {"required": False, "path": ["cveMetadata", "dateReserved"]},
+            # CVE Metadata - Only track fields not automatically added
             "cveMetadata.serial": {"required": False, "path": ["cveMetadata", "serial"]},
             
-            # CNA Container - Required fields
-            "containers.cna.providerMetadata": {"required": True, "path": ["containers", "cna", "providerMetadata"]},
+            # CNA Container - Required fields (excluding providerMetadata which is auto-added)
             "containers.cna.descriptions": {"required": True, "path": ["containers", "cna", "descriptions"]},
             "containers.cna.affected": {"required": True, "path": ["containers", "cna", "affected"]},
             "containers.cna.references": {"required": True, "path": ["containers", "cna", "references"]},
@@ -318,13 +320,33 @@ class CVECompletenessAnalyzer:
         # Track CNA-specific stats
         cna_stats = defaultdict(lambda: defaultdict(lambda: {"present": 0, "total": 0, "percentage": 0.0}))
         
+        # Track CVEs with missing required fields
+        cves_missing_required = []
+        
         for cve_data in cve_records:
             cve_results = self.analyze_cve(cve_data)
             
-            # Get CNA name for per-CNA statistics
+            # Get CVE information
+            cve_id = self._get_nested_value(cve_data, ["cveMetadata", "cveId"]) or "Unknown"
             cna_name = self._get_nested_value(cve_data, ["cveMetadata", "assignerShortName"]) or \
                       self._get_nested_value(cve_data, ["containers", "cna", "providerMetadata", "shortName"]) or \
                       "Unknown"
+            date_published = self._get_nested_value(cve_data, ["cveMetadata", "datePublished"])
+            
+            # Check for missing required fields
+            missing_required = []
+            for field_name, field_config in self.schema_fields.items():
+                if field_config["required"] and not cve_results.get(field_name, False):
+                    missing_required.append(field_name)
+            
+            # If CVE has missing required fields, track it
+            if missing_required:
+                cves_missing_required.append({
+                    "cveId": cve_id,
+                    "assigningCna": cna_name,
+                    "datePublished": date_published,
+                    "missingRequiredFields": missing_required
+                })
             
             # Update global statistics
             for field_name, is_present in cve_results.items():
@@ -356,7 +378,8 @@ class CVECompletenessAnalyzer:
             "total_records": total_records,
             "global_stats": dict(self.field_stats),
             "cna_stats": dict(cna_stats),
-            "completeness_summary": self._generate_completeness_summary()
+            "completeness_summary": self._generate_completeness_summary(),
+            "cves_missing_required_fields": cves_missing_required
         }
     
     def _generate_completeness_summary(self) -> Dict[str, Any]:

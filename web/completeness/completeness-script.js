@@ -2,6 +2,7 @@
 
 let completenessData = [];
 let summaryData = {};
+let missingCvesData = [];
 let currentSort = 'completeness';
 let currentView = 'table';
 
@@ -32,8 +33,12 @@ async function loadCompletenessData() {
         const summaryResponse = await fetch('completeness_summary.json');
         summaryData = await summaryResponse.json();
         
+        // Extract missing CVEs data
+        missingCvesData = summaryData.cves_missing_required_fields || [];
+        
         // Initialize the interface
         updateOverviewStats();
+        updateMissingCvesSection();
         renderTable();
         renderFieldAnalysis();
         updateLastUpdated();
@@ -91,6 +96,131 @@ function setupTabs() {
             document.getElementById(`${tabId}-fields`).classList.add('active');
         });
     });
+}
+
+// Update missing CVEs section
+function updateMissingCvesSection() {
+    const missingCount = missingCvesData.length;
+    const totalCves = summaryData.total_cves_analyzed || 1;
+    const percentage = ((missingCount / totalCves) * 100).toFixed(2);
+    
+    // Update stats
+    document.getElementById('missing-cves-count').textContent = missingCount;
+    document.getElementById('missing-percentage').textContent = `${percentage}%`;
+    
+    // Render missing CVEs table
+    renderMissingCvesTable();
+    
+    // Setup event listeners for missing CVEs section
+    setupMissingCvesEventListeners();
+}
+
+// Setup event listeners for missing CVEs section
+function setupMissingCvesEventListeners() {
+    const searchInput = document.getElementById('missing-cves-search');
+    const sortSelect = document.getElementById('missing-cves-sort');
+    
+    if (searchInput) {
+        searchInput.addEventListener('input', renderMissingCvesTable);
+    }
+    
+    if (sortSelect) {
+        sortSelect.addEventListener('change', renderMissingCvesTable);
+    }
+}
+
+// Render missing CVEs table
+function renderMissingCvesTable() {
+    const container = document.getElementById('missing-cves-table');
+    if (!container) return;
+    
+    const searchTerm = document.getElementById('missing-cves-search')?.value.toLowerCase() || '';
+    const sortBy = document.getElementById('missing-cves-sort')?.value || 'date';
+    
+    // Filter CVEs
+    let filteredCves = missingCvesData.filter(cve => 
+        cve.cveId.toLowerCase().includes(searchTerm) ||
+        cve.assigningCna.toLowerCase().includes(searchTerm) ||
+        cve.missingRequiredFields.some(field => field.toLowerCase().includes(searchTerm))
+    );
+    
+    // Sort CVEs
+    filteredCves.sort((a, b) => {
+        switch (sortBy) {
+            case 'date':
+                return new Date(b.datePublished || 0) - new Date(a.datePublished || 0);
+            case 'cve':
+                return a.cveId.localeCompare(b.cveId);
+            case 'cna':
+                return a.assigningCna.localeCompare(b.assigningCna);
+            case 'fields':
+                return b.missingRequiredFields.length - a.missingRequiredFields.length;
+            default:
+                return 0;
+        }
+    });
+    
+    if (filteredCves.length === 0) {
+        container.innerHTML = `
+            <div class="empty-missing-fields">
+                <div class="icon">✅</div>
+                <h3>Excellent Schema Compliance!</h3>
+                <p>All CVEs have required fields present, or no CVEs match your search criteria.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Create table
+    const tableHTML = `
+        <table>
+            <thead>
+                <tr>
+                    <th>CVE ID</th>
+                    <th>CNA</th>
+                    <th>Date Published</th>
+                    <th>Missing Required Fields</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${filteredCves.map(cve => `
+                    <tr>
+                        <td>
+                            <a href="https://cve.org/CVERecord?id=${cve.cveId}" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="cve-link">
+                                ${cve.cveId}
+                            </a>
+                        </td>
+                        <td>
+                            <span class="cna-badge">${escapeHtml(cve.assigningCna)}</span>
+                        </td>
+                        <td class="date-cell">
+                            ${cve.datePublished ? new Date(cve.datePublished).toLocaleDateString() : 'Unknown'}
+                        </td>
+                        <td>
+                            ${cve.missingRequiredFields.map(field => 
+                                `<span class="missing-fields-badge">${escapeHtml(formatFieldName(field))}</span>`
+                            ).join('')}
+                        </td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+    
+    container.innerHTML = tableHTML;
+}
+
+// Format field names for display
+function formatFieldName(fieldName) {
+    return fieldName
+        .replace(/^containers\.cna\./, '')
+        .replace(/^affected\./, 'affected: ')
+        .replace(/^descriptions\./, 'descriptions: ')
+        .replace(/([A-Z])/g, ' $1')
+        .replace(/^\w/, c => c.toUpperCase());
 }
 
 // Switch between table and chart views

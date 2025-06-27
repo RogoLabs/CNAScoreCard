@@ -175,7 +175,7 @@ In addition to the EAS scoring methodology, CNA ScoreCard now includes comprehen
 
 ### Completeness Methodology
 
-**Schema Field Analysis:** Each CVE record is evaluated against 60+ schema fields including:
+**Schema Field Analysis:** Each CVE record is evaluated against 50+ schema fields including:
 - **Core Metadata:** CVE ID, assigner information, state, timestamps
 - **Vulnerability Information:** Descriptions, affected products, problem types
 - **Technical Details:** CVSS metrics, CPE identifiers, CWE classifications  
