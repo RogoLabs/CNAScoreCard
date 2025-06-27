@@ -199,7 +199,12 @@ function renderFieldAnalysis() {
     
     const requiredFields = summaryData.global_completeness.required_fields || [];
     const optionalFields = summaryData.global_completeness.optional_fields || [];
-    const topMissing = summaryData.global_completeness.top_missing_required || [];
+    
+    // Create "most missing" by finding required fields with lowest completion rates
+    const leastCompleteRequired = [...requiredFields]
+        .sort((a, b) => a.percentage - b.percentage)
+        .slice(0, 10); // Show top 10 least complete required fields
+    
     const topPresent = summaryData.global_completeness.top_present_optional || [];
     
     // Render required fields
@@ -208,8 +213,8 @@ function renderFieldAnalysis() {
     // Render optional fields
     renderFieldGrid('optional-fields-grid', optionalFields, false);
     
-    // Render most missing fields
-    renderFieldGrid('missing-fields-grid', topMissing, null, true);
+    // Render least complete required fields (instead of completely missing)
+    renderFieldGrid('missing-fields-grid', leastCompleteRequired, true, true);
     
     // Render most utilized fields
     renderFieldGrid('utilized-fields-grid', topPresent, null, false);
@@ -221,6 +226,36 @@ function renderFieldGrid(containerId, fields, isRequired = null, showMissing = f
     if (!container) return;
     
     container.innerHTML = '';
+    
+    // Handle empty arrays with informative messages
+    if (fields.length === 0) {
+        const emptyMessage = document.createElement('div');
+        emptyMessage.className = 'empty-state';
+        
+        if (containerId === 'missing-fields-grid') {
+            emptyMessage.innerHTML = `
+                <div class="empty-state-content">
+                    <div class="empty-state-icon">✅</div>
+                    <h3>Excellent Schema Compliance!</h3>
+                    <p>All CVE schema fields have high completion rates across CNAs. 
+                       This indicates strong adherence to CVE schema requirements.</p>
+                    <p><strong>Average completion rate:</strong> 
+                       ${summaryData.global_completeness?.overall_completeness?.toFixed(1) || '0.0'}%</p>
+                </div>
+            `;
+        } else {
+            emptyMessage.innerHTML = `
+                <div class="empty-state-content">
+                    <div class="empty-state-icon">📊</div>
+                    <h3>No Data Available</h3>
+                    <p>No fields found for this category.</p>
+                </div>
+            `;
+        }
+        
+        container.appendChild(emptyMessage);
+        return;
+    }
     
     fields.forEach(field => {
         const fieldCard = document.createElement('div');
