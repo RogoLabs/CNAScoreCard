@@ -18,64 +18,42 @@ document.addEventListener('DOMContentLoaded', function() {
     setupEventListeners();
 });
 
-// Load CNA list data from data directory
+// Load CNA list data from consolidated data file
 async function loadCNAListData() {
     try {
-        // Load the list of CNA data files
-        const files = await fetch('data/')
-            .then(response => response.text())
-            .then(html => {
-                // Parse file listing from directory index
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const links = Array.from(doc.querySelectorAll('a[href$=".json"]'));
-                return links.map(link => link.href.split('/').pop());
-            })
-            .catch(() => {
-                // Fallback: try to load a known set of files or use an index file
-                console.log('Could not parse directory listing, attempting to load index file');
-                return fetch('data/index.json')
-                    .then(response => response.json())
-                    .then(data => data.files || [])
-                    .catch(() => []);
-            });
-
-        // Load each CNA file
-        const promises = files.map(async (filename) => {
-            try {
-                const response = await fetch(`data/${filename}`);
-                const data = await response.json();
-                
-                // Extract CNA info
-                const cnaInfo = data.cna_info || {};
-                const cnaName = filename.replace('.json', '').replace(/_/g, ' ');
+        // Load the consolidated CNA data from the parent data directory
+        const response = await fetch('../data/cnas.json');
+        const cnaData = await response.json();
+        
+        // Transform the data to match the expected format
+        cnaListData = cnaData
+            .filter(cna => cna.total_cves > 0) // Only include CNAs with CVEs
+            .map(cna => {
+                // Format the display name to be more readable
+                let displayName = cna.cna;
+                if (displayName.includes('_')) {
+                    displayName = displayName.replace(/_/g, ' ');
+                }
                 
                 return {
-                    name: cnaName,
-                    displayName: cnaInfo.cna_name || cnaName,
-                    easScore: cnaInfo.average_eas_score || 0,
-                    cveCount: data.total_cves || cnaInfo.total_cves_scored || 0,
-                    rank: cnaInfo.rank || 0,
-                    percentile: cnaInfo.percentile || 0,
-                    activeCnaCount: cnaInfo.active_cna_count || 0,
+                    name: cna.cna,
+                    displayName: displayName,
+                    easScore: cna.average_eas_score || 0,
+                    cveCount: cna.total_cves || 0,
+                    rank: cna.rank || 0,
+                    percentile: cna.percentile || 0,
+                    activeCnaCount: cna.active_cna_count || 298,
                     breakdown: {
-                        foundational: cnaInfo.average_foundational_completeness || 0,
-                        rootCause: cnaInfo.average_root_cause_analysis || 0,
-                        softwareIdentification: cnaInfo.average_software_identification || 0,
-                        security: cnaInfo.average_severity_context || 0,
-                        actionable: cnaInfo.average_actionable_intelligence || 0,
-                        dataFormat: cnaInfo.average_data_format_precision || 0
+                        foundational: cna.average_foundational_completeness || 0,
+                        rootCause: cna.average_root_cause_analysis || 0,
+                        softwareIdentification: cna.average_software_identification || 0,
+                        security: cna.average_severity_context || 0,
+                        actionable: cna.average_actionable_intelligence || 0,
+                        dataFormat: cna.average_data_format_precision || 0
                     },
-                    filename: filename
+                    filename: `${cna.cna}.json`
                 };
-            } catch (error) {
-                console.warn(`Error loading CNA data for ${filename}:`, error);
-                return null;
-            }
-        });
-
-        const results = await Promise.all(promises);
-        cnaListData = results.filter(item => item !== null && item.cveCount > 0);
+            });
         
         // Initialize the interface
         updateOverviewStats();
