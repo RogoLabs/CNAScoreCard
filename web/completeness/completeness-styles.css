@@ -765,7 +765,271 @@ h1 {
     color: #374151;
 }
 
-/* Responsive design */
+/* Additional styles for missing fields page */
+.info-section {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border-left: 4px solid #3498db;
+}
+
+.info-section h3 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+}
+
+.excluded-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.field-tag {
+    background: #ecf0f1;
+    color: #2c3e50;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    border: 1px solid #bdc3c7;
+}
+
+.results-info {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-left: auto;
+}
+
+.missing-fields-cell {
+    max-width: 300px;
+}
+
+.missing-fields-badge {
+    display: inline-block;
+    background: #e74c3c;
+    color: white;
+    padding: 0.2rem 0.4rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
+    white-space: nowrap;
+}
+
+.count-cell {
+    text-align: center;
+}
+
+.field-count {
+    background: #95a5a6;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.performance-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.performance-table th,
+.performance-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.performance-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.performance-table tr:hover {
+    background: #f8f9fa;
+}
+
+.rank-cell {
+    text-align: center;
+    font-weight: 600;
+    color: #7f8c8d;
+}
+
+.cna-name {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.score-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.score {
+    font-weight: 600;
+    min-width: 50px;
+}
+
+.score-bar {
+    flex: 1;
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+    max-width: 100px;
+}
+
+.score-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.missing-count {
+    font-weight: 600;
+}
+
+.missing-count.has-missing {
+    color: #e74c3c;
+}
+
+.missing-count.no-missing {
+    color: #27ae60;
+}
+
+.compliance-rate {
+    font-weight: 600;
+}
+
+.compliance-cell {
+    text-align: center;
+}
+
+.cna-performance-section {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+    overflow: hidden;
+}
+
+.cna-performance-section h2 {
+    background: #f8f9fa;
+    color: #2c3e50;
+    margin: 0;
+    padding: 1.5rem;
+    border-top: 4px solid #3498db;
+    font-weight: 600;
+}
+
+.cna-performance-section p {
+    padding: 0 1.5rem 1rem;
+    margin: 0;
+    color: #7f8c8d;
+    background: #f8f9fa;
+}
+
+.performance-table-container {
+    padding: 1.5rem;
+}
+
+/* Missing Fields Link Section */
+.missing-fields-link-section {
+    margin: 2rem 0;
+}
+
+.link-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    border-left: 5px solid #e74c3c;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.link-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.link-icon {
+    font-size: 3rem;
+    flex-shrink: 0;
+}
+
+.link-content {
+    flex: 1;
+}
+
+.link-content h3 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+    font-size: 1.3rem;
+}
+
+.link-content p {
+    margin: 0 0 1rem 0;
+    color: #7f8c8d;
+    line-height: 1.5;
+}
+
+.link-button {
+    display: inline-block;
+    background: #e74c3c;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.link-button:hover {
+    background: #c0392b;
+    text-decoration: none;
+}
+
+.link-stats {
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.quick-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background: #fdf2f2;
+    border-radius: 8px;
+    min-width: 120px;
+}
+
+.quick-stat .stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #c0392b;
+    margin-bottom: 0.25rem;
+}
+
+.quick-stat .stat-label {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    text-align: center;
+    line-height: 1.2;
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 8px;
@@ -839,185 +1103,77 @@ h1 {
     .header-section h2 {
         font-size: 1.5rem;
     }
-}
-
-/* Missing Required Fields Section */
-.missing-fields-section {
-    background: white;
-    border-radius: 12px;
-    padding: 30px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-left: 5px solid #e74c3c;
-}
-
-.missing-fields-section .section-header h2 {
-    color: #c0392b;
-    margin-bottom: 0.5rem;
-}
-
-.missing-fields-section .section-header p {
-    color: #7f8c8d;
-    margin-bottom: 1.5rem;
-}
-
-.missing-fields-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-    background: #fdf2f2;
-    border-radius: 8px;
-}
-
-.missing-fields-stats .stat-item {
-    text-align: center;
-    padding: 0.5rem;
-}
-
-.missing-fields-stats .stat-item strong {
-    display: block;
-    font-size: 1.8rem;
-    color: #c0392b;
-    font-weight: 700;
-    margin-bottom: 0.25rem;
-}
-
-.missing-fields-stats .stat-item span {
-    color: #7f8c8d;
-    font-size: 0.9rem;
-}
-
-.missing-fields-filter {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    align-items: center;
-}
-
-.missing-fields-filter input,
-.missing-fields-filter select {
-    padding: 0.5rem;
-    border: 1px solid #bdc3c7;
-    border-radius: 6px;
-    font-size: 0.9rem;
-}
-
-.missing-fields-filter input {
-    flex: 1;
-    max-width: 300px;
-}
-
-.missing-cves-table {
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid #ecf0f1;
-}
-
-.missing-cves-table table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.missing-cves-table th,
-.missing-cves-table td {
-    padding: 0.75rem;
-    text-align: left;
-    border-bottom: 1px solid #ecf0f1;
-}
-
-.missing-cves-table th {
-    background: #f8f9fa;
-    font-weight: 600;
-    color: #2c3e50;
-}
-
-.missing-cves-table tr:hover {
-    background: #f8f9fa;
-}
-
-.cve-link {
-    color: #3498db;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.cve-link:hover {
-    color: #2980b9;
-    text-decoration: underline;
-}
-
-.missing-fields-badge {
-    display: inline-block;
-    background: #e74c3c;
-    color: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 12px;
-    font-size: 0.7rem;
-    margin-right: 0.25rem;
-    margin-bottom: 0.25rem;
-}
-
-.cna-badge {
-    display: inline-block;
-    background: #95a5a6;
-    color: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: 500;
-}
-
-.date-cell {
-    color: #7f8c8d;
-    font-size: 0.9rem;
-}
-
-.empty-missing-fields {
-    text-align: center;
-    padding: 2rem;
-    color: #27ae60;
-}
-
-.empty-missing-fields .icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
-.empty-missing-fields h3 {
-    color: #27ae60;
-    margin-bottom: 0.5rem;
-}
-
-@media (max-width: 480px) {
-    .stats-overview {
-        grid-template-columns: 1fr;
+    
+    .excluded-fields {
+        justify-content: center;
     }
     
-    .metric-grid {
-        grid-template-columns: 1fr;
+    .field-tag {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.4rem;
     }
     
-    .view-toggle {
-        flex-direction: column;
-    }
-    
-    .view-btn {
-        margin-bottom: 0.5rem;
-    }
-
     .missing-fields-filter {
         flex-direction: column;
         align-items: stretch;
     }
-
-    .missing-fields-filter input {
+    
+    .results-info {
+        margin-left: 0;
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+    
+    .performance-table {
+        font-size: 0.8rem;
+    }
+    
+    .performance-table th,
+    .performance-table td {
+        padding: 0.5rem 0.25rem;
+    }
+    
+    .score-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+    
+    .score-bar {
+        width: 100%;
         max-width: none;
     }
+    
+    .link-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .link-icon {
+        font-size: 2.5rem;
+    }
+    
+    .link-stats {
+        order: -1;
+    }
+    
+    .quick-stat {
+        min-width: 100px;
+    }
+    
+    .quick-stat .stat-value {
+        font-size: 1.5rem;
+    }
+}
 
-    .missing-cves-table {
-        overflow-x: auto;
+@media (max-width: 480px) {
+    .missing-fields-badge {
+        font-size: 0.6rem;
+        padding: 0.15rem 0.3rem;
+    }
+    
+    .missing-fields-cell {
+        max-width: 200px;
     }
 }
