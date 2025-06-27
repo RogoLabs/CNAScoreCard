@@ -29,6 +29,25 @@
                 This analysis measures how well CNAs populate all available fields and arrays in CVE records, 
                 providing insights into data quality and schema adherence across the vulnerability disclosure ecosystem.
             </p>
+            
+            <div class="scoring-methodology">
+                <h3>📊 Completeness Score Calculation</h3>
+                <p>
+                    The <strong>Completeness Score</strong> is a weighted metric that evaluates how thoroughly CNAs populate CVE record fields:
+                </p>
+                <div class="formula-box">
+                    <strong>Completeness Score = (Required Fields × 70%) + (Optional Fields × 30%)</strong>
+                </div>
+                <ul class="scoring-details">
+                    <li><strong>Required Fields (70% weight):</strong> Schema-mandated fields like descriptions, affected products, and references</li>
+                    <li><strong>Optional Fields (30% weight):</strong> Enhanced fields like CVSS metrics, problem types, solutions, and credits</li>
+                    <li><strong>Field Coverage:</strong> Each field category is scored as the percentage of CVE records containing that field</li>
+                    <li><strong>Excluded Fields:</strong> Ten automatically-populated CVE program fields are excluded from scoring</li>
+                </ul>
+                <p class="scoring-note">
+                    <em>Note: Required fields are weighted more heavily as they represent minimum compliance with the CVE schema standards.</em>
+                </p>
+            </div>
         </div>
 
         <div class="stats-overview">
