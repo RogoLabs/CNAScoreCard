@@ -387,15 +387,14 @@ function displayCVECards(scores) {
     container.innerHTML = sortedScores.map(score => {
         const scoreClass = getPercentileClass(score.percentile);
         return `
-            <div class="cna-card ${scoreClass}">
-                <div class="cna-header">
-                    <h3 class="cna-name">
-                        <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=${score.cveId}" target="_blank">${score.cveId}</a>
-                    </h3>
-                    <div class="cna-score-container">
-                        <div class="cna-score">${formatNumber(score.overallScore)}/100</div>
+            <div class="cna-card ${scoreClass}">                    <div class="cna-header">
+                        <h3 class="cna-name">
+                            <a href="https://www.cve.org/CVERecord?id=${score.cveId}" target="_blank">${score.cveId}</a>
+                        </h3>
+                        <div class="cna-score-container">
+                            <div class="cna-score">${formatNumber(score.overallScore)}/100</div>
+                        </div>
                     </div>
-                </div>
                 <div class="cna-details">
                     <div class="detail-item">
                         <span class="label">Foundational Completeness:</span>
