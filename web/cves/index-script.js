@@ -102,8 +102,24 @@ function displayCVECards(cves, containerId) {
     
     container.innerHTML = cves.map(cve => {
         const score = cve.totalEasScore || 0;
-        const percentile = cve.percentile || 0;
-        const scoreClass = getPercentileClass(percentile);
+        const percentile = cve.percentile;
+        
+        // Use percentile-based classification if percentile data exists,
+        // otherwise determine based on context (top vs bottom preview)
+        let scoreClass;
+        if (percentile !== undefined && percentile !== null) {
+            scoreClass = getPercentileClass(percentile);
+        } else if (containerId === 'topCveCards') {
+            // Top CVEs should be green (top performers)
+            scoreClass = 'percentile-top';
+        } else if (containerId === 'bottomCveCards') {
+            // Bottom CVEs should be red (bottom performers)
+            scoreClass = 'percentile-bottom';
+        } else {
+            // Fallback to score-based classification
+            scoreClass = getScoreClass(score);
+        }
+        
         const breakdown = cve.scoreBreakdown || {};
         
         return `
