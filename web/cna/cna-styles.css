@@ -79,7 +79,7 @@ h1 {
 }
 
 .stat-card {
-    background: white;
+    background: white; /* Changed from grey to white */
     padding: 1.5rem;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -154,36 +154,6 @@ h1 {
     border-color: #3498db;
 }
 
-.view-toggle {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.view-btn {
-    padding: 10px 20px;
-    border: 2px solid #ddd;
-    background: white;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    color: #666;
-}
-
-.view-btn.active {
-    background: #3498db;
-    color: white;
-    border-color: #3498db;
-}
-
-.view-btn:hover:not(.active) {
-    border-color: #3498db;
-    color: #3498db;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
-}
-
 /* CNA Table Container */
 .cna-table-container {
     background: white;
@@ -235,8 +205,9 @@ h1 {
 }
 
 .cna-table td {
-    padding: 0.75rem;
-    border-bottom: 1px solid #f3f4f6;
+    padding: 1rem;
+    border-bottom: 1px solid #ecf0f1;
+    color: #34495e;
     vertical-align: middle;
 }
 
@@ -280,12 +251,14 @@ h1 {
 }
 
 .score-value {
+    min-width: 40px;
+    text-align: right;
     font-weight: 600;
-    min-width: 50px;
+    color: #2c3e50;
 }
 
 .progress-bar {
-    flex: 1;
+    flex-grow: 1;
     height: 8px;
     background: #e5e7eb;
     border-radius: 4px;
@@ -376,8 +349,6 @@ h1 {
 
 .details-btn:hover {
     background: #2980b9;
-    text-decoration: none;
-    color: white;
 }
 
 /* Breadcrumb navigation */
@@ -495,8 +466,9 @@ h1 {
 
 .breakdown-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
 }
 
 .breakdown-item {
@@ -504,19 +476,32 @@ h1 {
     justify-content: space-between;
     align-items: center;
     padding: 0.75rem 1rem;
-    background: rgba(255, 255, 255, 0.1);
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
     border-radius: 8px;
-    backdrop-filter: blur(10px);
+    transition: background-color 0.2s ease;
+}
+
+.breakdown-item:hover {
+    background: #e9ecef;
 }
 
 .breakdown-label {
     font-weight: 500;
     font-size: 0.9rem;
+    color: #495057;
 }
 
 .breakdown-value {
-    font-weight: 700;
     font-size: 1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    background: #ffffff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+    min-width: 50px;
+    text-align: center;
 }
 
 /* CVE Cards */
@@ -673,7 +658,7 @@ h1 {
 }
 
 .stat-card {
-    background: rgba(255, 255, 255, 0.1);
+    background: white;
     padding: 1rem;
     border-radius: 8px;
     text-align: center;
@@ -1065,223 +1050,135 @@ h1 {
 .cna-detail-card {
     background: white;
     border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e0e0e0;
+    padding: 2.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+    margin-bottom: 0;
 }
 
-/* CNA Title Section Styles */
+/* Title section improvements */
 .cna-title-section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
     margin-bottom: 2rem;
-    gap: 0.5rem;
 }
 
 .cna-title-content {
-    width: 100%;
+    text-align: center;
 }
 
 .cna-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin: 0 0 0.5rem 0;
+    font-size: 2.25rem;
+    font-weight: 600;
+    margin: 0 0 0.125rem 0;
     color: #2c3e50;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
 }
 
 .cna-org-name {
-    font-size: 1.2rem;
-    color: #7f8c8d;
-    font-weight: 500;
-    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    color: #6c757d;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.3;
 }
 
+/* Improved metrics section */
+.cna-metrics-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 2rem 1.5rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    gap: 2rem;
+    flex-wrap: wrap;
+    border: 1px solid #e9ecef;
+}
+
+/* Main metric styling */
+.metric-item.main-metric .metric-value {
+    font-size: 3.5rem;
+    color: #007bff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Metric labels */
+.metric-label {
+    font-size: 0.85rem;
+    color: #6c757d;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.75px;
+}
+
+/* Section title improvements */
+.section-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+/* Breakdown section improvements */
+.cna-breakdown-section {
+    border-top: 1px solid #e9ecef;
+    padding-top: 2rem;
+}
+
+.cna-breakdown-section h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+}
+
+/* Filter improvements */
+.filters {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+    margin-bottom: 2rem;
+}
+
+.filters input,
+.filters select {
+    padding: 0.75rem 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: white;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.filters input:focus,
+.filters select:focus {
+    border-color: #007bff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* CNA Scope Box Styling */
 .cna-scope-box {
     background: #f8f9fa;
-    padding: 1rem;
+    padding: 1rem 1.25rem;
     border-radius: 8px;
     border: 1px solid #dee2e6;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 100%;
     text-align: left;
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
 }
 
 .cna-scope-box strong {
     color: #2c3e50;
     font-weight: 600;
-}
-
-.cna-scope-box > div {
-    text-align: left;
-    word-wrap: break-word;
-    margin-bottom: 0.5rem;
-}
-
-.cna-scope-box > div:last-child {
-    margin-bottom: 0;
-}
-
-.cna-scope-box .cna-advisory {
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid #dee2e6;
-    text-align: left;
-    font-size: 0.9rem;
-}
-
-/* Metrics Section */
-.cna-metrics-section {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-bottom: 2rem;
-    padding: 1.5rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
-.metric-item {
-    text-align: center;
-    flex: 1;
-    min-width: 120px;
-}
-
-.metric-item.main-metric {
-    flex: 1.5;
-}
-
-.metric-value {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #2c3e50;
-    margin-bottom: 0.5rem;
-    display: block;
-}
-
-.metric-item.main-metric .metric-value {
-    font-size: 3rem;
-    color: #3498db;
-}
-
-.metric-unit {
-    font-size: 1.5rem;
-    color: #7f8c8d;
-}
-
-.metric-label {
-    font-size: 0.9rem;
-    color: #7f8c8d;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-/* Breakdown Section */
-.cna-breakdown-section {
-    border-top: 1px solid #dee2e6;
-    padding-top: 2rem;
-}
-
-/* --- Clean, minimal CNA styles for detail and card consistency --- */
-
-.cna-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 32px;
-  justify-content: center;
-}
-
-.cna-card {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(44,62,80,0.08);
-  border: none;
-  color: #222;
-  margin-bottom: 24px;
-  width: 350px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.cna-card .cna-header {
-  background: #fff;
-  border-radius: 16px 16px 0 0;
-  padding: 24px 24px 0 24px;
-  color: #3498db;
-  font-size: 1.05em;
-  font-weight: 600;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.cna-card .cve-id {
-  font-size: 1.05em;
-  font-weight: 600;
-  color: #2196f3;
-  word-break: break-all;
-}
-
-.cna-card .cna-score {
-  background: #f5f7fa;
-  color: #2563eb;
-  border-radius: 12px;
-  padding: 6px 18px;
-  font-weight: bold;
-  font-size: 1.2em;
-  box-shadow: none;
-  margin-left: 8px;
-}
-
-.cna-card .cna-details {
-  background: #fff;
-  border-radius: 0 0 16px 16px;
-  padding: 18px 24px 24px 24px;
-}
-
-.cna-card .cna-name a {
-  color: #3498db;
-  text-decoration: none;
-  font-weight: 600;
-}
-.cna-card .cna-name a:hover {
-  text-decoration: underline;
-}
-
-.cna-card .detail-item {
-  margin-bottom: 8px;
-  display: flex;
-  justify-content: space-between;
-}
-.cna-card .label {
-  font-weight: 500;
-}
-.cna-card .value {
-  font-weight: 400;
-}
-
-/* Remove any previous gradient or background-image rules */
-.cna-card, .cna-card .cna-header {
-  background-image: none !important;
-}
-
-/* Responsive for mobile */
-@media (max-width: 900px) {
-  .cna-cards {
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-  }
-  .cna-card {
-    width: 95vw;
-    min-width: 0;
-  }
 }
 
 /* Responsive design */
@@ -1373,4 +1270,12 @@ h1 {
 .cna-links-centered a:hover {
     background: #e3eaf6;
     text-decoration: underline;
+}
+
+.cna-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    justify-items: center;
+    margin-top: 20px;
 }
