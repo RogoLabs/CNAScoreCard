@@ -281,17 +281,15 @@ function renderCnaHeader(cnaInfo, cnaDetails) {
     
     // Set breakdown scores with maximum values
     document.getElementById('foundational').textContent = 
-        `${cnaInfo.average_foundational_completeness?.toFixed(1) || 'N/A'}${cnaInfo.average_foundational_completeness ? '/30' : ''}`;
+        `${cnaInfo.average_foundational_completeness?.toFixed(1) || 'N/A'}${cnaInfo.average_foundational_completeness ? '/32' : ''}`;
     document.getElementById('rootCause').textContent = 
-        `${cnaInfo.average_root_cause_analysis?.toFixed(1) || 'N/A'}${cnaInfo.average_root_cause_analysis ? '/10' : ''}`;
+        `${cnaInfo.average_root_cause_analysis?.toFixed(1) || 'N/A'}${cnaInfo.average_root_cause_analysis ? '/11' : ''}`;
     document.getElementById('softwareId').textContent = 
-        `${cnaInfo.average_software_identification?.toFixed(1) || 'N/A'}${cnaInfo.average_software_identification ? '/10' : ''}`;
+        `${cnaInfo.average_software_identification?.toFixed(1) || 'N/A'}${cnaInfo.average_software_identification ? '/11' : ''}`;
     document.getElementById('severityContext').textContent = 
-        `${cnaInfo.average_severity_context?.toFixed(1) || 'N/A'}${cnaInfo.average_severity_context ? '/25' : ''}`;
+        `${cnaInfo.average_severity_context?.toFixed(1) || 'N/A'}${cnaInfo.average_severity_context ? '/26' : ''}`;
     document.getElementById('actionableIntel').textContent = 
         `${cnaInfo.average_actionable_intelligence?.toFixed(1) || 'N/A'}${cnaInfo.average_actionable_intelligence ? '/20' : ''}`;
-    document.getElementById('dataFormat').textContent = 
-        `${cnaInfo.average_data_format_precision?.toFixed(1) || 'N/A'}${cnaInfo.average_data_format_precision ? '/5' : ''}`;
 }
 
 function renderCveCards(cves) {
@@ -347,10 +345,6 @@ function createCveCard(cve) {
             <div class="cve-detail-item">
                 <span class="cve-detail-label">Actionable</span>
                 <span class="cve-detail-value">${cve.scoreBreakdown?.actionableIntelligence || 0}</span>
-            </div>
-            <div class="cve-detail-item">
-                <span class="cve-detail-label">Data Format</span>
-                <span class="cve-detail-value">${cve.scoreBreakdown?.dataFormatAndPrecision || 0}</span>
             </div>
         </div>
     `;

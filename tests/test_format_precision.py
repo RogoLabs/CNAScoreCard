@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Test script to validate the updated Data Format & Precision scoring logic
+Test script to validate the updated scoring logic for different components.
 """
 
 import sys
@@ -11,12 +11,13 @@ import json
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 from cnascorecard.eas_scorer import EnhancedAggregateScorer
 
-def test_format_precision_all_pass():
-    """Test CVE with all format requirements met - should get 5 points"""
+def test_scoring_all_components_pass():
+    """Test CVE with all format requirements met - should get max points in related components"""
     cve_data = {
         "cveMetadata": {
             "cveId": "CVE-2023-TEST1",
-            "assignerShortName": "test-cna"
+            "assignerShortName": "test-cna",
+            "datePublished": "2023-01-01T00:00:00Z"
         },
         "containers": {
             "cna": {
@@ -30,6 +31,7 @@ def test_format_precision_all_pass():
                     {
                         "vendor": "Apache",
                         "product": "HTTP Server",
+                        "versions": [{"version": "2.4.52", "status": "affected"}],
                         "cpes": ["cpe:2.3:a:apache:http_server:2.4.52:*:*:*:*:*:*:*"]
                     }
                 ],
@@ -59,48 +61,23 @@ def test_format_precision_all_pass():
     scorer = EnhancedAggregateScorer(cve_data)
     result = scorer.calculate_scores()
     
-    assert result['scoreBreakdown']['dataFormatAndPrecision'] == 5, f"Expected 5 points, got {result['scoreBreakdown']['dataFormatAndPrecision']}"
-    print("✓ All format requirements pass test passed")
+    assert result['scoreBreakdown']['foundationalCompleteness'] == 5, f"Expected 5 for foundational, got {result['scoreBreakdown']['foundationalCompleteness']}"
+    assert result['scoreBreakdown']['rootCauseAnalysis'] == 3, f"Expected 3 for root cause, got {result['scoreBreakdown']['rootCauseAnalysis']}"
+    assert result['scoreBreakdown']['softwareIdentification'] == 5, f"Expected 5 for software id, got {result['scoreBreakdown']['softwareIdentification']}"
+    assert result['scoreBreakdown']['severityAndImpactContext'] == 3, f"Expected 3 for severity, got {result['scoreBreakdown']['severityAndImpactContext']}"
+    print("✓ All components pass test passed")
 
-def test_format_precision_missing_cvss_vector():
-    """Test CVE missing CVSS vector string - should get 0 points"""
+def test_severity_context_missing_cvss_vector():
+    """Test CVE missing CVSS vector string - should get lower severity score"""
     cve_data = {
-        "cveMetadata": {
-            "cveId": "CVE-2023-TEST2",
-            "assignerShortName": "test-cna"
-        },
+        "cveMetadata": {"cveId": "CVE-2023-TEST2"},
         "containers": {
             "cna": {
-                "descriptions": [
-                    {
-                        "lang": "en",
-                        "value": "A buffer overflow vulnerability in Apache HTTP Server"
-                    }
-                ],
-                "affected": [
-                    {
-                        "vendor": "Apache",
-                        "product": "HTTP Server",
-                        "cpes": ["cpe:2.3:a:apache:http_server:2.4.52:*:*:*:*:*:*:*"]
-                    }
-                ],
                 "metrics": [
                     {
                         "cvssV3_1": {
                             "baseScore": 9.8
-                            # Missing vectorString
                         }
-                    }
-                ],
-                "problemTypes": [
-                    {
-                        "descriptions": [
-                            {
-                                "lang": "en",
-                                "description": "Buffer Overflow",
-                                "cweId": "CWE-120"
-                            }
-                        ]
                     }
                 ]
             }
@@ -110,46 +87,21 @@ def test_format_precision_missing_cvss_vector():
     scorer = EnhancedAggregateScorer(cve_data)
     result = scorer.calculate_scores()
     
-    assert result['scoreBreakdown']['dataFormatAndPrecision'] == 0, f"Expected 0 points, got {result['scoreBreakdown']['dataFormatAndPrecision']}"
+    assert result['scoreBreakdown']['severityAndImpactContext'] == 1, f"Expected 1 for severity, got {result['scoreBreakdown']['severityAndImpactContext']}"
     print("✓ Missing CVSS vector string test passed")
 
-def test_format_precision_invalid_cwe():
-    """Test CVE with invalid CWE format - should get 0 points"""
+def test_root_cause_analysis_invalid_cwe():
+    """Test CVE with invalid CWE format - should get lower root cause score"""
     cve_data = {
-        "cveMetadata": {
-            "cveId": "CVE-2023-TEST3",
-            "assignerShortName": "test-cna"
-        },
+        "cveMetadata": {"cveId": "CVE-2023-TEST3"},
         "containers": {
             "cna": {
-                "descriptions": [
-                    {
-                        "lang": "en",
-                        "value": "A buffer overflow vulnerability in Apache HTTP Server"
-                    }
-                ],
-                "affected": [
-                    {
-                        "vendor": "Apache",
-                        "product": "HTTP Server",
-                        "cpes": ["cpe:2.3:a:apache:http_server:2.4.52:*:*:*:*:*:*:*"]
-                    }
-                ],
-                "metrics": [
-                    {
-                        "cvssV3_1": {
-                            "baseScore": 9.8,
-                            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
-                        }
-                    }
-                ],
                 "problemTypes": [
                     {
                         "descriptions": [
                             {
-                                "lang": "en",
                                 "description": "Buffer Overflow",
-                                "cweId": "Other"  # Invalid CWE format
+                                "cweId": "Other"
                             }
                         ]
                     }
@@ -161,48 +113,19 @@ def test_format_precision_invalid_cwe():
     scorer = EnhancedAggregateScorer(cve_data)
     result = scorer.calculate_scores()
     
-    assert result['scoreBreakdown']['dataFormatAndPrecision'] == 0, f"Expected 0 points, got {result['scoreBreakdown']['dataFormatAndPrecision']}"
+    assert result['scoreBreakdown']['rootCauseAnalysis'] == 2, f"Expected 2 for root cause, got {result['scoreBreakdown']['rootCauseAnalysis']}"
     print("✓ Invalid CWE format test passed")
 
-def test_format_precision_missing_cpe():
-    """Test CVE missing CPE identifiers - should get 0 points"""
+def test_software_identification_missing_cpe():
+    """Test CVE missing CPE identifiers - should get lower software id score"""
     cve_data = {
-        "cveMetadata": {
-            "cveId": "CVE-2023-TEST4",
-            "assignerShortName": "test-cna"
-        },
+        "cveMetadata": {"cveId": "CVE-2023-TEST4"},
         "containers": {
             "cna": {
-                "descriptions": [
-                    {
-                        "lang": "en",
-                        "value": "A buffer overflow vulnerability in Apache HTTP Server"
-                    }
-                ],
                 "affected": [
                     {
                         "vendor": "Apache",
                         "product": "HTTP Server"
-                        # Missing CPE
-                    }
-                ],
-                "metrics": [
-                    {
-                        "cvssV3_1": {
-                            "baseScore": 9.8,
-                            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"
-                        }
-                    }
-                ],
-                "problemTypes": [
-                    {
-                        "descriptions": [
-                            {
-                                "lang": "en",
-                                "description": "Buffer Overflow",
-                                "cweId": "CWE-120"
-                            }
-                        ]
                     }
                 ]
             }
@@ -212,20 +135,20 @@ def test_format_precision_missing_cpe():
     scorer = EnhancedAggregateScorer(cve_data)
     result = scorer.calculate_scores()
     
-    assert result['scoreBreakdown']['dataFormatAndPrecision'] == 0, f"Expected 0 points, got {result['scoreBreakdown']['dataFormatAndPrecision']}"
+    assert result['scoreBreakdown']['softwareIdentification'] == 2, f"Expected 2 for software id, got {result['scoreBreakdown']['softwareIdentification']}"
     print("✓ Missing CPE test passed")
 
 def main():
-    """Run all Data Format & Precision tests"""
-    print("Starting Data Format & Precision tests...\n")
+    """Run all scoring component tests"""
+    print("Starting scoring component tests...\n")
     
     try:
-        test_format_precision_all_pass()
-        test_format_precision_missing_cvss_vector()
-        test_format_precision_invalid_cwe()
-        test_format_precision_missing_cpe()
+        test_scoring_all_components_pass()
+        test_severity_context_missing_cvss_vector()
+        test_root_cause_analysis_invalid_cwe()
+        test_software_identification_missing_cpe()
         
-        print("\n🎉 All Data Format & Precision tests passed!")
+        print("\n🎉 All scoring component tests passed!")
         return True
         
     except Exception as e:

@@ -73,7 +73,6 @@ def generate_reports():
             avg_software_identification = sum(s["scoreBreakdown"]["softwareIdentification"] for s in scores) / total_cves
             avg_severity = sum(s["scoreBreakdown"]["severityAndImpactContext"] for s in scores) / total_cves
             avg_actionable = sum(s["scoreBreakdown"]["actionableIntelligence"] for s in scores) / total_cves
-            avg_format = sum(s["scoreBreakdown"]["dataFormatAndPrecision"] for s in scores) / total_cves
             
             data["total_cves_scored"] = total_cves
             data["average_eas_score"] = int(round(avg_total_eas, 2)) if round(avg_total_eas, 2) % 1 == 0 else round(avg_total_eas, 2)
@@ -83,7 +82,6 @@ def generate_reports():
             data["average_software_identification"] = int(round(avg_software_identification, 2)) if round(avg_software_identification, 2) % 1 == 0 else round(avg_software_identification, 2)
             data["average_severity_context"] = int(round(avg_severity, 2)) if round(avg_severity, 2) % 1 == 0 else round(avg_severity, 2)
             data["average_actionable_intelligence"] = int(round(avg_actionable, 2)) if round(avg_actionable, 2) % 1 == 0 else round(avg_actionable, 2)
-            data["average_data_format_precision"] = int(round(avg_format, 2)) if round(avg_format, 2) % 1 == 0 else round(avg_format, 2)
             # Clean up the individual scores from the final report
             del data["scores"]
 
@@ -123,7 +121,6 @@ def generate_reports():
                     "average_software_identification": 0,
                     "average_severity_context": 0,
                     "average_actionable_intelligence": 0,
-                    "average_data_format_precision": 0,
                     "message": "No CVEs published in the last 6 months"
                 }
     print("Finished adding inactive CNAs.")

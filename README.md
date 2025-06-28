@@ -26,7 +26,7 @@ A **CVE Numbering Authority (CNA)** is an organization authorized to assign CVE 
 
 ## Overview
 
-CNA ScoreCard is an open-source, fully automated static website that evaluates and visualizes the quality of CVE reporting by CNAs worldwide. Updated every 6 hours, it leverages the Enhanced Aggregate Scoring (EAS) methodology to provide transparent, actionable insights into CVE record quality across six key dimensions.
+CNA ScoreCard is an open-source, fully automated static website that evaluates and visualizes the quality of CVE reporting by CNAs worldwide. Updated every 6 hours, it leverages the Enhanced Aggregate Scoring (EAS) methodology to provide transparent, actionable insights into CVE record quality across five key dimensions.
 
 **NEW: Data Completeness Analysis** - We now include comprehensive CVE schema completeness analysis, evaluating how well CNAs populate all available fields and arrays in CVE records according to the official [CVE 5.1 Schema](https://github.com/CVEProject/cve-schema/blob/main/schema/CVE_Record_Format.json).
 
@@ -125,9 +125,9 @@ This analyzes 10,000 CVE descriptions and provides:
 
 ## Scoring Methodology
 
-The Enhanced Aggregate Scoring (EAS) system evaluates CVE records across six key dimensions:
+The Enhanced Aggregate Scoring (EAS) system evaluates CVE records across five key dimensions:
 
-### 1. Foundational Completeness (30 points)
+### 1. Foundational Completeness (32 points)
 - Product identification, version details, and clear vulnerability descriptions
 - **Enhanced description quality analysis** using multi-dimensional technical content evaluation based on analysis of 9,435 CVE descriptions:
   - **Length & Structure** (3 points): Progressive scoring for descriptions ≥50, ≥100, ≥200 characters
@@ -136,32 +136,23 @@ The Enhanced Aggregate Scoring (EAS) system evaluates CVE records across six key
   - **Technical Specificity** (4 points): Progressive scoring for 52 technical depth indicators (e.g., "function", "parameter", "API", "when processing", "authentication mechanism")
   - **Generic Content Penalty** (-2 points): Penalty for 12 generic phrases in short descriptions (e.g., "vulnerability exists", "security issue")
 - Data-driven term selection based on high vs. low quality CVE descriptions
+- Includes checks for proper language tags and structured product data.
 
-### 2. Root Cause Analysis (10 points)
+### 2. Root Cause Analysis (11 points)
 - CWE classifications and technical depth indicators
-- Evaluates presence of proper problem type identification
+- Evaluates presence of proper and validly formatted problem type identification (e.g. CWE-120)
 
-### 3. Software Identification (10 points)
-- Awarded if a valid CPE identifier is present in the CVE record
+### 3. Software Identification (11 points)
+- Awarded if a valid CPE identifier is present and correctly formatted in the CVE record
 - Enables precise product targeting for automation
 
-### 4. Severity & Impact Context (25 points)
-- CVSS metrics (v2, v3.0, v3.1, v4.0) with base scores and vector strings
+### 4. Severity & Impact Context (26 points)
+- CVSS metrics (v2, v3.0, v3.1, v4.0) with base scores and valid vector strings
 - Impact information and exploitation indicators
 
-### 5. Actionable Intelligence (20% weight)
+### 5. Actionable Intelligence (20 points)
 - Solution information, patch references, and workarounds
 - Quality and actionability of reference materials
-
-### 6. Data Format & Precision (5 points)
-- Structured, machine-readable content
-- Proper formatting of affected products and references
-- **All-or-nothing scoring:** Full 5 points only if ALL format requirements are met:
-  - Valid CPE identifiers in affected products
-  - Complete CVSS format with both baseScore and vectorString
-  - Valid CWE identifier format (e.g., CWE-120)
-  - Proper language tags in descriptions
-  - Well-structured affected products information
 
 **Scoring Scale:**
 - 🟢 Excellent (80-100)

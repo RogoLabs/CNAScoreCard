@@ -145,7 +145,6 @@ class EnhancedAggregateScorer:
         software_identification_score = self._calculate_software_identification()
         severity_score = self._calculate_severity_context()
         actionable_score = self._calculate_actionable_intelligence()
-        format_score = self._calculate_data_format_precision()
 
         # Calculate total EAS score (simple sum)
         total_eas_score = (
@@ -153,8 +152,7 @@ class EnhancedAggregateScorer:
             root_cause_score +
             software_identification_score +
             severity_score +
-            actionable_score +
-            format_score
+            actionable_score
         )
 
         return {
@@ -168,23 +166,25 @@ class EnhancedAggregateScorer:
                 'softwareIdentification': round(software_identification_score, 2),
                 'severityAndImpactContext': round(severity_score, 2),
                 'actionableIntelligence': round(actionable_score, 2),
-                'dataFormatAndPrecision': round(format_score, 2)
             }
         }
 
     def _calculate_foundational_completeness(self) -> int:
-        """Calculate foundational completeness score (0-30)."""
+        """Calculate foundational completeness score (0-32)."""
         score = 0
-        max_score = 30
+        max_score = 32
         
         # Check for basic required fields
         descriptions = self.cna_container.get('descriptions', [])
+        has_english_desc = False
         if descriptions:
             # Find English description and evaluate quality (15 points max)
             english_desc = None
             for desc in descriptions:
-                if desc.get('lang', '').lower() in ['en', 'eng', 'english']:
+                lang = desc.get('lang', '').lower()
+                if lang in ['en', 'eng', 'english']:
                     english_desc = desc.get('value', '')
+                    has_english_desc = True
                     break
             
             # Evaluate description quality (15 points max)
@@ -192,11 +192,18 @@ class EnhancedAggregateScorer:
                 quality_score = self._evaluate_description_quality(english_desc)
                 score += quality_score
         
+        # Add point for language tag correctness
+        if has_english_desc:
+            score += 1
+        
         # Check for affected products (10 points)
         affected = self.cna_container.get('affected', [])
         if affected and len(affected) > 0:
             score += 10
             
+            # Add point for structured data
+            score += 1
+
             # Check for version information (5 points)
             for product in affected:
                 versions = product.get('versions', [])
@@ -362,12 +369,14 @@ class EnhancedAggregateScorer:
         return min(quality_score, 5)
 
     def _calculate_root_cause_analysis(self) -> int:
-        """Calculate root cause analysis score (0-10)."""
+        """Calculate root cause analysis score (0-11)."""
         score = 0
-        max_score = 10
+        max_score = 11
         
         # Check problem types for CWE information
         problem_types = self.cna_container.get('problemTypes', [])
+        cwe_found = False
+        cwe_valid = False
         if isinstance(problem_types, list):
             for pt in problem_types:
                 if isinstance(pt, dict) and pt.get('descriptions'):
@@ -377,10 +386,12 @@ class EnhancedAggregateScorer:
                             if isinstance(desc, dict):
                                 cwe_id = desc.get('cweId', '')
                                 if cwe_id and cwe_id.startswith('CWE-'):
+                                    cwe_found = True
                                     # If CWE validator is available, validate the CWE
                                     if self.cwe_validator and self.cwe_validator.is_valid_cwe(cwe_id):
                                         # Valid CWE gets full credit
                                         score = 10
+                                        cwe_valid = True
                                     elif self.cwe_validator:
                                         # Invalid CWE gets minimal credit
                                         score = max(score, 2)
@@ -388,10 +399,15 @@ class EnhancedAggregateScorer:
                                     else:
                                         # No validator available, assume valid for backward compatibility
                                         score = 10
+                                        cwe_valid = True
                                     break
                     if score >= 10:
                         break
         
+        # Add point for valid CWE format
+        if cwe_found and cwe_valid:
+            score += 1
+
         # If no CWE found, check descriptions for technical depth
         if score == 0:
             descriptions = self.cna_container.get('descriptions', [])
@@ -414,9 +430,11 @@ class EnhancedAggregateScorer:
         return min(score, max_score)
 
     def _calculate_software_identification(self) -> int:
-        """Calculate software identification score (0-10)."""
+        """Calculate software identification score (0-11)."""
         score = 0
-        max_score = 10
+        max_score = 11
+        cpe_present = False
+        cpe_valid = False
         # Check for CPE in affected products
         affected = self.cna_container.get('affected', [])
         if isinstance(affected, list):
@@ -424,88 +442,100 @@ class EnhancedAggregateScorer:
                 if isinstance(item, dict):
                     # Check for 'cpes' (CVE 5.1 format - plural)
                     cpes = item.get('cpes', [])
+                    if cpes:
+                        cpe_present = True
                     if isinstance(cpes, list) and len(cpes) > 0:
                         # Validate that at least one CPE is valid using cpe lib
                         if any(self._is_valid_cpe(cpe) for cpe in cpes):
-                            score = max_score
+                            score = 10
+                            cpe_valid = True
                             break
                     # Check for 'cpe' (legacy format - singular)
                     cpe = item.get('cpe', [])
+                    if cpe:
+                        cpe_present = True
                     if isinstance(cpe, list) and len(cpe) > 0:
                         if any(self._is_valid_cpe(c) for c in cpe):
-                            score = max_score
+                            score = 10
+                            cpe_valid = True
                             break
                     # Some CNAs use 'cpe23Uri' or similar single string format
                     cpe_uri = item.get('cpe23Uri', '')
+                    if cpe_uri:
+                        cpe_present = True
                     if cpe_uri and isinstance(cpe_uri, str) and self._is_valid_cpe(cpe_uri):
-                        score = max_score
+                        score = 10
+                        cpe_valid = True
                         break
                     # Check for other potential CPE field names
                     for field_name in ['cpeId', 'cpe_name', 'platformId']:
                         cpe_value = item.get(field_name, '')
+                        if cpe_value:
+                            cpe_present = True
                         if cpe_value and isinstance(cpe_value, str) and self._is_valid_cpe(cpe_value):
-                            score = max_score
+                            score = 10
+                            cpe_valid = True
                             break
                     # Check for platformIds array
                     platform_ids = item.get('platformIds', [])
+                    if platform_ids:
+                        cpe_present = True
                     if isinstance(platform_ids, list) and len(platform_ids) > 0:
                         if any(self._is_valid_cpe(pid) for pid in platform_ids):
-                            score = max_score
+                            score = 10
+                            cpe_valid = True
                             break
-                    if score == max_score:
+                    if score == 10:
                         break
+        
+        if cpe_present and cpe_valid:
+            score += 1
+
         return min(score, max_score)
 
-    def _is_valid_cvss_vector(self, vector_string: str) -> bool:
-        """Validate CVSS vector string using the cvss library (supports v2, v3, v4)"""
-        if not vector_string or not isinstance(vector_string, str):
-            return False
-        try:
-            if vector_string.startswith('CVSS:3.') and CVSS3:
-                CVSS3(vector_string)
-                return True
-            elif vector_string.startswith('CVSS:4.') and CVSS4:
-                CVSS4(vector_string)
-                return True
-            elif vector_string.startswith('(') or vector_string.startswith('AV:'):
-                # Some v2 vectors are in legacy format
-                if CVSS2:
-                    CVSS2(vector_string)
-                    return True
-            elif vector_string.startswith('CVSS:2.') and CVSS2:
-                CVSS2(vector_string)
-                return True
-        except Exception:
-            return False
-        return False
-
     def _calculate_severity_context(self) -> int:
-        """Calculate severity and impact context score (0-25), using cvss lib for vector validation."""
+        """Calculate severity and impact context score (0-26), using cvss lib for vector validation."""
         score = 0
-        max_score = 25
+        max_score = 26
         metrics = self.cna_container.get('metrics', [])
+        cvss_present = False
+        cvss_valid = True
         if isinstance(metrics, list):
             for metric in metrics:
                 if isinstance(metric, dict):
                     for key in ['cvssV4_0', 'cvssV3_1', 'cvssV3_0']:
                         if key in metric:
+                            cvss_present = True
                             cvss_data = metric.get(key)
                             if isinstance(cvss_data, dict):
                                 if cvss_data.get('baseScore') is not None:
                                     score += 15
+                                else:
+                                    cvss_valid = False
                                 vector = cvss_data.get('vectorString')
                                 if vector and self._is_valid_cvss_vector(vector):
                                     score += 5
+                                else:
+                                    cvss_valid = False
                                 break
                     if 'cvssV2' in metric:
+                        cvss_present = True
                         cvss_data = metric['cvssV2']
                         if isinstance(cvss_data, dict) and cvss_data.get('baseScore') is not None:
                             score += 10
                             vector = cvss_data.get('vectorString')
                             if vector and self._is_valid_cvss_vector(vector):
                                 score += 2  # Optionally, partial credit for v2 vector
+                            else:
+                                cvss_valid = False
                             break
+                        else:
+                            cvss_valid = False
         
+        # Add point for valid CVSS format
+        if cvss_present and cvss_valid:
+            score += 1
+
         # Check descriptions for impact information
         descriptions = self.cna_container.get('descriptions', [])
         if isinstance(descriptions, list):
@@ -522,7 +552,7 @@ class EnhancedAggregateScorer:
                     break
         
         return min(score, max_score)
-
+    
     def _calculate_actionable_intelligence(self) -> int:
         """Calculate actionable intelligence score (0-20)."""
         score = 0
@@ -582,65 +612,29 @@ class EnhancedAggregateScorer:
         except Exception:
             return False
 
-    def _calculate_data_format_precision(self) -> int:
-        """
-        Calculate Data Format & Precision score (0 or 5).
-        If any present field (CPE, CVSS vector, CVSS baseScore, CWE) is invalid, return 0.
-        If all present fields are valid, return 5. If none are present, return 0.
-        """
-        cna = self.cna_container
-        present = False
-        # Track validity for each field
-        all_valid = True
+    def _is_valid_cvss_vector(self, vector_string: str) -> bool:
+        """Validate CVSS vector string using the cvss library (supports v2, v3, v4)"""
+        if not vector_string or not isinstance(vector_string, str):
+            return False
+        try:
+            if vector_string.startswith('CVSS:3.') and CVSS3:
+                CVSS3(vector_string)
+                return True
+            elif vector_string.startswith('CVSS:4.') and CVSS4:
+                CVSS4(vector_string)
+                return True
+            elif vector_string.startswith('(') or vector_string.startswith('AV:'):
+                # Some v2 vectors are in legacy format
+                if CVSS2:
+                    CVSS2(vector_string)
+                    return True
+            elif vector_string.startswith('CVSS:2.') and CVSS2:
+                CVSS2(vector_string)
+                return True
+        except Exception:
+            return False
+        return False
 
-        # 1. CPE present and valid
-        affected = cna.get('affected', [])
-        for entry in affected:
-            cpes = entry.get('cpes') or entry.get('cpe') or []
-            if isinstance(cpes, str):
-                cpes = [cpes]
-            if cpes:
-                present = True
-                if not any(isinstance(cpe, str) and cpe.startswith('cpe:') for cpe in cpes):
-                    all_valid = False
-
-        # 2. CVSS vector string present and valid
-        metrics = cna.get('metrics', [])
-        for metric in metrics:
-            for key in metric:
-                cvss = metric[key]
-                if isinstance(cvss, dict) and 'vectorString' in cvss:
-                    present = True
-                    vector = cvss['vectorString']
-                    if not (isinstance(vector, str) and vector.startswith('CVSS:')):
-                        all_valid = False
-
-        # 3. CVSS baseScore present and valid
-        for metric in metrics:
-            for key in metric:
-                cvss = metric[key]
-                if isinstance(cvss, dict) and 'baseScore' in cvss:
-                    present = True
-                    base = cvss['baseScore']
-                    if not (isinstance(base, (int, float))):
-                        all_valid = False
-
-        # 4. CWE present and valid
-        problem_types = cna.get('problemTypes', [])
-        for pt in problem_types:
-            for desc in pt.get('descriptions', []):
-                cwe_id = desc.get('cweId')
-                if cwe_id:
-                    present = True
-                    if not (isinstance(cwe_id, str) and cwe_id.startswith('CWE-') and cwe_id[4:].isdigit()):
-                        all_valid = False
-
-        # If any present field is invalid, return 0
-        if not present:
-            return 0
-        if all_valid:
-            return 5
-        return 0
 def calculate_eas(cve_data):
     """
     Convenience function to calculate the Enhanced Aggregate Score (EAS) for a CVE record.
