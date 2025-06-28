@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVEs Missing Required Fields - CNA ScoreCard</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="completeness-styles.css">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+    <div class="nav-links">
+        <a href="../index.html">🏠 Home</a>
+        <a href="../scoring.html">📊 EAS Methodology</a>
+        <a href="../cna/index.html">🏛️ CNAs</a>
+        <a href="../cves/index.html">🔍 CVEs</a>
+        <a href="index.html">📋 Completeness</a>
+        <a href="missing-fields.html" style="background-color: #ecf0f1;">⚠️ Bad CVEs</a>
+    </div>
+
+    <main class="container" role="main" aria-label="CVEs Missing Required Fields">
+        <h1>CNA ScoreCard</h1>
+        <div class="header-section">
+            <h2>⚠️ CVEs with Missing Required Fields</h2>
+            <p class="main-description">
+                Individual CVE records that lack schema-required fields that CNAs are responsible for completing. 
+                This is a comprehensive list of problematic CVE records missing critical data elements defined as required by the 
+                <a href="https://github.com/CVEProject/cve-schema/blob/main/schema/CVE_Record_Format.json" target="_blank" rel="noopener noreferrer">CVE JSON Schema</a>.
+                Each CVE entry links directly to the official CVE record for detailed review and verification.
+            </p>
+        </div>
+
+        <!-- Quick Stats Overview -->
+        <div class="stats-overview">
+            <div class="stat-card">
+                <h3>⚠️ Missing Fields CVEs</h3>
+                <div class="stat-value" id="missing-cves-count">Loading...</div>
+                <p>CVEs with missing required fields</p>
+            </div>
+            <div class="stat-card">
+                <h3>📊 Percentage of Total</h3>
+                <div class="stat-value" id="missing-percentage">Loading...</div>
+                <p>Percentage of all CVE records</p>
+            </div>
+            <div class="stat-card">
+                <h3>🏛️ Affected CNAs</h3>
+                <div class="stat-value" id="affected-cnas-count">Loading...</div>
+                <p>CNAs with missing field issues</p>
+            </div>
+            <div class="stat-card">
+                <h3>📈 Total CVEs Analyzed</h3>
+                <div class="stat-value" id="total-cves-analyzed">Loading...</div>
+                <p>CVE records in analysis</p>
+            </div>
+        </div>
+
+        <!-- Search and Filter Controls -->
+        <div class="analysis-controls">
+            <div class="search-filter">
+                <input type="text" id="missing-cves-search" placeholder="🔍 Search CVEs, CNAs, or fields..." aria-label="Search CVEs">
+                <select id="missing-cves-sort" aria-label="Sort CVEs">
+                    <option value="date">Sort by Date Published</option>
+                    <option value="cve">Sort by CVE ID</option>
+                    <option value="cna">Sort by CNA</option>
+                    <option value="fields">Sort by Missing Fields Count</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Missing Required Fields Section -->
+        <div class="missing-fields-section" id="missing-fields-section">
+            <div id="missing-cves-table" class="cna-table-container">
+                <div class="table-header">
+                    <h2>List of CVEs Missing Required Fields</h2>
+                    <p>Complete inventory of problematic CVE records missing schema-required fields, with direct links and detailed field information.</p>
+                </div>
+                <div class="table-wrapper">
+                    <table class="cna-table" id="missing-cves-main-table">
+                        <thead>
+                            <tr>
+                                <th>CVE ID</th>
+                                <th>CNA</th>
+                                <th>Date Published</th>
+                                <th>Missing Required Fields</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="missing-cves-table-body">
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Common Missing Fields Analysis -->
+        <div class="field-analysis-section">
+            <h2>📊 Most Common Missing Fields</h2>
+            <p>Analysis of which required fields are most frequently missing across all CVE records.</p>
+            <div id="common-missing-fields" class="field-grid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Excluded Fields Information (moved below) -->
+        <div class="info-section">
+            <h3>📝 Analysis Scope</h3>
+            <p>This analysis excludes the following 10 fields that are automatically added by the CVE Program and are not CNA responsibilities:</p>
+            <div class="excluded-fields">
+                <span class="field-tag">dataType</span>
+                <span class="field-tag">dataVersion</span>
+                <span class="field-tag">cveMetadata.cveId</span>
+                <span class="field-tag">cveMetadata.assignerOrgId</span>
+                <span class="field-tag">cveMetadata.state</span>
+                <span class="field-tag">containers.cna.providerMetadata</span>
+                <span class="field-tag">cveMetadata.assignerShortName</span>
+                <span class="field-tag">cveMetadata.dateUpdated</span>
+                <span class="field-tag">cveMetadata.datePublished</span>
+                <span class="field-tag">cveMetadata.dateReserved</span>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 CNA ScoreCard. Missing fields analysis based on <a href="https://github.com/CVEProject/cve-schema" target="_blank">CVE JSON Schema</a>.</p>
+            <p>Last updated: <span id="last-updated">Loading...</span></p>
+        </div>
+    </footer>
+
+    <script src="missing-fields-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNA Detail - CNA ScoreCard</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="cna-styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="nav-links">
+            <a href="../index.html">🏠 Home</a>
+            <a href="../scoring.html">📊 EAS Methodology</a>
+            <a href="index.html" style="background-color: #ecf0f1;">🏛️ CNAs</a>
+            <a href="../cves/index.html">🔍 CVEs</a>
+            <a href="../completeness/index.html">📋 Completeness</a>
+        </div>
+        
+        <div id="loading">Loading CNA data...</div>
+        
+        <!-- Professional CNA Header Section -->
+        <div id="cnaHeader" class="cna-detail-header" style="display: none;"></div>
+        
+        <!-- CVE Filters and Cards -->
+        <div id="cveSection" class="cve-section" style="display: none;">
+            <h2 class="section-title">Recent CVE Scores</h2>
+            <div class="filters">
+                <input type="text" id="searchInput" placeholder="Search CVEs...">
+                <select id="sortSelect">
+                    <option value="score">Sort by EAS Score</option>
+                    <option value="cveId">Sort by CVE ID</option>
+                </select>
+            </div>
+        </div>
+        
+        <div id="cveCards" class="cna-cards"></div>
+    </div>
+    
+    <script>
+        // Define CNA_NAME and SAFE_FILENAME for the script
+        const urlParams = new URLSearchParams(window.location.search);
+        const CNA_NAME = urlParams.get('cna') || 'adobe';
+        const SAFE_FILENAME = CNA_NAME.replace(/[^a-zA-Z0-9\s\-_]/g, '').trim().replace(/\s+/g, '_');
+    </script>
+    <script src="cna-script.js"></script>
+</body>
+</html>

@@ -3,32 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browse CNAs - CNA ScoreCard</title>
+    <title>CVE Numbering Authorities - CNA ScoreCard</title>
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="cna-styles.css">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
 </head>
 <body>
-    <div class="container">
-        <nav class="breadcrumb">
-            <a href="../index.html">← Back to Home</a>
-        </nav>
-        
-        <h1>Browse CNAs</h1>
-        <p class="description">Browse individual CNA (CVE Numbering Authority) pages to see detailed scoring breakdowns, recent CVEs, and performance metrics.</p>
-        
-        <div class="filters">
-            <input type="text" id="searchInput" placeholder="Search CNAs...">
-            <select id="sortSelect">
-                <option value="name">Sort by Name</option>
-                <option value="score">Sort by Score</option>
-                <option value="cveCount">Sort by CVE Count</option>
-            </select>
-        </div>
-        
-        <div id="loading">Loading CNA data...</div>
-        <div id="cnaList" class="cna-grid"></div>
+    <div class="nav-links">
+        <a href="../index.html">🏠 Home</a>
+        <a href="../scoring.html">📊 EAS Methodology</a>
+        <a href="index.html" style="background-color: #ecf0f1;">🏛️ CNAs</a>
+        <a href="../cves/index.html">🔍 CVEs</a>
+        <a href="../completeness/index.html">📋 Completeness</a>
     </div>
-    
+
+    <main class="container" role="main" aria-label="CVE Numbering Authorities">
+        <h1>CNA ScoreCard</h1>
+        <div class="header-section">
+            <h2>🏛️ CVE Numbering Authorities (CNAs)</h2>
+            <p class="main-description">
+                Browse individual CNA (CVE Numbering Authority) pages to see detailed scoring breakdowns, 
+                recent CVEs, and performance metrics. CNAs are ranked by their Enhanced Assessment Score (EAS), 
+                which evaluates the quality and completeness of their CVE publications across six key dimensions.
+            </p>
+        </div>
+
+        <div class="stats-overview">
+            <div class="stat-card">
+                <h3>📊 Average EAS Score</h3>
+                <div class="stat-value" id="average-score">Loading...</div>
+                <p>Mean score across all active CNAs</p>
+            </div>
+            <div class="stat-card">
+                <h3>🏛️ Active CNAs</h3>
+                <div class="stat-value" id="total-cnas">Loading...</div>
+                <p>CNAs with published CVEs (6mo)</p>
+            </div>
+            <div class="stat-card">
+                <h3>📄 Total CVEs</h3>
+                <div class="stat-value" id="total-cves">Loading...</div>
+                <p>CVEs analyzed in last 6 months</p>
+            </div>
+            <div class="stat-card">
+                <h3>🏆 Top Performer</h3>
+                <div class="stat-value" id="top-performer">Loading...</div>
+                <p>Highest scoring CNA</p>
+            </div>
+        </div>
+
+        <div class="analysis-controls">
+            <div class="search-filter">
+                <input type="text" id="cna-search" placeholder="🔍 Search CNAs..." aria-label="Search CNAs">
+                <select id="sort-select" aria-label="Sort CNAs">
+                    <option value="score">Sort by EAS Score</option>
+                    <option value="name">Sort by Name</option>
+                    <option value="cves">Sort by CVE Count</option>
+                    <option value="rank">Sort by Rank</option>
+                </select>
+            </div>
+            <div class="view-toggle">
+                <button id="table-view-btn" class="view-btn active">📋 Table View</button>
+                <button id="card-view-btn" class="view-btn">🗂️ Card View</button>
+            </div>
+        </div>
+
+        <div id="table-view" class="cna-table-container">
+            <div class="table-header">
+                <h2>CNA EAS Score Rankings</h2>
+                <p>CNAs ranked by their Enhanced Assessment Score (EAS). Higher scores indicate better quality and completeness of CVE publications.</p>
+            </div>
+            
+            <div class="table-wrapper">
+                <table class="cna-table" id="cna-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>CNA</th>
+                            <th>EAS Score</th>
+                            <th>CVE Count (6mo)</th>
+                            <th>Percentile</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cna-table-body">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="card-view" class="cna-cards" style="display: none;">
+            <!-- Card view content will be populated by JavaScript -->
+        </div>
+
+        <div id="loading">Loading CNA data...</div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 CNA ScoreCard. Enhanced Assessment Scores based on <a href="../scoring.html">EAS Methodology</a>.</p>
+            <p>Last updated: <span id="last-updated">Loading...</span></p>
+        </div>
+    </footer>
+
     <script src="cna-script.js"></script>
 </body>
 </html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVE Data Completeness Analysis - CNA ScoreCard</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="completeness-styles.css">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="nav-links">
+        <a href="../index.html">🏠 Home</a>
+        <a href="../scoring.html">📊 EAS Methodology</a>
+        <a href="../cna/index.html">🏛️ CNAs</a>
+        <a href="../cves/index.html">🔍 CVEs</a>
+        <a href="index.html" style="background-color: #ecf0f1;">📋 Completeness</a>
+        <a href="missing-fields.html">⚠️ Bad CVEs</a>
+    </div>
+
+    <main class="container" role="main" aria-label="CVE Data Completeness Analysis">
+        <h1>CNA ScoreCard</h1>
+        <div class="header-section">
+            <h2>📊 CVE Data Completeness Analysis</h2>
+            <p class="main-description">
+                Comprehensive evaluation of CVE record completeness based on the official 
+                <a href="https://github.com/CVEProject/cve-schema/blob/main/schema/CVE_Record_Format.json" target="_blank" rel="noopener noreferrer">CVE JSON Schema</a>. 
+                This analysis measures how well CNAs populate all available fields and arrays in CVE records, 
+                providing insights into data quality and schema adherence across the vulnerability disclosure ecosystem.
+            </p>
+            
+            <div class="scoring-methodology">
+                <h3>📊 Completeness Score Calculation</h3>
+                <p>
+                    The <strong>Completeness Score</strong> is a weighted metric that evaluates how thoroughly CNAs populate CVE record fields:
+                </p>
+                <div class="formula-box">
+                    <strong>Completeness Score = (Required Fields × 70%) + (Optional Fields × 30%)</strong>
+                </div>
+                <ul class="scoring-details">
+                    <li><strong>Required Fields (70% weight):</strong> Schema-mandated fields like descriptions, affected products, and references</li>
+                    <li><strong>Optional Fields (30% weight):</strong> Enhanced fields like CVSS metrics, problem types, solutions, and credits</li>
+                    <li><strong>Field Coverage:</strong> Each field category is scored as the percentage of CVE records containing that field</li>
+                    <li><strong>Excluded Fields:</strong> Ten automatically-populated CVE program fields are excluded from scoring</li>
+                </ul>
+                <p class="scoring-note">
+                    <em>Note: Required fields are weighted more heavily as they represent minimum compliance with the CVE schema standards.</em>
+                </p>
+            </div>
+        </div>
+
+        <div class="stats-overview">
+            <div class="stat-card">
+                <h3>📈 Overall Completeness</h3>
+                <div class="stat-value" id="overall-completeness">Loading...</div>
+                <p>Average completeness across all CVE records</p>
+            </div>
+            <div class="stat-card">
+                <h3>⚡ Required Fields</h3>
+                <div class="stat-value" id="required-completeness">Loading...</div>
+                <p>Completeness of schema-required fields</p>
+            </div>
+            <div class="stat-card">
+                <h3>➕ Optional Fields</h3>
+                <div class="stat-value" id="optional-completeness">Loading...</div>
+                <p>Utilization of optional schema fields</p>
+            </div>
+            <div class="stat-card">
+                <h3>🏛️ CNAs Analyzed</h3>
+                <div class="stat-value" id="total-cnas">Loading...</div>
+                <p>CVE Numbering Authorities evaluated</p>
+            </div>
+        </div>
+
+        <div class="analysis-controls">
+            <div class="search-filter">
+                <input type="text" id="cna-search" placeholder="🔍 Search CNAs..." aria-label="Search CNAs">
+                <select id="sort-select" aria-label="Sort CNAs">
+                    <option value="completeness">Sort by Completeness</option>
+                    <option value="name">Sort by Name</option>
+                    <option value="cves">Sort by CVE Count</option>
+                    <option value="required">Sort by Required Fields</option>
+                    <option value="optional">Sort by Optional Fields</option>
+                </select>
+            </div>
+            <div class="view-toggle">
+                <button id="table-view-btn" class="view-btn active">📋 Table View</button>
+                <button id="chart-view-btn" class="view-btn">📊 Chart View</button>
+            </div>
+        </div>
+
+        <div id="table-view" class="completeness-table-container">
+            <div class="table-header">
+                <h2>CNA Completeness Rankings</h2>
+                <p>CNAs ranked by their overall data completeness score. Higher scores indicate better utilization of the CVE schema fields.</p>
+            </div>
+            
+            <div class="table-wrapper">
+                <table class="completeness-table" id="completeness-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>CNA</th>
+                            <th>Completeness Score</th>
+                            <th>Required Fields</th>
+                            <th>Optional Fields</th>
+                            <th>CVE Count</th>
+                            <th>Percentile</th>
+                            <!-- Removed Details column header -->
+                        </tr>
+                    </thead>
+                    <tbody id="completeness-table-body">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="chart-view" class="chart-container" style="display: none;">
+            <div class="chart-header">
+                <h2>Completeness Distribution</h2>
+                <p>Visual representation of CNA completeness scores and field utilization patterns.</p>
+            </div>
+            
+            <div class="chart-grid">
+                <div class="chart-item">
+                    <h3>Completeness Score Distribution</h3>
+                    <div class="chart">
+                        <canvas id="completeness-histogram"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-item">
+                    <h3>Required vs Optional Fields</h3>
+                    <div class="chart">
+                        <canvas id="required-vs-optional-scatter"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-item">
+                    <h3>Top Performing CNAs</h3>
+                    <div class="chart">
+                        <canvas id="top-cnas-bar"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-item">
+                    <h3>Field Utilization Heatmap</h3>
+                    <div class="chart">
+                        <canvas id="field-utilization-heatmap"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="field-analysis-section">
+            <h2>📋 Schema Field Analysis</h2>
+            <p class="main-description">
+                Detailed analysis of individual CVE schema fields and their utilization across all records.
+            </p>
+            
+            <div class="field-tabs">
+                <button class="tab-btn active" data-tab="required">Required Fields</button>
+                <button class="tab-btn" data-tab="optional">Optional Fields</button>
+                <button class="tab-btn" data-tab="missing">Least Complete</button>
+                <button class="tab-btn" data-tab="utilized">Most Utilized</button>
+            </div>
+
+            <div id="required-fields" class="tab-content active">
+                <div class="field-grid" id="required-fields-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <div id="optional-fields" class="tab-content">
+                <div class="field-grid" id="optional-fields-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <div id="missing-fields" class="tab-content">
+                <div class="field-grid" id="missing-fields-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <div id="utilized-fields" class="tab-content">
+                <div class="field-grid" id="utilized-fields-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Link to Missing Fields Analysis (now outside the Schema Field Analysis box) -->
+        <div class="missing-fields-link-section">
+            <div class="link-card">
+                <div class="link-icon">⚠️</div>
+                <div class="link-content">
+                    <h3>Problematic CVEs: Missing Required Fields</h3>
+                    <p>Browse the complete list of problematic CVE records that lack schema-required fields. These CVE entries fail to meet basic completeness standards and require CNA attention to resolve data quality issues.</p>
+                    <a href="missing-fields.html" class="link-button">View Bad CVEs List →</a>
+                </div>
+                <div class="link-stats">
+                    <div class="quick-stat">
+                        <span class="stat-value" id="quick-missing-count">Loading...</span>
+                        <span class="stat-label">Bad CVE records</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 CNA ScoreCard. Data completeness analysis based on <a href="https://github.com/CVEProject/cve-schema" target="_blank">CVE JSON Schema</a>.</p>
+            <p>Last updated: <span id="last-updated">Loading...</span></p>
+        </div>
+    </footer>
+
+    <script src="completeness-script.js"></script>
+</body>
+</html>

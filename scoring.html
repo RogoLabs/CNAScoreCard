@@ -14,7 +14,10 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         
-        .scoring-section h2 {
+        .sc                <a href="https://github.com/jgamblin/CNAScoreCard/blob/main/scripts/build.py" target="_blank" class="code-link">📄 scripts/build.py</a>
+                <a href="https://github.com/jgamblin/CNAScoreCard/blob/main/scripts/generate_dashboard.py" target="_blank" class="code-link">📄 scripts/generate_dashboard.py</a>
+                <a href="https://github.com/jgamblin/CNAScoreCard/blob/main/cnascorecard/generate_static_data.py" target="_blank" class="code-link">📄 cnascorecard/generate_static_data.py</a>
+                <a href="https://github.com/jgamblin/CNAScoreCard/blob/main/.github/workflows/main.yml" target="_blank" class="code-link">📄 .github/workflows/main.yml</a>g-section h2 {
             color: #2c3e50;
             border-bottom: 2px solid #3498db;
             padding-bottom: 10px;
@@ -53,6 +56,43 @@
             border-left: 4px solid #3498db;
         }
         
+        .technical-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #2c3e50;
+        }
+        
+        .technical-details h4 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        
+        .code-link {
+            background: #e8f4fd;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin: 5px 0;
+            display: inline-block;
+            text-decoration: none;
+            color: #2c3e50;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        .code-link:hover {
+            background: #d1ecf1;
+        }
+        
+        .implementation-note {
+            background: #e8f5e8;
+            border-left: 4px solid #27ae60;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
         .score-range {
             display: flex;
             gap: 15px;
@@ -88,27 +128,67 @@
         .nav-links a:hover {
             text-decoration: underline;
         }
+        
+        .scoring-subsection {
+            margin: 20px 0;
+        }
+        
+        .scoring-subsection h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            border-bottom: 1px solid #ecf0f1;
+            padding-bottom: 5px;
+        }
+        
+        .scoring-subsection ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .scoring-subsection li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        .scoring-subsection code {
+            background: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .scoring-section,
+        .scoring-section h2,
+        .scoring-section p,
+        .scoring-section table,
+        .scoring-section .example-cve {
+            text-align: left;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="nav-links">
-            <a href="index.html">← Back to Scorecards</a>
+            <a href="index.html">🏠 Home</a>
+            <a href="scoring.html" style="background-color: #ecf0f1;">📊 EAS Methodology</a>
+            <a href="cna/index.html">🏛️ CNAs</a>
+            <a href="cves/index.html">🔍 CVEs</a>
+            <a href="completeness/index.html">� Completeness</a>
         </div>
         
         <h1>EAS Scoring Methodology</h1>
-        <p>The Enriched Actionability Score (EAS) evaluates CVE record quality across five key dimensions, with a maximum score of 100 points.</p>
+        <p>The Enhanced Aggregate Scoring (EAS) is a comprehensive framework designed to assess the quality and completeness of CVE records. By evaluating each record across six critical dimensions, EAS provides a standardized score (up to 100 points) that reflects how actionable, precise, and useful a CVE is for security teams and automated tools. All CVEs are published by CVE Numbering Authorities (CNAs), whose performance is measured and compared using this methodology.</p>
         
-        <div class="scoring-section">
-            <h2>Score Ranges</h2>
-            <div class="score-range">
-                <div class="score-badge excellent">80-100: Excellent</div>
-                <div class="score-badge good">60-79: Good</div>
-                <div class="score-badge fair">40-59: Fair</div>
-                <div class="score-badge poor">0-39: Needs Improvement</div>
-            </div>
+        <div class="technical-details">
+            <h4>🔧 Technical Implementation</h4>
+            <p>The EAS scoring algorithm is implemented in Python and processes CVE data from the official <a href="https://github.com/CVEProject/cvelistV5" target="_blank">CVEProject/cvelistV5</a> repository. The core scoring logic is contained in:</p>
+            <a href="https://github.com/jgamblin/CNAScoreCard/blob/main/cnascorecard/eas_scorer.py" target="_blank" class="code-link">📄 cnascorecard/eas_scorer.py</a>
+            <a href="https://github.com/jgamblin/CNAScoreCard/blob/main/cnascorecard/main.py" target="_blank" class="code-link">📄 cnascorecard/main.py</a>
+            <a href="https://github.com/jgamblin/CNAScoreCard/blob/main/cnascorecard/data_ingestor.py" target="_blank" class="code-link">📄 cnascorecard/data_ingestor.py</a>
         </div>
-
+        
         <div class="scoring-section">
             <h2>1. Foundational Completeness (30 points)</h2>
             <p>Measures the presence of basic, essential information needed to understand and act on a vulnerability.</p>
@@ -123,30 +203,43 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Affected Product/Vendor</td>
-                        <td class="points">10</td>
-                        <td>Clear identification of vendor and product (not "N/A")</td>
-                    </tr>
-                    <tr>
-                        <td>Structured Version Information</td>
+                        <td>Description Quality</td>
                         <td class="points">15</td>
-                        <td>Specific version ranges or status information</td>
+                        <td>Advanced content analysis evaluating technical depth, specificity, and clarity</td>
                     </tr>
                     <tr>
-                        <td>Clear Problem Description</td>
+                        <td>Affected Products</td>
+                        <td class="points">10</td>
+                        <td>Clear identification of affected products</td>
+                    </tr>
+                    <tr>
+                        <td>Version Information</td>
                         <td class="points">5</td>
-                        <td>Meaningful description (>40 characters)</td>
+                        <td>Specific version ranges or status information</td>
                     </tr>
                 </tbody>
             </table>
             
+            <div class="technical-details">
+                <h4>🔍 Description Quality Algorithm</h4>
+                <p>The description quality scoring uses a multi-dimensional analysis based on 9,435 CVE descriptions:</p>
+                <ul>
+                    <li><strong>Length & Structure:</strong> Progressive scoring for descriptions ≥50, ≥100, ≥200 characters</li>
+                    <li><strong>Technical Vulnerability Types:</strong> Detection of 47 specific vulnerability patterns (SQL injection, XSS, buffer overflow, etc.)</li>
+                    <li><strong>Impact/Exploitation Context:</strong> 36 exploitation indicators ("leads to", "execute arbitrary", "allows", "bypass")</li>
+                    <li><strong>Technical Specificity:</strong> 52 technical depth indicators ("function", "parameter", "API", "authentication mechanism")</li>
+                    <li><strong>Generic Content Penalty:</strong> -2 points for 12 generic phrases in short descriptions</li>
+                </ul>
+                <a href="https://github.com/jgamblin/CNAScoreCard/blob/main/cnascorecard/eas_scorer.py#L40" target="_blank" class="code-link">📄 View Description Scoring Implementation</a>
+            </div>
+            
             <div class="example-cve">
-                <strong>Example:</strong> A CVE that specifies "Apache HTTP Server versions 2.4.0 through 2.4.52" with a detailed description of the buffer overflow vulnerability would score the full 30 points.
+                <strong>Example:</strong> A CVE that specifies "Apache HTTP Server versions 2.4.0 through 2.4.52" with a detailed description like "A buffer overflow vulnerability in the mod_rewrite module allows remote attackers to execute arbitrary code via crafted HTTP requests when processing malformed URL patterns" would score the full 30 points.
             </div>
         </div>
-
+        
         <div class="scoring-section">
-            <h2>2. Root Cause Analysis (20 points)</h2>
+            <h2>2. Root Cause Analysis (10 points)</h2>
             <p>Evaluates whether the CVE provides insight into the underlying weakness type.</p>
             
             <table class="metric-table">
@@ -160,19 +253,60 @@
                 <tbody>
                     <tr>
                         <td>CWE ID Provided</td>
-                        <td class="points">20</td>
+                        <td class="points">10</td>
                         <td>Valid CWE identifier (e.g., CWE-79, CWE-120)</td>
                     </tr>
                 </tbody>
             </table>
             
+            <div class="implementation-note">
+                <strong>Implementation Note:</strong> CWE validation uses the official MITRE CWE catalog. The system checks for proper CWE-XXX format and validates against the current CWE database.
+            </div>
+            
             <div class="example-cve">
                 <strong>Example:</strong> A CVE that includes "CWE-787: Out-of-bounds Write" provides developers with the specific weakness pattern to look for.
             </div>
         </div>
+        
+        <div class="scoring-section">
+            <h2>3. Software Identification (10 points)</h2>
+            <p>Assesses whether the CVE record includes a valid CPE identifier for affected products, enabling precise software identification and automation.</p>
+            
+            <table class="metric-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Points</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CPE Present</td>
+                        <td class="points">10</td>
+                        <td>Valid CPE identifier (e.g., cpe:2.3:a:apache:http_server:2.4.52:*)</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="technical-details">
+                <h4>🏗️ CPE Validation</h4>
+                <p>CPE validation uses the <a href="https://pypi.org/project/cpe/" target="_blank">python-cpe</a> library to ensure compliance with <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir7695.pdf" target="_blank">NIST IR 7695</a> specification.</p>
+                <p>The system validates:</p>
+                <ul>
+                    <li>CPE 2.3 format structure</li>
+                    <li>Proper URI encoding</li>
+                    <li>Valid component values</li>
+                </ul>
+            </div>
+            
+            <div class="example-cve">
+                <strong>Example:</strong> Including "cpe:2.3:a:apache:http_server:2.4.52:*:*:*:*:*:*:*" enables automated vulnerability scanning tools to identify affected systems.
+            </div>
+        </div>
 
         <div class="scoring-section">
-            <h2>3. Severity & Impact Context (25 points)</h2>
+            <h2>4. Severity & Impact Context (25 points)</h2>
             <p>Assesses the quality and completeness of severity scoring information.</p>
             
             <table class="metric-table">
@@ -185,30 +319,42 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>CVSS v3.1/v4.0 Base Score</td>
-                        <td class="points">10</td>
-                        <td>Standard CVSS base metrics with vector string</td>
+                        <td>CVSS Base Score</td>
+                        <td class="points">15</td>
+                        <td>CVSS v4.0/v3.1/v3.0 base score provided</td>
                     </tr>
                     <tr>
-                        <td>CVSS v4.0 Threat Metrics</td>
+                        <td>CVSS Vector String</td>
                         <td class="points">5</td>
-                        <td>Exploit maturity (E) metric defined</td>
+                        <td>Complete CVSS vector string for reproducibility</td>
                     </tr>
                     <tr>
-                        <td>Environmental/Supplemental Metrics</td>
-                        <td class="points">10</td>
-                        <td>Additional context metrics (2 points each, max 10)</td>
+                        <td>Impact Description</td>
+                        <td class="points">5</td>
+                        <td>Description includes impact indicators</td>
                     </tr>
                 </tbody>
             </table>
             
+            <div class="technical-details">
+                <h4>📊 CVSS Validation</h4>
+                <p>CVSS scoring validation supports multiple versions and uses the <a href="https://pypi.org/project/cvss/" target="_blank">python-cvss</a> library:</p>
+                <ul>
+                    <li><strong>CVSS v4.0:</strong> Latest specification with enhanced metrics</li>
+                    <li><strong>CVSS v3.1:</strong> Current industry standard</li>
+                    <li><strong>CVSS v3.0:</strong> Previous generation support</li>
+                    <li><strong>CVSS v2.0:</strong> Legacy support for older CVEs</li>
+                </ul>
+                <p>The system validates both base scores (0.0-10.0) and vector strings for mathematical consistency.</p>
+            </div>
+            
             <div class="example-cve">
-                <strong>Example:</strong> A CVE with CVSS v4.0 base score, exploit maturity rating, and environmental metrics for confidentiality/integrity requirements would score 25 points.
+                <strong>Example:</strong> A CVE with CVSS v3.1 base score of 9.8, complete vector string "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H", and description mentioning "remote code execution" would score 25 points.
             </div>
         </div>
 
         <div class="scoring-section">
-            <h2>4. Actionable Intelligence (20 points)</h2>
+            <h2>5. Actionable Intelligence (20 points)</h2>
             <p>Measures the availability of information that enables immediate action by security teams.</p>
             
             <table class="metric-table">
@@ -221,31 +367,48 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>High-Quality References</td>
-                        <td class="points">12</td>
-                        <td>External links (4 points each, max 12)</td>
+                        <td>Solution Information</td>
+                        <td class="points">8</td>
+                        <td>Available fixes, patches, or mitigations</td>
                     </tr>
                     <tr>
-                        <td>Exploit/PoC Information</td>
-                        <td class="points">5</td>
-                        <td>Links to exploits or proof-of-concept code</td>
+                        <td>Actionable References</td>
+                        <td class="points">6</td>
+                        <td>Links to patches, advisories, or security guidance</td>
                     </tr>
                     <tr>
-                        <td>VEX Data Provided</td>
-                        <td class="points">3</td>
-                        <td>Vulnerability Exploitability eXchange data</td>
+                        <td>Workarounds</td>
+                        <td class="points">2</td>
+                        <td>Temporary mitigation steps</td>
+                    </tr>
+                    <tr>
+                        <td>Detailed Solution</td>
+                        <td class="points">4</td>
+                        <td>Solution or fix description is detailed (>100 characters)</td>
                     </tr>
                 </tbody>
             </table>
             
+            <div class="technical-details">
+                <h4>🎯 Reference Classification</h4>
+                <p>The system automatically classifies references by analyzing URLs and content:</p>
+                <ul>
+                    <li><strong>Vendor Advisories:</strong> Official security bulletins</li>
+                    <li><strong>Patch References:</strong> Direct links to fixes or updates</li>
+                    <li><strong>Technical Analysis:</strong> Security researcher findings</li>
+                    <li><strong>Exploit References:</strong> Excluded from scoring to avoid incentivizing exploit disclosure</li>
+                </ul>
+                <a href="https://github.com/jgamblin/CNAScoreCard/blob/main/cnascorecard/eas_scorer.py#L200" target="_blank" class="code-link">📄 View Reference Analysis Code</a>
+            </div>
+            
             <div class="example-cve">
-                <strong>Example:</strong> A CVE with vendor advisory, security researcher blog post, patch commit, and GitHub PoC would score the full 20 points.
+                <strong>Example:</strong> A CVE with vendor advisory, security researcher blog post, patch commit, and a detailed solution description would score the full 20 points. <strong>No points are given for published exploits.</strong>
             </div>
         </div>
 
         <div class="scoring-section">
-            <h2>5. Data Format & Precision (5 points)</h2>
-            <p>Evaluates the use of structured, machine-readable formats.</p>
+            <h2>6. Data Format & Precision (5 points)</h2>
+            <p>Evaluates the use of structured, machine-readable formats using an <strong>all-or-nothing scoring approach</strong>. Missing fields do not penalize the score, but any incorrectly formatted field results in 0 points.</p>
             
             <table class="metric-table">
                 <thead>
@@ -257,15 +420,79 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>CPE Usage</td>
+                        <td>All Format Checks Pass</td>
                         <td class="points">5</td>
-                        <td>Common Platform Enumeration identifiers</td>
+                        <td>All present fields must pass validation: CPE identifiers, CVSS format, CWE format, language tags, and structured data</td>
+                    </tr>
+                    <tr>
+                        <td>Any Format Error</td>
+                        <td class="points">0</td>
+                        <td>If any present field is incorrectly formatted</td>
                     </tr>
                 </tbody>
             </table>
             
+            <div class="technical-details">
+                <h4>⚙️ Format Validation Pipeline</h4>
+                <p>The format validation system performs comprehensive checks:</p>
+                <ul>
+                    <li><strong>Schema Validation:</strong> CVE 5.0 JSON schema compliance</li>
+                    <li><strong>Field Format Validation:</strong> Each field type uses specialized validators</li>
+                    <li><strong>Cross-field Consistency:</strong> Ensures related fields are logically consistent</li>
+                    <li><strong>Standards Compliance:</strong> Validates against official specifications (CPE, CVSS, CWE)</li>
+                </ul>
+            </div>
+            
+            <div class="scoring-subsection">
+                <h3>Format Requirements:</h3>
+                <ul>
+                    <li><strong>CPE Identifiers:</strong> Valid <a href="https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nistir7695.pdf" target="_blank">Common Platform Enumeration</a> format (e.g., <code>cpe:2.3:a:apache:http_server:2.4.52:*</code>)</li>
+                    <li><strong>CVSS Scoring:</strong> Complete score with both baseScore and vectorString (supports v2, v3, v4)</li>
+                    <li><strong>CWE Classification:</strong> Valid weakness identifier from <a href="https://cwe.mitre.org/" target="_blank">MITRE CWE</a> (e.g., <code>CWE-120</code>, <code>CWE-787</code>)</li>
+                    <li><strong>Language Tags:</strong> Proper language identification in descriptions (e.g., <code>"lang": "en"</code>)</li>
+                    <li><strong>Structured Products:</strong> Well-formed affected products with vendor and product fields</li>
+                </ul>
+            </div>
+            
+            <div class="scoring-subsection">
+                <h3>Validation Libraries:</h3>
+                <ul>
+                    <li><a href="https://pypi.org/project/cvss/" target="_blank">python-cvss</a> — CVSS vector and score validation</li>
+                    <li><a href="https://pypi.org/project/cpe/" target="_blank">python-cpe</a> — CPE identifier validation</li>
+                    <li>Local CWE validator using MITRE's official catalog</li>
+                    <li><a href="https://pypi.org/project/jsonschema/" target="_blank">jsonschema</a> — CVE 5.0 schema validation</li>
+                </ul>
+            </div>
+            
             <div class="example-cve">
-                <strong>Example:</strong> Including "cpe:2.3:a:apache:http_server:2.4.52:*:*:*:*:*:*:*" enables automated vulnerability scanning tools to identify affected systems.
+                <strong>Perfect Example:</strong> A CVE with valid CPE (<code>cpe:2.3:a:apache:http_server:2.4.52:*:*:*:*:*:*:*</code>), proper CWE (<code>CWE-787</code>), complete CVSS (<code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H</code>), language tags, and structured data receives 5 points.
+            </div>
+            
+            <div class="example-cve" style="background: #fff2f2; border-left: 4px solid #e74c3c;">
+                <strong>Failed Example:</strong> The same CVE with an invalid CPE format (<code>cpe:apache:http_server:2.4.52</code>) would receive 0 points, even if all other fields are perfect.
+            </div>
+        </div>
+
+        <div class="scoring-section">
+            <h2>Data Processing Pipeline</h2>
+            
+            <div class="technical-details">
+                <h4>🔄 Automated Processing</h4>
+                <p>The CNA ScoreCard system operates through a fully automated pipeline:</p>
+                <ol>
+                    <li><strong>Data Ingestion:</strong> Fetches latest CVE data from CVEProject/cvelistV5 every 6 hours</li>
+                    <li><strong>CVE Processing:</strong> Parses and validates CVE records using the CVE 5.0 schema</li>
+                    <li><strong>Scoring:</strong> Applies EAS methodology to each CVE record</li>
+                    <li><strong>CNA Aggregation:</strong> Calculates CNA-level statistics and rankings</li>
+                    <li><strong>Static Generation:</strong> Produces JSON data files and HTML pages</li>
+                    <li><strong>Deployment:</strong> Updates GitHub Pages site automatically</li>
+                </ol>
+                
+                <p><strong>Key Components:</strong></p>
+                <a href="https://github.com/jgamblin/CNAScoreCard/blob/main/scripts/build.py" target="_blank" class="code-link">📄 scripts/build.py</a>
+                <a href="https://github.com/jgamblin/CNAScoreCard/blob/main/scripts/generate_dashboard.py" target="_blank" class="code-link">📄 scripts/generate_dashboard.py</a>
+                <a href="https://github.com/jgamblin/CNAScoreCard/blob/main/cnascorecard/generate_static_data.py" target="_blank" class="code-link">📄 cnascorecard/generate_static_data.py</a>
+                <a href="https://github.com/jgamblin/CNAScoreCard/blob/main/.github/workflows/main.yml" target="_blank" class="code-link">📄 .github/workflows/main.yml</a>
             </div>
         </div>
 
@@ -279,9 +506,33 @@
                 <li><strong>Inactive CNAs:</strong> CNAs with no recent publications are marked as "No CVEs published in the last 6 months"</li>
             </ol>
             
+            <div class="technical-details">
+                <h4>📈 Statistical Analysis</h4>
+                <p>The system maintains comprehensive statistics for each CNA:</p>
+                <ul>
+                    <li><strong>Score Distribution:</strong> Percentile rankings among all active CNAs</li>
+                    <li><strong>Temporal Trends:</strong> Score changes over time</li>
+                    <li><strong>Component Breakdowns:</strong> Performance across individual scoring dimensions</li>
+                    <li><strong>Volume Metrics:</strong> CVE publication frequency and patterns</li>
+                </ul>
+                <p>Data is stored in JSON format for easy consumption by visualization tools and APIs.</p>
+            </div>
+            
             <div class="example-cve">
                 <strong>Data Freshness:</strong> Scores are updated every 6 hours using the latest CVE data from the official CVEProject repository.
             </div>
+            <div class="example-cve" style="background:#fffbe6; border-left:4px solid #f1c40f; margin-top:20px;">
+                <strong>Note:</strong> This project and scoring methodology were inspired by the <a href="https://www.cve.org/About/Metrics#CNAEnrichmentRecognition" target="_blank">CNA Enrichment Recognition program</a>.
+            </div>
+            
+            <div class="example-cve" style="background:#f0f8ff; border-left:4px solid #3498db; margin-top:15px;">
+                <strong>Related Work:</strong> For additional research on CVE performance measurement, see <a href="https://bjedwards.observablehq.cloud/measuring-cna-performance/" target="_blank">"Measuring CVE Performance"</a> by Ben Edwards (<a href="https://www.bitsight.com/trace/team/ben-edwards" target="_blank">BitSight</a>), which provides complementary analysis of CNA effectiveness and vulnerability disclosure quality.
+            </div>
+        </div>
+
+        <div class="scoring-section">
+            <h2>Ranking</h2>
+            <p><strong>Ranking</strong> shows a CNA's position among all active CNAs based on their average EAS score. For example, "Rank: 12 of 150" means this CNA is 12th out of 150 active CNAs in the last 6 months.</p>
         </div>
 
         <div class="scoring-section">
@@ -295,8 +546,21 @@
             </ul>
         </div>
 
+        <div class="technical-details">
+            <h4>🧪 Testing and Validation</h4>
+            <p>The scoring system includes comprehensive testing:</p>
+            <a href="https://github.com/jgamblin/CNAScoreCard/blob/main/tests/test_data_structure.py" target="_blank" class="code-link">📄 tests/test_data_structure.py</a>
+            <a href="https://github.com/jgamblin/CNAScoreCard/blob/main/tests/test_integration.py" target="_blank" class="code-link">📄 tests/test_integration.py</a>
+            <a href="https://github.com/jgamblin/CNAScoreCard/blob/main/tests/test_quick.py" target="_blank" class="code-link">📄 tests/test_quick.py</a>
+            <p>For detailed analysis of the description quality algorithm, see the testing framework in the <code>tests/</code> directory.</p>
+        </div>
+
         <div class="nav-links">
-            <a href="index.html">← Back to Scorecards</a>
+            <a href="index.html">🏠 Home</a>
+            <a href="scoring.html" style="background-color: #ecf0f1;">📊 EAS Methodology</a>
+            <a href="cna/index.html">🏛️ CNAs</a>
+            <a href="cves/index.html">� CVEs</a>
+            <a href="completeness/index.html">📋 Completeness</a>
         </div>
     </div>
 </body>

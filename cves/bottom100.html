@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bottom 100 CVEs - CNA ScoreCard</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="cve-styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="nav-links">
+            <a href="../index.html">🏠 Home</a>
+            <a href="../scoring.html">📊 EAS Methodology</a>
+            <a href="../cna/index.html">🏛️ CNAs</a>
+            <a href="index.html" style="background-color: #ecf0f1;">🔍 CVEs</a>
+            <a href="../completeness/index.html">📋 Completeness</a>
+        </div>
+        
+        <div id="loading">Loading bottom CVE data...</div>
+        
+        <!-- CVE List Header Section -->
+        <div id="cveHeader" class="cve-list-header" style="display: none;">
+            <h1 class="cve-list-title">Bottom 100 CVEs by EAS Score</h1>
+            <p class="cve-list-description">CVE records with the lowest EAS scores from the last 6 months, highlighting opportunities for improvement in vulnerability disclosure quality.</p>
+        </div>
+        
+        <!-- CVE Filters and Cards -->
+        <div id="cveSection" class="cve-section" style="display: none;">
+            <div class="filters">
+                <input type="text" id="searchInput" placeholder="Search CVEs by ID or CNA...">
+                <select id="sortSelect">
+                    <option value="score">Sort by EAS Score</option>
+                    <option value="cveId">Sort by CVE ID</option>
+                    <option value="cna">Sort by CNA</option>
+                    <option value="date">Sort by Date</option>
+                </select>
+            </div>
+        </div>
+        
+        <div id="cveCards" class="cve-cards"></div>
+    </div>
+    
+    <script>
+        // Define constants for the script
+        const CVE_LIST_TYPE = 'bottom100';
+        const CVE_LIST_TITLE = 'Bottom 100 CVEs by EAS Score';
+    </script>
+    <script src="cve-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1319 @@
+/* Completeness Analysis Styles */
+/* Aligned with main site styles (styles.css) for consistency */
+
+/* Container and layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Navigation styles consistent with main site */
+.nav-links {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.nav-links a {
+    color: #3498db;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-links a:hover {
+    background-color: #ecf0f1;
+    text-decoration: none;
+}
+
+/* Main heading */
+h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+/* Header section */
+.header-section {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-section h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+.main-description {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #2c3e50;
+    margin: 0;
+    text-align: left;
+}
+
+.main-description a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.main-description a:hover {
+    text-decoration: underline;
+}
+
+.completeness-table-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+    overflow: hidden;
+}
+
+.table-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f8f9fa;
+    color: #2c3e50;
+    border-top: 4px solid #3498db;
+}
+
+.table-header h2 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.table-header p {
+    margin: 0;
+    opacity: 0.8;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.completeness-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.completeness-table th {
+    background: #f8fafc;
+    color: #2c3e50;
+    font-weight: 600;
+    padding: 1rem 0.75rem;
+    text-align: left;
+    border-bottom: 2px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.completeness-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: middle;
+    color: #2c3e50;
+    font-size: 0.95rem;
+}
+
+.completeness-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.rank-cell {
+    font-weight: 700;
+    color: #3498db;
+    width: 60px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.cna-cell {
+    font-weight: 600;
+    color: #2c3e50;
+    min-width: 150px;
+    font-size: 0.95rem;
+}
+
+.score-cell {
+    font-weight: 600;
+    min-width: 100px;
+}
+
+.score-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.score-value {
+    font-weight: 700;
+    color: #1a1a1a;
+    font-size: 1rem;
+    min-width: 60px;
+    display: inline-block;
+    background: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    opacity: 1;
+}
+
+/* Specific styling for score values in tables */
+.completeness-table .score-value {
+    font-weight: 700;
+    color: #1a1a1a;
+    font-size: 1rem;
+    min-width: 60px;
+    display: inline-block;
+    background: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    opacity: 1;
+}
+
+.completeness-table .score-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.completeness-table td .score-value {
+    /* Ensure score values are highly visible in table cells */
+    background: transparent;
+    text-shadow: none;
+    opacity: 1;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+    max-width: 100px;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+.progress-fill.excellent {
+    background: #27ae60;
+}
+.progress-fill.good {
+    background: #27ae60;
+}
+.progress-fill.fair {
+    background: #f39c12;
+}
+.progress-fill.poor {
+    background: #e74c3c;
+}
+
+/* Progress bar percentile classes */
+.progress-fill.percentile-excellent,
+.progress-fill.percentile-top {
+    background: #27ae60;
+}
+
+.progress-fill.percentile-good,
+.progress-fill.percentile-high {
+    background: #27ae60;
+}
+
+.progress-fill.percentile-fair,
+.progress-fill.percentile-medium {
+    background: #f39c12;
+}
+
+.progress-fill.percentile-poor,
+.progress-fill.percentile-low {
+    background: #e74c3c;
+}
+
+/* Score bar styles for CNA performance table */
+.score-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.score-bar {
+    flex: 1;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+    max-width: 100px;
+}
+
+.score-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.score-fill.excellent {
+    background: #27ae60;
+}
+
+.score-fill.good {
+    background: #27ae60;
+}
+
+.score-fill.fair {
+    background: #f39c12;
+}
+
+.score-fill.poor {
+    background: #e74c3c;
+}
+
+.percentile-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.percentile-badge.percentile-top {
+    background: #27ae60;
+}
+
+.percentile-badge.percentile-upper {
+    background: #27ae60;
+}
+
+.percentile-badge.percentile-lower {
+    background: #f39c12;
+}
+
+.percentile-badge.percentile-bottom {
+    background: #e74c3c;
+}
+
+.details-btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    transition: background 0.2s;
+}
+
+.details-btn:hover {
+    background: #2980b9;
+}
+
+.stats-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-top: 4px solid #3498db;
+}
+
+.stat-card h3 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #3498db;
+    margin: 0.5rem 0;
+}
+
+.stat-card p {
+    margin: 0;
+    color: #7f8c8d;
+    font-size: 0.85rem;
+}
+
+.analysis-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.search-filter {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex: 1;
+}
+
+.search-filter input {
+    flex: 1;
+    max-width: 300px;
+    padding: 10px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.search-filter input:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.search-filter select {
+    padding: 10px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.search-filter select:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.view-toggle {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.view-btn {
+    padding: 10px 20px;
+    border: 2px solid #ddd;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: #666;
+}
+
+.view-btn.active {
+    background: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+.view-btn:hover:not(.active) {
+    border-color: #3498db;
+    color: #3498db;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+}
+
+.view-btn:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.chart-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.chart-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.chart-header h2 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+}
+
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.chart-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.chart-item h3 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.chart {
+    height: 300px;
+    width: 100%;
+    position: relative;
+}
+
+.chart canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.field-analysis-section {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+    overflow: hidden;
+}
+
+.field-analysis-section > h2 {
+    background: #f8f9fa;
+    color: #2c3e50;
+    margin: 0;
+    padding: 1.5rem;
+    border-top: 4px solid #3498db;
+    font-weight: 600;
+}
+
+.field-analysis-section > p {
+    padding: 0 1.5rem 1rem;
+    margin: 0;
+    color: #7f8c8d;
+}
+
+.field-tabs {
+    display: flex;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f8fafc;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 1rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-weight: 500;
+    color: #7f8c8d;
+    transition: all 0.2s;
+}
+
+.tab-btn.active {
+    color: #3498db;
+    border-bottom: 2px solid #3498db;
+    background: white;
+}
+
+.tab-btn:hover:not(.active) {
+    color: #2c3e50;
+    background: #e5e7eb;
+}
+
+.tab-content {
+    display: none;
+    padding: 1.5rem;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.field-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.field-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1rem;
+    transition: box-shadow 0.2s;
+}
+
+.field-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Field card percentile classes (stoplight color scheme) */
+.field-card.percentile-top,
+.field-card.percentile-excellent {
+    border-left: 4px solid #27ae60;    /* Green - Top performers (75th percentile and above) */
+}
+
+.field-card.percentile-upper,
+.field-card.percentile-high {
+    border-left: 4px solid #27ae60;    /* Green - Upper middle (50th-75th percentile) */
+}
+
+.field-card.percentile-lower,
+.field-card.percentile-medium {
+    border-left: 4px solid #f39c12;    /* Orange - Lower middle (25th-50th percentile) */
+}
+
+.field-card.percentile-bottom,
+.field-card.percentile-low {
+    border-left: 4px solid #e74c3c;    /* Red - Bottom performers (below 25th percentile) */
+}
+
+.field-name {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.field-description {
+    color: #7f8c8d;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+}
+
+.field-stats {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.field-percentage {
+    font-weight: 600;
+    color: #2c3e50;
+    min-width: 50px;
+}
+
+.field-progress {
+    flex: 1;
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.field-progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.field-progress-fill.excellent {
+    background: #27ae60;
+}
+
+.field-progress-fill.good {
+    background: #27ae60;
+}
+
+.field-progress-fill.fair {
+    background: #f39c12;
+}
+
+.field-progress-fill.poor {
+    background: #e74c3c;
+}
+
+.required-indicator {
+    display: inline-block;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-left: 0.5rem;
+}
+
+.required-indicator.required {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.required-indicator.optional {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.methodology-section {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+    padding: 2rem;
+}
+
+.methodology-section h2 {
+    margin: 0 0 1.5rem 0;
+    color: #2c3e50;
+}
+
+.methodology-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.methodology-item {
+    border-left: 4px solid #3498db;
+    padding-left: 1rem;
+}
+
+.methodology-item h3 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+.methodology-item p {
+    margin: 0 0 1rem 0;
+    color: #7f8c8d;
+    line-height: 1.6;
+}
+
+.methodology-item ul {
+    margin: 0;
+    padding-left: 1.5rem;
+    color: #7f8c8d;
+}
+
+.methodology-item li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+/* Modal styles for CNA details */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background: white;
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    background: #f8f9fa;
+    color: #2c3e50;
+    padding: 1.5rem;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 4px solid #3498db;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.close {
+    color: #2c3e50;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.close:hover {
+    opacity: 1;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.metric-item {
+    text-align: center;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.metric-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #3498db;
+    margin-bottom: 0.25rem;
+}
+
+.metric-label {
+    color: #7f8c8d;
+    font-size: 0.85rem;
+}
+
+/* Loading styles consistent with main site */
+#loading {
+    text-align: center;
+    font-size: 1.2em;
+    color: #666;
+    padding: 50px;
+}
+
+/* Empty state styles */
+.empty-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    padding: 40px 20px;
+}
+
+.empty-state-content {
+    text-align: center;
+    max-width: 500px;
+    color: #6b7280;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.empty-state-content h3 {
+    color: #374151;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.empty-state-content p {
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.empty-state-content p:last-child {
+    margin-bottom: 0;
+}
+
+.empty-state-content strong {
+    color: #374151;
+}
+
+/* Additional styles for missing fields page */
+.info-section {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border-left: 4px solid #3498db;
+}
+
+.info-section h3 {
+    margin: 0 0 1rem 0;
+    color: #2c3e50;
+}
+
+.excluded-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.field-tag {
+    background: #ecf0f1;
+    color: #2c3e50;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    border: 1px solid #bdc3c7;
+}
+
+.results-info {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-left: auto;
+}
+
+/* CVE Link styling for missing fields table */
+.cve-link {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+    transition: color 0.2s ease;
+}
+
+.cve-link:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+.cve-link:focus {
+    outline: 2px solid #3498db;
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* Enhanced missing fields cell styling */
+.missing-fields-cell {
+    max-width: 300px;
+}
+
+.missing-fields-badge {
+    display: inline-block;
+    background: #e74c3c;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin: 0.1rem;
+    white-space: nowrap;
+}
+
+.count-cell {
+    text-align: center;
+    width: 80px;
+}
+
+.field-count {
+    display: inline-block;
+    background: #3498db;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    min-width: 30px;
+    text-align: center;
+}
+
+/* Missing Fields Link Section */
+.missing-fields-link-section {
+    margin: 2rem 0;
+}
+
+.link-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-left: 4px solid #e74c3c;
+}
+
+.link-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.link-icon {
+    font-size: 3rem;
+    flex-shrink: 0;
+}
+
+.link-content {
+    flex: 1;
+}
+
+.link-content h3 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.link-content p {
+    margin: 0 0 1rem 0;
+    color: #666;
+    line-height: 1.5;
+}
+
+.link-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #e74c3c;
+    color: white;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.link-button:hover {
+    background: #c0392b;
+    color: white;
+    text-decoration: none;
+}
+
+.link-stats {
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.quick-stat {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+    min-width: 120px;
+    border: 1px solid #e5e7eb;
+}
+
+.quick-stat .stat-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #e74c3c;
+    margin-bottom: 0.25rem;
+}
+
+.quick-stat .stat-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Scoring methodology section */
+.scoring-methodology {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    border-left: 4px solid #3498db;
+}
+
+.scoring-methodology h3 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.formula-box {
+    background: #e3f2fd;
+    border: 1px solid #90caf9;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 15px 0;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    color: #1565c0;
+}
+
+.scoring-details {
+    margin: 15px 0;
+    padding-left: 20px;
+}
+
+.scoring-details li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+    color: #2c3e50;
+}
+
+.scoring-details strong {
+    color: #2c3e50;
+}
+
+.scoring-note {
+    margin-top: 15px;
+    font-style: italic;
+    color: #666;
+    font-size: 0.95rem;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+/* Responsive adjustments for missing fields table */
+@media (max-width: 768px) {
+    .missing-fields-cell {
+        max-width: 200px;
+    }
+    
+    .missing-fields-badge {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.4rem;
+        margin: 0.05rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 8px;
+    }
+    
+    .analysis-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-filter {
+        flex-direction: column;
+    }
+    
+    .search-filter input {
+        max-width: none;
+        margin-bottom: 1rem;
+    }
+    
+    .view-toggle {
+        justify-content: center;
+    }
+    
+    .chart-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-item {
+        min-width: 0;
+    }
+    
+    .stats-overview {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .methodology-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .completeness-table {
+        font-size: 0.8rem;
+    }
+    
+    .completeness-table th,
+    .completeness-table td {
+        padding: 0.5rem 0.25rem;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 2% auto;
+        max-height: 95vh;
+    }
+    
+    .modal-header {
+        padding: 1rem;
+    }
+    
+    .modal-body {
+        padding: 1rem;
+    }
+    
+    .metric-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .header-section {
+        padding: 20px;
+    }
+    
+    .header-section h2 {
+        font-size: 1.5rem;
+    }
+    
+    .excluded-fields {
+        justify-content: center;
+    }
+    
+    .field-tag {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.4rem;
+    }
+    
+    .missing-fields-filter {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .results-info {
+        margin-left: 0;
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+    
+    .performance-table {
+        font-size: 0.8rem;
+    }
+    
+    .performance-table th,
+    .performance-table td {
+        padding: 0.5rem 0.25rem;
+    }
+    
+    .score-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+    
+    .score-bar {
+        width: 100%;
+        max-width: none;
+    }
+    
+    .link-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .link-icon {
+        font-size: 2.5rem;
+    }
+    
+    .link-stats {
+        order: -1;
+    }
+    
+    .quick-stat {
+        min-width: 100px;
+    }
+    
+    .quick-stat .stat-value {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .missing-fields-badge {
+        font-size: 0.6rem;
+        padding: 0.15rem 0.3rem;
+    }
+    
+    .missing-fields-cell {
+        max-width: 200px;
+    }
+}
+
+/* Missing Fields Table Specific Styling - High Priority Overrides */
+#missing-cves-table .cna-table-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+    overflow: hidden;
+}
+
+#missing-cves-table .cna-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    table-layout: fixed; /* Ensures even spacing across columns */
+}
+
+#missing-cves-table .cna-table th {
+    background: #f8fafc !important; /* Grey header */
+    color: #2c3e50;
+    font-weight: 600;
+    padding: 1rem 0.75rem;
+    text-align: left;
+    border-bottom: 2px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+#missing-cves-table .cna-table td {
+    background: white !important; /* Explicitly white background for data rows */
+    padding: 0.75rem;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: middle;
+    color: #2c3e50;
+    word-wrap: break-word; /* Handle long content */
+}
+
+#missing-cves-table .cna-table tbody tr {
+    background: white !important; /* Ensure entire row is white */
+}
+
+#missing-cves-table .cna-table tbody tr:hover {
+    background: #f8fafc !important; /* Light grey on hover, but still distinguishable from header */
+}
+
+/* Specific column widths for even spacing */
+#missing-cves-table .cna-table th:nth-child(1), /* CVE ID */
+#missing-cves-table .cna-table td:nth-child(1) {
+    width: 15%;
+}
+
+#missing-cves-table .cna-table th:nth-child(2), /* CNA */
+#missing-cves-table .cna-table td:nth-child(2) {
+    width: 20%;
+}
+
+#missing-cves-table .cna-table th:nth-child(3), /* Date Published */
+#missing-cves-table .cna-table td:nth-child(3) {
+    width: 15%;
+}
+
+#missing-cves-table .cna-table th:nth-child(4), /* Missing Required Fields */
+#missing-cves-table .cna-table td:nth-child(4) {
+    width: 40%;
+}
+
+#missing-cves-table .cna-table th:nth-child(5), /* Count */
+#missing-cves-table .cna-table td:nth-child(5) {
+    width: 10%;
+    text-align: center;
+}
