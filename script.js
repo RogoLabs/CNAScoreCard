@@ -387,27 +387,23 @@ function createCNACard(cna) {
                 </div>
                 <div class="detail-item">
                     <span class="label">Foundational Completeness:</span>
-                    <span class="value">${formatScore(avgFoundational)}/30</span>
+                    <span class="value">${formatScore(avgFoundational)}/32</span>
                 </div>
                 <div class="detail-item">
                     <span class="label">Root Cause Analysis:</span>
-                    <span class="value">${formatScore(avgRootCause)}/10</span>
+                    <span class="value">${formatScore(avgRootCause)}/11</span>
                 </div>
                 <div class="detail-item">
                     <span class="label">Software Identification:</span>
-                    <span class="value">${formatScore(avgSoftwareId)}/10</span>
+                    <span class="value">${formatScore(avgSoftwareId)}/11</span>
                 </div>
                 <div class="detail-item">
                     <span class="label">Severity Context:</span>
-                    <span class="value">${formatScore(avgSeverity)}/25</span>
+                    <span class="value">${formatScore(avgSeverity)}/26</span>
                 </div>
                 <div class="detail-item">
                     <span class="label">Actionable Intelligence:</span>
                     <span class="value">${formatScore(avgActionable)}/20</span>
-                </div>
-                <div class="detail-item">
-                    <span class="label">Data Format Precision:</span>
-                    <span class="value">${formatScore(avgFormat)}/5</span>
                 </div>
                 ${cna.message ? `<div class="detail-item"><span class="label">Status:</span><span class="value">${escapeHtml(cna.message)}</span></div>` : ''}
                 ${!isInactive ? `<div class="detail-item cna-view_details"><a href="${cnaPageLink}" class="view-details-link">View Individual CVEs →</a></div>` : ''}

@@ -1,13 +1,8 @@
 // CNA Index Page Script - Lists all CNAs with EAS scores
 let cnaListData = [];
 let currentSort = 'score';
-let currentView = 'table';
 
 // DOM elements
-const tableView = document.getElementById('table-view');
-const cardView = document.getElementById('card-view');
-const tableViewBtn = document.getElementById('table-view-btn');
-const cardViewBtn = document.getElementById('card-view-btn');
 const cnaSearch = document.getElementById('cna-search');
 const sortSelect = document.getElementById('sort-select');
 const cnaTableBody = document.getElementById('cna-table-body');
@@ -86,34 +81,12 @@ function updateOverviewStats() {
 
 // Setup event listeners
 function setupEventListeners() {
-    // View toggle buttons
-    tableViewBtn?.addEventListener('click', () => switchView('table'));
-    cardViewBtn?.addEventListener('click', () => switchView('card'));
-    
     // Search and sort
     cnaSearch?.addEventListener('input', filterAndRenderTable);
     sortSelect?.addEventListener('change', (e) => {
         currentSort = e.target.value;
         filterAndRenderTable();
     });
-}
-
-// Switch between table and card views
-function switchView(view) {
-    currentView = view;
-    
-    if (view === 'table') {
-        tableView.style.display = 'block';
-        cardView.style.display = 'none';
-        tableViewBtn.classList.add('active');
-        cardViewBtn.classList.remove('active');
-    } else {
-        tableView.style.display = 'none';
-        cardView.style.display = 'block';
-        tableViewBtn.classList.remove('active');
-        cardViewBtn.classList.add('active');
-        renderCardView();
-    }
 }
 
 // Filter and render table based on search and sort
@@ -126,132 +99,59 @@ function filterAndRenderTable() {
     
     // Sort data
     filteredData.sort((a, b) => {
-        switch (currentSort) {
-            case 'name':
-                return a.displayName.localeCompare(b.displayName);
-            case 'cves':
-                return b.cveCount - a.cveCount;
-            case 'rank':
-                return a.rank - b.rank;
-            case 'score':
-            default:
-                return b.easScore - a.easScore;
+        if (currentSort === 'name') {
+            return a.displayName.localeCompare(b.displayName);
+        } else if (currentSort === 'cves') {
+            return b.cveCount - a.cveCount;
+        } else if (currentSort === 'rank') {
+            return a.rank - b.rank;
+        } else {
+            return b.easScore - a.easScore;
         }
     });
-    
+
     renderTable(filteredData);
 }
 
 // Render the CNA table
 function renderTable(data = cnaListData) {
-    if (!cnaTableBody) return;
-    
+    if (!cnaTableBody)
+        return;
+
     cnaTableBody.innerHTML = '';
-    
+
     data.forEach((cna, index) => {
         const row = document.createElement('tr');
         
-        // Determine percentile class for styling
-        const percentileClass = getPercentileClass(cna.percentile);
-        
         row.innerHTML = `
-            <td class="rank-cell">${cna.rank || (index + 1)}</td>
+            <td class="rank-cell">${index + 1}</td>
             <td class="cna-cell">
-                <a href="cna-detail.html?cna=${encodeURIComponent(cna.name)}" 
-                   title="${escapeHtml(cna.displayName)}">
-                    ${escapeHtml(cna.displayName)}
-                </a>
+                <a href="cna-detail.html?shortName=${cna.name}">${escapeHtml(cna.displayName)}</a>
             </td>
             <td class="score-cell">
                 <div class="score-bar">
-                    <span class="score-value">${formatNumber(cna.easScore)}/100</span>
                     <div class="progress-bar">
-                        <div class="progress-fill ${percentileClass}" style="width: ${cna.easScore}%"></div>
+                        <div class="progress-fill ${getPercentileClass(cna.percentile)}" style="width: ${cna.easScore.toFixed(1)}%;"></div>
                     </div>
+                    <span class="score-value">${cna.easScore.toFixed(1)}</span>
                 </div>
             </td>
-            <td>${cna.cveCount.toLocaleString()}</td>
+            <td><span class="percentile-badge ${getPercentileClass(cna.percentile)}">${cna.percentile}</span></td>
+            <td>${formatNumber(cna.cveCount)}</td>
             <td>
-                <span class="percentile-badge ${percentileClass}">${formatNumber(cna.percentile)}%</span>
-            </td>
-            <td>
-                <a href="cna-detail.html?cna=${encodeURIComponent(cna.name)}" 
-                   class="details-btn">
-                    View Details
-                </a>
+                <a href="cna-detail.html?shortName=${cna.name}" class="details-btn">Details</a>
             </td>
         `;
-        
         cnaTableBody.appendChild(row);
     });
 }
 
-// Render card view (fallback to existing card implementation)
-function renderCardView() {
-    if (!cardView) return;
-    
-    const searchTerm = cnaSearch?.value.toLowerCase() || '';
-    let filteredData = cnaListData.filter(cna => 
-        cna.name.toLowerCase().includes(searchTerm) ||
-        cna.displayName.toLowerCase().includes(searchTerm)
-    );
-    
-    // Sort data
-    filteredData.sort((a, b) => {
-        switch (currentSort) {
-            case 'name':
-                return a.displayName.localeCompare(b.displayName);
-            case 'cves':
-                return b.cveCount - a.cveCount;
-            case 'rank':
-                return a.rank - b.rank;
-            case 'score':
-            default:
-                return b.easScore - a.easScore;
-        }
-    });
-    
-    cardView.innerHTML = filteredData.map(cna => `
-        <div class="cna-card">
-            <div class="cna-header">
-                <h3 class="cna-name" title="${escapeHtml(cna.displayName)}">
-                    <a href="cna-detail.html?cna=${encodeURIComponent(cna.name)}">
-                        ${escapeHtml(cna.displayName)}
-                    </a>
-                </h3>
-                <div class="cna-score-container">
-                    <div class="cna-score">${formatNumber(cna.easScore)}</div>
-                </div>
-            </div>
-            <div class="cna-details">
-                <div class="detail-item">
-                    <span class="label">CVE Count (6mo):</span>
-                    <span class="value">${cna.cveCount.toLocaleString()}</span>
-                </div>
-                <div class="detail-item">
-                    <span class="label">Rank:</span>
-                    <span class="value">${cna.rank || 'N/A'}${cna.activeCnaCount ? ` of ${cna.activeCnaCount}` : ''}</span>
-                </div>
-                <div class="detail-item">
-                    <span class="label">Percentile:</span>
-                    <span class="value">${formatNumber(cna.percentile)}%</span>
-                </div>
-            </div>
-            <div class="cna-actions">
-                <a href="cna-detail.html?cna=${encodeURIComponent(cna.name)}" class="view-details-btn">
-                    View Details
-                </a>
-            </div>
-        </div>
-    `).join('');
-}
-
 // Helper functions
 function getScoreClass(score) {
-    if (score >= 80) return 'excellent';
-    if (score >= 60) return 'good';
-    if (score >= 40) return 'fair';
-    return 'poor';
+    if (score >= 7.5) return 'score-excellent';
+    if (score >= 5) return 'score-good';
+    if (score >= 2.5) return 'score-fair';
+    return 'score-poor';
 }
 
 function getPercentileClass(percentile) {

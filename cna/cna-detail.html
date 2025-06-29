@@ -6,6 +6,7 @@
     <title>CNA Detail - CNA ScoreCard</title>
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="cna-styles.css">
+    <link rel="stylesheet" href="../cves/cve-styles.css">
 </head>
 <body>
     <div class="container">
@@ -20,29 +21,92 @@
         <div id="loading">Loading CNA data...</div>
         
         <!-- Professional CNA Header Section -->
-        <div id="cnaHeader" class="cna-detail-header" style="display: none;"></div>
-        
+        <div id="cnaHeader" class="cna-header-container" style="display: none;">
+            <div class="cna-detail-card">
+                <div class="cna-title-section">
+                    <div class="cna-title-content">
+                        <h1 id="cnaTitle" class="cna-title"></h1>
+                        <div id="cnaOrgName" class="cna-org-name"></div>
+                    </div>
+                </div>
+                
+                <div class="cna-metrics-section" style="display: flex; justify-content: space-around; align-items: center; flex-wrap: nowrap; gap: 1.5rem; min-width: 0;">
+                    <div id="cnaMainScore" class="metric-item main-metric">
+                        <div class="metric-value"></div>
+                        <div class="metric-label">Average EAS Score</div>
+                    </div>
+                    <div id="cnaRank" class="metric-item">
+                        <div class="metric-value"></div>
+                        <div class="metric-label">Rank</div>
+                    </div>
+                    <div id="cnaPercentile" class="metric-item">
+                        <div class="metric-value"></div>
+                        <div class="metric-label">Percentile</div>
+                    </div>
+                    <div id="cnaTotalCves" class="metric-item">
+                        <div class="metric-value"></div>
+                        <div class="metric-label">Total CVEs</div>
+                    </div>
+                </div>
+                
+                <div id="cnaScope" class="cna-scope-box"></div>
+                
+                <div id="cnaBreakdown" class="cna-breakdown-section">
+                    <h3>Score Breakdown</h3>
+                    <div class="breakdown-grid">
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Foundational Completeness</span>
+                            <span id="foundational" class="breakdown-value"></span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Root Cause Analysis</span>
+                            <span id="rootCause" class="breakdown-value"></span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Software Identification</span>
+                            <span id="softwareId" class="breakdown-value"></span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Severity Context</span>
+                            <span id="severityContext" class="breakdown-value"></span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Actionable Intelligence</span>
+                            <span id="actionableIntel" class="breakdown-value"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- CVE Filters and Cards -->
         <div id="cveSection" class="cve-section" style="display: none;">
             <h2 class="section-title">Recent CVE Scores</h2>
             <div class="filters">
                 <input type="text" id="searchInput" placeholder="Search CVEs...">
                 <select id="sortSelect">
-                    <option value="score">Sort by EAS Score</option>
-                    <option value="cveId">Sort by CVE ID</option>
+                    <option value="score">Sort by EAS Score (High to Low)</option>
+                    <option value="date">Sort by Date (Recent First)</option>
+                </select>
+                <select id="filterSelect">
+                    <option value="all">All CVEs</option>
+                    <option value="high">High Scores (≥80)</option>
+                    <option value="medium">Medium Scores (60-79)</option>
+                    <option value="low">Low Scores (<60)</option>
                 </select>
             </div>
         </div>
         
-        <div id="cveCards" class="cna-cards"></div>
+        <div id="cveCards" class="cve-cards"></div>
     </div>
     
     <script>
         // Define CNA_NAME and SAFE_FILENAME for the script
         const urlParams = new URLSearchParams(window.location.search);
-        const CNA_NAME = urlParams.get('cna') || 'adobe';
+        // Support both 'cna' and 'shortName' as query params
+        const CNA_NAME = urlParams.get('cna') || urlParams.get('shortName') || 'adobe';
         const SAFE_FILENAME = CNA_NAME.replace(/[^a-zA-Z0-9\s\-_]/g, '').trim().replace(/\s+/g, '_');
     </script>
-    <script src="cna-script.js"></script>
+    <script src="cna-detail-script.js"></script>
 </body>
 </html>
