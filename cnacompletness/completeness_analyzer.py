@@ -151,12 +151,20 @@ class CVECompletenessAnalyzer:
             
         elif check_type == "has_vendor":
             if isinstance(data, list):
-                return any(item.get("vendor") for item in data)
+                for item in data:
+                    # Accept if (vendor and product) OR (packageName and collectionURL) are present
+                    if (item.get("vendor") and item.get("product")) or (item.get("packageName") and item.get("collectionURL")):
+                        return True
+                return False
             return False
-            
+        
         elif check_type == "has_product":
             if isinstance(data, list):
-                return any(item.get("product") for item in data)
+                for item in data:
+                    # Accept if (vendor and product) OR (packageName and collectionURL) are present
+                    if (item.get("vendor") and item.get("product")) or (item.get("packageName") and item.get("collectionURL")):
+                        return True
+                return False
             return False
             
         elif check_type == "has_versions":
