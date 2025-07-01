@@ -107,6 +107,44 @@ function updateOverviewStats() {
     document.getElementById('missing-percentage').textContent = `${percentage}%`;
     document.getElementById('affected-cnas-count').textContent = affectedCnas;
     document.getElementById('total-cves-analyzed').textContent = totalCves.toLocaleString();
+
+    // Hide or show sections based on missingCount
+    const searchFilter = document.querySelector('.analysis-controls');
+    const missingFieldsSection = document.getElementById('missing-fields-section');
+    const commonFieldsSection = document.querySelector('.field-analysis-section');
+    if (missingCount === 0) {
+        if (searchFilter) searchFilter.style.display = 'none';
+        if (missingFieldsSection) missingFieldsSection.style.display = 'none';
+        if (commonFieldsSection) commonFieldsSection.style.display = 'none';
+        // Show a friendly message below stats
+        let noBadCvesMsg = document.getElementById('no-bad-cves-message');
+        if (!noBadCvesMsg) {
+            noBadCvesMsg = document.createElement('div');
+            noBadCvesMsg.id = 'no-bad-cves-message';
+            noBadCvesMsg.className = 'empty-state';
+            noBadCvesMsg.innerHTML = `
+                <div class="empty-state-content">
+                    <div class="empty-state-icon">🎉</div>
+                    <h2>No CVEs with Missing Required Fields!</h2>
+                    <p>All analyzed CVE records have the required schema fields present. Great job, CNAs!</p>
+                </div>
+            `;
+            // Insert after stats overview
+            const statsOverview = document.querySelector('.stats-overview');
+            if (statsOverview && statsOverview.parentNode) {
+                statsOverview.parentNode.insertBefore(noBadCvesMsg, statsOverview.nextSibling);
+            }
+        }
+    } else {
+        if (searchFilter) searchFilter.style.display = '';
+        if (missingFieldsSection) missingFieldsSection.style.display = '';
+        if (commonFieldsSection) commonFieldsSection.style.display = '';
+        // Remove the friendly message if present
+        const noBadCvesMsg = document.getElementById('no-bad-cves-message');
+        if (noBadCvesMsg && noBadCvesMsg.parentNode) {
+            noBadCvesMsg.parentNode.removeChild(noBadCvesMsg);
+        }
+    }
 }
 
 // Setup event listeners

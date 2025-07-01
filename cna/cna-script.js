@@ -122,7 +122,6 @@ function renderTable(data = cnaListData) {
 
     data.forEach((cna, index) => {
         const row = document.createElement('tr');
-        
         row.innerHTML = `
             <td class="rank-cell">${index + 1}</td>
             <td class="cna-cell">
@@ -136,7 +135,6 @@ function renderTable(data = cnaListData) {
                     <span class="score-value">${cna.easScore.toFixed(1)}</span>
                 </div>
             </td>
-            <td><span class="percentile-badge ${getPercentileClass(cna.percentile)}">${cna.percentile}</span></td>
             <td>${formatNumber(cna.cveCount)}</td>
             <td>
                 <a href="cna-detail.html?shortName=${cna.name}" class="details-btn">Details</a>
