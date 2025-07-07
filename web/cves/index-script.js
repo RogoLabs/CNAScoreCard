@@ -126,7 +126,7 @@ function displayCVECards(cves, containerId) {
             <div class="cve-card ${scoreClass}">
                 <div class="cve-header">
                     <div class="cve-id">
-                        <a href="https://www.cve.org/CVERecord?id=${cve.cveId}" target="_blank">${cve.cveId}</a>
+                        <a href="https://cve.org/CVERecord?id=${cve.cveId}" target="_blank">${cve.cveId}</a>
                     </div>
                     <div class="cve-meta">
                         <div class="cve-score">${formatNumber(score)}/100</div>
