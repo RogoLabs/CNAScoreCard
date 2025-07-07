@@ -218,17 +218,18 @@ a:focus, a:hover {
 }
 
 .data-info {
-    background: linear-gradient(135deg, var(--success-color) 0%, #48bb78 100%);
-    color: white;
+    background: #f8f9fa;
+    color: var(--text-primary);
     padding: 25px;
     border-radius: 12px;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(56, 161, 105, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-color);
 }
 
 .data-info p {
     margin: 0;
-    color: white;
+    color: var(--text-primary);
     font-size: 0.95em;
 }
 
@@ -897,13 +898,19 @@ a:focus, a:hover {
 }
 
 .stat-item {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 1rem;
+    background: white;
+    padding: 1.5rem;
     border-radius: 8px;
-    text-align: center;
+    text-align: left;
     font-size: 0.9em;
-    border-left: 3px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 /* Hero Section Responsive Styles */
