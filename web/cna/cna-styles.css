@@ -1,5 +1,21 @@
 /* filepath: /Users/gamblin/Code/CNAScoreCard/web/cna/cna-styles.css */
-/* Additional styles for individual CNA pages */
+/* Additional styles for individual CNA pages - RogoLabs styling */
+
+/* Use the same CSS variables as main styles */
+:root {
+    --primary-color: #1a365d;      /* Deep blue */
+    --secondary-color: #2d3748;    /* Dark gray */
+    --accent-color: #3182ce;       /* Bright blue */
+    --success-color: #38a169;      /* Green */
+    --warning-color: #ed8936;      /* Orange */
+    --danger-color: #e53e3e;       /* Red */
+    --light-bg: #f7fafc;          /* Light gray background */
+    --card-bg: #ffffff;           /* White cards */
+    --border-color: #e2e8f0;      /* Light border */
+    --text-primary: #2d3748;      /* Dark text */
+    --text-secondary: #4a5568;    /* Medium gray text */
+    --text-muted: #718096;        /* Light gray text */
+}
 
 /* Container and layout matching completeness page */
 .container {
@@ -12,26 +28,39 @@
 .nav-links {
     text-align: center;
     margin: 20px 0;
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
 }
 
 .nav-links a {
-    color: #3498db;
+    color: var(--text-primary);
     text-decoration: none;
     margin: 0 15px;
     font-weight: 500;
-    padding: 8px 16px;
-    border-radius: 6px;
-    transition: background-color 0.3s ease;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    display: inline-block;
 }
 
 .nav-links a:hover {
-    background-color: #ecf0f1;
+    background-color: var(--accent-color);
+    color: white;
     text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.nav-links a[style*="background-color"] {
+    background-color: var(--primary-color) !important;
+    color: white;
 }
 
 /* Main heading */
-h1 {
-    color: #2c3e50;
+.header-section h1 {
+    color: var(--text-primary);
     text-align: center;
     margin-bottom: 1rem;
     font-weight: 700;
@@ -39,15 +68,16 @@ h1 {
 
 /* Header section */
 .header-section {
-    background: white;
+    background: var(--card-bg);
     border-radius: 12px;
     padding: 30px;
     margin-bottom: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
 }
 
 .header-section h2 {
-    color: #2c3e50;
+    color: var(--text-primary);
     margin-bottom: 1rem;
     font-size: 1.8rem;
     text-align: center;
@@ -56,13 +86,13 @@ h1 {
 .main-description {
     font-size: 1.1rem;
     line-height: 1.7;
-    color: #2c3e50;
+    color: var(--text-primary);
     margin: 0;
     text-align: left;
 }
 
 .main-description a {
-    color: #3498db;
+    color: var(--accent-color);
     text-decoration: none;
 }
 
@@ -79,17 +109,24 @@ h1 {
 }
 
 .stat-card {
-    background: white; /* Changed from grey to white */
+    background: var(--card-bg);
     padding: 1.5rem;
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     text-align: center;
-    border-top: 4px solid #3498db;
+    border-top: 4px solid var(--accent-color);
+    border: 1px solid var(--border-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .stat-card h3 {
     margin: 0 0 0.5rem 0;
-    color: #2c3e50;
+    color: var(--text-primary);
     font-size: 0.9rem;
     font-weight: 600;
 }
@@ -97,13 +134,13 @@ h1 {
 .stat-value {
     font-size: 2rem;
     font-weight: 700;
-    color: #3498db;
+    color: var(--accent-color);
     margin: 0.5rem 0;
 }
 
 .stat-card p {
     margin: 0;
-    color: #7f8c8d;
+    color: var(--text-secondary);
     font-size: 0.85rem;
 }
 
@@ -127,40 +164,45 @@ h1 {
 .search-filter input {
     flex: 1;
     max-width: 300px;
-    padding: 10px 15px;
-    border: 2px solid #ddd;
+    padding: 12px 16px;
+    border: 2px solid var(--border-color);
     border-radius: 8px;
     font-size: 16px;
-    transition: border-color 0.3s ease;
+    transition: all 0.2s ease;
+    background: white;
 }
 
 .search-filter input:focus {
     outline: none;
-    border-color: #3498db;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
 }
 
 .search-filter select {
-    padding: 10px 15px;
-    border: 2px solid #ddd;
+    padding: 12px 16px;
+    border: 2px solid var(--border-color);
     border-radius: 8px;
     background: white;
     font-size: 16px;
     cursor: pointer;
-    transition: border-color 0.3s ease;
+    transition: all 0.2s ease;
+    color: var(--text-primary);
 }
 
 .search-filter select:focus {
     outline: none;
-    border-color: #3498db;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
 }
 
 /* CNA Table Container */
 .cna-table-container {
-    background: white;
+    background: var(--card-bg);
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     margin: 2rem 0;
     overflow: hidden;
+    border: 1px solid var(--border-color);
 }
 
 .table-header {

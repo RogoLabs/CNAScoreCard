@@ -7,16 +7,17 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         .scoring-section {
-            background: white;
+            background: var(--card-bg);
             margin: 20px 0;
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
         }
         
         .scoring-section h2 {
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--accent-color);
             padding-bottom: 10px;
             margin-bottom: 20px;
         }
@@ -31,39 +32,39 @@
         .metric-table td {
             padding: 12px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid var(--border-color);
         }
         
         .metric-table th {
-            background-color: #f8f9fa;
+            background-color: var(--light-bg);
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--text-primary);
         }
         
         .points {
             font-weight: bold;
-            color: #27ae60;
+            color: var(--success-color);
         }
         
         .example-cve {
-            background: #f8f9fa;
+            background: var(--light-bg);
             padding: 15px;
             border-radius: 8px;
             margin: 15px 0;
-            border-left: 4px solid #3498db;
+            border-left: 4px solid var(--accent-color);
         }
         
         .technical-details {
-            background: #f8f9fa;
+            background: var(--light-bg);
             padding: 20px;
             border-radius: 8px;
             margin: 20px 0;
-            border-left: 4px solid #2c3e50;
+            border-left: 4px solid var(--primary-color);
         }
         
         .technical-details h4 {
             margin-top: 0;
-            color: #2c3e50;
+            color: var(--text-primary);
         }
         
         .code-link {
@@ -73,7 +74,7 @@
             margin: 5px 0;
             display: inline-block;
             text-decoration: none;
-            color: #2c3e50;
+            color: var(--text-primary);
             font-family: 'Courier New', monospace;
             font-size: 0.9em;
         }
@@ -84,7 +85,7 @@
         
         .implementation-note {
             background: #e8f5e8;
-            border-left: 4px solid #27ae60;
+            border-left: 4px solid var(--success-color);
             padding: 15px;
             margin: 15px 0;
             border-radius: 4px;
@@ -105,25 +106,42 @@
             min-width: 120px;
         }
         
-        .excellent { background: #27ae60; color: white; }
-        .good { background: #f39c12; color: white; }
-        .fair { background: #e67e22; color: white; }
-        .poor { background: #e74c3c; color: white; }
+        .excellent { background: var(--success-color); color: white; }
+        .good { background: var(--warning-color); color: white; }
+        .fair { background: var(--warning-color); color: white; }
+        .poor { background: var(--danger-color); color: white; }
         
         .nav-links {
             text-align: center;
             margin: 20px 0;
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
         }
         
         .nav-links a {
-            color: #3498db;
+            color: var(--text-primary);
             text-decoration: none;
             margin: 0 15px;
             font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            display: inline-block;
         }
         
         .nav-links a:hover {
-            text-decoration: underline;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+        
+        .nav-links a[style*="background-color"] {
+            background-color: var(--primary-color) !important;
+            color: white;
         }
         
         .scoring-subsection {
@@ -131,10 +149,10 @@
         }
         
         .scoring-subsection h3 {
-            color: #2c3e50;
+            color: var(--text-primary);
             margin-bottom: 15px;
             font-size: 1.1em;
-            border-bottom: 1px solid #ecf0f1;
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 5px;
         }
         
@@ -178,9 +196,12 @@
             <a href="cna/index.html">🏛️ CNAs</a>
             <a href="cves/index.html">🔍 CVEs</a>
             <a href="completeness/index.html">📋 Completeness</a>
+            <a href="https://rogolabs.net" target="_blank" rel="noopener noreferrer" class="rogolabs-link">🔗 RogoLabs</a>
         </div>
         
-        <h1>EAS Scoring Methodology</h1>
+        <div class="page-header">
+            <h1><span class="cna-part">EAS</span>Methodology</h1>
+        </div>
         
         <div class="scoring-section">
             <p>The Enhanced Aggregate Scoring (EAS) is a comprehensive framework designed to assess the quality and completeness of CVE records. By evaluating each record across five critical dimensions, EAS provides a standardized score (up to 100 points) that reflects how actionable, precise, and useful a CVE is for security teams and automated tools. All CVEs are published by CVE Numbering Authorities (CNAs), whose performance is measured and compared using this methodology.</p>
