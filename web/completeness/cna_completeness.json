@@ -113,8 +113,8 @@
   },
   {
     "cna": "VulDB",
-    "total_cves": 2828,
-    "completeness_score": 82.59,
+    "total_cves": 2839,
+    "completeness_score": 82.58,
     "required_fields_completeness": 100.0,
     "optional_fields_completeness": 41.95,
     "key_metrics": {
@@ -1121,10 +1121,10 @@
   },
   {
     "cna": "CERT-PL",
-    "total_cves": 63,
-    "completeness_score": 80.89,
+    "total_cves": 64,
+    "completeness_score": 80.88,
     "required_fields_completeness": 100.0,
-    "optional_fields_completeness": 36.29,
+    "optional_fields_completeness": 36.26,
     "key_metrics": {
       "has_descriptions": 100.0,
       "has_affected": 100.0,
@@ -2001,10 +2001,10 @@
   },
   {
     "cna": "dell",
-    "total_cves": 106,
+    "total_cves": 105,
     "completeness_score": 80.13,
     "required_fields_completeness": 100.0,
-    "optional_fields_completeness": 33.76,
+    "optional_fields_completeness": 33.78,
     "key_metrics": {
       "has_descriptions": 100.0,
       "has_affected": 100.0,
@@ -2128,6 +2128,22 @@
     "percentile": 56.1
   },
   {
+    "cna": "Patchstack",
+    "total_cves": 4114,
+    "completeness_score": 79.99,
+    "required_fields_completeness": 100.0,
+    "optional_fields_completeness": 33.28,
+    "key_metrics": {
+      "has_descriptions": 100.0,
+      "has_affected": 100.0,
+      "has_references": 100.0,
+      "has_problem_types": 100.0,
+      "has_metrics": 100.0,
+      "has_solutions": 30.238210986874087
+    },
+    "percentile": 55.8
+  },
+  {
     "cna": "tenable",
     "total_cves": 19,
     "completeness_score": 79.99,
@@ -2140,22 +2156,6 @@
       "has_problem_types": 94.73684210526315,
       "has_metrics": 100.0,
       "has_solutions": 57.89473684210527
-    },
-    "percentile": 55.8
-  },
-  {
-    "cna": "Patchstack",
-    "total_cves": 4113,
-    "completeness_score": 79.98,
-    "required_fields_completeness": 100.0,
-    "optional_fields_completeness": 33.28,
-    "key_metrics": {
-      "has_descriptions": 100.0,
-      "has_affected": 100.0,
-      "has_references": 100.0,
-      "has_problem_types": 100.0,
-      "has_metrics": 100.0,
-      "has_solutions": 30.221249696085582
     },
     "percentile": 55.5
   },
@@ -2208,22 +2208,6 @@
     "percentile": 54.5
   },
   {
-    "cna": "apache",
-    "total_cves": 109,
-    "completeness_score": 79.88,
-    "required_fields_completeness": 100.0,
-    "optional_fields_completeness": 32.92,
-    "key_metrics": {
-      "has_descriptions": 100.0,
-      "has_affected": 100.0,
-      "has_references": 100.0,
-      "has_problem_types": 100.0,
-      "has_metrics": 99.08256880733946,
-      "has_solutions": 0.0
-    },
-    "percentile": 54.2
-  },
-  {
     "cna": "php",
     "total_cves": 7,
     "completeness_score": 79.87,
@@ -2235,6 +2219,22 @@
       "has_references": 100.0,
       "has_problem_types": 85.71428571428571,
       "has_metrics": 100.0,
+      "has_solutions": 0.0
+    },
+    "percentile": 54.2
+  },
+  {
+    "cna": "apache",
+    "total_cves": 107,
+    "completeness_score": 79.87,
+    "required_fields_completeness": 100.0,
+    "optional_fields_completeness": 32.91,
+    "key_metrics": {
+      "has_descriptions": 100.0,
+      "has_affected": 100.0,
+      "has_references": 100.0,
+      "has_problem_types": 100.0,
+      "has_metrics": 99.06542056074767,
       "has_solutions": 0.0
     },
     "percentile": 53.8
@@ -3200,38 +3200,6 @@
     "percentile": 33.9
   },
   {
-    "cna": "Vivo",
-    "total_cves": 5,
-    "completeness_score": 78.93,
-    "required_fields_completeness": 100.0,
-    "optional_fields_completeness": 29.77,
-    "key_metrics": {
-      "has_descriptions": 100.0,
-      "has_affected": 100.0,
-      "has_references": 100.0,
-      "has_problem_types": 100.0,
-      "has_metrics": 100.0,
-      "has_solutions": 0.0
-    },
-    "percentile": 33.6
-  },
-  {
-    "cna": "CERTVDE",
-    "total_cves": 46,
-    "completeness_score": 78.86,
-    "required_fields_completeness": 100.0,
-    "optional_fields_completeness": 29.52,
-    "key_metrics": {
-      "has_descriptions": 100.0,
-      "has_affected": 100.0,
-      "has_references": 100.0,
-      "has_problem_types": 100.0,
-      "has_metrics": 100.0,
-      "has_solutions": 0.0
-    },
-    "percentile": 33.2
-  },
-  {
     "cna": "Hitachi Energy",
     "total_cves": 16,
     "completeness_score": 78.85,
@@ -3245,7 +3213,23 @@
       "has_metrics": 100.0,
       "has_solutions": 0.0
     },
-    "percentile": 32.9
+    "percentile": 33.6
+  },
+  {
+    "cna": "CERTVDE",
+    "total_cves": 48,
+    "completeness_score": 78.81,
+    "required_fields_completeness": 100.0,
+    "optional_fields_completeness": 29.36,
+    "key_metrics": {
+      "has_descriptions": 100.0,
+      "has_affected": 100.0,
+      "has_references": 100.0,
+      "has_problem_types": 100.0,
+      "has_metrics": 100.0,
+      "has_solutions": 0.0
+    },
+    "percentile": 33.2
   },
   {
     "cna": "CPANSec",
@@ -3261,7 +3245,7 @@
       "has_metrics": 0.0,
       "has_solutions": 48.38709677419355
     },
-    "percentile": 32.6
+    "percentile": 32.9
   },
   {
     "cna": "Citrix",
@@ -3277,7 +3261,7 @@
       "has_metrics": 100.0,
       "has_solutions": 0.0
     },
-    "percentile": 32.2
+    "percentile": 32.6
   },
   {
     "cna": "drupal",
@@ -3293,7 +3277,7 @@
       "has_metrics": 0.0,
       "has_solutions": 0.0
     },
-    "percentile": 31.9
+    "percentile": 32.2
   },
   {
     "cna": "Zohocorp",
@@ -3309,10 +3293,26 @@
       "has_metrics": 100.0,
       "has_solutions": 0.0
     },
-    "percentile": 31.6
+    "percentile": 31.9
   },
   {
     "cna": "netapp",
+    "total_cves": 2,
+    "completeness_score": 78.72,
+    "required_fields_completeness": 100.0,
+    "optional_fields_completeness": 29.07,
+    "key_metrics": {
+      "has_descriptions": 100.0,
+      "has_affected": 100.0,
+      "has_references": 100.0,
+      "has_problem_types": 100.0,
+      "has_metrics": 100.0,
+      "has_solutions": 0.0
+    },
+    "percentile": 31.6
+  },
+  {
+    "cna": "Vivo",
     "total_cves": 2,
     "completeness_score": 78.72,
     "required_fields_completeness": 100.0,
@@ -3761,15 +3761,15 @@
   },
   {
     "cna": "vmware",
-    "total_cves": 47,
-    "completeness_score": 77.82,
+    "total_cves": 46,
+    "completeness_score": 77.83,
     "required_fields_completeness": 100.0,
-    "optional_fields_completeness": 26.08,
+    "optional_fields_completeness": 26.09,
     "key_metrics": {
       "has_descriptions": 100.0,
       "has_affected": 100.0,
       "has_references": 100.0,
-      "has_problem_types": 46.808510638297875,
+      "has_problem_types": 47.82608695652174,
       "has_metrics": 100.0,
       "has_solutions": 0.0
     },
@@ -3921,16 +3921,16 @@
   },
   {
     "cna": "Wordfence",
-    "total_cves": 1613,
+    "total_cves": 1596,
     "completeness_score": 77.66,
     "required_fields_completeness": 100.0,
-    "optional_fields_completeness": 25.55,
+    "optional_fields_completeness": 25.54,
     "key_metrics": {
       "has_descriptions": 100.0,
       "has_affected": 100.0,
       "has_references": 100.0,
       "has_problem_types": 100.0,
-      "has_metrics": 99.93800371977682,
+      "has_metrics": 99.93734335839599,
       "has_solutions": 0.0
     },
     "percentile": 18.6
@@ -4208,22 +4208,6 @@
     "percentile": 13.0
   },
   {
-    "cna": "@huntr_ai",
-    "total_cves": 324,
-    "completeness_score": 76.28,
-    "required_fields_completeness": 100.0,
-    "optional_fields_completeness": 20.92,
-    "key_metrics": {
-      "has_descriptions": 100.0,
-      "has_affected": 100.0,
-      "has_references": 100.0,
-      "has_problem_types": 100.0,
-      "has_metrics": 100.0,
-      "has_solutions": 0.0
-    },
-    "percentile": 12.6
-  },
-  {
     "cna": "Honor",
     "total_cves": 3,
     "completeness_score": 76.28,
@@ -4237,7 +4221,7 @@
       "has_metrics": 100.0,
       "has_solutions": 0.0
     },
-    "percentile": 12.3
+    "percentile": 12.6
   },
   {
     "cna": "EDB",
@@ -4253,7 +4237,7 @@
       "has_metrics": 100.0,
       "has_solutions": 0.0
     },
-    "percentile": 12.0
+    "percentile": 12.3
   },
   {
     "cna": "odoo",
@@ -4269,7 +4253,7 @@
       "has_metrics": 100.0,
       "has_solutions": 0.0
     },
-    "percentile": 11.6
+    "percentile": 12.0
   },
   {
     "cna": "checkpoint",
@@ -4285,7 +4269,7 @@
       "has_metrics": 100.0,
       "has_solutions": 0.0
     },
-    "percentile": 11.3
+    "percentile": 11.6
   },
   {
     "cna": "oracle",
@@ -4299,6 +4283,22 @@
       "has_references": 100.0,
       "has_problem_types": 99.36708860759494,
       "has_metrics": 99.36708860759494,
+      "has_solutions": 0.0
+    },
+    "percentile": 11.3
+  },
+  {
+    "cna": "@huntr_ai",
+    "total_cves": 338,
+    "completeness_score": 76.26,
+    "required_fields_completeness": 100.0,
+    "optional_fields_completeness": 20.85,
+    "key_metrics": {
+      "has_descriptions": 100.0,
+      "has_affected": 100.0,
+      "has_references": 100.0,
+      "has_problem_types": 100.0,
+      "has_metrics": 100.0,
       "has_solutions": 0.0
     },
     "percentile": 11.0
