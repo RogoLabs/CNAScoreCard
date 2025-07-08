@@ -318,7 +318,7 @@ function createCveCard(cve) {
     card.innerHTML = `
         <div class="cve-header">
             <h3 class="cve-id">
-                <a href="../cves/cve-detail.html?id=${cve.cveId}" target="_blank">${cve.cveId}</a>
+                <a href="https://cve.org/CVERecord?id=${cve.cveId}" target="_blank">${cve.cveId}</a>
             </h3>
             <div class="cve-meta">
                 <div class="cve-score">${cve.totalEasScore}</div>

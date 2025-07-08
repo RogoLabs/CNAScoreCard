@@ -1,13 +1,50 @@
-/* Hero Section */
+/* RogoLabs-inspired color scheme and styling */
+:root {
+    --primary-color: #1a365d;      /* Deep blue */
+    --secondary-color: #2d3748;    /* Dark gray */
+    --accent-color: #3182ce;       /* Bright blue */
+    --success-color: #38a169;      /* Green */
+    --warning-color: #ed8936;      /* Orange */
+    --danger-color: #e53e3e;       /* Red */
+    --light-bg: #f7fafc;          /* Light gray background */
+    --card-bg: #ffffff;           /* White cards */
+    --border-color: #e2e8f0;      /* Light border */
+    --text-primary: #2d3748;      /* Dark text */
+    --text-secondary: #4a5568;    /* Medium gray text */
+    --text-muted: #718096;        /* Light gray text */
+}
+
+/* Page Header */
+.page-header {
+    text-align: left;
+    margin: 20px 0;
+    padding-bottom: 20px;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+.page-header .cna-part {
+    color: var(--accent-color);
+}
+
+/* Hero Section (keep for other pages that might use it) */
 .hero-section {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: white;
+    color: var(--text-primary);
     padding: 4rem 2rem;
-    margin: -2rem -2rem 3rem -2rem;
+    margin: 0 0 3rem 0;
     text-align: center;
     position: relative;
     overflow: hidden;
-    border-radius: 0 0 20px 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
 }
 
 .hero-section::before {
@@ -29,17 +66,21 @@
 .hero-title {
     font-size: 3.5rem;
     font-weight: 700;
-    margin: 0 0 1rem 0;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 0 0 0.5rem 0;
     letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+.hero-title .cna-part {
+    color: var(--accent-color);
 }
 
 .hero-subtitle {
     font-size: 1.4rem;
     margin: 0;
-    opacity: 0.95;
+    opacity: 0.8;
     font-weight: 400;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    color: var(--text-secondary);
 }
 
 /* Reset and base styles */
@@ -52,8 +93,8 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
     line-height: 1.6;
-    color: #222;
-    background-color: #f5f5f5;
+    color: var(--text-primary);
+    background-color: var(--light-bg);
 }
 
 .container {
@@ -63,47 +104,77 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: #2c3e50;
+    color: var(--text-primary);
     font-weight: 700;
 }
 
 p {
     text-align: center;
-    color: #666;
+    color: var(--text-secondary);
     margin-bottom: 30px;
     font-size: 1.1em;
 }
 
 /* Accessibility: High contrast for links */
 a {
-    color: #0056b3;
+    color: var(--accent-color);
     text-decoration: underline;
+    transition: color 0.2s ease;
 }
 a:focus, a:hover {
-    color: #003366;
-    outline: 2px solid #0056b3;
+    color: var(--primary-color);
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* RogoLabs attribution section */
+.rogolabs-attribution {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 0 0 30px 0;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(26, 54, 93, 0.15);
+}
+
+.rogolabs-attribution p {
+    margin: 0;
+    color: white;
+    font-size: 1.05em;
+}
+
+.rogolabs-attribution a {
+    color: #cbd5e0;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.rogolabs-attribution a:hover {
+    color: white;
 }
 
 /* Introduction section */
 .intro-section {
-    background: white;
+    background: var(--card-bg);
     border-radius: 12px;
     padding: 30px;
     margin-bottom: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
 }
 
 .main-description {
     font-size: 1.2em;
     line-height: 1.7;
-    color: #2c3e50;
+    color: var(--text-primary);
     margin-bottom: 30px;
     text-align: left;
 }
 
 .key-features h2 {
     text-align: center;
-    color: #2c3e50;
+    color: var(--text-primary);
     margin-bottom: 25px;
     font-size: 1.8em;
 }
@@ -112,43 +183,53 @@ a:focus, a:hover {
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 15px;
+    gap: 20px;
     margin-bottom: 30px;
 }
 
 .feature {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
     text-align: center;
-    border-left: 4px solid #3498db;
+    border-left: 4px solid var(--accent-color);
     min-width: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .feature h3 {
-    color: #2c3e50;
-    margin-bottom: 10px;
+    color: var(--text-primary);
+    margin-bottom: 12px;
     font-size: 1.1em;
 }
 
 .feature p {
-    color: #555;
+    color: var(--text-secondary);
     font-size: 0.95em;
     text-align: left;
     margin: 0;
 }
 
 .data-info {
-    background: #ecf0f1;
-    padding: 20px;
-    border-radius: 8px;
+    background: #f8f9fa;
+    color: var(--text-primary);
+    padding: 25px;
+    border-radius: 12px;
     text-align: center;
-    border-left: 4px solid #27ae60;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-color);
 }
 
 .data-info p {
     margin: 0;
-    color: #2c3e50;
+    color: var(--text-primary);
     font-size: 0.95em;
 }
 
@@ -156,21 +237,45 @@ a:focus, a:hover {
 .nav-links {
     text-align: center;
     margin: 20px 0;
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
 }
 
 .nav-links a {
-    color: #3498db;
+    color: var(--text-primary);
     text-decoration: none;
     margin: 0 15px;
     font-weight: 500;
-    padding: 8px 16px;
-    border-radius: 6px;
-    transition: background-color 0.3s ease;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    display: inline-block;
 }
 
 .nav-links a:hover {
-    background-color: #ecf0f1;
+    background-color: var(--accent-color);
+    color: white;
     text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.nav-links a[style*="background-color"] {
+    background-color: var(--primary-color) !important;
+    color: white;
+}
+
+.rogolabs-link {
+    border: 1px solid var(--border-color) !important;
+    color: var(--accent-color) !important;
+}
+
+.rogolabs-link:hover {
+    background-color: var(--accent-color) !important;
+    color: white !important;
+    border-color: var(--accent-color) !important;
 }
 
 /* Filters section */
@@ -180,82 +285,91 @@ a:focus, a:hover {
     margin-bottom: 30px;
     justify-content: center;
     flex-wrap: wrap;
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
 }
 
 #searchInput {
-    padding: 10px 15px;
-    border: 2px solid #ddd;
+    padding: 12px 16px;
+    border: 2px solid var(--border-color);
     border-radius: 8px;
     font-size: 16px;
     min-width: 300px;
-    transition: border-color 0.3s ease;
+    transition: all 0.2s ease;
+    background: white;
 }
 
 #searchInput:focus {
     outline: none;
-    border-color: #3498db;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
 }
 
 #sortSelect {
-    padding: 10px 15px;
-    border: 2px solid #ddd;
+    padding: 12px 16px;
+    border: 2px solid var(--border-color);
     border-radius: 8px;
     font-size: 16px;
     background-color: white;
     cursor: pointer;
-    transition: border-color 0.3s ease;
+    transition: all 0.2s ease;
+    color: var(--text-primary);
 }
 
 #sortSelect:focus {
     outline: none;
-    border-color: #3498db;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
 }
 
 /* Filter button styling */
 .filter-button {
-    padding: 10px 20px;
-    border: 2px solid #ddd;
+    padding: 12px 20px;
+    border: 2px solid var(--border-color);
     border-radius: 8px;
     font-size: 16px;
     background-color: white;
-    color: #666;
+    color: var(--text-secondary);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     font-weight: 500;
     text-align: center;
     min-width: 160px;
 }
 
 .filter-button:hover {
-    border-color: #3498db;
-    color: #3498db;
+    border-color: var(--accent-color);
+    color: var(--accent-color);
     transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+    box-shadow: 0 2px 8px rgba(49, 130, 206, 0.2);
 }
 
 .filter-button.active {
-    background-color: #3498db;
-    border-color: #3498db;
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
     color: white;
 }
 
 .filter-button.active:hover {
-    background-color: #2980b9;
-    border-color: #2980b9;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
     color: white;
 }
 
 .filter-button:focus {
     outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
 }
 
 /* Loading and error states */
 #loading {
     text-align: center;
     font-size: 1.2em;
-    color: #666;
+    color: var(--text-secondary);
     padding: 50px;
 }
 
@@ -269,24 +383,25 @@ a:focus, a:hover {
 
 /* Individual CNA Card */
 .cna-card {
-    background: white;
+    background: var(--card-bg);
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border-left: 5px solid #ddd;
+    border-left: 5px solid var(--border-color);
+    border: 1px solid var(--border-color);
 }
 
 .cna-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 /* Inactive CNA styling */
 .cna-inactive {
     opacity: 0.6;
-    background: #f8f9fa;
-    border-left-color: #bdc3c7 !important;
+    background: var(--light-bg);
+    border-left-color: var(--text-muted) !important;
 }
 
 .cna-inactive .cna-header {
@@ -294,56 +409,56 @@ a:focus, a:hover {
 }
 
 .cna-inactive .cna-score {
-    background: #ecf0f1;
-    color: #7f8c8d;
+    background: var(--border-color);
+    color: var(--text-muted);
 }
 
 .cna-inactive .detail-item .label {
-    color: #95a5a6;
+    color: var(--text-muted);
 }
 
 .cna-inactive .detail-item .value {
-    color: #7f8c8d;
+    color: var(--text-muted);
 }
 
 .cna-inactive:hover {
     transform: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-/* Score-based colors (kept for backward compatibility) */
+/* Score-based colors (updated with new color scheme) */
 .score-excellent {
-    border-left-color: #27ae60;
+    border-left-color: var(--success-color);
 }
 
 .score-good {
-    border-left-color: #f39c12;
+    border-left-color: var(--warning-color);
 }
 
 .score-fair {
-    border-left-color: #e67e22;
+    border-left-color: var(--warning-color);
 }
 
 .score-poor {
-    border-left-color: #e74c3c;
+    border-left-color: var(--danger-color);
 }
 
-/* Percentile-based colors (stoplight color scheme) */
+/* Percentile-based colors (updated with new color scheme) */
 /* Primary percentile classes for card borders */
 .percentile-top {
-    border-left-color: #27ae60;    /* Green - Top performers (75th percentile and above) */
+    border-left-color: var(--success-color);    /* Green - Top performers (75th percentile and above) */
 }
 
 .percentile-upper {
-    border-left-color: #27ae60;    /* Green - Upper middle (50th-75th percentile) */
+    border-left-color: var(--success-color);    /* Green - Upper middle (50th-75th percentile) */
 }
 
 .percentile-lower {
-    border-left-color: #f39c12;    /* Orange - Lower middle (25th-50th percentile) */
+    border-left-color: var(--warning-color);    /* Orange - Lower middle (25th-50th percentile) */
 }
 
 .percentile-bottom {
-    border-left-color: #e74c3c;    /* Red - Bottom performers (below 25th percentile) */
+    border-left-color: var(--danger-color);    /* Red - Bottom performers (below 25th percentile) */
 }
 
 /* Percentile badge classes for text labels */
@@ -357,61 +472,61 @@ a:focus, a:hover {
 }
 
 .percentile-badge.percentile-top {
-    background: #27ae60;
+    background: var(--success-color);
 }
 
 .percentile-badge.percentile-upper {
-    background: #27ae60;
+    background: var(--success-color);
 }
 
 .percentile-badge.percentile-lower {
-    background: #f39c12;
+    background: var(--warning-color);
 }
 
 .percentile-badge.percentile-bottom {
-    background: #e74c3c;
+    background: var(--danger-color);
 }
 
 /* Progress bar percentile classes */
 .progress-fill.percentile-excellent,
 .progress-fill.percentile-top {
-    background: #27ae60;
+    background: var(--success-color);
 }
 
 .progress-fill.percentile-good,
 .progress-fill.percentile-high {
-    background: #27ae60;
+    background: var(--success-color);
 }
 
 .progress-fill.percentile-fair,
 .progress-fill.percentile-medium {
-    background: #f39c12;
+    background: var(--warning-color);
 }
 
 .progress-fill.percentile-poor,
 .progress-fill.percentile-low {
-    background: #e74c3c;
+    background: var(--danger-color);
 }
 
 /* CVE card percentile classes */
 .cve-card.percentile-top,
 .cve-card.percentile-excellent {
-    border-left-color: #27ae60;
+    border-left-color: var(--success-color);
 }
 
 .cve-card.percentile-high,
 .cve-card.percentile-good {
-    border-left-color: #27ae60;
+    border-left-color: var(--success-color);
 }
 
 .cve-card.percentile-medium,
 .cve-card.percentile-fair {
-    border-left-color: #f39c12;
+    border-left-color: var(--warning-color);
 }
 
 .cve-card.percentile-low,
 .cve-card.percentile-poor {
-    border-left-color: #e74c3c;
+    border-left-color: var(--danger-color);
 }
 
 /* Card header */
@@ -421,12 +536,12 @@ a:focus, a:hover {
     align-items: center;
     margin-bottom: 15px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .cna-name {
     font-size: 1.3em;
-    color: #2c3e50;
+    color: var(--text-primary);
     margin: 0;
     flex: 1;
     margin-right: 10px;
@@ -446,18 +561,19 @@ a:focus, a:hover {
 .cna-score {
     font-size: 1.7rem;
     font-weight: 700;
-    color: #2d5bff;
+    color: var(--accent-color);
     margin-bottom: 6px;
-    background: #f8f9fa;
-    padding: 5px 12px;
+    background: var(--light-bg);
+    padding: 8px 12px;
     border-radius: 20px;
     min-width: 60px;
     text-align: center;
+    border: 1px solid var(--border-color);
 }
 
 .cna-percentile {
     font-size: 0.8em;
-    color: #666;
+    color: var(--text-secondary);
     text-align: center;
     white-space: nowrap;
 }
@@ -477,43 +593,43 @@ a:focus, a:hover {
 
 .label {
     font-weight: 600;
-    color: #555;
+    color: var(--text-secondary);
 }
 
 .value {
-    color: #333;
+    color: var(--text-primary);
     font-weight: 500;
 }
 
 /* CNA Links */
 .cna-link {
-    color: #2c3e50;
+    color: var(--text-primary);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.2s ease;
 }
 
 .cna-link:hover {
-    color: #3498db;
+    color: var(--accent-color);
     text-decoration: underline;
 }
 
 .cna-name a {
-    color: #007acc;
+    color: var(--accent-color);
     text-decoration: none;
     font-weight: 500;
 }
 
 .cna-name a:hover {
-    color: #005999;
+    color: var(--primary-color);
     text-decoration: underline;
 }
 
 .view-details-link {
-    color: #3498db;
+    color: var(--accent-color);
     text-decoration: none;
     font-weight: 500;
     font-size: 0.9em;
-    transition: color 0.3s ease;
+    transition: color 0.2s ease;
 }
 
 .view-details-link:hover {
@@ -783,11 +899,18 @@ a:focus, a:hover {
 
 .stat-item {
     background: white;
-    padding: 1rem;
+    padding: 1.5rem;
     border-radius: 8px;
-    text-align: center;
+    text-align: left;
     font-size: 0.9em;
-    border-left: 3px solid #3498db;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 /* Hero Section Responsive Styles */
