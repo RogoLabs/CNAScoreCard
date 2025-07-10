@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVE Schema Field Insights - CNA ScoreCard</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../completeness/completeness-styles.css">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="nav-links">
+        <a href="../index.html">🏠 Home</a>
+        <a href="../scoring.html">📊 EAS Methodology</a>
+        <a href="../cna/index.html">🏛️ CNAs</a>
+        <a href="../cves/index.html">🔍 CVEs</a>
+        <a href="index.html" style="background-color: #ecf0f1;">🧬 Field Insights</a>
+        <a href="../completeness/index.html">📋 Completeness</a>
+        <a href="https://rogolabs.net" target="_blank" rel="noopener noreferrer" class="rogolabs-link">🔗 RogoLabs</a>
+    </div>
+
+    <main class="container" role="main" aria-label="CVE Schema Field Insights">
+        <div class="page-header">
+            <h1 class="brand-title" style="font-size:2.6rem; font-weight:800; letter-spacing:-1px;">
+                <span style="color:#2980b9;">CVE</span><span style="color:#222;">Schema</span><span style="color:#222;">Field</span><span style="color:#222;">Insights</span>
+            </h1>
+        </div>
+
+        <div class="header-section">
+            <p class="main-description">
+                This page provides a detailed breakdown of how individual fields within the <a href="https://github.com/CVEProject/cve-schema/blob/main/schema/CVE_Record_Format.json" target="_blank" rel="noopener noreferrer">CVE JSON schema</a> are utilized across all analyzed CVE records. Explore data quality trends, schema adoption patterns, and discover which fields are most and least used by CNAs.
+            </p>
+        </div>
+
+        <!-- Field Analysis Table -->
+        <div class="field-analysis-section">
+            <div class="table-wrapper">
+                <table class="completeness-table" id="optional-fields-table">
+                    <thead>
+                        <tr>
+                            <th id="sort-rank" class="sortable">Rank</th>
+                            <th id="sort-name" class="sortable">Field Name</th>
+                            <th id="sort-util" class="sortable">Utilization %</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody id="optional-fields-table-body">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <style>
+            .sortable { cursor: pointer; }
+            .sortable.sorted-asc:after { content: " \25B2"; }
+            .sortable.sorted-desc:after { content: " \25BC"; }
+            .info-box a { color: #2980b9; text-decoration: underline; }
+        </style>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 CNA ScoreCard. Field insights based on <a href="https://github.com/CVEProject/cve-schema" target="_blank">CVE JSON Schema</a>.</p>
+            <p>Last updated: <span id="last-updated">Loading...</span></p>
+        </div>
+    </footer>
+
+    <script src="field-insights-script.js"></script>
+</body>
+</html>

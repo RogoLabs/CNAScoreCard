@@ -127,3 +127,115 @@ def generate_reports():
     
     print("Report generation complete.")
     return cna_reports, all_scores
+
+def analyze_field_utilization(cve_records, schema_fields):
+    """
+    Analyze field utilization across all CVE records.
+    Returns dicts for heatmap, leaderboards, and breakdowns.
+    """
+    from collections import defaultdict
+    field_counts = defaultdict(int)
+    total_cves = len(cve_records)
+    for cve in cve_records:
+        def check_fields(obj, prefix=""):
+            for key, value in obj.items():
+                field = f"{prefix}{key}" if prefix else key
+                if value is not None and value != [] and value != "":
+                    field_counts[field] += 1
+                if isinstance(value, dict):
+                    check_fields(value, field + ".")
+                elif isinstance(value, list):
+                    for item in value:
+                        if isinstance(item, dict):
+                            check_fields(item, field + ".")
+        check_fields(cve)
+    # Build utilization stats
+    utilization = []
+    for field in schema_fields:
+        count = field_counts.get(field["name"], 0)
+        utilization.append({
+            "field": field["name"],
+            "description": field.get("description", ""),
+            "required": field.get("required", False),
+            "utilization": round(100 * count / total_cves, 2) if total_cves else 0
+        })
+    return utilization
+
+def generate_field_insights_json():
+    """
+    Generates JSON files for field insights (heatmap, leaderboards, breakdowns).
+    """
+    import json, os
+    # List of 10 automatically-populated CVE program fields to exclude
+    excluded_fields = set([
+        "cveMetadata.datePublished",
+        "cveMetadata.dateUpdated",
+        "cveMetadata.dateReserved",
+        "cveMetadata.state",
+        "cveMetadata.assignerOrgId",
+        "cveMetadata.serial",
+        "cveMetadata.assignerShortName",
+        "cveMetadata.providerMetadata.orgId",
+        "cveMetadata.providerMetadata.shortName",
+        "cveMetadata.providerMetadata.dateUpdated"
+    ])
+    # Load schema fields (should be a list of dicts with name, description, required)
+    schema_path = os.path.join(os.path.dirname(__file__), "cve_schema_fields.json")
+    if not os.path.exists(schema_path):
+        print("Schema field definition file missing: cve_schema_fields.json")
+        return
+    with open(schema_path, "r") as f:
+        schema_fields = json.load(f)
+    # Exclude the 10 fields from schema_fields
+    schema_fields = [f for f in schema_fields if f["name"] not in excluded_fields]
+    # Get all CVE records
+    cve_records = data_ingestor.get_cve_records()
+    utilization = analyze_field_utilization(cve_records, schema_fields)
+    # Heatmap data
+    heatmap = {u["field"]: u["utilization"] for u in utilization}
+    # Leaderboards
+    sorted_fields = sorted(utilization, key=lambda x: x["utilization"], reverse=True)
+    most_utilized = sorted_fields[:15]
+    least_utilized = sorted_fields[-15:]
+    # Breakdowns
+    required = [u for u in utilization if u["required"]]
+    optional = [u for u in utilization if not u["required"]]
+    # Output directory
+    out_dir = os.path.join(os.path.dirname(__file__), "../web/field-insights/")
+    os.makedirs(out_dir, exist_ok=True)
+    with open(os.path.join(out_dir, "field_utilization.json"), "w") as f:
+        json.dump(heatmap, f, indent=2)
+    with open(os.path.join(out_dir, "field_leaderboards.json"), "w") as f:
+        json.dump({"most_utilized": most_utilized, "least_utilized": least_utilized}, f, indent=2)
+    with open(os.path.join(out_dir, "required_fields_breakdown.json"), "w") as f:
+        json.dump(required, f, indent=2)
+    with open(os.path.join(out_dir, "optional_fields_breakdown.json"), "w") as f:
+        json.dump(optional, f, indent=2)
+    print("Field insights JSON files generated.")
+
+if __name__ == "__main__":
+    cna_reports, all_scores = generate_reports()
+    generate_field_insights_json()
+    # Save completeness data to both completeness and field-insights folders
+    import json, os
+    web_dir = os.path.join(os.path.dirname(__file__), "../web")
+    completeness_dir = os.path.join(web_dir, "completeness")
+    field_insights_dir = os.path.join(web_dir, "field-insights")
+    os.makedirs(completeness_dir, exist_ok=True)
+    os.makedirs(field_insights_dir, exist_ok=True)
+    # Save cna_completeness.json
+    cna_completeness_path = os.path.join(completeness_dir, "cna_completeness.json")
+    cna_completeness_path2 = os.path.join(field_insights_dir, "cna_completeness.json")
+    with open(cna_completeness_path, "w") as f:
+        json.dump(list(cna_reports.values()), f, indent=2)
+    with open(cna_completeness_path2, "w") as f:
+        json.dump(list(cna_reports.values()), f, indent=2)
+    # Save completeness_summary.json
+    summary_path = os.path.join(completeness_dir, "completeness_summary.json")
+    summary_path2 = os.path.join(field_insights_dir, "completeness_summary.json")
+    # Assume you have a function or dict for summaryData, else skip
+    if 'summaryData' in globals():
+        with open(summary_path, "w") as f:
+            json.dump(summaryData, f, indent=2)
+        with open(summary_path2, "w") as f:
+            json.dump(summaryData, f, indent=2)

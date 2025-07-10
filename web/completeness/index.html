@@ -15,6 +15,7 @@
         <a href="../scoring.html">📊 EAS Methodology</a>
         <a href="../cna/index.html">🏛️ CNAs</a>
         <a href="../cves/index.html">🔍 CVEs</a>
+        <a href="../field-insights/index.html">🧬 Field Insights</a>
         <a href="index.html" style="background-color: #ecf0f1;">📋 Completeness</a>
         <a href="https://rogolabs.net" target="_blank" rel="noopener noreferrer" class="rogolabs-link">🔗 RogoLabs</a>
     </div>
@@ -156,44 +157,6 @@
             </div>
         </div>
 
-        <div class="field-analysis-section">
-            <h2>📋 Schema Field Analysis</h2>
-            <p class="main-description">
-                Detailed analysis of individual CVE schema fields and their utilization across all records.
-            </p>
-            
-            <div class="field-tabs">
-                <button class="tab-btn active" data-tab="required">Required Fields</button>
-                <button class="tab-btn" data-tab="optional">Optional Fields</button>
-                <button class="tab-btn" data-tab="missing">Least Complete</button>
-                <button class="tab-btn" data-tab="utilized">Most Utilized</button>
-            </div>
-
-            <div id="required-fields" class="tab-content active">
-                <div class="field-grid" id="required-fields-grid">
-                    <!-- Populated by JavaScript -->
-                </div>
-            </div>
-
-            <div id="optional-fields" class="tab-content">
-                <div class="field-grid" id="optional-fields-grid">
-                    <!-- Populated by JavaScript -->
-                </div>
-            </div>
-
-            <div id="missing-fields" class="tab-content">
-                <div class="field-grid" id="missing-fields-grid">
-                    <!-- Populated by JavaScript -->
-                </div>
-            </div>
-
-            <div id="utilized-fields" class="tab-content">
-                <div class="field-grid" id="utilized-fields-grid">
-                    <!-- Populated by JavaScript -->
-                </div>
-            </div>
-        </div>
-
         <!-- Quick Link to Missing Fields Analysis (now outside the Schema Field Analysis box) -->
         <div class="missing-fields-link-section">
             <div class="link-card">
@@ -210,6 +173,14 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- Deep Dive into Schema Fields CTA -->
+        <div class="cta-section" style="margin: 3rem 0; text-align: center; background: #f8fafc; border-radius: 16px; box-shadow: 0 2px 8px rgba(49,130,206,0.07); padding: 2.5rem 1rem; border: 2px solid #e2e8f0;">
+            <h2 style="color: #3182ce; font-size: 2rem; margin-bottom: 1rem;">Deep Dive into Schema Fields</h2>
+            <p style="font-size: 1.15rem; max-width: 700px; margin: 0 auto 1.5rem auto; color: #2d3748;">
+                Explore a detailed analysis of every CVE schema field. View utilization heatmaps, see the most and least used fields, and get a full breakdown of required vs. optional field data. Gain insights into data quality trends and schema adoption patterns across the CVE ecosystem.
+            </p>
+            <a href="../field-insights/index.html" class="link-button" style="font-size: 1.1rem; padding: 0.9rem 2.2rem; background: #3182ce; color: white; border-radius: 8px; font-weight: 700; text-decoration: none; box-shadow: 0 2px 8px rgba(49,130,206,0.10); transition: background 0.2s;">Explore Field Insights →</a>
         </div>
     </main>
 

@@ -112,12 +112,19 @@ def generate_completeness_reports():
     # Save CNA completeness data for web interface
     web_output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "web", "completeness")
     os.makedirs(web_output_dir, exist_ok=True)
-    
     cna_completeness_file = os.path.join(web_output_dir, "cna_completeness.json")
     with open(cna_completeness_file, 'w') as f:
         json.dump(cna_completeness_data, f, indent=2)
     print(f"CNA completeness data saved to: {cna_completeness_file}")
-    
+
+    # Also save a copy to field-insights directory
+    field_insights_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "web", "field-insights")
+    os.makedirs(field_insights_dir, exist_ok=True)
+    cna_completeness_file_fi = os.path.join(field_insights_dir, "cna_completeness.json")
+    with open(cna_completeness_file_fi, 'w') as f:
+        json.dump(cna_completeness_data, f, indent=2)
+    print(f"CNA completeness data also saved to: {cna_completeness_file_fi}")
+
     # Generate summary statistics for web interface
     summary_stats = {
         "generated_at": datetime.now().isoformat(),
@@ -133,11 +140,15 @@ def generate_completeness_reports():
             for field_name, config in analyzer.schema_fields.items()
         }
     }
-    
     summary_file = os.path.join(web_output_dir, "completeness_summary.json")
     with open(summary_file, 'w') as f:
         json.dump(summary_stats, f, indent=2)
     print(f"Summary statistics saved to: {summary_file}")
+    # Also save a copy to field-insights directory
+    summary_file_fi = os.path.join(field_insights_dir, "completeness_summary.json")
+    with open(summary_file_fi, 'w') as f:
+        json.dump(summary_stats, f, indent=2)
+    print(f"Summary statistics also saved to: {summary_file_fi}")
     
     # Print summary to console
     print("\n" + "="*60)
