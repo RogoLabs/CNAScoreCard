@@ -50,13 +50,13 @@ jobs:
         echo "CVE data cloned successfully"
         ls -la cve_data/
     
-    - name: Run build script
-      run: |
-        python scripts/build.py
-    
     - name: Run completeness analysis
       run: |
-        python -m cnacompletness.main
+        python -m cnascorecard.completeness_main
+
+    - name: Run main scoring/aggregation
+      run: |
+        python -m cnascorecard.main
     
     - name: Commit and push generated files
       run: |
@@ -67,6 +67,7 @@ jobs:
           echo "No changes to commit"
         else
           git commit -m "Auto-update generated web files [skip ci]"
+          git pull --rebase origin main
           git push
         fi
     

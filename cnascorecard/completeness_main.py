@@ -13,7 +13,7 @@ from typing import Dict, Any, List
 # Add the parent directory to Python path to import cnascorecard modules
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from cnacompletness.completeness_analyzer import CVECompletenessAnalyzer
+from cnascorecard.completeness_analyzer import CVECompletenessAnalyzer
 from cnascorecard import data_ingestor
 
 # Configure logging
