@@ -13,6 +13,9 @@ let fieldFilter = 'all';
 let fieldSort = 'util-desc';
 let fieldTableSort = { key: 'util', dir: 'desc' };
 
+// --- CNA Utilization Table Sorting ---
+let cnaUtilSort = { key: 'cna_percent', dir: 'asc' };
+
 // On DOMContentLoaded, initialize
 window.addEventListener('DOMContentLoaded', () => {
     fieldUtilizationCtx = document.getElementById('field-utilization-heatmap');
@@ -50,6 +53,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (sortRank) sortRank.addEventListener('click', () => setFieldTableSort('rank'));
     if (sortName) sortName.addEventListener('click', () => setFieldTableSort('name'));
     if (sortUtil) sortUtil.addEventListener('click', () => setFieldTableSort('util'));
+    setupCnaUtilTableSort();
 });
 
 async function loadSummaryData() {
@@ -275,8 +279,15 @@ async function renderCnaUtilizationTable() {
         tbody.innerHTML = '<tr><td colspan="3">No CNA field utilization data available.</td></tr>';
         return;
     }
-    // Sort by % of CNAs descending
-    cnaFieldUtil.sort((a, b) => (b.cna_percent || 0) - (a.cna_percent || 0));
+    // Sort by selected column and direction
+    cnaFieldUtil.sort((a, b) => {
+        let vA = a[cnaUtilSort.key], vB = b[cnaUtilSort.key];
+        if (typeof vA === 'string') vA = vA.toLowerCase();
+        if (typeof vB === 'string') vB = vB.toLowerCase();
+        if (vA < vB) return cnaUtilSort.dir === 'asc' ? -1 : 1;
+        if (vA > vB) return cnaUtilSort.dir === 'asc' ? 1 : -1;
+        return 0;
+    });
     tbody.innerHTML = cnaFieldUtil.map(f => `<tr>
         <td>${escapeHtml(formatFieldName(f.field))}</td>
         <td>${f.unique_cnas || 0}</td>
@@ -287,6 +298,42 @@ async function renderCnaUtilizationTable() {
 function setupSearchFilters() {
     if (requiredFieldsSearch) requiredFieldsSearch.addEventListener('input', renderRequiredFieldsTable);
     if (optionalFieldsSearch) optionalFieldsSearch.addEventListener('input', renderOptionalFieldsTable);
+}
+
+function setupCnaUtilTableSort() {
+    const sortField = document.getElementById('cna-sort-field');
+    const sortUnique = document.getElementById('cna-sort-unique');
+    const sortPercent = document.getElementById('cna-sort-percent');
+    if (sortField) sortField.addEventListener('click', () => setCnaUtilSort('field'));
+    if (sortUnique) sortUnique.addEventListener('click', () => setCnaUtilSort('unique_cnas'));
+    if (sortPercent) sortPercent.addEventListener('click', () => setCnaUtilSort('cna_percent'));
+}
+
+function setCnaUtilSort(key) {
+    if (cnaUtilSort.key === key) {
+        cnaUtilSort.dir = cnaUtilSort.dir === 'asc' ? 'desc' : 'asc';
+    } else {
+        cnaUtilSort.key = key;
+        cnaUtilSort.dir = key === 'cna_percent' ? 'asc' : 'desc';
+    }
+    updateCnaUtilSortIndicators();
+    renderCnaUtilizationTable();
+}
+
+function updateCnaUtilSortIndicators() {
+    const headers = [
+        { id: 'cna-sort-field', key: 'field' },
+        { id: 'cna-sort-unique', key: 'unique_cnas' },
+        { id: 'cna-sort-percent', key: 'cna_percent' }
+    ];
+    headers.forEach(h => {
+        const el = document.getElementById(h.id);
+        if (!el) return;
+        el.classList.remove('sorted-asc', 'sorted-desc');
+        if (cnaUtilSort.key === h.key) {
+            el.classList.add(cnaUtilSort.dir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+        }
+    });
 }
 
 function updateLastUpdated() {

@@ -19,16 +19,10 @@ if ! command -v git &> /dev/null; then
     exit 1
 fi
 
-# Create virtual environment if it doesn't exist
-if [ ! -d "venv" ]; then
-    echo "📦 Creating Python virtual environment..."
-    python3 -m venv venv
-fi
-
 # Install dependencies
 echo "📥 Installing Python dependencies..."
-python3 -m pip install --upgrade pip
-python3 -m pip install -r requirements.txt
+pip3 install --upgrade pip
+pip3 install -r requirements.txt
 
 # Clone CVE data if not already present
 if [ ! -d "cve_data" ]; then
@@ -68,6 +62,15 @@ if [ -f "web/data/bottom100_cves.json" ]; then
     echo "📈 Generated bottom $BOTTOM_CVE_COUNT CVEs"
 fi
 
+# Run completeness analysis
+python3 -m cnascorecard.completeness_main
+
+# Generate CNA field utilization
+python3 cnascorecard/generate_cna_field_utilization.py
+
+# Run main scoring/aggregation
+python3 -m cnascorecard.main
+
 # Start local server
 echo ""
 echo "🌐 Starting local development server..."
@@ -75,7 +78,6 @@ echo "📍 Your site will be available at: http://localhost:8000"
 echo "🔧 Press Ctrl+C to stop the server"
 echo ""
 
-# Change to web directory and start server
 cd web
 python3 -m http.server 8000
 

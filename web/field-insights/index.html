@@ -8,15 +8,45 @@
     <link rel="stylesheet" href="../completeness/completeness-styles.css">
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .nav-links {
+            text-align: center;
+            margin: 20px 0;
+            background: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+        .nav-links a {
+            color: #222;
+            text-decoration: none;
+            padding: 8px 18px;
+            margin: 0 2px;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .nav-links a.active {
+            background-color: #3182ce !important;
+            color: #fff !important;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .nav-links a:hover:not(.active) {
+            background: #e2e8f0;
+            color: #222;
+        }
+    </style>
 </head>
 <body>
     <div class="nav-links">
         <a href="../index.html">🏠 Home</a>
-        <a href="../scoring.html">📊 EAS Methodology</a>
         <a href="../cna/index.html">🏛️ CNAs</a>
         <a href="../cves/index.html">🔍 CVEs</a>
-        <a href="index.html" style="background-color: #ecf0f1;">🧬 Field Insights</a>
+        <a href="../field-insights/index.html" class="active">🧬 Field Insights</a>
         <a href="../completeness/index.html">📋 Completeness</a>
+        <a href="../scoring.html">📊 EAS Methodology</a>
         <a href="https://rogolabs.net" target="_blank" rel="noopener noreferrer" class="rogolabs-link">🔗 RogoLabs</a>
     </div>
 
@@ -33,35 +63,10 @@
             </p>
         </div>
 
-        <!-- Field Analysis Table -->
-        <div class="field-analysis-section">
-            <div class="table-wrapper">
-                <table class="completeness-table" id="optional-fields-table">
-                    <thead>
-                        <tr>
-                            <th id="sort-rank" class="sortable">Rank</th>
-                            <th id="sort-name" class="sortable">Field Name</th>
-                            <th id="sort-util" class="sortable">Utilization %</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody id="optional-fields-table-body">
-                        <!-- Populated by JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <style>
-            .sortable { cursor: pointer; }
-            .sortable.sorted-asc:after { content: " \25B2"; }
-            .sortable.sorted-desc:after { content: " \25BC"; }
-            .info-box a { color: #2980b9; text-decoration: underline; }
-        </style>
-
         <!-- Overall Usage Percentage Table in Card Box -->
-        <div class="card-box" style="max-width:600px;margin:2rem auto 2rem auto;padding:1.5rem 2rem;background:#fff;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.07);">
-            <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:1rem;">Overall Field Utilization</h2>
-            <div style="max-height:320px;overflow-y:auto;">
+        <div class="card-box" style="max-width:1100px;margin:2rem auto 2rem auto;padding:2rem 2.5rem;background:#fff;border-radius:18px;box-shadow:0 2px 16px rgba(0,0,0,0.08);">
+            <h2 style="text-align:center;font-size:2.1rem;font-weight:800;letter-spacing:-1px;margin-bottom:2rem;">Overall Field Utilization</h2>
+            <div style="max-height:420px;overflow-y:auto;">
                 <table class="completeness-table" style="width:100%;">
                     <thead>
                         <tr><th>Field Name</th><th>Utilization %</th><th>Description</th></tr>
@@ -74,12 +79,16 @@
         </div>
 
         <!-- CNA Utilization Table -->
-        <div class="card-box" style="max-width:700px;margin:2rem auto 2rem auto;padding:1.5rem 2rem;background:#fff;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.07);">
-            <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:1rem;">CNA Field Utilization</h2>
-            <div style="max-height:320px;overflow-y:auto;">
+        <div class="card-box" style="max-width:1100px;margin:2rem auto 2rem auto;padding:2rem 2.5rem;background:#fff;border-radius:18px;box-shadow:0 2px 16px rgba(0,0,0,0.08);">
+            <h2 style="text-align:center;font-size:2.1rem;font-weight:800;letter-spacing:-1px;margin-bottom:2rem;">CNA Field Utilization</h2>
+            <div style="max-height:420px;overflow-y:auto;">
                 <table class="completeness-table" style="width:100%;">
                     <thead>
-                        <tr><th>Field Name</th><th>Unique CNAs</th><th>% of CNAs</th></tr>
+                        <tr>
+                            <th id="cna-sort-field" class="sortable">Field Name</th>
+                            <th id="cna-sort-unique" class="sortable">Unique CNAs</th>
+                            <th id="cna-sort-percent" class="sortable sorted-asc">% of CNAs</th>
+                        </tr>
                     </thead>
                     <tbody id="cna-utilization-table-body">
                         <!-- Populated by JS -->

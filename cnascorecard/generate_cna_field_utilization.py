@@ -41,7 +41,8 @@ def main():
         if cna == "Unknown":
             continue
         for field in stats:
-            if stats[field].get("total", 0) > 0:
+            # Only count if the field is actually present for this CNA
+            if stats[field].get("present", 0) > 0:
                 field_to_cnas[field].add(cna)
     all_cnas = set(cna for cna in cna_stats if cna != "Unknown")
     total_cnas = len(all_cnas)

@@ -8,15 +8,45 @@
     <link rel="stylesheet" href="completeness-styles.css">
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .nav-links {
+            text-align: center;
+            margin: 20px 0;
+            background: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+        .nav-links a {
+            color: #222;
+            text-decoration: none;
+            padding: 8px 18px;
+            margin: 0 2px;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .nav-links a:hover:not(.active) {
+            background: #e2e8f0;
+            color: #222;
+        }
+        .nav-links a.active {
+            background-color: #3182ce !important;
+            color: #fff !important;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+    </style>
 </head>
 <body>
     <div class="nav-links">
-        <a href="../index.html">🏠 Home</a>
-        <a href="../scoring.html">📊 EAS Methodology</a>
-        <a href="../cna/index.html">🏛️ CNAs</a>
-        <a href="../cves/index.html">🔍 CVEs</a>
-        <a href="../field-insights/index.html">🧬 Field Insights</a>
-        <a href="index.html" style="background-color: #ecf0f1;">📋 Completeness</a>
+        <a href="../../index.html">🏠 Home</a>
+        <a href="../../cna/index.html">🏛️ CNAs</a>
+        <a href="../../cves/index.html">🔍 CVEs</a>
+        <a href="../../field-insights/index.html">🧬 Field Insights</a>
+        <a href="../../completeness/index.html" class="active">📋 Completeness</a>
+        <a href="../../scoring.html">📊 EAS Methodology</a>
         <a href="https://rogolabs.net" target="_blank" rel="noopener noreferrer" class="rogolabs-link">🔗 RogoLabs</a>
     </div>
 
