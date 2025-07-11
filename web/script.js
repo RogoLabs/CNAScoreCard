@@ -318,15 +318,43 @@ function getSortedCNAs(cnas, sortBy = 'score') {
     return [...activeCNAs, ...inactiveCNAs];
 }
 
+// Carousel state
+let carouselIndex = 0;
+const CARDS_PER_PAGE = 3; // Adjust for your card height/row size
+
+// Carousel navigation handlers
+function showCarouselPage(pageIdx, cnas, sortBy = 'score') {
+    const sortedCNAs = getSortedCNAs(cnas, sortBy);
+    const start = pageIdx * CARDS_PER_PAGE;
+    const end = start + CARDS_PER_PAGE;
+    const visible = sortedCNAs.slice(start, end);
+    const container = document.getElementById('cnaCards');
+    container.innerHTML = visible.map(cna => createCNACard(cna)).join('');
+    // Disable/enable arrows
+    document.getElementById('carouselUp').disabled = (pageIdx === 0);
+    document.getElementById('carouselDown').disabled = (end >= sortedCNAs.length);
+}
+
+function handleCarouselUp() {
+    if (carouselIndex > 0) {
+        carouselIndex--;
+        showCarouselPage(carouselIndex, filteredCNAs, document.getElementById('sortSelect').value);
+    }
+}
+
+function handleCarouselDown() {
+    const sortBy = document.getElementById('sortSelect').value;
+    const sortedCNAs = getSortedCNAs(filteredCNAs, sortBy);
+    if ((carouselIndex + 1) * CARDS_PER_PAGE < sortedCNAs.length) {
+        carouselIndex++;
+        showCarouselPage(carouselIndex, filteredCNAs, sortBy);
+    }
+}
+
 // Display CNAs as cards
 function displayCNAs(cnas, sortBy = 'score') {
-    const container = document.getElementById('cnaCards');
-    if (cnas.length === 0) {
-        container.innerHTML = '<p>No CNAs found matching your criteria.</p>';
-        return;
-    }
-    const sortedCNAs = getSortedCNAs(cnas, sortBy);
-    container.innerHTML = sortedCNAs.map(cna => createCNACard(cna)).join('');
+    carouselIndex = 0;
+    showCarouselPage(carouselIndex, cnas, sortBy);
 }
 
 // Helper to format numbers: show as integer if .0, else one decimal (handles string '100.0' too)
@@ -511,4 +539,7 @@ document.addEventListener('DOMContentLoaded', () => {
     hideInactiveToggle.classList.add('active');
     hideInactiveToggle.textContent = 'Show CNAs with 0 CVEs';
     loadCNAData();
+    // Carousel arrow listeners
+    document.getElementById('carouselUp').addEventListener('click', handleCarouselUp);
+    document.getElementById('carouselDown').addEventListener('click', handleCarouselDown);
 });

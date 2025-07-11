@@ -78,10 +78,58 @@
                 Hide CNAs with 0 CVEs
             </button>
         </div>
-        
-        <div id="loading" aria-live="polite">Loading CNA data...</div>
-        <div id="cnaCards" class="cna-cards" aria-label="CNA Scorecards"></div>
+
+        <div class="carousel-outer">
+            <button class="carousel-arrow carousel-arrow-up" id="carouselUp" aria-label="Previous CNA cards">&#9650;</button>
+            <div class="carousel-container">
+                <div id="cnaCards" class="cna-cards carousel-cards" aria-label="CNA Scorecards"></div>
+            </div>
+            <button class="carousel-arrow carousel-arrow-down" id="carouselDown" aria-label="Next CNA cards">&#9660;</button>
+        </div>
     </main>
     <script src="script.js"></script>
+    <style>
+        .carousel-outer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 2rem auto;
+        }
+        .carousel-arrow {
+            background: #f7fafc;
+            border: none;
+            color: #2980b9;
+            font-size: 2.2rem;
+            cursor: pointer;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin: 0.5rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .carousel-arrow:active {
+            background: #e2e8f0;
+        }
+        .carousel-container {
+            width: 100%;
+            overflow: hidden;
+            min-height: 340px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .carousel-cards {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s cubic-bezier(.4,2,.6,1);
+        }
+    </style>
 </body>
 </html>
