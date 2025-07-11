@@ -54,6 +54,10 @@ jobs:
       run: |
         python -m cnascorecard.completeness_main
 
+    - name: Generate CNA field utilization
+      run: |
+        python cnascorecard/generate_cna_field_utilization.py
+
     - name: Run main scoring/aggregation
       run: |
         python -m cnascorecard.main

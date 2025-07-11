@@ -320,7 +320,7 @@ function getSortedCNAs(cnas, sortBy = 'score') {
 
 // Carousel state
 let carouselIndex = 0;
-const CARDS_PER_PAGE = 3; // Adjust for your card height/row size
+const CARDS_PER_PAGE = 2; // Show 2 CNA cards per page
 
 // Carousel navigation handlers
 function showCarouselPage(pageIdx, cnas, sortBy = 'score') {
@@ -329,6 +329,11 @@ function showCarouselPage(pageIdx, cnas, sortBy = 'score') {
     const end = start + CARDS_PER_PAGE;
     const visible = sortedCNAs.slice(start, end);
     const container = document.getElementById('cnaCards');
+    if (visible.length === 0 && sortedCNAs.length > 0) {
+        // If page is empty but there are CNAs, show last page
+        carouselIndex = Math.max(0, Math.ceil(sortedCNAs.length / CARDS_PER_PAGE) - 1);
+        return showCarouselPage(carouselIndex, cnas, sortBy);
+    }
     container.innerHTML = visible.map(cna => createCNACard(cna)).join('');
     // Disable/enable arrows
     document.getElementById('carouselUp').disabled = (pageIdx === 0);
@@ -348,6 +353,15 @@ function handleCarouselDown() {
     if ((carouselIndex + 1) * CARDS_PER_PAGE < sortedCNAs.length) {
         carouselIndex++;
         showCarouselPage(carouselIndex, filteredCNAs, sortBy);
+    }
+}
+
+// Keyboard navigation for carousel
+function handleCarouselKey(e) {
+    if (e.key === 'ArrowDown') {
+        handleCarouselDown();
+    } else if (e.key === 'ArrowUp') {
+        handleCarouselUp();
     }
 }
 
@@ -542,4 +556,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Carousel arrow listeners
     document.getElementById('carouselUp').addEventListener('click', handleCarouselUp);
     document.getElementById('carouselDown').addEventListener('click', handleCarouselDown);
+    // Keyboard navigation
+    document.addEventListener('keydown', handleCarouselKey);
 });
