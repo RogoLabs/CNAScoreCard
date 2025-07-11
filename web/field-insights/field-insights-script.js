@@ -60,6 +60,8 @@ async function loadSummaryData() {
         renderFieldLeaderboards();
         renderRequiredFieldsTable();
         renderOptionalFieldsTable();
+        renderOverallUtilizationTable(); // NEW
+        await renderCnaUtilizationTable(); // NEW (async)
         updateLastUpdated();
     } catch (e) {
         showError('Failed to load field insights data.');
@@ -239,6 +241,46 @@ function renderOptionalFieldsTable() {
         <td>${escapeHtml(formatFieldName(f.field))}</td>
         <td>${(f.percentage || 0).toFixed(1)}%</td>
         <td>${escapeHtml(getFieldDescription(f.field))}</td>
+    </tr>`).join('');
+}
+
+// Render the overall utilization table in the card box
+function renderOverallUtilizationTable() {
+    const tbody = document.getElementById('overall-utilization-table-body');
+    if (!tbody || !summaryData.global_completeness) return;
+    let required = filterExcludedFields(summaryData.global_completeness.required_fields || []);
+    let optional = filterExcludedFields(summaryData.global_completeness.optional_fields || []);
+    let allFields = [...required, ...optional];
+    // Sort by utilization descending
+    allFields.sort((a, b) => (b.percentage || 0) - (a.percentage || 0));
+    tbody.innerHTML = allFields.map(f => `<tr>
+        <td>${escapeHtml(formatFieldName(f.field))}</td>
+        <td>${(f.percentage || 0).toFixed(1)}%</td>
+        <td>${escapeHtml(getFieldDescription(f.field))}</td>
+    </tr>`).join('');
+}
+
+// Render the CNA utilization table in the card box
+async function renderCnaUtilizationTable() {
+    const tbody = document.getElementById('cna-utilization-table-body');
+    if (!tbody) return;
+    // Load CNA field utilization data (precomputed or fallback to empty)
+    let cnaFieldUtil = [];
+    try {
+        const resp = await fetch('cna_field_utilization.json');
+        cnaFieldUtil = await resp.json();
+    } catch (e) { cnaFieldUtil = []; }
+    // If not available, show message
+    if (!Array.isArray(cnaFieldUtil) || cnaFieldUtil.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="3">No CNA field utilization data available.</td></tr>';
+        return;
+    }
+    // Sort by % of CNAs descending
+    cnaFieldUtil.sort((a, b) => (b.cna_percent || 0) - (a.cna_percent || 0));
+    tbody.innerHTML = cnaFieldUtil.map(f => `<tr>
+        <td>${escapeHtml(formatFieldName(f.field))}</td>
+        <td>${f.unique_cnas || 0}</td>
+        <td>${(f.cna_percent || 0).toFixed(1)}%</td>
     </tr>`).join('');
 }
 

@@ -57,6 +57,36 @@
             .sortable.sorted-desc:after { content: " \25BC"; }
             .info-box a { color: #2980b9; text-decoration: underline; }
         </style>
+
+        <!-- Overall Usage Percentage Table in Card Box -->
+        <div class="card-box" style="max-width:600px;margin:2rem auto 2rem auto;padding:1.5rem 2rem;background:#fff;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.07);">
+            <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:1rem;">Overall Field Utilization</h2>
+            <div style="max-height:320px;overflow-y:auto;">
+                <table class="completeness-table" style="width:100%;">
+                    <thead>
+                        <tr><th>Field Name</th><th>Utilization %</th><th>Description</th></tr>
+                    </thead>
+                    <tbody id="overall-utilization-table-body">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- CNA Utilization Table -->
+        <div class="card-box" style="max-width:700px;margin:2rem auto 2rem auto;padding:1.5rem 2rem;background:#fff;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,0.07);">
+            <h2 style="font-size:1.3rem;font-weight:700;margin-bottom:1rem;">CNA Field Utilization</h2>
+            <div style="max-height:320px;overflow-y:auto;">
+                <table class="completeness-table" style="width:100%;">
+                    <thead>
+                        <tr><th>Field Name</th><th>Unique CNAs</th><th>% of CNAs</th></tr>
+                    </thead>
+                    <tbody id="cna-utilization-table-body">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </main>
 
     <footer class="footer">
