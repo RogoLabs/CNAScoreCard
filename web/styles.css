@@ -1023,3 +1023,57 @@ button:focus, input:focus, select:focus {
 .card-title a:hover {
     color: #0d6efd;
 }
+
+/* EAS Scoring Card Styles */
+.cve-score-main {
+  font-size: 2.1em;
+  font-weight: 700;
+  color: var(--primary-color);
+  line-height: 1;
+  margin-bottom: 0.1em;
+}
+.score-number {
+  font-size: 1.2em;
+}
+.score-denom {
+  font-size: 0.6em;
+  color: var(--text-secondary);
+  margin-left: 2px;
+}
+.cve-breakdown-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5em 1.5em;
+  margin-top: 0.7em;
+  margin-bottom: 0.2em;
+}
+.breakdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 1em;
+  background: var(--card-bg);
+  border-radius: 6px;
+  padding: 0.3em 0.7em;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.breakdown-item .label {
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-size: 0.95em;
+}
+.breakdown-item .value {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 1.08em;
+}
+@media (max-width: 700px) {
+  .cve-breakdown-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 500px) {
+  .cve-breakdown-grid {
+    grid-template-columns: 1fr;
+  }
+}

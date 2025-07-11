@@ -129,36 +129,18 @@ function displayCVECards(cves, containerId) {
                         <a href="https://cve.org/CVERecord?id=${cve.cveId}" target="_blank">${cve.cveId}</a>
                     </div>
                     <div class="cve-meta">
-                        <div class="cve-score">${formatNumber(score)}/100</div>
+                        <div class="cve-score-main"><span class="score-number">${formatNumber(score)}</span><span class="score-denom">/100</span></div>
                         <div class="cve-cna">${cve.assigningCna || 'Unknown CNA'}</div>
                         <div class="cve-date">${formatDate(cve.datePublished)}</div>
                     </div>
                 </div>
-                <div class="cve-details">
-                    <div class="cve-detail-item">
-                        <span class="cve-detail-label">Foundational:</span>
-                        <span class="cve-detail-value">${formatNumber(breakdown.foundationalCompleteness || 0)}/30</span>
-                    </div>
-                    <div class="cve-detail-item">
-                        <span class="cve-detail-label">Root Cause:</span>
-                        <span class="cve-detail-value">${formatNumber(breakdown.rootCauseAnalysis || 0)}/10</span>
-                    </div>
-                    <div class="cve-detail-item">
-                        <span class="cve-detail-label">Software ID:</span>
-                        <span class="cve-detail-value">${formatNumber(breakdown.softwareIdentification || 0)}/10</span>
-                    </div>
-                    <div class="cve-detail-item">
-                        <span class="cve-detail-label">Severity:</span>
-                        <span class="cve-detail-value">${formatNumber(breakdown.severityAndImpactContext || 0)}/25</span>
-                    </div>
-                    <div class="cve-detail-item">
-                        <span class="cve-detail-label">Actionable:</span>
-                        <span class="cve-detail-value">${formatNumber(breakdown.actionableIntelligence || 0)}/20</span>
-                    </div>
-                    <div class="cve-detail-item">
-                        <span class="cve-detail-label">Format:</span>
-                        <span class="cve-detail-value">${formatNumber(breakdown.dataFormatAndPrecision || 0)}/5</span>
-                    </div>
+                <div class="cve-breakdown-grid">
+                    <div class="breakdown-item"><span class="label">Foundational</span><span class="value">${formatNumber(breakdown.foundationalCompleteness || 0)}/30</span></div>
+                    <div class="breakdown-item"><span class="label">Root Cause</span><span class="value">${formatNumber(breakdown.rootCauseAnalysis || 0)}/10</span></div>
+                    <div class="breakdown-item"><span class="label">Software ID</span><span class="value">${formatNumber(breakdown.softwareIdentification || 0)}/10</span></div>
+                    <div class="breakdown-item"><span class="label">Severity</span><span class="value">${formatNumber(breakdown.severityAndImpactContext || 0)}/25</span></div>
+                    <div class="breakdown-item"><span class="label">Actionable</span><span class="value">${formatNumber(breakdown.actionableIntelligence || 0)}/20</span></div>
+                    <div class="breakdown-item"><span class="label">Format</span><span class="value">${formatNumber(breakdown.dataFormatAndPrecision || 0)}/5</span></div>
                 </div>
             </div>
         `;
