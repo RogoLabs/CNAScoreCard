@@ -1,114 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CNA Detail - CNA ScoreCard</title>
-    <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="cna-styles.css">
-    <link rel="stylesheet" href="../cves/cve-styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNA Detail - CNA Scorecard</title>
+  <link rel="stylesheet" href="../assets/theme.css">
+  <link rel="stylesheet" href="../shared/shared.css">
+  <link rel="stylesheet" href="cna-detail.css">
 </head>
 <body>
-    <div class="container">
-        <div class="nav-links">
-            <a href="../index.html">🏠 Home</a>
-            <a href="index.html" style="background-color: #ecf0f1;">🏛️ CNAs</a>
-            <a href="../cves/index.html">🔍 CVEs</a>
-            <a href="../field-insights/index.html">🧬 Field Insights</a>
-            <a href="../completeness/index.html">📋 Completeness</a>
-            <a href="../scoring.html">📊 EAS Methodology</a>
-            <a href="https://rogolabs.net" target="_blank" rel="noopener noreferrer" class="rogolabs-link">🔗 RogoLabs</a>
-        </div>
-        
-        <div id="loading">Loading CNA data...</div>
-        
-        <!-- Professional CNA Header Section -->
-        <div id="cnaHeader" class="cna-header-container" style="display: none;">
-            <div class="cna-detail-card">
-                <div class="cna-title-section">
-                    <div class="cna-title-content">
-                        <h1 id="cnaTitle" class="cna-title"></h1>
-                        <div id="cnaOrgName" class="cna-org-name"></div>
-                    </div>
-                </div>
-                
-                <div class="cna-metrics-section" style="display: flex; justify-content: space-around; align-items: center; flex-wrap: nowrap; gap: 1.5rem; min-width: 0;">
-                    <div id="cnaMainScore" class="metric-item main-metric">
-                        <div class="metric-value"></div>
-                        <div class="metric-label">Average EAS Score</div>
-                    </div>
-                    <div id="cnaRank" class="metric-item">
-                        <div class="metric-value"></div>
-                        <div class="metric-label">Rank</div>
-                    </div>
-                    <div id="cnaPercentile" class="metric-item">
-                        <div class="metric-value"></div>
-                        <div class="metric-label">Percentile</div>
-                    </div>
-                    <div id="cnaTotalCves" class="metric-item">
-                        <div class="metric-value"></div>
-                        <div class="metric-label">Total CVEs</div>
-                    </div>
-                </div>
-                
-                <div id="cnaScope" class="cna-scope-box"></div>
-                
-                <div id="cnaBreakdown" class="cna-breakdown-section">
-                    <h3>Score Breakdown</h3>
-                    <div class="breakdown-grid">
-                        <div class="breakdown-item">
-                            <span class="breakdown-label">Foundational Completeness</span>
-                            <span id="foundational" class="breakdown-value"></span>
-                        </div>
-                        <div class="breakdown-item">
-                            <span class="breakdown-label">Root Cause Analysis</span>
-                            <span id="rootCause" class="breakdown-value"></span>
-                        </div>
-                        <div class="breakdown-item">
-                            <span class="breakdown-label">Software Identification</span>
-                            <span id="softwareId" class="breakdown-value"></span>
-                        </div>
-                        <div class="breakdown-item">
-                            <span class="breakdown-label">Severity Context</span>
-                            <span id="severityContext" class="breakdown-value"></span>
-                        </div>
-                        <div class="breakdown-item">
-                            <span class="breakdown-label">Actionable Intelligence</span>
-                            <span id="actionableIntel" class="breakdown-value"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- CVE Filters and Cards -->
-        <div id="cveSection" class="cve-section" style="display: none;">
-            <h2 class="section-title">Recent CVE Scores</h2>
-            <div class="filters">
-                <input type="text" id="searchInput" placeholder="Search CVEs...">
-                <select id="sortSelect">
-                    <option value="score">Sort by EAS Score (High to Low)</option>
-                    <option value="date">Sort by Date (Recent First)</option>
-                </select>
-                <select id="filterSelect">
-                    <option value="all">All CVEs</option>
-                    <option value="high">High Scores (≥80)</option>
-                    <option value="medium">Medium Scores (60-79)</option>
-                    <option value="low">Low Scores (<60)</option>
-                </select>
-            </div>
-        </div>
-        
-        <div id="cveCards" class="cve-cards"></div>
+  <nav class="navbar">
+    <img src="../assets/logo.svg" alt="CNA Scorecard Logo" class="navbar-logo">
+    <div class="navbar-links">
+      <a href="../index.html">Home</a>
+      <a href="index.html">CNAs</a>
+      <a href="../cves/index.html">CVEs</a>
+      <a href="../completeness/index.html">Completeness</a>
+      <a href="../scoring.html">Methodology</a>
     </div>
-    
-    <script>
-        // Define CNA_NAME and SAFE_FILENAME for the script
-        const urlParams = new URLSearchParams(window.location.search);
-        // Support both 'cna' and 'shortName' as query params
-        const CNA_NAME = urlParams.get('cna') || urlParams.get('shortName') || 'adobe';
-        const SAFE_FILENAME = CNA_NAME.replace(/[^a-zA-Z0-9\s\-_]/g, '').trim().replace(/\s+/g, '_');
-    </script>
-    <script src="cna-detail-script.js"></script>
+  </nav>
+  <main class="container">
+    <section class="cna-header-section">
+      <a href="../index.html" class="back-button" onclick="handleBackNavigation(event)">
+        <span class="back-icon">←</span>
+        <span class="back-text">Back to CNA List</span>
+      </a>
+      <div class="cna-header-content">
+        <div class="cna-title-section">
+          <h1 id="cnaName">CNA Name</h1>
+          <h2 id="organizationName" class="organization-name">Organization Name</h2>
+          <div class="cna-metadata-badges">
+            <div class="left-badges">
+              <span id="cnaType">Vendor</span>
+              <span id="cnaCountryFlag" class="country-flag-display" title="Country">🌐</span>
+            </div>
+            <div class="right-badges">
+              <span id="cnaGrade" class="badge-grade uniform-pill">Great</span>
+              <span id="cnaScore" class="uniform-pill">Score: 88</span>
+              <span id="cnaTrend" class="trend-badge uniform-pill">Steady</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cna-details-grid">
+        <div class="cna-detail-item">
+          <strong>Scope:</strong>
+          <span id="cnaScope">Not specified</span>
+        </div>
+        <div class="cna-detail-item">
+          <strong>CNA ID:</strong>
+          <span id="cnaOfficialId">Not specified</span>
+        </div>
+        <div class="cna-detail-item">
+          <strong>Root CNA:</strong>
+          <span id="cnaRootInfo">Not specified</span>
+        </div>
+      </div>
+      
+      <!-- Patch Info section - centered at bottom -->
+      <div class="cna-patch-info">
+        <span id="cnaEmail" style="display: none;"></span>
+        <span id="cnaAdvisories" style="display: none;"></span>
+        <span id="cnaDisclosurePolicy" style="display: none;"></span>
+      </div>
+      
+      <!-- Line break and metric cards integrated into header -->
+      <div class="header-metric-cards">
+        <section class="metric-cards" id="metricCards">
+          <!-- Individual metric cards will be rendered here -->
+        </section>
+      </div>
+    </section>
+    <section class="category-breakdown">
+      <h2>Category Breakdown</h2>
+      <p class="category-explanation">Scores reflect the quality and completeness of CVE documentation across five key areas.</p>
+      <div id="categoryCharts">
+        <!-- Bar/donut charts for 5 categories will render here -->
+      </div>
+    </section>
+
+
+  </main>
+  <footer class="footer modern-footer">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <img src="../assets/logo.svg" alt="CNA Scorecard Logo" class="footer-logo">
+        <span class="footer-title">CNA Scorecard</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://rogolabs.net" target="_blank">RogoLabs</a>
+        <a href="https://patchthis.app" target="_blank">PatchThis</a>
+        <a href="https://cveforecast.org" target="_blank">CVEForecast</a>
+        <a href="https://cve.icu" target="_blank">CVE.ICU</a>
+      </div>
+    </div>
+    <div class="footer-meta">&copy; 2025 RogoLabs. All rights reserved.</div>
+  </footer>
+  <script src="cna-detail-clean.js"></script>
 </body>
 </html>

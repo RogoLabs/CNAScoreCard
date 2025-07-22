@@ -1,164 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CNA ScoreCard</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Accessibility: ARIA landmarks and improved color contrast -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNA Scorecard - Leaderboard</title>
+  <link rel="stylesheet" href="assets/theme.css">
+  <link rel="stylesheet" href="shared/shared.css">
+  <link rel="stylesheet" href="leaderboard.css">
 </head>
 <body>
-    <div class="nav-links">
-        <a href="index.html" class="active">🏠 Home</a>
-        <a href="cna/index.html">🏛️ CNAs</a>
-        <a href="cves/index.html">🔍 CVEs</a>
-        <a href="field-insights/index.html">🧬 Field Insights</a>
-        <a href="completeness/index.html">📋 Completeness</a>
-        <a href="scoring.html">📊 EAS Methodology</a>
-        <a href="https://rogolabs.net" target="_blank" rel="noopener noreferrer" class="rogolabs-link">🔗 RogoLabs</a>
+  <nav class="navbar">
+    <img src="assets/logo.svg" alt="CNA Scorecard Logo" class="navbar-logo">
+    <div class="navbar-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="cna/index.html">CNAs</a>
+      <a href="cves/index.html">CVEs</a>
+      <a href="completeness/index.html">Completeness</a>
+      <a href="scoring.html">Methodology</a>
     </div>
-    <div id="loading" aria-live="polite">Loading CNA data...</div>
-    <main class="container" role="main" aria-label="CNA ScoreCard main content">
-        <div class="page-header">
-            <h1 id="main-title"><span class="cna-part">CNA</span>ScoreCard</h1>
-        </div>
-        <div class="intro-section" aria-labelledby="main-title">
-            <p class="main-description">A comprehensive evaluation platform that analyzes and scores CVE Numbering Authorities (CNAs) based on the quality and completeness of their vulnerability disclosures. Our <a href="scoring.html">Enhanced Aggregate Scoring (EAS) methodology</a> provides objective, data-driven assessments to recognize excellence in vulnerability reporting. The EAS scoring model is open source and available for review in our <a href="https://github.com/jgamblin/CNAScoreCard" target="_blank" rel="noopener noreferrer">GitHub repository</a>.</p>
-        </div>
-        <div class="card-box" style="max-width:1100px;margin:2rem auto 2rem auto;padding:2rem 2.5rem;background:#fff;border-radius:18px;box-shadow:0 2px 16px rgba(0,0,0,0.08);">
-            <div class="filters no-box" style="margin-bottom:1.5rem;background:none;box-shadow:none;border:none;padding:0;">
-                <input type="text" id="searchInput" placeholder="Search CNAs...">
-                <select id="sortSelect">
-                    <option value="score">Sort by Score</option>
-                    <option value="name">Sort by Name</option>
-                    <option value="cveCount">Sort by CVE Count</option>
-                </select>
-                <button type="button" id="hideInactiveToggle" class="filter-button active" data-active="true">
-                    Hide CNAs with 0 CVEs
-                </button>
-            </div>
-            <div class="carousel-outer">
-                <button class="carousel-arrow carousel-arrow-up" id="carouselUp" aria-label="Previous CNA cards">&#9650;</button>
-                <div class="carousel-container">
-                    <div id="cnaCards" class="cna-cards carousel-cards" aria-label="CNA Scorecards"></div>
-                </div>
-                <button class="carousel-arrow carousel-arrow-down" id="carouselDown" aria-label="Next CNA cards">&#9660;</button>
-            </div>
-        </div>
-        <div class="card-box" style="max-width:1100px;margin:2rem auto 2rem auto;padding:2rem 2.5rem;background:#fff;border-radius:18px;box-shadow:0 2px 16px rgba(0,0,0,0.08);">
-            <h2 style="text-align:center;font-size:2.1rem;font-weight:800;letter-spacing:-1px;margin-bottom:2rem;">What We Measure</h2>
-            <div class="features-grid">
-                <div class="feature">
-                    <h3>🏗️ Foundational Completeness</h3>
-                    <p>Product identification (either vendor/product or packageName/collectionURL) and high-quality vulnerability descriptions</p>
-                </div>
-                <div class="feature">
-                    <h3>🔍 Root Cause Analysis</h3>
-                    <p>CWE classifications that help developers understand vulnerability patterns</p>
-                </div>
-                <div class="feature">
-                    <h3>🆔 Software Identification</h3>
-                    <p>Presence of valid CPE identifiers for affected products, enabling precise software targeting and automation</p>
-                </div>
-                <div class="feature">
-                    <h3>⚡ Severity Context</h3>
-                    <p>CVSS scores and threat metrics for proper risk assessment</p>
-                </div>
-                <div class="feature">
-                    <h3>🎯 Actionable Intelligence</h3>
-                    <p>References, exploits, and VEX data for immediate security response</p>
-                </div>
-            </div>
-            <div class="data-info" style="margin-top:2.5rem;">
-                <div class="data-stats">
-                    <div class="stat-item">
-                        <strong>Live Data:</strong> Automatically updated every 6 hours from the official CVE database
-                    </div>
-                    <div class="stat-item">
-                        <strong>Time Range:</strong> Last 6 months of CVE publications
-                    </div>
-                    <div class="stat-item">
-                        <strong>Methodology:</strong> Enhanced Aggregate Scoring (EAS) with 100-point scale
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-    <script src="script.js"></script>
-    <style>
-        .carousel-outer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto 2rem auto;
-        }
-        .carousel-arrow {
-            background: #f7fafc;
-            border: none;
-            color: #2980b9;
-            font-size: 2.2rem;
-            cursor: pointer;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            margin: 0.5rem 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s;
-        }
-        .carousel-arrow:active {
-            background: #e2e8f0;
-        }
-        .carousel-container {
-            width: 100%;
-            overflow: hidden;
-            min-height: 340px;
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-        }
-        .carousel-cards {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            gap: 3.5rem;
-            transition: transform 0.4s cubic-bezier(.4,2,.6,1);
-        }
-        .cna-card {
-            min-width: 340px;
-            max-width: 400px;
-            flex: 1 1 340px;
-        }
-        @media (max-width: 700px) {
-            .carousel-cards {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-        .nav-links a.active {
-            background-color: #3182ce !important;
-            color: #fff !important;
-            border-radius: 8px;
-            transition: background 0.2s;
-        }
-        .nav-links a {
-            color: #222;
-            text-decoration: none;
-            padding: 8px 18px;
-            margin: 0 2px;
-            font-weight: 500;
-            border-radius: 8px;
-            transition: background 0.2s;
-        }
-        .nav-links a:hover:not(.active) {
-            background: #e2e8f0;
-            color: #222;
-        }
-    </style>
+  </nav>
+  <main class="container">
+    <section class="contextual-heading-card card">
+      <h1 class="contextual-heading-title">CNA Scorecard</h1>
+      <p class="contextual-heading-subtitle">Explore CNA performance, trends, and actionable insights at a glance.</p>
+    </section>
+    <section class="hero-section">
+      <input type="search" id="searchBar" placeholder="Search CNA..." aria-label="Search CNA">
+    </section>
+    <section class="top-performers" id="topPerformers">
+      <!-- Top CNA cards will be rendered here -->
+    </section>
+
+  </main>
+  <footer class="footer modern-footer">
+    <div class="footer-main">
+      <!-- Summary line will be injected here by summary-cards.js -->
+      <div class="footer-brand">
+        <img src="assets/logo.svg" alt="CNA Scorecard Logo" class="footer-logo">
+        <span class="footer-title">CNA Scorecard</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://rogolabs.net" target="_blank">RogoLabs</a>
+        <a href="https://patchthis.app" target="_blank">PatchThis</a>
+        <a href="https://cveforecast.org" target="_blank">CVEForecast</a>
+        <a href="https://cve.icu" target="_blank">CVE.ICU</a>
+      </div>
+    </div>
+    <div class="footer-meta">&copy; 2025 RogoLabs. All rights reserved.</div>
+  </footer>
+  <script src="leaderboard.js"></script>
+  <script src="shared/summary-cards.js"></script>
 </body>
 </html>

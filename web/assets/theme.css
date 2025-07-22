@@ -1,0 +1,92 @@
+/*
+  RogoLabs CNA Scorecard Theme - carries over PatchThis/CVEForecast colors
+  This file defines color variables, font stack, and basic theme styles
+*/
+:root {
+  --primary-color: #0074d9;   /* CNA Scorecard Blue from cnascorecard.org */
+  --accent-color: #0fa3b1;    /* Teal/blue accent */
+  --grade-perfect: #ffd700;   /* Gold for "Perfect" */
+  --grade-great: #27ae60;     /* Green for "Great" */
+  --grade-good: #f4d35e;      /* Yellow for "Good" */
+  --grade-needs-work: #e67e22;/* Orange for "Needs Work" */
+  --grade-missing: #e74c3c;   /* Red for "Missing Data" */
+  --background: #f8fafc;
+  --card-bg: #fff;
+  --text-primary: #222;
+  --text-secondary: #666;
+  --border-color: #e0e0e0;
+  --success-color: #27ae60;
+  --warning-color: #f4d35e;
+  --danger-color: #e74c3c;
+  --info-color: #1ec6e6;
+  --muted-color: #b0b0b0;
+  --font-stack: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font-stack);
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-stack);
+  color: var(--text-primary);
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+}
+
+.contextual-heading-card.card {
+  display: block;
+  background: var(--card-bg);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(30,198,230,0.10);
+  padding: 2.2rem 2.4rem 1.7rem 2.4rem;
+  margin: 2.5rem auto 2.2rem auto;
+  border: 1px solid var(--border-color);
+  max-width: 900px;
+  text-align: center;
+}
+
+.contextual-heading-title {
+  font-size: 2.1em;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.contextual-heading-subtitle {
+  font-size: 1.23em;
+  color: var(--text-secondary);
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.badge-grade {
+  display: inline-block;
+  border-radius: 12px;
+  padding: 0.25em 0.8em;
+  font-weight: 700;
+  font-size: 0.95em;
+  color: #fff;
+}
+
+.badge-perfect { background: var(--grade-perfect); color: #333; }
+.badge-great { background: var(--grade-great); }
+.badge-good { background: var(--grade-good); color: #333; }
+.badge-needs-work { background: var(--grade-needs-work); }
+.badge-missing { background: var(--grade-missing); }

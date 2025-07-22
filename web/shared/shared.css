@@ -1,0 +1,116 @@
+/* Shared layout, nav, footer, and accessibility styles */
+
+.footer-summary-line {
+  text-align: left;
+  margin: 0 0 1.3rem 0;
+  font-size: 1.06em;
+  color: #5a6b7b;
+  letter-spacing: 0.01em;
+  font-weight: 400;
+  max-width: 440px;
+  min-width: 260px;
+  line-height: 1.5;
+  display: block;
+}
+@media (max-width: 900px) {
+  .footer-summary-line {
+    text-align: left;
+    margin: 0 1rem 1.2rem 1rem;
+    max-width: 100%;
+  }
+}
+
+
+.navbar {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+  padding: 1.2rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar-logo {
+  height: 36px;
+  margin-right: 1.5rem;
+}
+.navbar-links a {
+  color: var(--text-primary);
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.navbar-links a.active, .navbar-links a:hover {
+  background: var(--primary-color);
+  color: #fff;
+}
+.footer {
+  background: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  padding: 2rem 0 0 0;
+  color: var(--text-secondary);
+  font-size: 1em;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.footer.modern-footer {
+  padding: 0;
+  border: none;
+  background: var(--background);
+}
+.footer-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 2rem 0.5rem 2rem;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border-color);
+}
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.footer-logo {
+  height: 36px;
+  width: 36px;
+}
+.footer-title {
+  font-size: 1.35em;
+  font-weight: 700;
+  color: var(--primary-color);
+  letter-spacing: 0.02em;
+}
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+.footer-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1em;
+  transition: color 0.2s;
+}
+.footer-links a:hover {
+  color: var(--primary-color);
+}
+.footer-meta {
+  text-align: center;
+  color: var(--muted-color);
+  font-size: 0.98em;
+  padding: 1.2rem 0 1.8rem 0;
+  width: 100%;
+  border-top: 1px solid var(--border-color);
+  background: var(--background);
+  margin-top: 0.5rem;
+}
+[tabindex]:focus, button:focus, a:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}

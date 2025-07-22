@@ -1,0 +1,478 @@
+// Completeness Dashboard Logic - Dynamic Rendering
+
+// Comprehensive mapping from field name to schema anchor for CVE 5.1 Schema
+const schemaAnchorMap = {
+  // Core CVE metadata fields
+  "dataVersion": "#oneOf_i0_dataVersion",
+  "cveMetadata.serial": "#oneOf_i0_cveMetadata_serial",
+  
+  // CNA Container core fields
+  "containers.cna.descriptions": "#oneOf_i0_containers_cna_descriptions",
+  "containers.cna.affected": "#oneOf_i0_containers_cna_affected",
+  "containers.cna.references": "#oneOf_i0_containers_cna_references",
+  "containers.cna.title": "#oneOf_i0_containers_cna_title",
+  "containers.cna.dateAssigned": "#oneOf_i0_containers_cna_dateAssigned",
+  "containers.cna.datePublic": "#oneOf_i0_containers_cna_datePublic",
+  "containers.cna.problemTypes": "#oneOf_i0_containers_cna_problemTypes",
+  "containers.cna.metrics": "#oneOf_i0_containers_cna_metrics",
+  "containers.cna.impacts": "#oneOf_i0_containers_cna_impacts",
+  "containers.cna.configurations": "#oneOf_i0_containers_cna_configurations",
+  "containers.cna.workarounds": "#oneOf_i0_containers_cna_workarounds",
+  "containers.cna.solutions": "#oneOf_i0_containers_cna_solutions",
+  "containers.cna.exploits": "#oneOf_i0_containers_cna_exploits",
+  "containers.cna.timeline": "#oneOf_i0_containers_cna_timeline",
+  "containers.cna.credits": "#oneOf_i0_containers_cna_credits",
+  "containers.cna.source": "#oneOf_i0_containers_cna_source",
+  "containers.cna.tags": "#oneOf_i0_containers_cna_tags",
+  "containers.cna.taxonomyMappings": "#oneOf_i0_containers_cna_taxonomyMappings",
+  "containers.cna.cpeApplicability": "#oneOf_i0_containers_cna_cpeApplicability",
+  
+  // ADP Container
+  "containers.adp": "#oneOf_i0_containers_adp",
+  
+  // Descriptions analysis (custom checks)
+  "descriptions.english": "#oneOf_i0_containers_cna_descriptions",
+  "descriptions.multiple_languages": "#oneOf_i0_containers_cna_descriptions",
+  "descriptions.supporting_media": "#oneOf_i0_containers_cna_descriptions",
+  
+  // Affected products analysis (custom checks)
+  "affected.vendor": "#oneOf_i0_containers_cna_affected",
+  "affected.product": "#oneOf_i0_containers_cna_affected",
+  "affected.versions": "#oneOf_i0_containers_cna_affected",
+  "affected.defaultStatus": "#oneOf_i0_containers_cna_affected",
+  "affected.cpes": "#oneOf_i0_containers_cna_affected",
+  "affected.modules": "#oneOf_i0_containers_cna_affected",
+  "affected.programFiles": "#oneOf_i0_containers_cna_affected",
+  "affected.programRoutines": "#oneOf_i0_containers_cna_affected",
+  "affected.platforms": "#oneOf_i0_containers_cna_affected",
+  "affected.repo": "#oneOf_i0_containers_cna_affected",
+  
+  // Problem Types analysis (custom checks)
+  "problemTypes.cwe": "#oneOf_i0_containers_cna_problemTypes",
+  "problemTypes.type": "#oneOf_i0_containers_cna_problemTypes",
+  "problemTypes.references": "#oneOf_i0_containers_cna_problemTypes",
+  
+  // References analysis (custom checks)
+  "references.advisory": "#oneOf_i0_containers_cna_references",
+  "references.patch": "#oneOf_i0_containers_cna_references",
+  "references.exploit": "#oneOf_i0_containers_cna_references",
+  "references.technical": "#oneOf_i0_containers_cna_references",
+  "references.vendor": "#oneOf_i0_containers_cna_references",
+  "references.named": "#oneOf_i0_containers_cna_references",
+  
+  // Metrics analysis (custom checks)
+  "metrics.cvssV4": "#oneOf_i0_containers_cna_metrics",
+  "metrics.cvssV3_1": "#oneOf_i0_containers_cna_metrics",
+  "metrics.cvssV3_0": "#oneOf_i0_containers_cna_metrics",
+  "metrics.cvssV2": "#oneOf_i0_containers_cna_metrics",
+  "metrics.other": "#oneOf_i0_containers_cna_metrics",
+  "metrics.scenarios": "#oneOf_i0_containers_cna_metrics"
+};
+
+function renderSchemaFieldLink(field) {
+  const anchor = schemaAnchorMap[field] || ("#oneOf_i0_" + field.replace(/\./g, '_'));
+  const label = field.replace(/\./g, ' \u2192 ');
+  return `<a href="https://cveproject.github.io/cve-schema/schema/docs/${anchor}" target="_blank" rel="noopener" class="schema-link">${label}</a>`;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const overview = document.getElementById('completenessOverview');
+  const cnaSearchInput = document.getElementById('cnaSearchInput');
+  const cnaSearchResults = document.getElementById('cnaSearchResults');
+  
+  // Sorting state
+  let currentSortColumn = 'importance';
+  let currentSortDirection = 'desc'; // Default to High to Low
+  
+  // Global data storage
+  let allFields = [];
+  let cnaData = [];
+  let cnaScorecardsData = {};
+
+  // Define canonical field order based on schema importance
+  const canonicalFieldOrder = [
+    "cveMetadata.serial",
+    "containers.cna.descriptions",
+    "containers.cna.affected",
+    "containers.cna.references",
+    "containers.cna.title",
+    "containers.cna.dateAssigned",
+    "containers.cna.datePublic",
+    "containers.cna.problemTypes",
+    "containers.cna.metrics",
+    "containers.cna.impacts",
+    "containers.cna.configurations",
+    "containers.cna.workarounds",
+    "containers.cna.solutions",
+    "containers.cna.exploits",
+    "containers.cna.timeline",
+    "containers.cna.credits",
+    "containers.cna.source",
+    "containers.cna.tags",
+    "containers.cna.taxonomyMappings",
+    "containers.cna.cpeApplicability",
+    "containers.adp",
+    "descriptions.english",
+    "descriptions.multiple_languages",
+    "descriptions.supporting_media",
+    "affected.vendor",
+    "affected.product",
+    "affected.versions",
+    "affected.defaultStatus",
+    "affected.cpes",
+    "affected.modules",
+    "affected.programFiles",
+    "affected.programRoutines",
+    "affected.platforms",
+    "affected.repo",
+    "problemTypes.cwe",
+    "problemTypes.type"
+  ];
+
+  // Render importance badge based on field importance level
+  function renderImportanceBadge(importance) {
+    const badgeClass = `importance-${importance.toLowerCase()}`;
+    return `<span class="importance-badge ${badgeClass}">${importance}</span>`;
+  }
+
+  // Sort fields by column
+  function sortFields(fields, column, direction) {
+    return fields.sort((a, b) => {
+      let aVal, bVal;
+      
+      switch(column) {
+        case 'field':
+          aVal = a.field;
+          bVal = b.field;
+          break;
+        case 'importance':
+          // Define importance order: High > Medium > Low
+          const importanceOrder = { 'High': 3, 'Medium': 2, 'Low': 1 };
+          aVal = importanceOrder[a.importance] || 0;
+          bVal = importanceOrder[b.importance] || 0;
+          break;
+        case 'percent':
+          aVal = parseFloat(a.cna_percent ?? a.percent ?? 0);
+          bVal = parseFloat(b.cna_percent ?? b.percent ?? 0);
+          break;
+        case 'unique_cnas':
+          aVal = parseInt(a.unique_cnas ?? 0);
+          bVal = parseInt(b.unique_cnas ?? 0);
+          break;
+        case 'description':
+          aVal = (a.description || '').toLowerCase();
+          bVal = (b.description || '').toLowerCase();
+          break;
+        default:
+          return 0;
+      }
+      
+      if (direction === 'asc') {
+        return aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+      } else {
+        return aVal > bVal ? -1 : aVal < bVal ? 1 : 0;
+      }
+    });
+  }
+
+  // Render a single table with all fields
+  function renderTable(fields) {
+    if (!fields.length) return '';
+    
+    // Sort fields by current sort settings
+    const sortedFields = sortFields([...fields], currentSortColumn, currentSortDirection);
+    
+    return `<div class="completeness-table-section">
+      <table class="completeness-table">
+        <thead><tr>
+          <th class="sortable" data-column="field">Field Name ${getSortIcon('field')}</th>
+          <th class="sortable" data-column="importance">Importance ${getSortIcon('importance')}</th>
+          <th class="sortable" data-column="percent">Field Utilization ${getSortIcon('percent')}</th>
+          <th class="sortable" data-column="unique_cnas">Unique CNAs ${getSortIcon('unique_cnas')}</th>
+          <th class="sortable" data-column="description">Description ${getSortIcon('description')}</th>
+        </tr></thead>
+        <tbody>
+          ${sortedFields.map(field => `
+            <tr>
+              <td>${renderSchemaFieldLink(field.field)}</td>
+              <td>${renderImportanceBadge(field.importance || 'Medium')}</td>
+              <td style="color:#0074d9;font-weight:700;text-align:center;">${field.cna_percent ?? field.percent ?? ''}%</td>
+              <td style="text-align:center;color:#6c757d;">${field.unique_cnas ?? ''}</td>
+              <td><span class="field-desc">${field.description || ''}</span></td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+  }
+
+  // Get sort icon for column header
+  function getSortIcon(column) {
+    if (currentSortColumn !== column) {
+      return '<span class="sort-icon">↕</span>';
+    }
+    return currentSortDirection === 'asc' ? 
+      '<span class="sort-icon active">↑</span>' : 
+      '<span class="sort-icon active">↓</span>';
+  }
+  
+  // Load the completeness data
+  fetch('../data/field_utilization.json')
+    .then(response => response.json())
+    .then(data => {
+      allFields = data;
+      // Filter and order fields based on canonical list
+      const fields = canonicalFieldOrder
+        .map(key => allFields.find(f => f.field === key))
+        .filter(Boolean);
+
+      let html = renderTable(fields);
+      overview.innerHTML = html;
+
+      // Add event listeners for sorting
+      addSortEventListeners();
+    })
+    .catch(error => {
+      console.error('Error loading data:', error);
+      overview.innerHTML = '<p>Error loading completeness data.</p>';
+    });
+    
+  // Load CNA data
+  Promise.all([
+    fetch('../data/cna_summary.json').then(resp => resp.json()),
+    fetch('../data/cna_scorecards.json').then(resp => resp.json())
+  ])
+    .then(([cnaList, scorecards]) => {
+      cnaData = cnaList;
+      allCNAScorecardsData = scorecards;
+      
+      // Setup CNA search functionality
+      setupCNASearch(cnaList);
+    })
+    .catch(error => {
+      console.error('Error loading CNA data:', error);
+    });
+  
+  // Function to setup CNA search functionality
+  function setupCNASearch(cnaList) {
+    // Sort CNAs by name for consistent display
+    const sortedCNAs = cnaList.sort((a, b) => a.shortName.localeCompare(b.shortName));
+    
+    // Current selected CNA (null means "All CNAs")
+    let selectedCNA = null;
+    
+    // Search input event handler
+    cnaSearchInput.addEventListener('input', function(e) {
+      const query = e.target.value.toLowerCase().trim();
+      
+      if (query === '') {
+        // Hide results when empty
+        cnaSearchResults.style.display = 'none';
+        return;
+      }
+      
+      // Filter CNAs based on search query
+      const filteredCNAs = sortedCNAs.filter(cna => 
+        cna.shortName.toLowerCase().includes(query) || 
+        cna.cnaId.toLowerCase().includes(query)
+      );
+      
+      // Show search results
+      displaySearchResults(filteredCNAs.slice(0, 10)); // Limit to 10 results
+    });
+    
+    // Handle clicks outside search box to close results
+    document.addEventListener('click', function(e) {
+      if (!cnaSearchInput.contains(e.target) && !cnaSearchResults.contains(e.target)) {
+        cnaSearchResults.style.display = 'none';
+      }
+    });
+    
+    // Handle search input focus
+    cnaSearchInput.addEventListener('focus', function() {
+      if (this.value.trim() !== '') {
+        const query = this.value.toLowerCase().trim();
+        const filteredCNAs = sortedCNAs.filter(cna => 
+          cna.shortName.toLowerCase().includes(query) || 
+          cna.cnaId.toLowerCase().includes(query)
+        );
+        displaySearchResults(filteredCNAs.slice(0, 10));
+      }
+    });
+    
+    // Function to display search results
+    function displaySearchResults(results) {
+      if (results.length === 0) {
+        cnaSearchResults.innerHTML = '<div style="padding: 0.5rem; color: #666;">No CNAs found</div>';
+        cnaSearchResults.style.display = 'block';
+        return;
+      }
+      
+      const resultsHtml = results.map(cna => `
+        <div class="search-result-item" data-cna-id="${cna.cnaId}" 
+             style="padding: 0.5rem; cursor: pointer; border-bottom: 1px solid #eee; hover:background-color: #f5f5f5;"
+             onmouseover="this.style.backgroundColor='#f5f5f5'"
+             onmouseout="this.style.backgroundColor='white'">
+          <strong>${cna.shortName}</strong> (${cna.cveCount} CVEs)
+        </div>
+      `).join('');
+      
+      cnaSearchResults.innerHTML = resultsHtml;
+      cnaSearchResults.style.display = 'block';
+      
+      // Add click handlers to search results
+      cnaSearchResults.querySelectorAll('.search-result-item').forEach(item => {
+        item.addEventListener('click', function() {
+          const cnaId = this.getAttribute('data-cna-id');
+          const cna = sortedCNAs.find(c => c.cnaId === cnaId);
+          selectCNA(cna);
+        });
+      });
+    }
+    
+    // Function to select a CNA
+    function selectCNA(cna) {
+      selectedCNA = cna;
+      if (cna) {
+        cnaSearchInput.value = `${cna.shortName} (${cna.cveCount} CVEs)`;
+        // Show CNA-specific data
+        displayCNACompleteness(cna.cnaId);
+      } else {
+        cnaSearchInput.value = '';
+        cnaSearchInput.placeholder = 'All CNAs (Ecosystem) - Start typing to search...';
+        // Show all CNAs data
+        displayCompleteness(allFields);
+      }
+      cnaSearchResults.style.display = 'none';
+    }
+    
+    // Add "All CNAs" option when clicked
+    cnaSearchInput.addEventListener('click', function() {
+      if (selectedCNA !== null) {
+        const allCNAsOption = `<div class="search-result-item" data-cna-id="all" 
+             style="padding: 0.5rem; cursor: pointer; border-bottom: 1px solid #eee; font-weight: bold;"
+             onmouseover="this.style.backgroundColor='#f5f5f5'"
+             onmouseout="this.style.backgroundColor='white'">
+          All CNAs (Ecosystem)
+        </div>`;
+        
+        cnaSearchResults.innerHTML = allCNAsOption + cnaSearchResults.innerHTML;
+        cnaSearchResults.style.display = 'block';
+        
+        // Add click handler for "All CNAs" option
+        cnaSearchResults.querySelector('[data-cna-id="all"]').addEventListener('click', function() {
+          selectCNA(null);
+        });
+      }
+    });
+    
+    // Function to display CNA-specific completeness
+    function displayCNACompleteness(cnaId) {
+      if (cnaScorecardsData && cnaScorecardsData[cnaId]) {
+        const cnaScorecard = cnaScorecardsData[cnaId];
+        displayCompleteness(cnaScorecard.fields || []);
+      }
+    }
+  }
+  
+  // Function to display completeness data
+  function displayCompleteness(fields) {
+    const html = renderTable(fields);
+    overview.innerHTML = html;
+    addSortEventListeners();
+  }
+  
+  // Handle CNA selection change
+  cnaSelect.addEventListener('change', function() {
+    const selectedCNAId = this.value;
+    
+    if (selectedCNAId === 'all') {
+      // Show all CNAs data
+      displayCompleteness(allFields);
+    } else {
+      // Show specific CNA data
+      const selectedCNA = cnaData.find(cna => cna.cnaId === selectedCNAId);
+      const cnaScorecard = cnaScorecardsData[selectedCNAId];
+      
+      if (selectedCNA && cnaScorecard) {
+        displayCNASpecificData(selectedCNA, cnaScorecard);
+      } else {
+        console.error('CNA data not found for:', selectedCNAId);
+        displayCompleteness(allFields);
+      }
+    }
+  });
+  
+  // Function to display CNA-specific data
+  function displayCNASpecificData(cna, scorecard) {
+    // Convert CNA-specific field completeness to the same format as all-CNAs data
+    const cnaFields = scorecard.fieldCompleteness.map(field => ({
+      field: field.field,
+      percent: field.completionPercent,
+      unique_cnas: 1, // Always 1 for individual CNA
+      importance: field.importance,
+      description: getFieldDescription(field.field)
+    }));
+    
+    displayCompleteness(cnaFields);
+    
+    // Update page title to show selected CNA
+    const titleElement = document.querySelector('.contextual-heading-title');
+    if (titleElement) {
+      titleElement.textContent = `${cna.shortName} - Field Completeness`;
+    }
+  }
+  
+  // Helper function to get field description
+  function getFieldDescription(fieldName) {
+    const field = allFields.find(f => f.field === fieldName);
+    return field ? field.description : '';
+  }
+  
+  // Function to add sort event listeners
+  function addSortEventListeners() {
+    document.querySelectorAll('.sortable').forEach(header => {
+      header.addEventListener('click', () => {
+        const column = header.dataset.column;
+        
+        // Toggle sort direction if same column, otherwise default to desc
+        if (currentSortColumn === column) {
+          currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+          currentSortColumn = column;
+          currentSortDirection = column === 'importance' ? 'desc' : 'asc';
+        }
+        
+        // Re-render table with new sort
+        const currentFields = getCurrentFields();
+        const sortedFields = sortFields(currentFields, currentSortColumn, currentSortDirection);
+        const tableHtml = renderTable(sortedFields);
+        overview.innerHTML = tableHtml;
+        addSortEventListeners();
+      });
+    });
+  }
+  
+  // Helper function to get current fields being displayed
+  function getCurrentFields() {
+    const selectedCNAId = cnaSelect.value;
+    
+    if (selectedCNAId === 'all') {
+      return allFields;
+    } else {
+      const selectedCNA = cnaData.find(cna => cna.cnaId === selectedCNAId);
+      const cnaScorecard = cnaScorecardsData[selectedCNAId];
+      
+      if (selectedCNA && cnaScorecard) {
+        return cnaScorecard.fieldCompleteness.map(field => ({
+          field: field.field,
+          percent: field.completionPercent,
+          unique_cnas: 1,
+          importance: field.importance,
+          description: getFieldDescription(field.field)
+        }));
+      }
+    }
+    
+    return allFields;
+  }
+});
