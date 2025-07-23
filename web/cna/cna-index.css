@@ -235,23 +235,26 @@
   display: none; /* Hidden by default */
 }
 
-/* Top 3 styling */
-#cnaTable tbody tr:nth-child(1) td.col-rank {
-  color: #FFD700; /* Gold */
+/* Medal-style ranking colors for tied rankings */
+.rank-gold {
+  color: #FFD700 !important; /* Gold */
   font-weight: bold;
   font-size: 1.1rem;
+  text-shadow: 0 1px 2px rgba(255, 215, 0, 0.3);
 }
 
-#cnaTable tbody tr:nth-child(2) td.col-rank {
-  color: #C0C0C0; /* Silver */
+.rank-silver {
+  color: #C0C0C0 !important; /* Silver */
   font-weight: bold;
   font-size: 1.1rem;
+  text-shadow: 0 1px 2px rgba(192, 192, 192, 0.3);
 }
 
-#cnaTable tbody tr:nth-child(3) td.col-rank {
-  color: #CD7F32; /* Bronze */
+.rank-bronze {
+  color: #CD7F32 !important; /* Bronze */
   font-weight: bold;
   font-size: 1.1rem;
+  text-shadow: 0 1px 2px rgba(205, 127, 50, 0.3);
 }
 
 /* CNA Cell Styling */

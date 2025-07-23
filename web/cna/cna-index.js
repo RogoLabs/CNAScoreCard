@@ -47,6 +47,9 @@ async function init() {
     // Set up event listeners
     setupEventListeners();
     
+    // Set initial header text based on details view state
+    updateScoreCardHeaderText();
+    
     // Apply filters (this will hide inactive CNAs by default and set STATE.filteredData)
     applyFilters();
     
@@ -155,6 +158,22 @@ function handleToggleDetails() {
   
   // Toggle class on table
   DOM.table.classList.toggle('show-details', STATE.showingDetails);
+  
+  // Update CNA ScoreCard Rating header text based on view state
+  updateScoreCardHeaderText();
+}
+
+/**
+ * Update the CNA ScoreCard Rating header text based on details view state
+ */
+function updateScoreCardHeaderText() {
+  const scoreHeader = document.querySelector('th[data-sort="score"]');
+  if (scoreHeader) {
+    const headerText = STATE.showingDetails ? 'Average' : 'CNA ScoreCard Rating';
+    // Update the text content while preserving the sort indicator
+    const sortIndicator = scoreHeader.querySelector('.sort-indicator');
+    scoreHeader.innerHTML = `${headerText} <span class="sort-indicator">${sortIndicator ? sortIndicator.innerHTML : ''}</span>`;
+  }
 }
 
 /**
@@ -312,8 +331,21 @@ function renderTable() {
     
     // Format and create cells - show rank only for active CNAs
     const rankDisplay = cna.is_active ? cna.rank : '-';
+    
+    // Determine medal-style CSS class based on rank value
+    let rankClass = '';
+    if (cna.is_active && cna.rank) {
+      if (cna.rank === 1) {
+        rankClass = 'rank-gold';
+      } else if (cna.rank === 2) {
+        rankClass = 'rank-silver';
+      } else if (cna.rank === 3) {
+        rankClass = 'rank-bronze';
+      }
+    }
+    
     row.innerHTML = `
-      <td class="col-rank">${rankDisplay}</td>
+      <td class="col-rank ${rankClass}">${rankDisplay}</td>
       <td class="col-name">
         <div class="cna-name-cell">
           <a href="cna-detail.html?shortName=${cna.shortName}" class="cna-name-link">${cna.shortName}</a>
@@ -324,7 +356,7 @@ function renderTable() {
       </td>
       <td class="col-type">${formatCnaTypes(cna.cnaTypes, cna.cnaType)}</td>
       <td class="col-count">${cna.total_cves || 0}</td>
-      <td class="col-score">${formatScoreWithBar(cna.scores?.overall_average_score || 0)}</td>
+      <td class="col-score">${formatScoreWithBar(cna.scores?.overall_average_score || 0, true)}</td>
       <td class="col-detail" data-column="foundational">${formatScoreWithBar(cna.scores?.foundational_completeness || 0, true)}</td>
       <td class="col-detail" data-column="rootcause">${formatScoreWithBar(cna.scores?.root_cause_analysis || 0, true)}</td>
       <td class="col-detail" data-column="software">${formatScoreWithBar(cna.scores?.software_identification || 0, true)}</td>

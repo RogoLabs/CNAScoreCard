@@ -269,15 +269,15 @@ async function loadFieldData() {
 async function loadCNAData() {
   try {
     console.log('Loading CNA data...');
-    const [cnaList, scorecards] = await Promise.all([
-      fetch('../data/cna_summary.json').then(resp => resp.json()),
-      fetch('../data/cna_scorecards.json').then(resp => resp.json())
-    ]);
+    // Load the combined data which has correct CVE counts
+    const combinedData = await fetch('../data/cna_combined.json').then(resp => resp.json());
     
-    console.log('CNA data loaded successfully');
-    return { cnaList, scorecards };
+    console.log('CNA data loaded successfully:', combinedData.length, 'CNAs from combined data');
+    // Use combinedData for both search list and scorecards since it has correct CVE counts
+    return { cnaList: combinedData, scorecards: combinedData };
   } catch (error) {
     console.error('Error loading CNA data:', error);
+    console.error('Make sure cna_combined.json exists in ../data/');
     return { cnaList: [], scorecards: {} };
   }
 }
@@ -292,8 +292,18 @@ function setupCNASearch(cnaList, scorecards) {
     return;
   }
   
-  // Sort CNAs by name
-  const sortedCNAs = cnaList.sort((a, b) => a.shortName.localeCompare(b.shortName));
+  // Sort CNAs by name with safe property access
+  const sortedCNAs = cnaList.sort((a, b) => {
+    const nameA = a.shortName || a.name || '';
+    const nameB = b.shortName || b.name || '';
+    return nameA.localeCompare(nameB);
+  });
+  
+  // Track highlighted result index for keyboard navigation
+  let highlightedIndex = -1;
+  let currentResults = [];
+  
+  console.log('Setting up keyboard navigation for CNA search');
   
   // Search input handler
   searchInput.addEventListener('input', function(e) {
@@ -301,24 +311,113 @@ function setupCNASearch(cnaList, scorecards) {
     
     if (query === '') {
       searchResults.style.display = 'none';
+      highlightedIndex = -1;
+      currentResults = [];
       return;
     }
     
-    // Filter CNAs
-    const filteredCNAs = sortedCNAs.filter(cna => 
-      cna.shortName.toLowerCase().includes(query) || 
-      cna.cnaId.toLowerCase().includes(query)
-    );
+    // Filter CNAs with safe property access
+    const filteredCNAs = sortedCNAs.filter(cna => {
+      const shortName = cna.shortName || cna.name || '';
+      const cnaId = cna.cnaId || cna.id || '';
+      return shortName.toLowerCase().includes(query) || 
+             cnaId.toLowerCase().includes(query);
+    });
     
     // Show results
-    displaySearchResults(filteredCNAs.slice(0, 10));
+    currentResults = filteredCNAs.slice(0, 10);
+    displaySearchResults(currentResults);
+    
+    // Highlight first result by default
+    if (currentResults.length > 0) {
+      highlightedIndex = 0;
+      setTimeout(() => updateHighlight(), 10);
+    } else {
+      highlightedIndex = -1;
+    }
   });
+  
+  // Keyboard navigation event handler
+  searchInput.addEventListener('keydown', function(e) {
+    console.log(`Key pressed: ${e.key}, Results visible: ${searchResults.style.display !== 'none'}, Results count: ${currentResults.length}`);
+    
+    if (searchResults.style.display === 'none' || currentResults.length === 0) {
+      console.log('Exiting early - no results or hidden');
+      return;
+    }
+    
+    switch(e.key) {
+      case 'ArrowDown':
+        console.log('Processing ArrowDown');
+        e.preventDefault();
+        e.stopPropagation();
+        highlightedIndex = Math.min(highlightedIndex + 1, currentResults.length - 1);
+        console.log(`Arrow Down: highlighting index ${highlightedIndex}`);
+        updateHighlight();
+        break;
+        
+      case 'ArrowUp':
+        console.log('Processing ArrowUp');
+        e.preventDefault();
+        e.stopPropagation();
+        highlightedIndex = Math.max(highlightedIndex - 1, 0);
+        console.log(`Arrow Up: highlighting index ${highlightedIndex}`);
+        updateHighlight();
+        break;
+        
+      case 'Enter':
+        console.log('Processing Enter');
+        e.preventDefault();
+        e.stopPropagation();
+        if (highlightedIndex >= 0 && highlightedIndex < currentResults.length) {
+          const selectedCna = currentResults[highlightedIndex];
+          const cnaShortName = selectedCna.shortName || selectedCna.name || '';
+          console.log(`Selecting CNA: ${cnaShortName}`, selectedCna);
+          selectCNA(cnaShortName, selectedCna, scorecards);
+        }
+        break;
+        
+      case 'Escape':
+        console.log('Processing Escape');
+        searchResults.style.display = 'none';
+        highlightedIndex = -1;
+        currentResults = [];
+        break;
+    }
+  });
+  
+  // Function to update highlight styling
+  function updateHighlight() {
+    const items = searchResults.querySelectorAll('.search-result-item');
+    
+    if (items.length === 0) {
+      console.log('No search result items found for highlighting');
+      return;
+    }
+    
+    console.log(`Highlighting index ${highlightedIndex} of ${items.length} items`);
+    
+    items.forEach((item, index) => {
+      if (index === highlightedIndex) {
+        item.style.backgroundColor = '#e3f2fd';
+        item.style.borderLeft = '3px solid #2196f3';
+        item.classList.add('highlighted');
+      } else {
+        item.style.backgroundColor = 'white';
+        item.style.borderLeft = 'none';
+        item.classList.remove('highlighted');
+      }
+    });
+  }
   
   // Display search results
   function displaySearchResults(cnas) {
-    const resultsHtml = cnas.map(cna => `
-      <div class="search-result-item" data-cna-id="${cna.cnaId}">
-        ${cna.shortName}
+    const resultsHtml = cnas.map((cna, index) => `
+      <div class="search-result-item" data-cna-short-name="${cna.shortName || cna.name || ''}" data-index="${index}"
+           style="padding: 0.5rem; cursor: pointer; border-bottom: 1px solid #eee; transition: background-color 0.2s ease;"
+           onmouseover="this.style.backgroundColor='#f5f5f5'; if (!this.classList.contains('highlighted')) this.style.borderLeft='none';"
+           onmouseout="if (!this.classList.contains('highlighted')) { this.style.backgroundColor='white'; this.style.borderLeft='none'; }">
+        <strong>${cna.shortName || cna.name || 'Unknown CNA'}</strong> (${cna.recent_cves || cna.total_cves || 0} CVEs)
       </div>
     `).join('');
     
@@ -326,10 +425,18 @@ function setupCNASearch(cnaList, scorecards) {
     searchResults.style.display = 'block';
     
     // Add click handlers
-    searchResults.querySelectorAll('.search-result-item').forEach(item => {
+    searchResults.querySelectorAll('.search-result-item').forEach((item, index) => {
       item.addEventListener('click', async () => {
-        const cnaId = item.dataset.cnaId;
-        await selectCNA(cnaId, cnas.find(c => c.cnaId === cnaId), scorecards);
+        const cnaShortName = item.dataset.cnaShortName;
+        const selectedCna = cnas.find(c => (c.shortName || c.name) === cnaShortName);
+        console.log(`Click handler - CNA short name: ${cnaShortName}, Found CNA:`, selectedCna);
+        await selectCNA(cnaShortName, selectedCna, scorecards);
+      });
+      
+      // Update highlighted index on mouse enter for consistency
+      item.addEventListener('mouseenter', function() {
+        highlightedIndex = index;
+        updateHighlight();
       });
     });
   }

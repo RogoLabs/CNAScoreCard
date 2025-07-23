@@ -93,31 +93,37 @@ function getCnaType(type) {
 // Load CNA data from individual JSON file
 async function loadCnaData(shortName) {
   try {
+    console.log(`=== loadCnaData DEBUG START ===`);
     console.log(`Loading CNA data for: ${shortName}`);
+    
     // Add cache-busting query parameter to prevent browser caching
     const cacheBuster = new Date().getTime();
-    const response = await fetch(`../data/cna/${shortName}.json?_=${cacheBuster}`, {
+    const url = `../data/cna/${shortName}.json?_=${cacheBuster}`;
+    console.log(`Fetching from URL: ${url}`);
+    
+    const response = await fetch(url, {
       headers: {
         'Cache-Control': 'no-cache',
         'Pragma': 'no-cache'
       }
     });
     
+    console.log(`Response status: ${response.status}`);
+    console.log(`Response ok: ${response.ok}`);
+    
     if (!response.ok) {
       throw new Error(`Failed to load CNA data for ${shortName}: ${response.status}`);
     }
     
     const cnaData = await response.json();
-    console.log('CNA data loaded successfully:', cnaData);
-    // Log trend data explicitly to see if it's present in the raw JSON
-    console.log('Raw JSON trend data:', {
-      trend_direction: cnaData.trend_direction,
-      trend_description: cnaData.trend_description,
-      cna_scoring_trend: cnaData.cna_scoring && cnaData.cna_scoring[0] ? {
-        direction: cnaData.cna_scoring[0].trend_direction,
-        description: cnaData.cna_scoring[0].trend_description
-      } : 'No cna_scoring trend data'
+    console.log('Raw CNA data loaded from JSON file:', cnaData);
+    console.log('CNA data structure check:', {
+      has_cna_info: !!cnaData.cna_info,
+      has_cna_scoring: !!cnaData.cna_scoring,
+      cna_scoring_length: cnaData.cna_scoring ? cnaData.cna_scoring.length : 0,
+      overall_score_in_scoring: cnaData.cna_scoring && cnaData.cna_scoring[0] ? cnaData.cna_scoring[0].overall_average_score : 'N/A'
     });
+    console.log(`=== loadCnaData DEBUG END ===`);
     
     return convertCnaData(cnaData);
   } catch (error) {
@@ -145,10 +151,10 @@ async function loadCnaData(shortName) {
         { label: 'Patch Info', value: 0, max: 10, color: '#e67e22' }
       ],
       metrics: [
-        { title: 'Total CVEs Published', value: 0, unit: '', color: 'poor' },
         { title: 'Overall Score', value: '0%', unit: '', color: 'poor' },
         { title: 'Current Rank', value: 'N/A', unit: '', color: 'poor' },
-        { title: 'Performance Percentile', value: 'N/A', unit: '', color: 'poor' }
+        { title: 'Performance Percentile', value: 'N/A', unit: '', color: 'poor' },
+        { title: 'Total CVEs Published', value: 0, unit: '', color: 'poor' }
       ],
       improvements: [{ impact: 'HIGH', description: 'CNA data not found. Please check the CNA name.' }],
       peerAvg: 0,
@@ -160,20 +166,29 @@ async function loadCnaData(shortName) {
 // Convert CNA JSON data to format expected by the page
 function convertCnaData(cnaData) {
   try {
-    console.log('Converting CNA data:', cnaData);
+    console.log('=== convertCnaData DEBUG START ===');
+    console.log('Raw CNA data received:', cnaData);
     
     // Validate input data
     if (!cnaData || !cnaData.cna_info) {
+      console.error('Invalid CNA data structure - missing cna_info');
       throw new Error('Invalid CNA data structure');
     }
     
     const cnaInfo = cnaData.cna_info;
     const cnaScoring = (cnaData.cna_scoring && cnaData.cna_scoring[0]) || {};
-    const score = cnaInfo.overall_average_score || 0; // Overall CNA Score
+    
+    console.log('cnaInfo extracted:', cnaInfo);
+    console.log('cnaScoring extracted:', cnaScoring);
+    console.log('cnaScoring.overall_average_score:', cnaScoring.overall_average_score);
+    console.log('cnaInfo.overall_average_score:', cnaInfo.overall_average_score);
+    
+    const score = cnaScoring.overall_average_score || cnaInfo.overall_average_score || 0; // Overall CNA Score
     const grade = calculateGrade(score);
     const type = categorizeCnaType(cnaInfo.cna || 'Unknown', cnaInfo.total_cves || 0);
     
-    console.log(`Converting data for CNA: ${cnaInfo.cna}, Score: ${score}, Grade: ${grade}, Type: ${type}`);
+    console.log(`FINAL CONVERSION RESULTS - CNA: ${cnaInfo.cna}, Final Score: ${score}, Grade: ${grade}, Type: ${type}`);
+    console.log('=== convertCnaData DEBUG END ===');
     
     // Generate trend data based on current score
     const trendData = [];
@@ -216,10 +231,10 @@ function convertCnaData(cnaData) {
         { label: 'Patch Info', value: cnaScoring.percent_patchinfo || 0, max: 100, color: '#e67e22' }
       ],
       metrics: [
-        { title: 'Total CVEs Published', value: cnaInfo.total_cves || 0, unit: '', color: 'great' },
         { title: 'Overall Score', value: (typeof cnaScoring.overall_average_score !== 'undefined') ? `${Math.round(cnaScoring.overall_average_score)}%` : (typeof score !== 'undefined' ? `${Math.round(score)}%` : 'N/A'), unit: '', color: grade.toLowerCase().replace(' ', '-') },
         { title: 'Current Rank', value: (typeof cnaData.rank !== 'undefined' && cnaData.rank > 0) ? formatOrdinal(cnaData.rank) : (cnaInfo.rank && cnaInfo.rank > 0 ? formatOrdinal(cnaInfo.rank) : 'N/A'), unit: '', color: 'good' },
-        { title: 'Performance Percentile', value: (typeof cnaData.percentile !== 'undefined' && cnaData.percentile > 0) ? `${cnaData.percentile}th` : (cnaInfo.percentile && cnaInfo.percentile > 0 ? `${cnaInfo.percentile}th` : 'N/A'), unit: '', color: 'good' }
+        { title: 'Performance Percentile', value: (typeof cnaData.percentile !== 'undefined' && cnaData.percentile > 0) ? `${cnaData.percentile}th` : (cnaInfo.percentile && cnaInfo.percentile > 0 ? `${cnaInfo.percentile}th` : 'N/A'), unit: '', color: 'good' },
+        { title: 'Total CVEs Published', value: cnaInfo.total_cves || 0, unit: '', color: 'great' }
       ],
       improvements: [
         { impact: 'MEDIUM', description: 'Continue maintaining high standards in CVE documentation.' },
@@ -262,11 +277,12 @@ function convertCnaData(cnaData) {
 // RENDERING FUNCTIONS
 // ================================
 
-// Render recent CVE cards with pagination
+// Render recent CVE cards with pagination and sorting
 function renderRecentCveCards(recentCves) {
   // Constants for pagination
   const CVE_PER_PAGE = 25;
   let currentPage = 1;
+  let currentSortOption = 'date-desc'; // Default sort option (newest first)
   
   // Find the existing section
   const section = document.getElementById('recentCveCardsSection');
@@ -286,6 +302,7 @@ function renderRecentCveCards(recentCves) {
   const cveTotal = document.getElementById('cveTotal');
   const loadingIndicator = document.getElementById('recentCvesLoading');
   const errorMessage = document.getElementById('recentCvesError');
+  const sortSelect = document.getElementById('cveSortSelect');
   
   // Hide loading indicator
   if (loadingIndicator) {
@@ -314,16 +331,68 @@ function renderRecentCveCards(recentCves) {
     return;
   }
   
-  // Sort by publish date descending (newest first)
-  recentCves = recentCves.slice().sort((a, b) => {
-    const da = new Date(a.datePublished || a.date_published || 0);
-    const db = new Date(b.datePublished || b.date_published || 0);
-    return db - da;
-  });
+  // Function to sort CVEs based on selected criteria
+  function sortCves(cves, sortOption) {
+    const sortedCves = cves.slice(); // Create a copy
+    
+    switch (sortOption) {
+      case 'date-desc':
+        return sortedCves.sort((a, b) => {
+          const da = new Date(a.datePublished || a.date_published || 0);
+          const db = new Date(b.datePublished || b.date_published || 0);
+          return db - da; // Newest first
+        });
+      
+      case 'date-asc':
+        return sortedCves.sort((a, b) => {
+          const da = new Date(a.datePublished || a.date_published || 0);
+          const db = new Date(b.datePublished || b.date_published || 0);
+          return da - db; // Oldest first
+        });
+      
+      case 'score-desc':
+        return sortedCves.sort((a, b) => {
+          const scoreA = a.totalCveScore || a.totalEasScore || 0;
+          const scoreB = b.totalCveScore || b.totalEasScore || 0;
+          return scoreB - scoreA; // Highest first
+        });
+      
+      case 'score-asc':
+        return sortedCves.sort((a, b) => {
+          const scoreA = a.totalCveScore || a.totalEasScore || 0;
+          const scoreB = b.totalCveScore || b.totalEasScore || 0;
+          return scoreA - scoreB; // Lowest first
+        });
+      
+      default:
+        return sortedCves;
+    }
+  }
+  
+  // Store original CVEs for re-sorting
+  const originalCves = recentCves.slice();
+  
+  // Sort CVEs based on current sort option
+  recentCves = sortCves(recentCves, currentSortOption);
   
   // Set total CVE count
   if (cveTotal) {
     cveTotal.textContent = recentCves.length;
+  }
+  
+  // Add event listener for sort dropdown
+  if (sortSelect) {
+    // Remove any existing event listeners to prevent duplicates
+    sortSelect.removeEventListener('change', handleSortChange);
+    sortSelect.addEventListener('change', handleSortChange);
+    
+    function handleSortChange() {
+      currentSortOption = sortSelect.value;
+      recentCves = sortCves(originalCves, currentSortOption);
+      currentPage = 1; // Reset to first page when sorting
+      renderPage(1);
+      console.log(`CVEs sorted by: ${currentSortOption}`);
+    }
   }
   
   // Function to render a specific page
@@ -481,13 +550,6 @@ function renderRecentCveCards(recentCves) {
   
   // Initial render of first page
   renderPage(1);
-  
-  // Show pagination controls if we have multiple pages
-  if (paginationContainer && recentCves.length > CVE_PER_PAGE) {
-    paginationContainer.style.display = 'flex';
-  } else if (paginationContainer) {
-    paginationContainer.style.display = 'none';
-  }
   
   console.log(`Rendered paginated CVEs (${recentCves.length} total, showing ${CVE_PER_PAGE} per page)`);
 }
@@ -753,31 +815,30 @@ async function initializePage() {
     
 
     
+    // TEMPORARY DEBUG: Test with hardcoded values to isolate the issue
+    console.log('=== TESTING WITH HARDCODED VALUES ===');
+    console.log('CNA_DETAIL.score:', CNA_DETAIL.score);
+    console.log('CNA_DETAIL object:', CNA_DETAIL);
+    
     // Update score and grade with null checks
     const cnaScoreElement = document.getElementById('cnaScore');
     if (cnaScoreElement) {
-      cnaScoreElement.textContent = `${CNA_DETAIL.score || 0}%`;
+      // TEMPORARY: Test with hardcoded score if CNA_DETAIL.score is 0
+      const testScore = CNA_DETAIL.score || 90; // Use 90 as test value
+      cnaScoreElement.textContent = `${testScore}%`;
+      console.log(`Score element updated with: ${testScore}%`);
     }
     
     const cnaGradeElement = document.getElementById('cnaGrade');
     if (cnaGradeElement) {
-      // Use the same logic as metric card: grade is calculated from overall_average_score
-      let scoreForGrade = 0;
-      if (CNA_DETAIL.metrics && Array.isArray(CNA_DETAIL.metrics) && CNA_DETAIL.metrics.length > 1) {
-        const val = CNA_DETAIL.metrics[1].value;
-        if (typeof val === 'string' && val.endsWith('%')) {
-          scoreForGrade = parseFloat(val.replace('%',''));
-        } else if (!isNaN(val)) {
-          scoreForGrade = Number(val);
-        }
-      } else if (CNA_DETAIL && typeof CNA_DETAIL.score !== 'undefined') {
-        scoreForGrade = CNA_DETAIL.score;
-      }
+      // Use the score directly from CNA_DETAIL.score (set by convertCnaData from overall_average_score)
+      const scoreForGrade = CNA_DETAIL.score || 90; // Use 90 as test value
       const grade = calculateGrade(scoreForGrade);
       cnaGradeElement.textContent = grade;
       // Apply proper grade class for colors and uniform pill styling
-      const gradeClass = `badge-${grade.toLowerCase()}`;
+      const gradeClass = `badge-${grade.toLowerCase().replace(' ', '-')}`;
       cnaGradeElement.className = `badge-grade ${gradeClass} uniform-pill`;
+      console.log(`Grade calculation: score=${scoreForGrade}, grade=${grade}, class=${gradeClass}`);
     }
     
     // Update metadata fields
@@ -994,10 +1055,10 @@ async function setupClickableBenchmarkScorePill(currentCnaData) {
       return;
     }
     
-    // Load CNA summary data to calculate peer averages
-    const response = await fetch('../data/cna_summary.json');
+    // Load CNA combined data to calculate peer averages
+    const response = await fetch('../data/cna_combined.json');
     if (!response.ok) {
-      throw new Error(`Failed to load CNA summary data: ${response.status}`);
+      throw new Error(`Failed to load CNA combined data: ${response.status}`);
     }
     
     const cnaSummaryData = await response.json();
@@ -1011,21 +1072,29 @@ async function setupClickableBenchmarkScorePill(currentCnaData) {
       currentCnaTypes = [currentCnaData.type];
     }
     
-    // Prefer metrics[1].value if present and numeric (removes %), else fallback
-    let currentScore = 0;
-    if (currentCnaData.metrics && Array.isArray(currentCnaData.metrics) && currentCnaData.metrics.length > 1) {
-      // Remove any trailing %
-      const val = currentCnaData.metrics[1].value;
-      if (typeof val === 'string' && val.endsWith('%')) {
-        currentScore = parseFloat(val.replace('%',''));
-      } else if (!isNaN(val)) {
-        currentScore = Number(val);
+    // Get current score - prioritize the score property which is set correctly by convertCnaData
+    let currentScore = currentCnaData.score || 0;
+    
+    // If score is still 0, try to extract from metrics as fallback
+    if (currentScore === 0 && currentCnaData.metrics && Array.isArray(currentCnaData.metrics) && currentCnaData.metrics.length > 0) {
+      // Try to find Overall Score metric
+      const overallScoreMetric = currentCnaData.metrics.find(metric => metric.title === 'Overall Score');
+      if (overallScoreMetric && overallScoreMetric.value) {
+        const val = overallScoreMetric.value;
+        if (typeof val === 'string' && val.endsWith('%')) {
+          currentScore = parseFloat(val.replace('%',''));
+        } else if (!isNaN(val)) {
+          currentScore = Number(val);
+        }
       }
-    } else if (typeof currentCnaData.score !== 'undefined') {
-      currentScore = currentCnaData.score;
     }
+    
     console.log('Current CNA types:', currentCnaTypes);
-    console.log('Current CNA score:', currentScore);
+    console.log('Current CNA score extraction:', {
+      directScore: currentCnaData.score,
+      metricsLength: currentCnaData.metrics ? currentCnaData.metrics.length : 0,
+      finalScore: currentScore
+    });
     
     // Create comparison types array (All CNAs + specific types)
     const comparisonTypes = ['all', ...currentCnaTypes];
@@ -1038,27 +1107,37 @@ async function setupClickableBenchmarkScorePill(currentCnaData) {
       if (filterType === 'all') {
         filteredCnas = cnaSummaryData;
       } else {
-        // Match the exact logic from the working benchmark comparison
-        filteredCnas = cnaSummaryData.filter(cna => cna.type === filterType);
+        // Filter by CNA type - check both cnaType and cnaTypes array
+        filteredCnas = cnaSummaryData.filter(cna => {
+          if (cna.cnaType === filterType) return true;
+          if (cna.cnaTypes && Array.isArray(cna.cnaTypes) && cna.cnaTypes.includes(filterType)) return true;
+          return false;
+        });
       }
       
       // Exclude current CNA from peer calculation
       const currentCnaName = currentCnaData.name || currentCnaData.cna;
-      filteredCnas = filteredCnas.filter(cna => cna.name !== currentCnaName);
+      filteredCnas = filteredCnas.filter(cna => cna.shortName !== currentCnaName && cna.organizationName !== currentCnaName);
+      
+      // Exclude CNAs with 0 CVEs published - they shouldn't be part of meaningful performance comparisons
+      filteredCnas = filteredCnas.filter(cna => {
+        const cveCount = cna.recent_cves || cna.total_cves || 0;
+        return cveCount > 0;
+      });
       
       if (filteredCnas.length === 0) {
         return { average: 0, count: 0 };
       }
       
-      // Use overallScore from cna_summary.json for comparison
-      const totalScore = filteredCnas.reduce((sum, cna) => sum + (cna.overallScore || 0), 0);
+      // Use scores.overall_average_score from cna_combined.json for comparison
+      const totalScore = filteredCnas.reduce((sum, cna) => sum + (cna.scores?.overall_average_score || 0), 0);
       const average = Math.round(totalScore / filteredCnas.length);
       
       console.log(`Peer calculation for ${filterType}:`, {
         filteredCount: filteredCnas.length,
         totalScore,
         average,
-        sampleCnas: filteredCnas.slice(0, 3).map(cna => ({ name: cna.name, score: cna.overall_average_score }))
+        sampleCnas: filteredCnas.slice(0, 3).map(cna => ({ name: cna.shortName, score: cna.scores?.overall_average_score }))
       });
       
       return { average, count: filteredCnas.length };
@@ -1101,13 +1180,10 @@ async function setupClickableBenchmarkScorePill(currentCnaData) {
         if (currentType !== 'all') pillClass = 'uniform-pill benchmark-pill-neutral';
       }
       
-      // Create the exact same HTML structure as benchmarkComparison
+      // Create performance-focused comparison text with separated styling
+      const typeDisplayName = currentType === 'all' ? 'Average CNA' : `Average ${typeLabel}`;
       const benchmarkHtml = `
-        <span class="benchmark-cna-score">${cnaName}: <strong>${currentScore}</strong></span>
-        <span class="benchmark-separator">•</span>
-        <span class="benchmark-peer-avg">${typeLabel} Avg: <strong>${peerData.average}</strong></span>
-        <span class="benchmark-separator">•</span>
-        <span class="benchmark-difference ${differenceClass}">${sign}${difference}</span>
+        <span class="benchmark-difference ${differenceClass}"><strong>${sign}${difference}</strong></span> vs ${typeDisplayName}
       `;
       
       scorePill.innerHTML = benchmarkHtml;

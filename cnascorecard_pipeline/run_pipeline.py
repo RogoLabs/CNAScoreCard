@@ -110,13 +110,13 @@ from datetime import datetime, timedelta
 import os
 import json
 
-def generate_individual_cna_jsons(cve_records, cna_scorecards, sorted_cna_summary, cna_metadata=None, trend_periods=None):
+def generate_individual_cna_jsons(cve_records, cna_scorecards, sorted_active_cnas, cna_metadata=None, trend_periods=None):
     """Generate individual CNA JSON files matching the deployed format.
     
     Args:
         cve_records: List of CVE records
         cna_scorecards: Dictionary of CNA scorecards
-        cna_summary: List of CNA summary data
+        sorted_active_cnas: List of active CNA summary data (for ranking calculations)
         cna_metadata: Dictionary of rich CNA metadata (organizationName, scope, etc.)
         trend_periods: Dictionary with current and previous period date ranges for trend analysis
     """
@@ -204,7 +204,7 @@ def generate_individual_cna_jsons(cve_records, cna_scorecards, sorted_cna_summar
     
     # Create ranking map that allows ties for identical scores and CVE counts
     ranking_map = {}
-    total_cnas = len(sorted_cna_summary)
+    total_cnas = len(sorted_active_cnas)  # Use only active CNAs for ranking calculations
     
     print("\nApplying rankings to CNAs with support for ties...")
     print(f"Total CNAs to rank: {total_cnas}")
@@ -215,31 +215,22 @@ def generate_individual_cna_jsons(cve_records, cna_scorecards, sorted_cna_summar
     ))
     print("-" * 70)
     
-    # First pass: Determine tied groups based on score and CVE count
-    tied_groups = []
-    current_group = []
-    last_score = None
-    last_cve_count = None
+    # Group CNAs by identical scores for proper tied ranking
+    from collections import defaultdict
+    score_groups = defaultdict(list)
     
-    for cna in sorted_cna_summary:
+    # Group all active CNAs by their overall_average_score
+    for cna in sorted_active_cnas:
         score = cna.get('overall_average_score', 0)
-        cve_count = cna.get('total_cves', 0)
-        
-        # Check if this CNA has the same metrics as the last one
-        if score == last_score and cve_count == last_cve_count:
-            # Add to the current tied group
-            current_group.append(cna)
-        else:
-            # Different metrics, start a new group
-            if current_group:
-                tied_groups.append(current_group)
-            current_group = [cna]
-            last_score = score
-            last_cve_count = cve_count
+        score_groups[score].append(cna)
     
-    # Add the last group if not empty
-    if current_group:
-        tied_groups.append(current_group)
+    # Sort score groups by score (descending) and create tied groups
+    tied_groups = []
+    for score in sorted(score_groups.keys(), reverse=True):
+        group = score_groups[score]
+        # Sort CNAs within each score group by CVE count (descending) for consistent ordering
+        group.sort(key=lambda x: x.get('total_cves', 0), reverse=True)
+        tied_groups.append(group)
     
     # Second pass: Assign ranks to each group with ties
     next_rank = 1
@@ -247,8 +238,9 @@ def generate_individual_cna_jsons(cve_records, cna_scorecards, sorted_cna_summar
         # All CNAs in this group get the same rank
         group_rank = next_rank
         
-        # Calculate percentile based on rank (not position)
-        # Higher rank (lower number) means higher percentile
+        # Calculate percentile based on rank position
+        # Lower rank number = better performance = higher percentile
+        # Higher rank number = worse performance = lower percentile
         percentile = round(((total_cnas - group_rank + 1) / total_cnas) * 100, 1)
         
         # Apply the rank to all CNAs in this group
@@ -261,7 +253,7 @@ def generate_individual_cna_jsons(cve_records, cna_scorecards, sorted_cna_summar
             # Store the ranking information for this CNA
             ranking_map[short_name] = {
                 'rank': group_rank,
-                'active_cna_count': total_cnas,
+                'active_cna_count': total_cnas,  # Use actual active CNA count
                 'percentile': percentile
             }
             
@@ -597,7 +589,7 @@ def generate_individual_cna_jsons(cve_records, cna_scorecards, sorted_cna_summar
             print(f"  Generated {short_name}.json - {cna_json['cna_info']['total_cves']} CVEs, {len(recent_cves)} recent")
     
     print(f"Generated {generated_count} individual CNA JSON files in {output_dir}")
-    return generated_count
+    return generated_count, ranking_map
 
 def main():
     # Sync CNAs list to ensure latest data
@@ -788,6 +780,7 @@ def main():
             inactive_cnas.append(cna)
     
     # Sort active CNAs by overall_average_score and total_cves (both descending)
+    # This provides consistent ordering within score groups for tie detection
     sorted_active_cnas = sorted(
         active_cnas,
         key=lambda x: (
@@ -925,10 +918,10 @@ def main():
                 break
     
     from run_pipeline import generate_individual_cna_jsons
-    generate_individual_cna_jsons(
+    generated_count, ranking_map = generate_individual_cna_jsons(
         cve_records=filtered_cve_records,
         cna_scorecards=cna_outputs,
-        sorted_cna_summary=sorted_cna_summary,
+        sorted_active_cnas=sorted_active_cnas,
         cna_metadata=cna_metadata,
         trend_periods=trend_periods
     )
@@ -1065,7 +1058,6 @@ def main():
     
     # Transform data to match web interface expectations using official CNA names
     web_formatted_cnas = []
-    active_cna_rank = 0  # Counter for active CNA rankings only
     
     for i, cna_info in enumerate(sorted_cna_summary):
         cve_derived_name = cna_info.get('shortName', '')
@@ -1084,9 +1076,11 @@ def main():
         recent_cves_count = cna_info.get('recent_cves_count', 0)
         is_active = recent_cves_count > 0
         
-        # Only increment rank counter for active CNAs
-        if is_active:
-            active_cna_rank += 1
+        # Get proper tied ranking data from ranking_map (created by generate_individual_cna_jsons)
+        ranking_data = ranking_map.get(cve_derived_name, {})
+        cna_rank = ranking_data.get('rank') if is_active else None
+        cna_percentile = ranking_data.get('percentile') if is_active else None
+        active_cna_count = ranking_data.get('active_cna_count', len(sorted_active_cnas))
         
         # Handle MITRE special case - always assign as "Program" type
         if short_name.lower() == 'mitre':
@@ -1115,9 +1109,9 @@ def main():
             "organizationName": official_meta.get('organizationName', short_name),
             "cnaType": primary_type,
             "cnaTypes": types_array,
-            "rank": active_cna_rank if is_active else None,  # Only active CNAs get rankings
-            "active_cna_count": len(sorted_active_cnas),  # Count of active CNAs only
-            "percentile": ((len(sorted_active_cnas) - active_cna_rank + 1) / len(sorted_active_cnas)) * 100 if is_active else None,
+            "rank": cna_rank,  # Use proper tied ranking data
+            "active_cna_count": active_cna_count,  # Use count from ranking data
+            "percentile": cna_percentile,  # Use percentile from tied ranking calculation
             "total_cves": cna_info.get('total_cves', 0),
             "recent_cves": cna_info.get('recent_cves_count', 0),
             "is_active": is_active,  # Flag to indicate active vs inactive status
@@ -1145,10 +1139,36 @@ def main():
             "disclosurePolicy": official_meta.get('disclosurePolicy', [])
         })
         
-        web_formatted_cnas.append(web_cna)
+        # Only include active CNAs (with recent CVEs > 0) in cna_combined.json
+        # This ensures peer average calculations are based on meaningful comparisons
+        if is_active:
+            web_formatted_cnas.append(web_cna)
     
     write_json(web_formatted_cnas, "cna_combined.json")
     print(f"Generated cna_combined.json with {len(web_formatted_cnas)} CNAs for rankings page")
+    
+    # Generate cna_summary.json for completeness page CNA search functionality
+    print("\nGenerating cna_summary.json for completeness page...")
+    cna_summary_list = []
+    for cna_info in sorted_cna_summary:
+        summary_entry = {
+            "cnaId": cna_info.get('cnaId', ''),
+            "shortName": cna_info.get('shortName', ''),
+            "overallScore": cna_info.get('overallScore', 0),
+            "grade": cna_info.get('grade', ''),
+            "previousPeriodCveCount": cna_info.get('previousPeriodCveCount', 0),
+            "cveCount": cna_info.get('cveCount', 0),
+            "type": cna_info.get('type', 'Unspecified'),
+            "trend": cna_info.get('trend', {}).get('direction', 'steady')
+        }
+        cna_summary_list.append(summary_entry)
+    
+    write_json(cna_summary_list, "cna_summary.json")
+    print(f"Generated cna_summary.json with {len(cna_summary_list)} CNAs")
+    
+    # Skip generating cna_scorecards.json - analysis shows it's loaded but never actually used
+    # The completeness pages load this file but the scorecards parameter is never used in selectCNA function
+    print("\nSkipping cna_scorecards.json generation - file loaded but never used by web interface")
 
     # Generate field utilization data with CNA ScoreCard highlighting
     print("\nGenerating field utilization data with CNA ScoreCard highlighting...")

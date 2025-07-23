@@ -144,24 +144,26 @@ def create_enhanced_cna_list(official_cnas: List[Dict[str, Any]]) -> List[Dict[s
 
 
 def save_cna_lists(official_cnas: List[Dict[str, Any]], enhanced_cnas: List[Dict[str, Any]]) -> None:
-    """Save both the raw official CNAs list and the enhanced version."""
+    """Save CNA list files needed for pipeline operation.
+    
+    Note: While these files are not used by web pages, cna_list.json is required
+    internally by the pipeline for CNA metadata. We only skip official_cnas_list.json
+    which is truly unused.
+    """
     
     # Determine the web/data directory path
     current_dir = Path(__file__).parent
     web_data_dir = current_dir.parent / 'web' / 'data'
     web_data_dir.mkdir(parents=True, exist_ok=True)
     
-    # Save raw official CNAs list
-    official_file = web_data_dir / 'official_cnas_list.json'
-    with open(official_file, 'w', encoding='utf-8') as f:
-        json.dump(official_cnas, f, indent=2, ensure_ascii=False)
-    logging.info(f"Saved raw official CNAs list to: {official_file}")
+    # Skip raw official CNAs list (truly unused)
+    logging.info("Skipping official_cnas_list.json generation - not used by web interface or pipeline")
     
-    # Save enhanced CNA list for frontend use
+    # Save enhanced CNA list for pipeline internal use (required for CNA metadata)
     enhanced_file = web_data_dir / 'cna_list.json'
     with open(enhanced_file, 'w', encoding='utf-8') as f:
         json.dump(enhanced_cnas, f, indent=2, ensure_ascii=False)
-    logging.info(f"Saved enhanced CNA list to: {enhanced_file}")
+    logging.info(f"Saved enhanced CNA list to: {enhanced_file} (required for pipeline operation)")
 
 
 def sync_cna_list() -> bool:

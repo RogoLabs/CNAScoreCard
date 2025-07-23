@@ -95,6 +95,15 @@
       <h2>Recent CVEs (Last 6 Months)</h2>
       <div class="recent-cves-header">
         <div id="cveCountInfo" class="cve-count-info">Showing <span id="cveStart">1</span>-<span id="cveEnd">25</span> of <span id="cveTotal">0</span> CVEs</div>
+        <div class="cve-sort-controls">
+          <label for="cveSortSelect">Sort by:</label>
+          <select id="cveSortSelect" class="cve-sort-dropdown">
+            <option value="date-desc">Date Published (Newest First)</option>
+            <option value="date-asc">Date Published (Oldest First)</option>
+            <option value="score-desc">Overall Score (Highest First)</option>
+            <option value="score-asc">Overall Score (Lowest First)</option>
+          </select>
+        </div>
       </div>
       <div class="recent-cve-cards" aria-label="Recent CVE cards" id="recentCveCardsContainer">
         <!-- Recent CVE cards will be rendered here by JavaScript -->
