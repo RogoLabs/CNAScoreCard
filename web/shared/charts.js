@@ -47,3 +47,67 @@ function renderBarChart(canvasId, labels, values, colors) {
     }
   });
 }
+
+// Create horizontal bar chart for field utilization
+function createHorizontalBarChart(canvasId, data, options = {}) {
+  if (!window.Chart) {
+    console.warn('Chart.js not loaded');
+    return;
+  }
+  
+  const ctx = document.getElementById(canvasId).getContext('2d');
+  const defaultOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            return `${context.parsed.x.toFixed(1)}%`;
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        beginAtZero: true,
+        max: 100,
+        ticks: {
+          callback: function(value) {
+            return value + '%';
+          },
+          color: '#94a3b8'
+        },
+        grid: {
+          color: 'rgba(148, 163, 184, 0.1)'
+        }
+      },
+      y: {
+        ticks: {
+          color: '#94a3b8'
+        },
+        grid: {
+          display: false
+        }
+      }
+    }
+  };
+  
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: data.labels,
+      datasets: [{
+        data: data.values,
+        backgroundColor: options.color || '#1ec6e6',
+        borderRadius: 4,
+        borderSkipped: false
+      }]
+    },
+    options: { ...defaultOptions, ...options }
+  });
+}
+
+// Export functions for module usage
+export { renderSparkline, renderBarChart, createHorizontalBarChart };

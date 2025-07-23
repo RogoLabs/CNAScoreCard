@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scoring Methodology - CNA Scorecard</title>
+  <title>Our Scoring Methodology - CNA Scorecard</title>
   <link rel="stylesheet" href="assets/theme.css">
   <link rel="stylesheet" href="shared/shared.css">
   <link rel="stylesheet" href="scoring.css">
@@ -19,50 +19,108 @@
     </div>
   </nav>
   <main class="container scoring-cards-container">
+    <!-- Introduction Section -->
     <section class="scoring-summary-card card">
-      <h1 class="scoring-title">How is this scored?</h1>
-      <p class="main-description">CNA Scorecard uses a transparent, percentage-based system to promote quality and accountability in the CVE ecosystem.</p>
-      <div class="grading-tier-bar">
-        <span class="badge-grade badge-perfect">Perfect</span>
-        <span class="badge-grade badge-great">Great</span>
-        <span class="badge-grade badge-good">Good</span>
-        <span class="badge-grade badge-needs-work">Needs Work</span>
-        <span class="badge-grade badge-missing">Missing Data</span>
+      <h1 class="scoring-title">Scoring Methodology</h1>
+      <p class="main-description">
+        The CNA Scorecard promotes transparency and accountability in vulnerability reporting by measuring how completely 
+        CVE Numbering Authorities populate essential data fields. The scoring philosophy is simple: complete, actionable 
+        vulnerability data leads to better security outcomes for everyone.
+      </p>
+    </section>
+
+    <!-- Scoring Categories Section -->
+    <section class="scoring-categories-card card">
+      <h2>Scoring Categories</h2>
+      <p class="categories-intro">
+        The scoring system evaluates CVE records across five essential categories, with points allocated based on 
+        the relative importance of each type of information for security decision-making.
+      </p>
+      
+      <div class="category-detail">
+        <h3><span class="category-points">50 points</span> Foundational Completeness</h3>
+        <p class="category-what"><strong>What it is:</strong> The essential building blocks of every CVE record, including problem types, affected products, references, and descriptions.</p>
+        <p class="category-why"><strong>Why it matters:</strong> These are the minimum fields required for CVE publication and provide the basic context needed to understand any vulnerability. Without complete foundational data, security teams cannot properly identify or assess threats.</p>
+        <p class="category-how"><strong>How points are awarded:</strong> Points are earned for including comprehensive problem type classifications, detailed affected product information, relevant reference links, and clear vulnerability descriptions.</p>
       </div>
-      <p class="scoring-note">Scores are calculated as a percentage of possible points, then mapped to a grade for clarity. Raw point values are only shown here for transparency.</p>
+
+      <div class="category-detail">
+        <h3><span class="category-points">15 points</span> Root Cause Analysis</h3>
+        <p class="category-what"><strong>What it is:</strong> Information about the underlying weakness that caused the vulnerability, typically expressed as a CWE (Common Weakness Enumeration) identifier.</p>
+        <p class="category-why"><strong>Why it matters:</strong> CWE data helps development teams understand patterns in security flaws and implement preventive measures. It's like knowing that a house fire was caused by faulty wiring versus a gas leak—the root cause determines the best prevention strategy.</p>
+        <p class="category-how"><strong>How points are awarded:</strong> Points are earned for including valid CWE identifiers that accurately describe the specific type of weakness, rather than generic classifications.</p>
+      </div>
+
+      <div class="category-detail">
+        <h3><span class="category-points">15 points</span> Severity & Impact Context</h3>
+        <p class="category-what"><strong>What it is:</strong> Standardized severity ratings using CVSS (Common Vulnerability Scoring System) metrics, which provide numerical scores from 0-10 indicating how serious a vulnerability is.</p>
+        <p class="category-why"><strong>Why it matters:</strong> CVSS scores help organizations prioritize which vulnerabilities to fix first based on potential impact. A CVSS score of 9.8 demands immediate attention, while a 3.1 might be scheduled for routine patching.</p>
+        <p class="category-how"><strong>How points are awarded:</strong> Points are earned for including complete CVSS v3 or v4 metrics with valid vector strings that accurately reflect the vulnerability's exploitability and impact.</p>
+      </div>
+
+      <div class="category-detail">
+        <h3><span class="category-points">10 points</span> Software Identification</h3>
+        <p class="category-what"><strong>What it is:</strong> Precise identification of affected software using CPE (Common Platform Enumeration) format, which provides standardized names for software products and versions.</p>
+        <p class="category-why"><strong>Why it matters:</strong> CPE data enables automated vulnerability scanners to accurately match vulnerabilities to specific software in an organization's environment. Without it, security tools can't reliably identify what's at risk.</p>
+        <p class="category-how"><strong>How points are awarded:</strong> Points are earned for including valid CPE identifiers that precisely specify the affected software products, versions, and configurations.</p>
+      </div>
+
+      <div class="category-detail">
+        <h3><span class="category-points">10 points</span> Patch Information</h3>
+        <p class="category-what"><strong>What it is:</strong> Direct links to patches, fixes, or official vendor advisories that provide remediation guidance.</p>
+        <p class="category-why"><strong>Why it matters:</strong> Patch information bridges the gap between identifying a vulnerability and actually fixing it. Security teams need clear paths to remediation, not just problem descriptions.</p>
+        <p class="category-how"><strong>How points are awarded:</strong> Points are earned for including direct links to official patches or vendor advisories, rather than generic references or third-party discussions.</p>
+      </div>
     </section>
-    <section class="scoring-table-card card">
-      <h2>Scoring Categories & Points</h2>
-      <table class="scoring-table modern-table">
-        <thead>
-          <tr>
-            <th>Category</th>
-            <th>Points</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Foundational Completeness</td><td>50</td><td>problemTypes, affected products, references, descriptions</td></tr>
-          <tr><td>Root Cause Analysis</td><td>15</td><td>valid CWE ID, specific CWE</td></tr>
-          <tr><td>Severity & Impact Context</td><td>15</td><td>CVSS v3/v4 metrics, valid CVSS vector string</td></tr>
-          <tr><td>Software Identification</td><td>10</td><td>valid CPE in affected</td></tr>
-          <tr><td>Patch Info</td><td>10</td><td>Patch/Vendor Patch Links Only references</td></tr>
-        </tbody>
-      </table>
-    </section>
+
+    <!-- Grading Tiers Section -->
     <section class="grading-tiers-card card">
       <h2>Grading Tiers</h2>
-      <div class="grading-tiers-row">
-        <span class="badge-grade badge-great">Perfect</span> 100%
-        <span class="badge-grade badge-great">Great</span> &gt;75%
-        <span class="badge-grade badge-good">Good</span> &gt;50%
-        <span class="badge-grade badge-needs-work">Needs Work</span> &lt;50%
-        <span class="badge-grade badge-missing">Missing Data</span> 0%
+      <p class="grading-intro">
+        Scores are calculated as a percentage of total possible points (100), then mapped to letter grades for easy interpretation:
+      </p>
+      <div class="grading-table">
+        <div class="grade-row">
+          <span class="badge-grade badge-perfect">Perfect</span>
+          <span class="grade-percentage">100%</span>
+          <span class="grade-description">All essential data fields are complete and accurate</span>
+        </div>
+        <div class="grade-row">
+          <span class="badge-grade badge-great">Great</span>
+          <span class="grade-percentage">&gt;75%</span>
+          <span class="grade-description">Most critical information is provided with minor gaps</span>
+        </div>
+        <div class="grade-row">
+          <span class="badge-grade badge-good">Good</span>
+          <span class="grade-percentage">&gt;50%</span>
+          <span class="grade-description">Basic requirements met with room for improvement</span>
+        </div>
+        <div class="grade-row">
+          <span class="badge-grade badge-needs-work">Needs Work</span>
+          <span class="grade-percentage">&lt;50%</span>
+          <span class="grade-description">Significant gaps in essential vulnerability data</span>
+        </div>
+        <div class="grade-row">
+          <span class="badge-grade badge-missing">Missing Data</span>
+          <span class="grade-percentage">0%</span>
+          <span class="grade-description">No scoring data available for this CNA</span>
+        </div>
       </div>
     </section>
+
+    <!-- Transparency Section -->
     <section class="methodology-notes-card card">
-      <h2>Transparency & Methodology</h2>
-      <p>All scoring logic is open and documented. For details, see the <a href="https://github.com/jgamblin/CNAScoreCard" target="_blank">project repository</a>.</p>
+      <h2>Transparency & Open Standards</h2>
+      <p class="transparency-statement">
+        The CNA Scorecard is committed to complete transparency in methodology. Every aspect of the scoring system is based on 
+        established industry standards and open specifications. The scoring logic is fully documented and publicly 
+        available, ensuring that CNAs and security professionals can understand exactly how scores are calculated.
+      </p>
+      <p class="open-source-note">
+        All scoring algorithms, data processing methods, and evaluation criteria are open source and available for 
+        review in the <a href="https://github.com/jgamblin/CNAScoreCard" target="_blank">project repository</a>. 
+        Feedback and contributions from the security community are welcome to continuously improve the methodology.
+      </p>
     </section>
   </main>
   <footer class="footer modern-footer">

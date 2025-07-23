@@ -43,9 +43,9 @@
 
 
 .scoring-cards-container {
-  max-width: 950px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 2.5rem 0 2rem 0;
+  padding: 2.5rem 1rem 2rem 1rem;
 }
 .card {
   background: var(--card-bg);
@@ -69,6 +69,206 @@
   font-size: 1.18em;
   color: var(--text-secondary);
   margin-bottom: 1.2rem;
+  line-height: 1.6;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.methodology-philosophy {
+  font-size: 1.1em;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 1.5rem auto 0;
+}
+
+/* Scoring Categories Section */
+.scoring-categories-card h2 {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.categories-intro {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 2.5rem;
+}
+
+.category-detail {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-left: 4px solid var(--primary-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.category-detail:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.category-detail h3 {
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.category-points {
+  background: var(--primary-color);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  min-width: 80px;
+  text-align: center;
+}
+
+.category-what,
+.category-why,
+.category-how {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.category-what {
+  color: var(--text-primary);
+}
+
+.category-why {
+  color: var(--text-secondary);
+}
+
+.category-how {
+  color: var(--text-secondary);
+}
+
+/* Grading Tiers Section */
+.grading-tiers-card h2 {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.grading-intro {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+}
+
+.grading-table {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.grade-row {
+  display: grid;
+  grid-template-columns: 120px 80px 1fr;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 1.5rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border-left: 4px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.grade-row:hover {
+  background: #f0f7ff;
+  border-left-color: var(--primary-color);
+}
+
+.grade-percentage {
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.grade-description {
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Transparency Section */
+.methodology-notes-card h2 {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.transparency-statement,
+.open-source-note {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.transparency-statement {
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.open-source-note {
+  background: #f0f7ff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.open-source-note a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.open-source-note a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .scoring-cards-container {
+    padding: 1.5rem 1rem;
+  }
+  
+  .category-detail {
+    padding: 1.5rem;
+  }
+  
+  .category-detail h3 {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .grade-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .grade-percentage {
+    font-size: 1.2rem;
+  }
 }
 .grading-tier-bar {
   display: flex;
