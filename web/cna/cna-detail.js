@@ -709,7 +709,7 @@ function renderCategoryBreakdown(categories) {
     categoryCard.className = 'category-card';
     const explanation = explanations[category.label] || '';
     categoryCard.innerHTML = `
-      <div class="category-score" style="color: ${category.color}">${Math.round(category.value)}%</div>
+      <div class="category-score" style="color: var(--primary-color)">${Math.round(category.value)}%</div>
       <div class="category-label">${category.label}</div>
       <div class="category-explanation">${explanation}</div>
     `;

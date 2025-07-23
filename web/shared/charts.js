@@ -1,5 +1,24 @@
 // Shared chart rendering utilities for CNA Scorecard
-// Placeholder for sparkline, bar, donut chart rendering (to be replaced with Chart.js or similar)
+// Uses CSS variables from theme.css for consistent coloring
+
+// Helper function to get CSS variable values
+function getCSSVariable(variableName) {
+  return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
+}
+
+// Get chart color palette from CSS variables
+function getChartColors() {
+  return [
+    getCSSVariable('--chart-color-1'), // Primary blue
+    getCSSVariable('--chart-color-2'), // Green
+    getCSSVariable('--chart-color-3'), // Yellow
+    getCSSVariable('--chart-color-4'), // Orange
+    getCSSVariable('--chart-color-5'), // Red
+    getCSSVariable('--chart-color-6'), // Teal
+    getCSSVariable('--chart-color-7'), // Purple
+    getCSSVariable('--chart-color-8')  // Orange variant
+  ];
+}
 
 // Example: Render a sparkline using Chart.js
 function renderSparkline(canvasId, data) {
@@ -11,8 +30,8 @@ function renderSparkline(canvasId, data) {
       labels: data.labels,
       datasets: [{
         data: data.values,
-        borderColor: '#1ec6e6',
-        backgroundColor: 'rgba(30,198,230,0.15)',
+        borderColor: getCSSVariable('--primary-color'),
+        backgroundColor: getCSSVariable('--primary-color') + '26', // Add alpha
         pointRadius: 0,
         borderWidth: 2,
         fill: true,
@@ -100,7 +119,7 @@ function createHorizontalBarChart(canvasId, data, options = {}) {
       labels: data.labels,
       datasets: [{
         data: data.values,
-        backgroundColor: options.color || '#1ec6e6',
+        backgroundColor: options.color || getCSSVariable('--chart-color-1'),
         borderRadius: 4,
         borderSkipped: false
       }]

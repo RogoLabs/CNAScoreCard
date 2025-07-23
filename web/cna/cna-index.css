@@ -1,77 +1,14 @@
-/* CNA Index Page - Main Styles */
-:root {
-  --primary-color: #0066cc;
-  --primary-hover: #0055aa;
-  --accent-color: #17a2b8;
-  --success-color: #28a745;
-  --warning-color: #ffc107;
-  --danger-color: #dc3545;
-  --light-bg: #f8f9fa;
-  --border-color: #e0e0e0;
-  --text-color: #333333;
-  --text-light: #666666;
-  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  --transition-speed: 0.3s;
-}
+/* CNA Index Page - Page-Specific Styles */
 
-/* Page Layout */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-}
-
-.page-header {
-  background-color: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  box-shadow: var(--card-shadow);
-  text-align: center;
-}
-
-.page-title {
-  font-size: 2rem;
-  color: var(--primary-color);
-  margin-bottom: 0.5rem;
-}
-
-.page-subtitle {
-  color: var(--text-light);
-  font-size: 1rem;
-  margin: 0;
-}
-
-/* Search Input in Controls */
+/* CNA Index Page Controls */
 .search-group {
   flex: 1;
   max-width: 400px;
 }
 
 .search-input {
+  /* Uses .form-input from shared.css as base */
   width: 100%;
-  padding: 0.75rem 1rem;
-  border: 2px solid var(--border-color);
-  border-radius: 8px;
-  font-size: 0.95rem;
-  background-color: white;
-  transition: all var(--transition-speed) ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1), 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Controls Section */
-.cna-table-section {
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: var(--card-shadow);
-  padding: 1.5rem;
-  margin-bottom: 2rem;
 }
 
 .controls-container {
@@ -89,35 +26,12 @@
   gap: 0.5rem;
 }
 
-#sortSelect {
-  padding: 0.5rem;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  font-size: 0.9rem;
-  background-color: white;
-}
-
 .checkbox-container {
   display: flex;
   align-items: center;
   cursor: pointer;
   font-size: 0.9rem;
   gap: 0.5rem;
-}
-
-.control-button {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background-color var(--transition-speed) ease;
-}
-
-.control-button:hover {
-  background-color: var(--primary-hover);
 }
 
 /* Table Info */
@@ -129,37 +43,11 @@
   font-size: 0.9rem;
 }
 
-/* Table Styles */
-.table-container {
-  overflow-x: auto;
-  margin-bottom: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  background: white;
-  max-width: 100%;
-}
-
+/* CNA Table Specific Styles */
 #cnaTable {
-  width: 100%;
+  /* Uses .data-table from shared.css as base */
   table-layout: fixed;
   min-width: 1000px;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: 0.95rem;
-  background: white;
-  line-height: 1.4;
-}
-
-#cnaTable th {
-  position: sticky;
-  top: 0;
-  background-color: var(--light-bg);
-  color: var(--text-color);
-  font-weight: 600;
-  padding: 1.25rem 1rem;
-  text-align: left;
-  border-bottom: 2px solid var(--border-color);
-  white-space: nowrap;
 }
 
 /* Sortable header styling */
@@ -231,8 +119,21 @@
   text-align: center;
 }
 
-.col-detail {
-  display: none; /* Hidden by default */
+/* Table layout for better column control */
+#cnaTable {
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* Detail columns - completely hidden by default */
+#cnaTable .col-detail,
+#cnaTable th.col-detail,
+#cnaTable td.col-detail {
+  display: none !important;
+  width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
 }
 
 /* Medal-style ranking colors for tied rankings */
@@ -255,6 +156,24 @@
   font-weight: bold;
   font-size: 1.1rem;
   text-shadow: 0 1px 2px rgba(205, 127, 50, 0.3);
+}
+
+/* Control Button Styling - Match navbar active state */
+.control-button {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  font-family: var(--font-stack);
+  font-size: 0.9rem;
+}
+
+.control-button:hover {
+  background: var(--primary-hover);
 }
 
 /* CNA Cell Styling */
@@ -517,11 +436,39 @@
   padding: 0.75rem 0.5rem;
 }
 
-/* Make detail columns more compact */
-.show-details .col-detail {
-  min-width: 75px;
+/* Clean table borders - match Record Completeness styling */
+#cnaTable {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+#cnaTable th {
+  border-bottom: 2px solid var(--border-color);
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+#cnaTable td {
+  border-bottom: 1px solid var(--border-color);
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+/* Show detail columns when toggled - clean borders */
+#cnaTable.show-details .col-detail,
+#cnaTable.show-details th.col-detail,
+#cnaTable.show-details td.col-detail {
+  display: table-cell !important;
+  width: auto !important;
+  min-width: 75px !important;
+  padding: 0.75rem 0.5rem !important;
+  margin: 0 !important;
   text-align: center;
   font-size: 0.85rem;
+  visibility: visible !important;
+  overflow: visible !important;
 }
 
 /* Adjust CNA name column when details are shown */

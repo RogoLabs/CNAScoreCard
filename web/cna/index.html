@@ -23,58 +23,60 @@
   <!-- Main Content -->
   <main class="container">
     <section class="page-header">
-      <h1 class="page-title">CNA Performance Rankings</h1>
-      <p class="page-subtitle">Comprehensive performance rankings and metrics for all CVE Numbering Authorities based on data quality and completeness.</p>
+      <h1 class="page-title">CNA Scorecard: Performance Rankings</h1>
+      <p class="page-subtitle">Performance rankings showing which CNAs provide the most complete vulnerability data to help security teams prioritize and respond to threats.</p>
     </section>
     
     <section class="cna-table-section">
-      <!-- Controls Section -->
-      <div class="controls-container">
-        <div class="control-group search-group">
-          <input type="search" id="searchInput" placeholder="Search CNA..." aria-label="Search CNA" class="search-input">
+      <!-- Card Container -->
+      <div class="card">
+        <!-- Controls Section -->
+        <div class="controls-container">
+          <div class="control-group search-group">
+            <input type="search" id="searchInput" placeholder="Search CNA..." aria-label="Search CNA" class="search-input">
+          </div>
+          <div class="control-group">
+            <button id="toggleDetailsBtn" class="control-button" data-showing="false">
+              <span>Show Details</span>
+            </button>
+          </div>
         </div>
-        <div class="control-group">
-          <button id="toggleDetailsBtn" class="control-button" data-showing="false">
-            <span>Show Details</span>
-          </button>
+        <!-- Info/Pagination Summary -->
+        <div class="table-info">
+          <span id="resultsSummary">Showing <span id="startIndex">1</span>-<span id="endIndex">25</span> of <span id="totalItems">0</span> CNAs</span>
         </div>
-      </div>
-      
-      <!-- Info/Pagination Summary -->
-      <div class="table-info">
-        <span id="resultsSummary">Showing <span id="startIndex">1</span>-<span id="endIndex">25</span> of <span id="totalItems">0</span> CNAs</span>
-      </div>
-      
-      <!-- Main Table -->
-      <div class="table-container">
-        <table id="cnaTable">
-          <thead>
-            <tr>
-              <th class="col-rank sortable" data-sort="rank">Rank <span class="sort-indicator"></span></th>
-              <th class="col-name sortable" data-sort="name">CNA Name <span class="sort-indicator"></span></th>
-              <th class="col-type sortable" data-sort="type">CNA Type <span class="sort-indicator"></span></th>
-              <th class="col-count sortable" data-sort="cveCount">CVE Count <span class="sort-indicator"></span></th>
-              <th class="col-score sortable" data-sort="score">CNA ScoreCard Rating <span class="sort-indicator"></span></th>
-              <th class="col-detail sortable" data-sort="foundational" data-column="foundational">Foundational <span class="sort-indicator"></span></th>
-              <th class="col-detail sortable" data-sort="rootcause" data-column="rootcause">Root Cause <span class="sort-indicator"></span></th>
-              <th class="col-detail sortable" data-sort="software" data-column="software">Software ID <span class="sort-indicator"></span></th>
-              <th class="col-detail sortable" data-sort="severity" data-column="severity">Severity & Impact <span class="sort-indicator"></span></th>
-              <th class="col-detail sortable" data-sort="patch" data-column="patch">Patch Info <span class="sort-indicator"></span></th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Table content will be dynamically generated -->
-          </tbody>
-        </table>
-      </div>
-      
-      <!-- Pagination Controls -->
-      <div class="pagination-controls" id="paginationControls">
-        <button class="pagination-button" id="prevPageBtn" disabled>&laquo; Previous</button>
-        <div class="pagination-pages" id="paginationPages">
-          <!-- Page numbers will be dynamically generated -->
+        
+        <!-- Main Table -->
+        <div class="table-container">
+          <table id="cnaTable">
+            <thead>
+              <tr>
+                <th class="col-rank sortable" data-sort="rank">Rank <span class="sort-indicator"></span></th>
+                <th class="col-name sortable" data-sort="name">CNA Name <span class="sort-indicator"></span></th>
+                <th class="col-type sortable" data-sort="type">CNA Type <span class="sort-indicator"></span></th>
+                <th class="col-count sortable" data-sort="cveCount">CVE Count <span class="sort-indicator"></span></th>
+                <th class="col-score sortable" data-sort="score">CNA ScoreCard Rating <span class="sort-indicator"></span></th>
+                <th class="col-detail sortable" data-sort="foundational" data-column="foundational">Foundational <span class="sort-indicator"></span></th>
+                <th class="col-detail sortable" data-sort="rootcause" data-column="rootcause">Root Cause <span class="sort-indicator"></span></th>
+                <th class="col-detail sortable" data-sort="software" data-column="software">Software ID <span class="sort-indicator"></span></th>
+                <th class="col-detail sortable" data-sort="severity" data-column="severity">Severity & Impact <span class="sort-indicator"></span></th>
+                <th class="col-detail sortable" data-sort="patch" data-column="patch">Patch Info <span class="sort-indicator"></span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Table content will be dynamically generated -->
+            </tbody>
+          </table>
         </div>
-        <button class="pagination-button" id="nextPageBtn" disabled>Next &raquo;</button>
+        
+        <!-- Pagination Controls -->
+        <div class="pagination-controls" id="paginationControls">
+          <button class="pagination-button" id="prevPageBtn" disabled>&laquo; Previous</button>
+          <div class="pagination-pages" id="paginationPages">
+            <!-- Page numbers will be dynamically generated -->
+          </div>
+          <button class="pagination-button" id="nextPageBtn" disabled>Next &raquo;</button>
+        </div>
       </div>
     </section>
   </main>
