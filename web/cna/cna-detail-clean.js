@@ -1158,6 +1158,9 @@ async function setupClickableBenchmarkScorePill(currentCnaData) {
       const sign = difference > 0 ? '+' : '';
       const cnaName = currentCnaData.name || currentCnaData.cna || 'This CNA';
       
+      // Format difference to avoid floating point precision errors
+      const formattedDifference = Math.abs(difference) < 0.01 ? '0' : difference.toFixed(2);
+      
       // Determine type label and styling
       let typeLabel, pillClass, differenceClass;
       if (currentType === 'all') {
@@ -1183,7 +1186,7 @@ async function setupClickableBenchmarkScorePill(currentCnaData) {
       // Create performance-focused comparison text with separated styling
       const typeDisplayName = currentType === 'all' ? 'Average CNA' : `Average ${typeLabel}`;
       const benchmarkHtml = `
-        <span class="benchmark-difference ${differenceClass}"><strong>${sign}${difference}</strong></span> vs ${typeDisplayName}
+        <span class="benchmark-difference ${differenceClass}"><strong>${sign}${formattedDifference}</strong></span> vs ${typeDisplayName}
       `;
       
       scorePill.innerHTML = benchmarkHtml;
