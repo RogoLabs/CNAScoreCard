@@ -94,7 +94,14 @@ function getCnaType(type) {
 async function loadCnaData(shortName) {
   try {
     console.log(`Loading CNA data for: ${shortName}`);
-    const response = await fetch(`../data/cna/${shortName}.json`);
+    // Add cache-busting query parameter to prevent browser caching
+    const cacheBuster = new Date().getTime();
+    const response = await fetch(`../data/cna/${shortName}.json?_=${cacheBuster}`, {
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+      }
+    });
     
     if (!response.ok) {
       throw new Error(`Failed to load CNA data for ${shortName}: ${response.status}`);
@@ -102,6 +109,15 @@ async function loadCnaData(shortName) {
     
     const cnaData = await response.json();
     console.log('CNA data loaded successfully:', cnaData);
+    // Log trend data explicitly to see if it's present in the raw JSON
+    console.log('Raw JSON trend data:', {
+      trend_direction: cnaData.trend_direction,
+      trend_description: cnaData.trend_description,
+      cna_scoring_trend: cnaData.cna_scoring && cnaData.cna_scoring[0] ? {
+        direction: cnaData.cna_scoring[0].trend_direction,
+        description: cnaData.cna_scoring[0].trend_description
+      } : 'No cna_scoring trend data'
+    });
     
     return convertCnaData(cnaData);
   } catch (error) {
@@ -177,9 +193,9 @@ function convertCnaData(cnaData) {
       score: score,
       grade: grade,
       trend: trendData,
-      // Real trend analysis data from pipeline
-      trend_direction: cnaInfo.trend_direction || 'steady',
-      trend_description: cnaInfo.trend_description || 'No trend data available',
+      // Real trend analysis data from pipeline - get from cna_scoring[0] instead of cnaInfo
+      trend_direction: (cnaScoring && cnaScoring.trend_direction) || cnaData.trend_direction || 'steady',
+      trend_description: (cnaScoring && cnaScoring.trend_description) || cnaData.trend_description || 'No trend data available',
       // Enhanced metadata for rich header display
       scope: cnaInfo.scope || 'Not Provided',
       advisories: cnaInfo.advisories || [],
@@ -243,96 +259,238 @@ function convertCnaData(cnaData) {
     };
   }
 }
-
-// ================================
 // RENDERING FUNCTIONS
 // ================================
 
+// Render recent CVE cards with pagination
 function renderRecentCveCards(recentCves) {
-  const mainContainer = document.querySelector('main.container');
-  if (!mainContainer) return;
-  // Remove old section if present
-  let oldSection = document.getElementById('recentCveCardsSection');
-  if (oldSection) oldSection.remove();
-
-  const section = document.createElement('section');
-  section.id = 'recentCveCardsSection';
-  section.className = 'recent-cve-cards-section';
-  section.innerHTML = `
-    <h2>Recent CVEs (Last 6 Months)</h2>
-    <div class="recent-cve-cards"></div>
-  `;
-  mainContainer.appendChild(section);
-
-  const cardsContainer = section.querySelector('.recent-cve-cards');
-  if (!recentCves || recentCves.length === 0) {
-    cardsContainer.innerHTML = '<p>No recent CVEs for this CNA in the last 6 months.</p>';
+  // Constants for pagination
+  const CVE_PER_PAGE = 25;
+  let currentPage = 1;
+  
+  // Find the existing section
+  const section = document.getElementById('recentCveCardsSection');
+  if (!section) {
+    console.warn('Recent CVEs section not found');
     return;
   }
+  
+  const cardsContainer = document.getElementById('recentCveCardsContainer');
+  const paginationContainer = document.getElementById('cvePagination');
+  const paginationPages = document.getElementById('paginationPages');
+  const prevButton = document.getElementById('prevPage');
+  const nextButton = document.getElementById('nextPage');
+  const cveCountInfo = document.getElementById('cveCountInfo');
+  const cveStart = document.getElementById('cveStart');
+  const cveEnd = document.getElementById('cveEnd');
+  const cveTotal = document.getElementById('cveTotal');
+  const loadingIndicator = document.getElementById('recentCvesLoading');
+  const errorMessage = document.getElementById('recentCvesError');
+  
+  // Hide loading indicator
+  if (loadingIndicator) {
+    loadingIndicator.style.display = 'none';
+  }
+  
+  if (!cardsContainer || !recentCves || !Array.isArray(recentCves)) {
+    console.warn('No recent CVEs found or container not available');
+    if (errorMessage) {
+      errorMessage.style.display = 'block';
+    }
+    if (paginationContainer) {
+      paginationContainer.style.display = 'none';
+    }
+    return;
+  }
+  
+  if (recentCves.length === 0) {
+    cardsContainer.innerHTML = '<div class="no-cves-message">No CVEs found in the last 6 months.</div>';
+    if (paginationContainer) {
+      paginationContainer.style.display = 'none';
+    }
+    if (cveCountInfo) {
+      cveCountInfo.textContent = 'No CVEs found';
+    }
+    return;
+  }
+  
   // Sort by publish date descending (newest first)
   recentCves = recentCves.slice().sort((a, b) => {
     const da = new Date(a.datePublished || a.date_published || 0);
     const db = new Date(b.datePublished || b.date_published || 0);
     return db - da;
   });
-  recentCves.forEach(cve => {
-    const score = cve.totalCveScore || 0;
-    const grade = calculateGrade(score);
-    let badgeClass = '';
-    switch (grade) {
-      case 'Perfect': badgeClass = 'badge-perfect'; break;
-      case 'Great': badgeClass = 'badge-great'; break;
-      case 'Good': badgeClass = 'badge-good'; break;
-      case 'Fair': badgeClass = 'badge-fair'; break;
-      case 'Poor': badgeClass = 'badge-poor'; break;
-      default: badgeClass = 'badge-missing';
-    }
-    const card = document.createElement('div');
-    card.className = 'recent-cve-card';
-    // Render five category indicators
-    const categories = [
-      { key: 'foundationalCompleteness', label: 'Foundational', color: '#1ec6e6' },
-      { key: 'rootCauseAnalysis', label: 'Root Cause', color: '#0fa3b1' },
-      { key: 'softwareIdentification', label: 'Software ID', color: '#f4d35e' },
-      { key: 'severityAndImpactContext', label: 'Severity', color: '#27ae60' },
-      { key: 'patchinfo', label: 'Patch', color: '#e67e22' }
-    ];
-    const breakdown = cve.scoreBreakdown || {};
-    const indicators = categories.map(cat => {
-      const present = breakdown[cat.key] && breakdown[cat.key] > 0;
-      return `<div class="cve-cat-indicator" title="${cat.label}" style="color: ${present ? '#444' : '#bbb'}; font-weight: ${present ? 'bold' : 'normal'}; margin-bottom: 0.1em; display: flex; align-items: center;">
-        <span class="cve-cat-label">${cat.label}</span>
-      </div>`;
-    }).join('');
-    // Map grade to pill color class (matching main index)
-    let pillClass = '';
-    switch (grade) {
-      case 'Perfect': pillClass = 'badge-perfect'; break;
-      case 'Great': pillClass = 'badge-great'; break;
-      case 'Good': pillClass = 'badge-good'; break;
-      case 'Fair': pillClass = 'badge-fair'; break;
-      case 'Poor': pillClass = 'badge-poor'; break;
-      default: pillClass = 'badge-missing';
-    }
-    card.innerHTML = `
-      <div class="cve-id-row"><a href="https://www.cve.org/CVERecord?id=${cve.cveId}" target="_blank" rel="noopener noreferrer"><strong>${cve.cveId}</strong></a></div>
-      <div class="cve-date">${(cve.datePublished || '').slice(0,10)}</div>
-      <div class="cve-cat-indicators" style="margin-top: 0.5em; display: flex; flex-direction: column; gap: 0.1em 0;">${indicators}</div>
-      <div class="cve-score-pill ${pillClass}">${score} <span class="cve-grade-pill">${grade}</span></div>
-    `;
+  
+  // Set total CVE count
+  if (cveTotal) {
+    cveTotal.textContent = recentCves.length;
+  }
+  
+  // Function to render a specific page
+  function renderPage(page) {
+    // Clear current cards
+    cardsContainer.innerHTML = '';
     
-    // Force the correct color for Good badges with inline styles
-    if (grade === 'Good') {
-      const pillElement = card.querySelector('.cve-score-pill');
-      if (pillElement) {
-        pillElement.style.background = 'linear-gradient(135deg, #3b82f6, #2563eb)';
-        pillElement.style.color = '#fff';
+    // Calculate start and end indices for current page
+    const startIndex = (page - 1) * CVE_PER_PAGE;
+    const endIndex = Math.min(startIndex + CVE_PER_PAGE, recentCves.length);
+    
+    // Update the counter display
+    if (cveStart) cveStart.textContent = startIndex + 1;
+    if (cveEnd) cveEnd.textContent = endIndex;
+    
+    // Render the CVEs for the current page
+    for (let i = startIndex; i < endIndex; i++) {
+      const cve = recentCves[i];
+      
+      // Process CVE data
+      const score = cve.totalCveScore || cve.totalEasScore || 0;
+      const grade = calculateGrade(score);
+      let pillClass = '';
+      switch (grade) {
+        case 'Perfect': pillClass = 'badge-perfect'; break;
+        case 'Great': pillClass = 'badge-great'; break;
+        case 'Good': pillClass = 'badge-good'; break;
+        case 'Fair': pillClass = 'badge-fair'; break;
+        case 'Poor': pillClass = 'badge-poor'; break;
+        default: pillClass = 'badge-missing';
       }
+      
+      // Format CVE ID and date
+      const cveId = cve.cveId || 'Unknown CVE';
+      const datePublished = cve.datePublished ? new Date(cve.datePublished).toISOString().split('T')[0] : 'Unknown Date';
+      
+      // Generate a styled card element
+      const card = document.createElement('div');
+      card.className = 'recent-cve-card';
+      
+      // Generate indicators for each category
+      const scoreBreakdown = cve.scoreBreakdown || {};
+      const indicators = [`
+        <div class="cve-cat-indicator" title="Foundational" style="color: ${scoreBreakdown.foundationalCompleteness >= 1 ? '#444' : '#bbb'}; font-weight: ${scoreBreakdown.foundationalCompleteness >= 1 ? 'bold' : 'normal'}; margin-bottom: 0.1em; display: flex; align-items: center;">
+          <span class="cve-cat-label">Foundational</span>
+        </div>`,
+        `<div class="cve-cat-indicator" title="Root Cause" style="color: ${scoreBreakdown.rootCauseAnalysis >= 1 ? '#444' : '#bbb'}; font-weight: ${scoreBreakdown.rootCauseAnalysis >= 1 ? 'bold' : 'normal'}; margin-bottom: 0.1em; display: flex; align-items: center;">
+          <span class="cve-cat-label">Root Cause</span>
+        </div>`,
+        `<div class="cve-cat-indicator" title="Software ID" style="color: ${scoreBreakdown.softwareIdentification >= 1 ? '#444' : '#bbb'}; font-weight: ${scoreBreakdown.softwareIdentification >= 1 ? 'bold' : 'normal'}; margin-bottom: 0.1em; display: flex; align-items: center;">
+          <span class="cve-cat-label">Software ID</span>
+        </div>`,
+        `<div class="cve-cat-indicator" title="Severity" style="color: ${scoreBreakdown.severityAndImpactContext >= 1 ? '#444' : '#bbb'}; font-weight: ${scoreBreakdown.severityAndImpactContext >= 1 ? 'bold' : 'normal'}; margin-bottom: 0.1em; display: flex; align-items: center;">
+          <span class="cve-cat-label">Severity</span>
+        </div>`,
+        `<div class="cve-cat-indicator" title="Patch" style="color: ${scoreBreakdown.patchinfo >= 1 ? '#444' : '#bbb'}; font-weight: ${scoreBreakdown.patchinfo >= 1 ? 'bold' : 'normal'}; margin-bottom: 0.1em; display: flex; align-items: center;">
+          <span class="cve-cat-label">Patch</span>
+        </div>`
+      ].join('');
+      
+      card.innerHTML = `
+        <div class="cve-id-row"><a href="https://www.cve.org/CVERecord?id=${cveId}" target="_blank" rel="noopener noreferrer"><strong>${cveId}</strong></a></div>
+        <div class="cve-date">${datePublished}</div>
+        <div class="cve-cat-indicators" style="margin-top: 0.5em; display: flex; flex-direction: column; gap: 0.1em 0;">${indicators}</div>
+        <div class="cve-score-pill ${pillClass}">${score} <span class="cve-grade-pill">${grade}</span></div>
+      `;
+      
+      // Force the correct color for Good badges with inline styles
+      if (grade === 'Good') {
+        const pillElement = card.querySelector('.cve-score-pill');
+        if (pillElement) {
+          pillElement.style.background = 'linear-gradient(135deg, #3b82f6, #2563eb)';
+          pillElement.style.color = '#fff';
+        }
+      }
+      
+      cardsContainer.appendChild(card);
     }
-    cardsContainer.appendChild(card);
-  });
+    
+    // Enable/disable pagination buttons
+    if (prevButton) {
+      prevButton.disabled = page === 1;
+    }
+    if (nextButton) {
+      nextButton.disabled = page >= Math.ceil(recentCves.length / CVE_PER_PAGE);
+    }
+    
+    // Update current page indicator
+    currentPage = page;
+    updatePaginationControls();
+  }
+  
+  // Generate pagination page numbers
+  function updatePaginationControls() {
+    if (!paginationPages) return;
+    
+    paginationPages.innerHTML = '';
+    const totalPages = Math.ceil(recentCves.length / CVE_PER_PAGE);
+    
+    // Determine which pages to show (always show first, last, current, and some around current)
+    const pagesToShow = new Set();
+    pagesToShow.add(1); // Always show first page
+    if (totalPages > 1) pagesToShow.add(totalPages); // Always show last page
+    
+    // Show current page and pages around it
+    for (let i = Math.max(1, currentPage - 1); i <= Math.min(totalPages, currentPage + 1); i++) {
+      pagesToShow.add(i);
+    }
+    
+    // Convert to sorted array
+    const sortedPages = Array.from(pagesToShow).sort((a, b) => a - b);
+    
+    // Render page numbers with ellipses where needed
+    let lastRenderedPage = 0;
+    sortedPages.forEach(page => {
+      if (lastRenderedPage > 0 && page > lastRenderedPage + 1) {
+        // Add ellipsis
+        const ellipsis = document.createElement('div');
+        ellipsis.className = 'page-ellipsis';
+        ellipsis.textContent = '…';
+        ellipsis.setAttribute('aria-hidden', 'true');
+        paginationPages.appendChild(ellipsis);
+      }
+      
+      // Add page number
+      const pageElement = document.createElement('div');
+      pageElement.className = 'page-number' + (page === currentPage ? ' active' : '');
+      pageElement.textContent = page;
+      pageElement.setAttribute('role', 'button');
+      pageElement.setAttribute('aria-label', `Page ${page}${page === currentPage ? ' (current)' : ''}`);
+      pageElement.setAttribute('tabindex', '0');
+      pageElement.addEventListener('click', () => renderPage(page));
+      paginationPages.appendChild(pageElement);
+      
+      lastRenderedPage = page;
+    });
+  }
+  
+  // Set up event listeners for pagination buttons
+  if (prevButton) {
+    prevButton.addEventListener('click', () => {
+      if (currentPage > 1) {
+        renderPage(currentPage - 1);
+      }
+    });
+  }
+  
+  if (nextButton) {
+    nextButton.addEventListener('click', () => {
+      if (currentPage < Math.ceil(recentCves.length / CVE_PER_PAGE)) {
+        renderPage(currentPage + 1);
+      }
+    });
+  }
+  
+  // Initial render of first page
+  renderPage(1);
+  
+  // Show pagination controls if we have multiple pages
+  if (paginationContainer && recentCves.length > CVE_PER_PAGE) {
+    paginationContainer.style.display = 'flex';
+  } else if (paginationContainer) {
+    paginationContainer.style.display = 'none';
+  }
+  
+  console.log(`Rendered paginated CVEs (${recentCves.length} total, showing ${CVE_PER_PAGE} per page)`);
 }
-
 
 // Get country flag emoji based on country name
 function getCountryFlag(country) {
@@ -377,17 +535,24 @@ function renderCnaTypeBadges(cnaTypes) {
   }
   
   return cnaTypes.map(type => {
-    const colorMap = {
-      'Vendor': { bg: '#3b82f6', text: 'white' },
-      'Researcher': { bg: '#10b981', text: 'white' },
-      'Coordinator': { bg: '#f59e0b', text: 'white' },
-      'Government': { bg: '#8b5cf6', text: 'white' }
-    };
+    // Create class name based on type (matching main page logic)
+    let typeClass = '';
+    if (type === 'Vendor') {
+      typeClass = 'cna-type-vendor';
+    } else if (type === 'Open Source') {
+      typeClass = 'cna-type-opensource';
+    } else if (type === 'CERT') {
+      typeClass = 'cna-type-cert';
+    } else if (type.includes('Bug Bounty')) {
+      typeClass = 'cna-type-bounty';
+    } else if (type === 'Consortium') {
+      typeClass = 'cna-type-consortium';
+    } else if (type === 'Researcher') {
+      typeClass = 'cna-type-researcher';
+    }
     
-    const colors = colorMap[type] || { bg: '#6b7280', text: 'white' };
-    
-    return `<span class="cna-type-badge" style="background: ${colors.bg}; color: ${colors.text}; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600; margin-right: 0.5rem;">${type}</span>`;
-  }).join('');
+    return `<span class="cna-type-badge ${typeClass}">${type}</span>`;
+  }).join(' ');
 }
 
 // Render country information with flag
@@ -415,18 +580,18 @@ function renderTrendBadge(trendDirection, trendDescription) {
   
   switch (trendDirection) {
     case 'improving':
-      icon = '↗️';
+      icon = ''; // Removed emoji
       background = 'linear-gradient(135deg, #10b981, #059669)';
       trendText = 'Improving';
       break;
     case 'declining':
-      icon = '↘️';
+      icon = ''; // Removed emoji
       background = 'linear-gradient(135deg, #dc3545, #c82333)';
       trendText = 'Declining';
       break;
     case 'steady':
     default:
-      icon = '➡️';
+      icon = ''; // Removed emoji
       background = 'linear-gradient(135deg, #6b7280, #4b5563)';
       trendText = 'Steady';
       break;
@@ -445,7 +610,10 @@ function renderTrendBadge(trendDirection, trendDescription) {
   trendElement.style.alignItems = 'center';
   trendElement.style.justifyContent = 'center';
   trendElement.style.gap = '0.25rem';
-  trendElement.style.width = '90px';
+  // Adjust width based on text content - auto-scale instead of fixed width
+  trendElement.style.minWidth = '90px'; // Minimum width
+  trendElement.style.width = 'auto'; // Auto-width based on content
+  trendElement.style.maxWidth = '130px'; // Maximum width
   trendElement.style.textAlign = 'center';
   trendElement.style.whiteSpace = 'nowrap';
   trendElement.style.overflow = 'hidden';
@@ -615,7 +783,14 @@ async function initializePage() {
     // Update metadata fields
     const scopeElement = document.getElementById('cnaScope');
     if (scopeElement) {
-      scopeElement.textContent = CNA_DETAIL.scope;
+      // Safely render HTML content in scope field
+      if (CNA_DETAIL.scope && CNA_DETAIL.scope.includes('<')) {
+        // If HTML is present, render it (links, formatting, etc.)
+        scopeElement.innerHTML = CNA_DETAIL.scope;
+      } else {
+        // Otherwise use textContent for safety
+        scopeElement.textContent = CNA_DETAIL.scope;
+      }
     }
     
     const officialIdElement = document.getElementById('cnaOfficialId');
@@ -671,6 +846,11 @@ async function initializePage() {
     }
     
     // Render trend badge using real trend analysis data
+    console.log('DEBUG - Trend data from CNA_DETAIL:', {
+      trend_direction: CNA_DETAIL.trend_direction, 
+      trend_description: CNA_DETAIL.trend_description,
+      raw_data: JSON.stringify(CNA_DETAIL).substring(0, 500) + '...' // Show part of raw JSON
+    });
     renderTrendBadge(CNA_DETAIL.trend_direction, CNA_DETAIL.trend_description);
 
     // Render recent CVE cards below main info
@@ -682,7 +862,17 @@ async function initializePage() {
     const emailEl = document.getElementById('cnaEmail');
     const advisoriesEl = document.getElementById('cnaAdvisories');
     
-    if (scopeEl) scopeEl.textContent = CNA_DETAIL.scope || 'Not Provided';
+    if (scopeEl) {
+      // Safely render HTML content in scope field
+      const scopeContent = CNA_DETAIL.scope || 'Not Provided';
+      if (typeof scopeContent === 'string' && scopeContent.includes('<')) {
+        // If HTML is present, render it (links, formatting, etc.)
+        scopeEl.innerHTML = scopeContent;
+      } else {
+        // Otherwise use textContent for safety
+        scopeEl.textContent = scopeContent;
+      }
+    }
     if (idEl) idEl.textContent = CNA_DETAIL.officialCnaID || 'Not Provided';
     
     // Handle action buttons in the centered section - no headings, just buttons

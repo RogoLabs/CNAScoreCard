@@ -43,6 +43,7 @@ def _get_schema_fields() -> Dict[str, Dict]:
         "containers.cna.tags": {"path": ["containers", "cna", "tags"]},
         "containers.cna.taxonomyMappings": {"path": ["containers", "cna", "taxonomyMappings"]},
         "containers.cna.cpeApplicability": {"path": ["containers", "cna", "cpeApplicability"]},
+        
         # ADP Container
         "containers.adp": {"path": ["containers", "adp"]},
         # Descriptions
@@ -72,10 +73,10 @@ def _get_schema_fields() -> Dict[str, Dict]:
         "references.vendor": {"path": ["containers", "cna", "references"], "check": "has_vendor_ref"},
         "references.named": {"path": ["containers", "cna", "references"], "check": "has_named_ref"},
         # Metrics
-        "metrics.cvssV4": {"path": ["containers", "cna", "metrics"], "check": "has_cvss_v4"},
+        "metrics.cvssV4_0": {"path": ["containers", "cna", "metrics"], "check": "has_cvss_v4"},
         "metrics.cvssV3_1": {"path": ["containers", "cna", "metrics"], "check": "has_cvss_v3_1"},
         "metrics.cvssV3_0": {"path": ["containers", "cna", "metrics"], "check": "has_cvss_v3_0"},
-        "metrics.cvssV2": {"path": ["containers", "cna", "metrics"], "check": "has_cvss_v2"},
+        "metrics.cvssV2_0": {"path": ["containers", "cna", "metrics"], "check": "has_cvss_v2"},
         "metrics.other": {"path": ["containers", "cna", "metrics"], "check": "has_other_metrics"},
         "metrics.scenarios": {"path": ["containers", "cna", "metrics"], "check": "has_scenarios"},
     }
@@ -199,30 +200,33 @@ def _custom_check(data: Any, check_type: str) -> bool:
             return any(ref.get("name") for ref in data if isinstance(ref, dict))
         return False
 
-    # Metrics
+    # Metrics - handle as array of metric objects
     if check_type == "has_cvss_v4":
-        if isinstance(data, dict):
-            return "cvssV4" in data
+        if isinstance(data, list):
+            return any("cvssV4_0" in metric for metric in data if isinstance(metric, dict))
         return False
     if check_type == "has_cvss_v3_1":
-        if isinstance(data, dict):
-            return "cvssV3_1" in data
+        if isinstance(data, list):
+            return any("cvssV3_1" in metric for metric in data if isinstance(metric, dict))
         return False
     if check_type == "has_cvss_v3_0":
-        if isinstance(data, dict):
-            return "cvssV3_0" in data
+        if isinstance(data, list):
+            return any("cvssV3_0" in metric for metric in data if isinstance(metric, dict))
         return False
     if check_type == "has_cvss_v2":
-        if isinstance(data, dict):
-            return "cvssV2" in data
+        if isinstance(data, list):
+            return any("cvssV2_0" in metric for metric in data if isinstance(metric, dict))
         return False
     if check_type == "has_other_metrics":
-        if isinstance(data, dict):
-            return any(k not in ("cvssV4", "cvssV3_1", "cvssV3_0", "cvssV2") for k in data.keys())
+        if isinstance(data, list):
+            return any(
+                any(k not in ("cvssV4_0", "cvssV3_1", "cvssV3_0", "cvssV2_0") for k in metric.keys())
+                for metric in data if isinstance(metric, dict)
+            )
         return False
     if check_type == "has_scenarios":
-        if isinstance(data, dict):
-            return "scenarios" in data
+        if isinstance(data, list):
+            return any("scenarios" in metric for metric in data if isinstance(metric, dict))
         return False
 
     return False
@@ -274,3 +278,91 @@ def compute_field_utilization(cve_records, field_list):
     # Sort by cna_percent descending, then field name ascending
     utilization.sort(key=lambda x: (-x['cna_percent'], x['field']))
     return utilization
+
+
+def compute_individual_cna_field_utilization(cve_records, field_list):
+    """
+    Calculates field utilization for each individual CNA.
+    Returns a dictionary mapping CNA shortName to their field utilization data.
+    """
+    from collections import defaultdict
+    import json
+    import os
+    
+    # No need for external mapping - we'll extract shortName directly from CVE records
+    # This matches the approach used in ingest.py load_cna_list function
+    
+    schema_fields = _get_schema_fields()
+    
+    # Track field usage per CNA using shortName as key
+    cna_field_data = defaultdict(lambda: defaultdict(int))  # shortName -> field -> count
+    cna_total_cves = defaultdict(int)  # shortName -> total CVE count
+    
+    for cve in cve_records:
+        # Extract shortName directly from CVE record (matches ingest.py approach)
+        containers = cve.get("containers", {})
+        cna = containers.get("cna", {})
+        provider = cna.get("providerMetadata", {})
+        short_name = provider.get("shortName")
+        
+        if not short_name:
+            continue
+        
+        cna_total_cves[short_name] += 1
+        
+        for field_name in field_list:
+            if field_name not in schema_fields:
+                continue
+            
+            field_info = schema_fields[field_name]
+            path = field_info["path"]
+            check_type = field_info.get("check")
+            
+            value = _get_nested_value(cve, path)
+            
+            is_present = False
+            if check_type:
+                is_present = _custom_check(value, check_type)
+            elif value is not None and value != []:
+                is_present = True
+            
+            if is_present:
+                cna_field_data[short_name][field_name] += 1
+    
+    # Get field metadata from CANONICAL_FIELDS
+    field_metadata = {}
+    try:
+        from run_pipeline import CANONICAL_FIELDS
+        field_metadata = {f['field']: f for f in CANONICAL_FIELDS}
+    except ImportError:
+        print("Warning: Could not import CANONICAL_FIELDS for field metadata")
+    
+    # Generate individual CNA field utilization data
+    cna_utilization_data = {}
+    
+    for short_name, field_counts in cna_field_data.items():
+        total_cves = cna_total_cves[short_name]
+        utilization = []
+        
+        for field in field_list:
+            field_count = field_counts.get(field, 0)
+            percent = round(100 * field_count / total_cves, 1) if total_cves > 0 else 0.0
+            
+            # Get field metadata
+            field_meta = field_metadata.get(field, {})
+            
+            utilization.append({
+                "field": field,
+                "percent": percent,
+                "cve_count": field_count,
+                "total_cves": total_cves,
+                "importance": field_meta.get('importance', 'Medium'),
+                "description": field_meta.get('description', ''),
+                "cna_scorecard_category": field_meta.get('cna_scorecard_category')
+            })
+        
+        # Sort by percent descending, then field name ascending
+        utilization.sort(key=lambda x: (-x['percent'], x['field']))
+        cna_utilization_data[short_name] = utilization
+    
+    return cna_utilization_data

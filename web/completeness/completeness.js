@@ -81,8 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const cnaSearchResults = document.getElementById('cnaSearchResults');
   
   // Sorting state
-  let currentSortColumn = 'importance';
-  let currentSortDirection = 'desc'; // Default to High to Low
+  let currentSortColumn = 'cna_scorecard';
+  let currentSortDirection = 'desc'; // Default to CNA ScoreCard fields first
   
   // Global data storage
   let allFields = [];
@@ -131,12 +131,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Render importance badge based on field importance level
   function renderImportanceBadge(importance) {
-    const badgeClass = `importance-${importance.toLowerCase()}`;
+    const badgeClass = importance === 'High' ? 'high' : importance === 'Medium' ? 'medium' : 'low';
     return `<span class="importance-badge ${badgeClass}">${importance}</span>`;
   }
 
-  // Sort fields by column
+  // Get CNA ScoreCard CSS class based on category
+  function getCNAScoreCardClass(category) {
+    if (!category) return '';
+    
+    const categoryMap = {
+      'foundationalCompleteness': 'cna-scorecard-foundational',
+      'rootCauseAnalysis': 'cna-scorecard-root-cause',
+      'severityAndImpactContext': 'cna-scorecard-severity',
+      'softwareIdentification': 'cna-scorecard-software-id',
+      'patchinfo': 'cna-scorecard-patchinfo'
+    };
+    
+    return categoryMap[category] || '';
+  }
+
+  // Sort fields with CNA ScoreCard fields always at top
   function sortFields(fields, column, direction) {
+    // Separate CNA ScoreCard measured fields from non-measured fields
+    const measuredFields = fields.filter(field => field.cna_scorecard_category);
+    const nonMeasuredFields = fields.filter(field => !field.cna_scorecard_category);
+    
+    // Sort each group separately
+    const sortedMeasured = sortFieldGroup(measuredFields, column, direction);
+    const sortedNonMeasured = sortFieldGroup(nonMeasuredFields, column, direction);
+    
+    // Always return measured fields first, then non-measured
+    return [...sortedMeasured, ...sortedNonMeasured];
+  }
+  
+  // Helper function to sort a group of fields by column
+  function sortFieldGroup(fields, column, direction) {
     return fields.sort((a, b) => {
       let aVal, bVal;
       
@@ -146,14 +175,13 @@ document.addEventListener('DOMContentLoaded', function() {
           bVal = b.field;
           break;
         case 'importance':
-          // Define importance order: High > Medium > Low
           const importanceOrder = { 'High': 3, 'Medium': 2, 'Low': 1 };
           aVal = importanceOrder[a.importance] || 0;
           bVal = importanceOrder[b.importance] || 0;
           break;
         case 'percent':
-          aVal = parseFloat(a.cna_percent ?? a.percent ?? 0);
-          bVal = parseFloat(b.cna_percent ?? b.percent ?? 0);
+          aVal = parseFloat(a.percent ?? 0);
+          bVal = parseFloat(b.percent ?? 0);
           break;
         case 'unique_cnas':
           aVal = parseInt(a.unique_cnas ?? 0);
@@ -163,8 +191,12 @@ document.addEventListener('DOMContentLoaded', function() {
           aVal = (a.description || '').toLowerCase();
           bVal = (b.description || '').toLowerCase();
           break;
+        case 'cna_scorecard':
         default:
-          return 0;
+          // Default sort by completion percentage
+          aVal = parseFloat(a.percent ?? 0);
+          bVal = parseFloat(b.percent ?? 0);
+          break;
       }
       
       if (direction === 'asc') {
@@ -177,32 +209,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Render a single table with all fields
   function renderTable(fields) {
-    if (!fields.length) return '';
-    
-    // Sort fields by current sort settings
-    const sortedFields = sortFields([...fields], currentSortColumn, currentSortDirection);
-    
-    return `<div class="completeness-table-section">
-      <table class="completeness-table">
-        <thead><tr>
-          <th class="sortable" data-column="field">Field Name ${getSortIcon('field')}</th>
-          <th class="sortable" data-column="importance">Importance ${getSortIcon('importance')}</th>
-          <th class="sortable" data-column="percent">Field Utilization ${getSortIcon('percent')}</th>
-          <th class="sortable" data-column="unique_cnas">Unique CNAs ${getSortIcon('unique_cnas')}</th>
-          <th class="sortable" data-column="description">Description ${getSortIcon('description')}</th>
-        </tr></thead>
-        <tbody>
-          ${sortedFields.map(field => `
+    const tableHtml = `
+      <div class="completeness-table-container">
+        <table class="completeness-table">
+          <thead>
             <tr>
-              <td>${renderSchemaFieldLink(field.field)}</td>
-              <td>${renderImportanceBadge(field.importance || 'Medium')}</td>
-              <td style="color:#0074d9;font-weight:700;text-align:center;">${field.cna_percent ?? field.percent ?? ''}%</td>
-              <td style="text-align:center;color:#6c757d;">${field.unique_cnas ?? ''}</td>
-              <td><span class="field-desc">${field.description || ''}</span></td>
-            </tr>`).join('')}
-        </tbody>
-      </table>
-    </div>`;
+              <th class="sortable" data-column="field">Field ${getSortIcon('field')}</th>
+              <th class="sortable" data-column="percent">Completeness ${getSortIcon('percent')}</th>
+              <th class="sortable" data-column="unique_cnas">CNAs Populating ${getSortIcon('unique_cnas')}</th>
+              <th class="sortable" data-column="importance">Importance ${getSortIcon('importance')}</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${fields.map(field => {
+              const cnaScoreCardClass = getCNAScoreCardClass(field.cna_scorecard_category);
+              return `
+                <tr class="${cnaScoreCardClass}">
+                  <td>${renderSchemaFieldLink(field.field)}</td>
+                  <td class="percent-cell">${field.percent}%</td>
+                  <td class="count-cell">${field.unique_cnas}</td>
+                  <td>${renderImportanceBadge(field.importance)}</td>
+                  <td class="description-cell">${field.description || ''}</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+    return tableHtml;
   }
 
   // Get sort icon for column header
@@ -220,16 +256,8 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(response => response.json())
     .then(data => {
       allFields = data;
-      // Filter and order fields based on canonical list
-      const fields = canonicalFieldOrder
-        .map(key => allFields.find(f => f.field === key))
-        .filter(Boolean);
-
-      let html = renderTable(fields);
-      overview.innerHTML = html;
-
-      // Add event listeners for sorting
-      addSortEventListeners();
+      // Display all fields from the data (already sorted by the pipeline)
+      displayCompleteness(allFields);
     })
     .catch(error => {
       console.error('Error loading data:', error);
@@ -376,7 +404,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Function to display completeness data
   function displayCompleteness(fields) {
-    const html = renderTable(fields);
+    // Use the new sorting logic with default CNA ScoreCard priority
+    const sortedFields = sortFields(fields, currentSortColumn, currentSortDirection);
+    const html = renderTable(sortedFields);
     overview.innerHTML = html;
     addSortEventListeners();
   }

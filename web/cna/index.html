@@ -6,56 +6,82 @@
   <title>CNAs - CNA Scorecard</title>
   <link rel="stylesheet" href="../assets/theme.css">
   <link rel="stylesheet" href="../shared/shared.css">
-  <link rel="stylesheet" href="../leaderboard.css">
+  <link rel="stylesheet" href="cna-index.css">
 </head>
 <body>
+  <!-- Navigation Bar -->
   <nav class="navbar">
     <img src="../assets/logo.svg" alt="CNA Scorecard Logo" class="navbar-logo">
     <div class="navbar-links">
       <a href="../index.html">Home</a>
-      <a href="index.html" class="active">CNAs</a>
-      <a href="../cves/index.html">CVEs</a>
-      <a href="../completeness/index.html">Completeness</a>
+      <a href="index-refactored.html" class="active">CNAs</a>
+      <a href="../completeness/index.html">Record Completeness</a>
       <a href="../scoring.html">Methodology</a>
     </div>
   </nav>
+  
+  <!-- Main Content -->
   <main class="container">
-    <section class="contextual-heading-card card">
-      <h1 class="contextual-heading-title">All CNAs</h1>
-      <p class="contextual-heading-subtitle">Browse and explore all participating CVE Numbering Authorities.</p>
+    <section class="page-header">
+      <h1 class="page-title">CNA Performance Rankings</h1>
+      <p class="page-subtitle">Comprehensive performance rankings and metrics for all CVE Numbering Authorities based on data quality and completeness.</p>
     </section>
-    <section class="hero-section">
-      <input type="search" id="searchBar" placeholder="Search CNA..." aria-label="Search CNA">
-    </section>
-    <section class="leaderboard-section">
-      <div class="leaderboard-controls">
-        <label for="sortSelect">Sort by:</label>
-        <select id="sortSelect">
-          <option value="score">Score</option>
-          <option value="grade">Grade</option>
-          <option value="trend">12-Month Trend</option>
-          <option value="type">CNA Type</option>
-        </select>
-        <label><input type="checkbox" id="activeOnly"> Show only active CNAs</label>
+    
+    <section class="cna-table-section">
+      <!-- Controls Section -->
+      <div class="controls-container">
+        <div class="control-group search-group">
+          <input type="search" id="searchInput" placeholder="Search CNA..." aria-label="Search CNA" class="search-input">
+        </div>
+        <div class="control-group">
+          <button id="toggleDetailsBtn" class="control-button" data-showing="false">
+            <span>Show Details</span>
+          </button>
+        </div>
       </div>
-      <table class="leaderboard-table" id="leaderboardTable">
-        <thead>
-          <tr>
-            <th>CNA Name</th>
-            <th>Grade</th>
-            <th>CNA Type</th>
-            <th>12-Month Trend</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- CNA rows will be rendered here by leaderboard.js -->
-        </tbody>
-      </table>
+      
+      <!-- Info/Pagination Summary -->
+      <div class="table-info">
+        <span id="resultsSummary">Showing <span id="startIndex">1</span>-<span id="endIndex">25</span> of <span id="totalItems">0</span> CNAs</span>
+      </div>
+      
+      <!-- Main Table -->
+      <div class="table-container">
+        <table id="cnaTable">
+          <thead>
+            <tr>
+              <th class="col-rank sortable" data-sort="rank">Rank <span class="sort-indicator"></span></th>
+              <th class="col-name sortable" data-sort="name">CNA Name <span class="sort-indicator"></span></th>
+              <th class="col-type sortable" data-sort="type">CNA Type <span class="sort-indicator"></span></th>
+              <th class="col-count sortable" data-sort="cveCount">CVE Count <span class="sort-indicator"></span></th>
+              <th class="col-score sortable" data-sort="score">Overall Score <span class="sort-indicator"></span></th>
+              <th class="col-detail sortable" data-sort="foundational" data-column="foundational">Foundational <span class="sort-indicator"></span></th>
+              <th class="col-detail sortable" data-sort="rootcause" data-column="rootcause">Root Cause <span class="sort-indicator"></span></th>
+              <th class="col-detail sortable" data-sort="software" data-column="software">Software ID <span class="sort-indicator"></span></th>
+              <th class="col-detail sortable" data-sort="severity" data-column="severity">Severity & Impact <span class="sort-indicator"></span></th>
+              <th class="col-detail sortable" data-sort="patch" data-column="patch">Patch Info <span class="sort-indicator"></span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Table content will be dynamically generated -->
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Pagination Controls -->
+      <div class="pagination-controls" id="paginationControls">
+        <button class="pagination-button" id="prevPageBtn" disabled>&laquo; Previous</button>
+        <div class="pagination-pages" id="paginationPages">
+          <!-- Page numbers will be dynamically generated -->
+        </div>
+        <button class="pagination-button" id="nextPageBtn" disabled>Next &raquo;</button>
+      </div>
     </section>
   </main>
-  <footer class="footer modern-footer">
+  
+  <!-- Footer -->
+  <footer class="footer">
     <div class="footer-main">
-      <!-- Summary line will be injected here by summary-cards.js -->
       <div class="footer-brand">
         <img src="../assets/logo.svg" alt="CNA Scorecard Logo" class="footer-logo">
         <span class="footer-title">CNA Scorecard</span>
@@ -69,7 +95,8 @@
     </div>
     <div class="footer-meta">&copy; 2025 RogoLabs. All rights reserved.</div>
   </footer>
-  <script src="../leaderboard.js"></script>
-  <script src="../shared/summary-cards.js"></script>
+  
+  <!-- Scripts -->
+  <script src="cna-index.js" type="module"></script>
 </body>
 </html>

@@ -4,6 +4,9 @@
 // Global variables for CNA data
 let CNA_DATA = [];
 let filteredData = [];
+let currentPage = 1;
+const CNA_PER_PAGE = 25;
+let isShowingDetails = false;
 let isDataLoaded = false;
 
 const GRADE_CLASS = {
@@ -32,19 +35,28 @@ function updateLeaderboard() {
 // Function to load CNA data from JSON file
 async function loadCNAData() {
   try {
-    const response = await fetch('../data/cna_summary.json');
+    const response = await fetch('../data/cna_combined.json');
     const data = await response.json();
     
     // Transform data to match expected structure
     CNA_DATA = data.map(cna => ({
-      name: cna.shortName || cna.cnaId,
-      shortName: cna.shortName || cna.cnaId, // Store the actual shortName for linking
-      score: cna.overallScore || 0,
-      grade: cna.grade || 'Missing Data',
-      type: cna.type || 'Unknown',
-      trend: cna.trend || Array(12).fill(0),
-      cveCount: cna.cveCount || 0,
-      cnaId: cna.cnaId
+      name: cna.shortName || '',
+      shortName: cna.shortName || '',
+      organizationName: cna.organizationName || cna.shortName || '',
+      score: cna.scores?.overall_average_score || 0,
+      foundationalCompleteness: cna.scores?.foundational_completeness || 0,
+      rootCauseAnalysis: cna.scores?.root_cause_analysis || 0,
+      softwareIdentification: cna.scores?.software_identification || 0,
+      severityAndImpact: cna.scores?.severity_and_impact || 0,
+      patchinfo: cna.scores?.patchinfo || 0,
+      type: cna.cnaType || 'Unknown',
+      trend: cna.trend?.monthly_data || Array(12).fill(0),
+      trendDirection: cna.trend?.direction || 'steady',
+      trendDescription: cna.trend?.description || '➡️ No change',
+      cveCount: cna.total_cves || 0,
+      recentCves: cna.recent_cves || 0,
+      rank: cna.rank || 0,
+      percentile: cna.percentile || 0
     }));
     
     // Sort by score (highest first)
@@ -75,26 +87,79 @@ function renderLeaderboard(data) {
   
   tbody.innerHTML = '';
   
-  // Show top 50 CNAs for performance
-  const displayData = data.slice(0, 50);
+  // Update counters and pagination info
+  const total = data.length;
+  const startIndex = (currentPage - 1) * CNA_PER_PAGE;
+  const endIndex = Math.min(startIndex + CNA_PER_PAGE, total);
+  
+  // Update counter display
+  document.getElementById('cnaTotal').textContent = total;
+  document.getElementById('cnaStart').textContent = startIndex + 1;
+  document.getElementById('cnaEnd').textContent = endIndex;
+  
+  // Get current page data
+  const displayData = data.slice(startIndex, endIndex);
   
   displayData.forEach((cna, index) => {
     const tr = document.createElement('tr');
+    
+    // Format scores for display with visual indicators
+    const formatScoreWithBar = (score, isPercentage = false, max = 100) => {
+      const value = score || 0;
+      const percentage = isPercentage ? value : Math.min(100, (value / max) * 100);
+      let colorClass = 'score-low';
+      
+      if (percentage >= 80) {
+        colorClass = 'score-great';
+      } else if (percentage >= 60) {
+        colorClass = 'score-good';
+      } else if (percentage >= 40) {
+        colorClass = 'score-medium';
+      }
+      
+      const displayValue = isPercentage ? `${value.toFixed(1)}%` : value.toFixed(1);
+      
+      return `
+        <div class="score-display">
+          <div>${displayValue}</div>
+          <div class="score-bar">
+            <div class="score-fill ${colorClass}" style="width: ${percentage}%"></div>
+          </div>
+        </div>
+      `;
+    };
+    
+    const formatScore = (score) => score ? score.toFixed(1) : '0.0';
+    
     tr.innerHTML = `
+      <td>${cna.rank}</td>
       <td>
         <div class="cna-name-cell">
           <a href="cna-detail.html?shortName=${cna.shortName}" class="cna-name-link">
             <strong>${cna.name}</strong>
           </a>
           <div class="cna-details">
-            <div class="cve-count"><strong>${cna.cveCount} CVEs</strong></div>
-            <div class="score-badge"><strong>Score: ${cna.score}</strong></div>
+            <div class="org-name">${cna.organizationName}</div>
+            <div class="percentile-badge">Percentile: ${cna.percentile}</div>
           </div>
         </div>
       </td>
-      <td><span class="badge-grade ${GRADE_CLASS[cna.grade] || ''}">${cna.grade}</span></td>
       <td>${cna.type}</td>
-      <td><canvas id="trend-${cna.cnaId || index}" width="80" height="20"></canvas></td>
+      <td>${cna.cveCount}</td>
+      <td>${formatScoreWithBar(cna.score)}</td>
+      <td>${formatScoreWithBar(cna.foundationalCompleteness, true)}</td>
+      <td>${formatScoreWithBar(cna.rootCauseAnalysis, true)}</td>
+      <td>${formatScoreWithBar(cna.softwareIdentification, true)}</td>
+      <td>${formatScoreWithBar(cna.severityAndImpact, true)}</td>
+      <td>${formatScoreWithBar(cna.patchinfo, true)}</td>
+      <td>
+        <div class="trend-container">
+          <span class="trend-indicator" title="${cna.trendDescription}">
+            ${cna.trendDirection === 'improving' ? '↗️' : cna.trendDirection === 'declining' ? '↘️' : '➡️'}
+          </span>
+          <canvas id="trend-${index}" width="80" height="20"></canvas>
+        </div>
+      </td>
     `;
     tbody.appendChild(tr);
     
@@ -177,6 +242,10 @@ function renderTopPerformers(data) {
 document.addEventListener('DOMContentLoaded', async () => {
   // Load CNA data from JSON file
   await loadCNAData();
+  
+  // Setup pagination and column toggle
+  setupPagination();
+  setupColumnToggle();
   
   function updateTopCards() {
     // Show top 3 by score if no search, else show filtered results

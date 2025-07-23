@@ -1,0 +1,126 @@
+/* Column toggle button */
+.toggle-button {
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.toggle-button:hover {
+  background-color: #0055aa;
+}
+
+.toggle-text-hide {
+  display: none;
+}
+
+.showing-details .toggle-text-show {
+  display: none;
+}
+
+.showing-details .toggle-text-hide {
+  display: inline;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.table-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.score-display {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Pagination controls styling */
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.pagination-button {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+.pagination-button:hover:not([disabled]) {
+  background-color: #f8f9fa;
+  border-color: #0066cc;
+  color: #0066cc;
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-pages {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.page-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.page-number:hover {
+  background-color: #f0f7ff;
+  color: #0066cc;
+}
+
+.page-number.active {
+  background-color: #0066cc;
+  color: white;
+}
+
+.page-ellipsis {
+  width: 20px;
+  text-align: center;
+  color: #999;
+  user-select: none;
+}
+
+/* Hide detailed columns by default */
+.detail-column {
+  display: none;
+}
+
+.showing-details .detail-column {
+  display: table-cell;
+}

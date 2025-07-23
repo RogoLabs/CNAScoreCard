@@ -128,12 +128,13 @@ def _calculate_actionable_intelligence(cve, cna):
     references = cna.get('references', [])
     score = 0
     if references:
-        # 5 points for Patch reference
+        # Check for Patch reference (binary scoring)
         patch_refs = any(
             ref.get('tags') and any('patch' in str(tag).lower() for tag in ref.get('tags', []))
             for ref in references if isinstance(ref, dict)
         )
         if patch_refs:
-            score += rule['partialPoints']['patchRef']
+            # Binary scoring - full weight if patch reference exists
+            score = rule['weight']
         
     return min(score, rule['weight'])

@@ -3,25 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Detailed scorecard and performance metrics for CVE Numbering Authorities (CNAs), including recent CVEs, category breakdowns, and quality scores.">
+  
+  <!-- Open Graph / Social Media Tags -->
+  <meta property="og:title" content="CNA Detail - CNA Scorecard">
+  <meta property="og:description" content="Comprehensive analysis and quality assessment of CVE Numbering Authority performance metrics.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cnascorecard.com/cna/cna-detail.html">
+  <meta property="og:image" content="https://cnascorecard.com/assets/scorecard-social-preview.jpg">
+  
   <title>CNA Detail - CNA Scorecard</title>
   <link rel="stylesheet" href="../assets/theme.css">
   <link rel="stylesheet" href="../shared/shared.css">
   <link rel="stylesheet" href="cna-detail.css">
 </head>
 <body>
-  <nav class="navbar">
+  <nav class="navbar" role="navigation" aria-label="Main Navigation">
     <img src="../assets/logo.svg" alt="CNA Scorecard Logo" class="navbar-logo">
     <div class="navbar-links">
       <a href="../index.html">Home</a>
       <a href="index.html">CNAs</a>
-      <a href="../cves/index.html">CVEs</a>
-      <a href="../completeness/index.html">Completeness</a>
+      <a href="../completeness/index.html">Record Completeness</a>
       <a href="../scoring.html">Methodology</a>
     </div>
   </nav>
   <main class="container">
     <section class="cna-header-section">
-      <a href="../index.html" class="back-button" onclick="handleBackNavigation(event)">
+      <a href="../index.html" class="back-button" onclick="handleBackNavigation(event)" aria-label="Back to CNA List">
         <span class="back-icon">←</span>
         <span class="back-text">Back to CNA List</span>
       </a>
@@ -32,12 +40,12 @@
           <div class="cna-metadata-badges">
             <div class="left-badges">
               <span id="cnaType">Vendor</span>
-              <span id="cnaCountryFlag" class="country-flag-display" title="Country">🌐</span>
+              <span id="cnaCountryFlag" class="country-flag-display" title="Country" aria-label="Country Flag" lang="">🌐</span>
             </div>
             <div class="right-badges">
-              <span id="cnaGrade" class="badge-grade uniform-pill">Great</span>
-              <span id="cnaScore" class="uniform-pill">Score: 88</span>
-              <span id="cnaTrend" class="trend-badge uniform-pill">Steady</span>
+              <span id="cnaGrade" class="badge-grade uniform-pill" aria-label="CNA Grade">Great</span>
+              <span id="cnaScore" class="uniform-pill" aria-label="CNA Score">Score: 88</span>
+              <span id="cnaTrend" class="trend-badge uniform-pill" aria-label="CNA Trend">Steady</span>
             </div>
           </div>
         </div>
@@ -59,30 +67,53 @@
       
       <!-- Patch Info section - centered at bottom -->
       <div class="cna-patch-info">
-        <span id="cnaEmail" style="display: none;"></span>
-        <span id="cnaAdvisories" style="display: none;"></span>
-        <span id="cnaDisclosurePolicy" style="display: none;"></span>
+        <span id="cnaEmail" style="display: none;" aria-hidden="true"></span>
+        <span id="cnaAdvisories" style="display: none;" aria-hidden="true"></span>
+        <span id="cnaDisclosurePolicy" style="display: none;" aria-hidden="true"></span>
       </div>
       
       <!-- Line break and metric cards integrated into header -->
       <div class="header-metric-cards">
         <section class="metric-cards" id="metricCards">
           <!-- Individual metric cards will be rendered here -->
+          <div class="loading-indicator" id="metricCardsLoading">Loading metrics...</div>
+          <div class="error-message" id="metricCardsError" style="display: none;">Failed to load metrics. Please try refreshing the page.</div>
         </section>
       </div>
     </section>
     <section class="category-breakdown">
       <h2>Category Breakdown</h2>
       <p class="category-explanation">Scores reflect the quality and completeness of CVE documentation across five key areas.</p>
-      <div id="categoryCharts">
+      <div id="categoryCharts" aria-label="Category Breakdown Charts">
         <!-- Bar/donut charts for 5 categories will render here -->
+        <div class="loading-indicator" id="categoryChartsLoading">Loading category data...</div>
+        <div class="error-message" id="categoryChartsError" style="display: none;">Failed to load category data. Please try refreshing the page.</div>
+      </div>
+    </section>
+
+    <section class="recent-cve-cards-section" id="recentCveCardsSection">
+      <h2>Recent CVEs (Last 6 Months)</h2>
+      <div class="recent-cves-header">
+        <div id="cveCountInfo" class="cve-count-info">Showing <span id="cveStart">1</span>-<span id="cveEnd">25</span> of <span id="cveTotal">0</span> CVEs</div>
+      </div>
+      <div class="recent-cve-cards" aria-label="Recent CVE cards" id="recentCveCardsContainer">
+        <!-- Recent CVE cards will be rendered here by JavaScript -->
+        <div class="loading-indicator" id="recentCvesLoading">Loading recent CVEs...</div>
+        <div class="error-message" id="recentCvesError" style="display: none;">Failed to load recent CVEs. Please try refreshing the page.</div>
+      </div>
+      <div class="pagination-controls" aria-label="Pagination" role="navigation" id="cvePagination">
+        <button class="pagination-button" id="prevPage" aria-label="Previous page" disabled>&laquo; Previous</button>
+        <div class="pagination-pages" id="paginationPages">
+          <!-- Page numbers will be generated here -->
+        </div>
+        <button class="pagination-button" id="nextPage" aria-label="Next page" disabled>Next &raquo;</button>
       </div>
     </section>
 
 
   </main>
   <footer class="footer modern-footer">
-    <div class="footer-main">
+    <div class="footer-main" role="contentinfo">
       <div class="footer-brand">
         <img src="../assets/logo.svg" alt="CNA Scorecard Logo" class="footer-logo">
         <span class="footer-title">CNA Scorecard</span>
@@ -96,6 +127,16 @@
     </div>
     <div class="footer-meta">&copy; 2025 RogoLabs. All rights reserved.</div>
   </footer>
-  <script src="cna-detail-clean.js"></script>
+  <script src="cna-detail-clean.js" defer></script>
+  <!-- Added timestamp for cache busting and data freshness indication -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add last updated timestamp to the footer
+      const lastUpdated = document.createElement('div');
+      lastUpdated.className = 'last-updated';
+      lastUpdated.innerHTML = 'Data last updated: ' + new Date().toLocaleString();
+      document.querySelector('.footer-meta').appendChild(lastUpdated);
+    });
+  </script>
 </body>
 </html>

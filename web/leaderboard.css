@@ -192,26 +192,216 @@
 }
 
 .leaderboard-section {
+  margin-top: 2rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  overflow-x: auto;
+}
+
+.leaderboard-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0;
+}
+
+.leaderboard-controls select,
+.leaderboard-controls input[type="checkbox"] {
+  border: 1px solid #e0e0e0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background-color: white;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9rem;
+}
+
+.leaderboard-table th {
+  background-color: #f8f9fa;
+  color: #333;
+  font-weight: 600;
+  padding: 1rem 0.75rem;
+  border-bottom: 2px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.leaderboard-table td {
+  padding: 1rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+
+/* Row hover effect */
+.leaderboard-table tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.03);
+}
+
+/* Alternating row colors */
+.leaderboard-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* Make CNA name column wider */
+.leaderboard-table th:nth-child(2),
+.leaderboard-table td:nth-child(2) {
+  min-width: 240px;
+  white-space: normal;
+}
+
+/* Add styling for rank column */
+.leaderboard-table th:first-child,
+.leaderboard-table td:first-child {
+  text-align: center;
+  font-weight: 600;
+  width: 50px;
+}
+
+/* Top 3 styling */
+.leaderboard-table tbody tr:nth-child(1) td:first-child {
+  color: #FFD700; /* Gold */
+}
+
+.leaderboard-table tbody tr:nth-child(2) td:first-child {
+  color: #C0C0C0; /* Silver */
+}
+
+.leaderboard-table tbody tr:nth-child(3) td:first-child {
+  color: #CD7F32; /* Bronze */
+}
+
+/* Style for the CNA name cell */
+.cna-name-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cna-name-link {
+  color: #0066cc;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.cna-name-link:hover {
+  text-decoration: underline;
+}
+
+.cna-details {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.org-name {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+.percentile-badge {
+  font-size: 0.75rem;
+  background-color: #f0f7ff;
+  color: #0066cc;
+  padding: 3px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+/* Score visualization */
+.score-bar {
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.score-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+/* Score color ranges */
+.score-great {
+  background-color: #28a745;
+}
+
+.score-good {
+  background-color: #17a2b8;
+}
+
+.score-medium {
+  background-color: #ffc107;
+}
+
+.score-low {
+  background-color: #dc3545;
+}
+
+/* Trend styling */
+.trend-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.trend-indicator {
+  font-size: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .leaderboard-table {
+    font-size: 0.8rem;
+  }
+  
+  .leaderboard-table th,
+  .leaderboard-table td {
+    padding: 0.75rem 0.5rem;
+  }
+}
+
+.leaderboard-section {
   background: var(--card-bg);
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   padding: 2rem;
 }
-.leaderboard-controls {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.2rem;
-}
+
 .leaderboard-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 1.05em;
+  margin-top: 2rem;
+  font-size: 0.9rem;
 }
 .leaderboard-table th, .leaderboard-table td {
-  padding: 0.8em 1em;
-  border-bottom: 1px solid var(--border-color);
+  padding: 0.75rem 0.5rem;
   text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+.leaderboard-table th:nth-child(2),
+.leaderboard-table td:nth-child(2) {
+  min-width: 200px;
+  white-space: normal;
 }
 .leaderboard-table th {
   background: var(--background);

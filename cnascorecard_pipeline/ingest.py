@@ -9,11 +9,24 @@ from datetime import datetime
 
 def load_cve_records(cve_dir="../cve_data", start_date=None, end_date=None):
     """
-    Load all CVE JSON records from the cve_data directory, optionally filtering by datePublished.
+    Load CVE JSON records from the cve_data directory, optionally filtering by datePublished.
     start_date and end_date should be strings in 'YYYY-MM-DD' format.
     Returns a list of CVE dicts.
+    
+    Optimized to only load CVE files from recent years (2024-2025) for performance.
     """
-    cve_files = glob(os.path.join(cve_dir, "**", "CVE-*.json"), recursive=True)
+    # Only load CVE files from recent years to improve performance
+    # Since we typically only need last 6 months, focus on 2024-2025
+    recent_years = ['2024', '2025']
+    cve_files = []
+    
+    for year in recent_years:
+        year_pattern = os.path.join(cve_dir, "cves", year, "**", "CVE-*.json")
+        year_files = glob(year_pattern, recursive=True)
+        cve_files.extend(year_files)
+        print(f"Found {len(year_files)} CVE files in {year}")
+    
+    print(f"Total CVE files to process: {len(cve_files)} (optimized from 300k+ total)")
     records = []
     for f in cve_files:
         try:

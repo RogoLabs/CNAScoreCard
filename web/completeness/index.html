@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Completeness Dashboard - CNA Scorecard</title>
+  <title>Record Completeness Dashboard - CNA Scorecard</title>
   <link rel="stylesheet" href="../assets/theme.css">
   <link rel="stylesheet" href="../shared/shared.css">
-  <link rel="stylesheet" href="completeness.css">
+  <link rel="stylesheet" href="../cna/cna-index.css">
+  <link rel="stylesheet" href="completeness.css?v=6">
 </head>
 <body>
   <nav class="navbar">
@@ -14,27 +15,28 @@
     <div class="navbar-links">
       <a href="../index.html">Home</a>
       <a href="../cna/index.html">CNAs</a>
-      <a href="../cves/index.html">CVEs</a>
-      <a href="index.html" class="active">Completeness</a>
+      <a href="index.html" class="active">Record Completeness</a>
       <a href="../scoring.html">Methodology</a>
     </div>
   </nav>
   <main class="container">
-    <section class="contextual-heading-card card">
-      <h1 class="contextual-heading-title">Completeness Dashboard</h1>
-      <p class="contextual-heading-subtitle">Explore field-level completeness and data quality for the entire CVE ecosystem or any CNA.</p>
+    <section class="page-header">
+      <h1 class="page-title">Record Completeness Dashboard</h1>
+      <p class="page-subtitle">Explore field-level completeness and data quality for the entire CVE ecosystem or any CNA.</p>
     </section>
-    <div class="card completeness-card">
-      <div class="completeness-selector" style="display: flex; justify-content: center; margin-bottom: 2rem; align-items: center;">
-        <label for="cnaSearchInput" style="margin-right: 1rem;">View completeness for:</label>
-        <div class="search-container" style="position: relative; min-width: 300px;">
-          <input type="text" id="cnaSearchInput" placeholder="All CNAs (Ecosystem) - Start typing to search..." 
-                 style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem;"
-                 autocomplete="off">
-          <div id="cnaSearchResults" class="search-results" style="display: none; position: absolute; top: 100%; left: 0; right: 0; max-height: 200px; overflow-y: auto; background: white; border: 1px solid #ccc; border-top: none; border-radius: 0 0 4px 4px; z-index: 1000;"></div>
+    
+    <section class="completeness-table-section">
+      <!-- Controls Section -->
+      <div class="controls-container">
+        <div class="control-group search-group">
+          <input type="text" id="cnaSearchInput" placeholder="All CNAs (Ecosystem) - Start typing to search..." class="search-input" autocomplete="off">
+          <div id="cnaSearchResults" class="search-results"></div>
         </div>
       </div>
-      <div id="completenessOverview">
+      
+      <!-- Table Container -->
+      <div class="table-container">
+        <div id="completenessOverview"></div>
         <!-- Completeness summary, heatmap/bar chart, and recommendations will render here -->
       </div>
     </div>
@@ -54,7 +56,7 @@
     </div>
     <div class="footer-meta">&copy; 2025 RogoLabs. All rights reserved.</div>
   </footer>
-  <script src="completeness.js"></script>
+  <script src="completeness-clean.js?v=6"></script>
   <script src="../shared/charts.js"></script>
   <script src="../shared/summary-cards.js"></script>
 </body>

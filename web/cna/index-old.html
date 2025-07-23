@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNAs - CNA Scorecard</title>
+  <link rel="stylesheet" href="../assets/theme.css">
+  <link rel="stylesheet" href="../shared/shared.css">
+  <link rel="stylesheet" href="../leaderboard.css">
+  <link rel="stylesheet" href="pagination.css">
+</head>
+<body>
+  <nav class="navbar">
+    <img src="../assets/logo.svg" alt="CNA Scorecard Logo" class="navbar-logo">
+    <div class="navbar-links">
+      <a href="../index.html">Home</a>
+      <a href="index.html" class="active">CNAs</a>
+      <a href="../completeness/index.html">Record Completeness</a>
+      <a href="../scoring.html">Methodology</a>
+    </div>
+  </nav>
+  <main class="container">
+    <section class="contextual-heading-card card">
+      <h1 class="contextual-heading-title">All CNAs</h1>
+      <p class="contextual-heading-subtitle">Browse and explore all participating CVE Numbering Authorities.</p>
+    </section>
+    <section class="hero-section">
+      <input type="search" id="searchBar" placeholder="Search CNA..." aria-label="Search CNA">
+    </section>
+    <section class="leaderboard-section">
+      <div class="leaderboard-controls">
+        <div class="control-group">
+          <label for="sortSelect">Sort by:</label>
+          <select id="sortSelect">
+            <option value="rank">Rank</option>
+            <option value="score">Score</option>
+            <option value="cveCount">CVE Count</option>
+            <option value="type">CNA Type</option>
+          </select>
+        </div>
+        
+        <div class="control-group">
+          <label><input type="checkbox" id="activeOnly"> Show only active CNAs</label>
+        </div>
+        
+        <div class="control-group column-toggle">
+          <button id="toggleDetailColumns" class="toggle-button">
+            <span class="toggle-text-show">Show Details</span>
+            <span class="toggle-text-hide">Hide Details</span>
+          </button>
+        </div>
+      </div>
+      
+      <div class="table-info">
+        <div class="cna-count" id="cnaCountInfo">Showing <span id="cnaStart">1</span>-<span id="cnaEnd">25</span> of <span id="cnaTotal">0</span> CNAs</div>
+      </div>
+      <table class="leaderboard-table" id="leaderboardTable">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>CNA Name</th>
+            <th>CNA Type</th>
+            <th>CVE Count</th>
+            <th>Overall Score</th>
+            <th class="detail-column">Foundational Completeness %</th>
+            <th class="detail-column">Root Cause Analysis %</th>
+            <th class="detail-column">Software ID %</th>
+            <th class="detail-column">Severity & Impact %</th>
+            <th class="detail-column">Patch Info %</th>
+            <th>12-Month Trend</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- CNA rows will be rendered here by leaderboard.js -->
+        </tbody>
+      </table>
+      
+      <div class="pagination-controls" aria-label="Pagination" role="navigation" id="cnaPagination">
+        <button class="pagination-button" id="prevPage" aria-label="Previous page" disabled>&laquo; Previous</button>
+        <div class="pagination-pages" id="paginationPages">
+          <!-- Page numbers will be generated dynamically -->
+        </div>
+        <button class="pagination-button" id="nextPage" aria-label="Next page" disabled>Next &raquo;</button>
+      </div>
+    </section>
+  </main>
+  <footer class="footer modern-footer">
+    <div class="footer-main">
+      <!-- Summary line will be injected here by summary-cards.js -->
+      <div class="footer-brand">
+        <img src="../assets/logo.svg" alt="CNA Scorecard Logo" class="footer-logo">
+        <span class="footer-title">CNA Scorecard</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://rogolabs.net" target="_blank">RogoLabs</a>
+        <a href="https://patchthis.app" target="_blank">PatchThis</a>
+        <a href="https://cveforecast.org" target="_blank">CVEForecast</a>
+        <a href="https://cve.icu" target="_blank">CVE.ICU</a>
+      </div>
+    </div>
+    <div class="footer-meta">&copy; 2025 RogoLabs. All rights reserved.</div>
+  </footer>
+  <script src="../leaderboard.js"></script>
+  <script src="../shared/summary-cards.js"></script>
+  <script src="../dynamic-toggle.js"></script>
+</body>
+</html>
