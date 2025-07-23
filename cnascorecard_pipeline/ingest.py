@@ -13,20 +13,38 @@ def load_cve_records(cve_dir="../cve_data", start_date=None, end_date=None):
     start_date and end_date should be strings in 'YYYY-MM-DD' format.
     Returns a list of CVE dicts.
     
-    Optimized to only load CVE files from recent years (2024-2025) for performance.
+    When date filtering is provided, searches all year folders since CVEs can be published
+    in any year regardless of their CVE identifier year (e.g., CVE-2015 published in 2025).
     """
-    # Only load CVE files from recent years to improve performance
-    # Since we typically only need last 6 months, focus on 2024-2025
-    recent_years = ['2024', '2025']
     cve_files = []
     
-    for year in recent_years:
-        year_pattern = os.path.join(cve_dir, "cves", year, "**", "CVE-*.json")
-        year_files = glob(year_pattern, recursive=True)
-        cve_files.extend(year_files)
-        print(f"Found {len(year_files)} CVE files in {year}")
+    if start_date or end_date:
+        # When date filtering is needed, we must check all year folders
+        # since CVEs can be published in any year regardless of identifier year
+        print("Date filtering requested - scanning all CVE year folders...")
+        cves_dir = os.path.join(cve_dir, "cves")
+        if os.path.exists(cves_dir):
+            # Get all year directories
+            year_dirs = [d for d in os.listdir(cves_dir) 
+                        if os.path.isdir(os.path.join(cves_dir, d)) and d.isdigit()]
+            year_dirs.sort()
+            
+            for year in year_dirs:
+                year_pattern = os.path.join(cve_dir, "cves", year, "**", "CVE-*.json")
+                year_files = glob(year_pattern, recursive=True)
+                cve_files.extend(year_files)
+                print(f"Found {len(year_files)} CVE files in {year}")
+    else:
+        # When no date filtering, optimize by only loading recent years
+        print("No date filtering - optimizing by loading recent years only...")
+        recent_years = ['2024', '2025']
+        for year in recent_years:
+            year_pattern = os.path.join(cve_dir, "cves", year, "**", "CVE-*.json")
+            year_files = glob(year_pattern, recursive=True)
+            cve_files.extend(year_files)
+            print(f"Found {len(year_files)} CVE files in {year}")
     
-    print(f"Total CVE files to process: {len(cve_files)} (optimized from 300k+ total)")
+    print(f"Total CVE files to scan: {len(cve_files)}")
     records = []
     for f in cve_files:
         try:

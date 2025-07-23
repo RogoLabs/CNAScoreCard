@@ -611,43 +611,25 @@ def main():
         print("Warning: Official CNA list not found, pipeline may produce inconsistent results")
         official_cna_metadata = {}
     
-    # Load CVE data for last 6 months for scorecard calculations (original methodology)
-    print("Loading CVE data for last 6 months for scorecard calculations...")
-    cve_records = load_cve_records()
-    
-    # Filter to last 6 months for scoring (restore original logic)
+    # Calculate date range for last 6 months
     from datetime import timezone
     today = datetime.now(timezone.utc).date()
     six_months_ago = today - timedelta(days=183)
     
-    # Filter CVE records to last 6 months for scoring
-    filtered_cve_records = []
-    for cve in cve_records:
-        date_published = cve.get('datePublished', '') or cve.get('cveMetadata', {}).get('datePublished', '')
-        if date_published:
-            try:
-                if 'T' in date_published:
-                    pub_date = datetime.fromisoformat(date_published.replace('Z', '+00:00')).date()
-                else:
-                    pub_date = datetime.strptime(date_published, '%Y-%m-%d').date()
-                if pub_date >= six_months_ago:
-                    filtered_cve_records.append(cve)
-            except (ValueError, TypeError):
-                # Exclude CVEs with unparseable dates from recent_cves
-                continue
-        # Exclude CVEs without datePublished from recent_cves
-    print(f"Strictly filtered {len(filtered_cve_records)} CVEs from last 6 months for scoring (from {len(cve_records)} total)")
+    # Load CVE data with date filtering - this will scan all year folders for recent publications
+    print("Loading CVE data for last 6 months for scorecard calculations...")
+    print(f"Date range: {six_months_ago} to {today}")
+    filtered_cve_records = load_cve_records(
+        start_date=six_months_ago.strftime('%Y-%m-%d'),
+        end_date=today.strftime('%Y-%m-%d')
+    )
     
-    print(f"Filtered {len(filtered_cve_records)} CVEs from last 6 months for scoring (from {len(cve_records)} total)")
+    print(f"Loaded {len(filtered_cve_records)} CVEs from last 6 months for scoring")
     cna_list = load_cna_list(filtered_cve_records)
     
-    # Calculate date ranges for trend analysis (12 months total)
-    from datetime import timezone
-    today = datetime.now(timezone.utc).date()
-    
-    # Current 6-month period (last 183 days from today)
+    # Use the same date range for trend analysis
     current_end_date = today
-    current_start_date = (today - timedelta(days=183))  # ~6 months
+    current_start_date = six_months_ago
     
     current_start_str = current_start_date.strftime('%Y-%m-%d')
     current_end_str = current_end_date.strftime('%Y-%m-%d')
