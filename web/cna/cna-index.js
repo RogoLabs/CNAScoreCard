@@ -354,7 +354,7 @@ function renderTable() {
           </div>
         </div>
       </td>
-      <td class="col-type">${formatCnaTypes(cna.cnaTypes, cna.cnaType)}</td>
+      <td class="col-type">${formatCnaTypes(cna.cnaTypes, cna.cnaType, cna.shortName)}</td>
       <td class="col-count">${cna.total_cves || 0}</td>
       <td class="col-score">${formatScoreWithBar(cna.scores?.overall_average_score || 0, true)}</td>
       <td class="col-detail" data-column="foundational">${formatScoreWithBar(cna.scores?.foundational_completeness || 0, true)}</td>
@@ -406,9 +406,15 @@ function formatScoreWithBar(score, isPercentage = false) {
  * Format CNA types for display
  * @param {Array} types - Array of CNA types
  * @param {string} fallbackType - Fallback single type string
+ * @param {string} cnaShortName - CNA short name for special case handling
  * @returns {string} - HTML string for CNA types
  */
-function formatCnaTypes(types, fallbackType) {
+function formatCnaTypes(types, fallbackType, cnaShortName) {
+  // Special case for MITRE - always show "CNA Of Last Resort"
+  if (cnaShortName && cnaShortName.toLowerCase() === 'mitre') {
+    return '<span class="cna-type-badge cna-type-cert">CNA Of Last Resort</span>';
+  }
+  
   // Handle cases where types is not an array or is empty
   if (!Array.isArray(types) || types.length === 0) {
     return fallbackType || 'Unknown';
