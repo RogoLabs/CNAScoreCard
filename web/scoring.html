@@ -100,6 +100,374 @@
       </div>
     </section>
 
+    <!-- Technical Documentation Section -->
+    <section class="technical-docs-card card" id="technical-documentation">
+      <h2>Technical Documentation for CNAs</h2>
+      <p class="tech-intro">
+        This section provides the exact technical implementation details for CNAs who want to verify 
+        the scoring methodology. All field paths reference the official CVE JSON 5.0 schema.
+      </p>
+      
+      <div class="tech-toggle-container">
+        <button class="btn btn-primary" id="toggleTechnicalDetails">Show Technical Details</button>
+      </div>
+      
+      <div class="technical-details" id="technicalDetails" style="display: none;">
+        
+        <!-- Foundational Completeness Technical Details -->
+        <div class="tech-category" id="foundational-completeness-tech">
+          <h3><span class="category-points">50 points</span> Foundational Completeness - Technical Implementation</h3>
+          
+          <div class="tech-subsection">
+            <h4>Schema Field Paths Checked:</h4>
+            <div class="code-block">
+              <code>containers.cna.descriptions</code> (array)<br>
+              <code>containers.cna.affected</code> (array)<br>
+              <code>containers.cna.references</code> (array)
+            </div>
+          </div>
+          
+          <div class="tech-subsection">
+            <h4>Validation Logic:</h4>
+            <div class="validation-rule">
+              <strong>Binary Scoring:</strong> All-or-nothing - either 50 points or 0 points
+            </div>
+            <div class="validation-rule">
+              <strong>Requirements:</strong> All three field arrays must exist AND contain at least one valid entry
+            </div>
+            <div class="validation-rule">
+              <strong>Validation Criteria:</strong>
+              <ul>
+                <li><code>descriptions</code>: Must be non-empty array with at least one description object</li>
+                <li><code>affected</code>: Must be non-empty array with at least one affected product object</li>
+                <li><code>references</code>: Must be non-empty array with at least one reference object</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="tech-subsection">
+            <h4>Code Implementation:</h4>
+            <div class="code-block">
+<pre>def _calculate_foundational_completeness(cve, cna):
+    descriptions = cna.get('descriptions', [])
+    affected = cna.get('affected', [])
+    references = cna.get('references', [])
+    
+    has_descriptions = isinstance(descriptions, list) and len(descriptions) > 0
+    has_affected = isinstance(affected, list) and len(affected) > 0
+    has_references = isinstance(references, list) and len(references) > 0
+    
+    return 50 if (has_descriptions and has_affected and has_references) else 0</pre>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Root Cause Analysis Technical Details -->
+        <div class="tech-category" id="root-cause-analysis-tech">
+          <h3><span class="category-points">15 points</span> Root Cause Analysis - Technical Implementation</h3>
+          
+          <div class="tech-subsection">
+            <h4>Schema Field Paths Checked:</h4>
+            <div class="code-block">
+              <code>containers.cna.problemTypes[].descriptions[].cweId</code> (string)
+            </div>
+          </div>
+          
+          <div class="tech-subsection">
+            <h4>Validation Logic:</h4>
+            <div class="validation-rule">
+              <strong>Binary Scoring:</strong> Either 15 points or 0 points
+            </div>
+            <div class="validation-rule">
+              <strong>CWE ID Format:</strong> Must match pattern <code>CWE-[0-9]+</code> (case-insensitive)
+            </div>
+            <div class="validation-rule">
+              <strong>Valid CWE List:</strong> Must exist in official MITRE CWE database (loaded from cwe_ids.json)
+            </div>
+            <div class="validation-rule">
+              <strong>Search Process:</strong> Iterates through all problemTypes → descriptions → cweId fields
+            </div>
+          </div>
+          
+          <div class="tech-subsection">
+            <h4>Code Implementation:</h4>
+            <div class="code-block">
+<pre>def _calculate_root_cause_analysis(cve, cna):
+    problem_types = cna.get('problemTypes', [])
+    if not isinstance(problem_types, list):
+        return 0
+    
+    has_valid_cwe = _find_valid_cwe(problem_types)
+    return 15 if has_valid_cwe else 0
+
+def _find_valid_cwe(problem_types):
+    for problem_type in problem_types:
+        descriptions = problem_type.get('descriptions', [])
+        for desc in descriptions:
+            cwe_id = desc.get('cweId', '')
+            if _is_valid_cwe_id(cwe_id):
+                return True
+    return False
+
+def _is_valid_cwe_id(cwe_raw):
+    if not isinstance(cwe_raw, str):
+        return False
+    
+    # Check format: CWE-[digits]
+    import re
+    if not re.match(r'^CWE-\d+$', cwe_raw, re.IGNORECASE):
+        return False
+    
+    # Check against official CWE database
+    return cwe_raw.upper() in scoring_config.valid_cwe_ids</pre>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Severity & Impact Context Technical Details -->
+        <div class="tech-category" id="severity-impact-context-tech">
+          <h3><span class="category-points">15 points</span> Severity & Impact Context - Technical Implementation</h3>
+          
+          <div class="tech-subsection">
+            <h4>Schema Field Paths Checked:</h4>
+            <div class="code-block">
+              <code>containers.cna.metrics[].cvssV3_0</code> (object)<br>
+              <code>containers.cna.metrics[].cvssV3_1</code> (object)<br>
+              <code>containers.cna.metrics[].cvssV4_0</code> (object)
+            </div>
+          </div>
+          
+          <div class="tech-subsection">
+            <h4>Validation Logic:</h4>
+            <div class="validation-rule">
+              <strong>Binary Scoring:</strong> Either 15 points or 0 points
+            </div>
+            <div class="validation-rule">
+              <strong>CVSS Version Support:</strong> Accepts CVSS v3.0, v3.1, or v4.0
+            </div>
+            <div class="validation-rule">
+              <strong>Vector String Required:</strong> Must contain valid <code>vectorString</code> field
+            </div>
+            <div class="validation-rule">
+              <strong>Search Process:</strong> Iterates through metrics array looking for any valid CVSS object
+            </div>
+          </div>
+          
+          <div class="tech-subsection">
+            <h4>Code Implementation:</h4>
+            <div class="code-block">
+<pre>def _calculate_severity_context(cve, cna):
+    metrics = cna.get('metrics', [])
+    if not isinstance(metrics, list):
+        return 0
+    
+    has_cvss = _has_cvss_metrics(metrics)
+    has_vector = _has_valid_cvss_vector(metrics)
+    
+    return 15 if (has_cvss and has_vector) else 0
+
+def _has_cvss_metrics(metrics):
+    for metric in metrics:
+        if any(version in metric for version in ['cvssV3_0', 'cvssV3_1', 'cvssV4_0']):
+            return True
+    return False
+
+def _has_valid_cvss_vector(metrics):
+    for metric in metrics:
+        for version in ['cvssV3_0', 'cvssV3_1', 'cvssV4_0']:
+            if version in metric:
+                cvss_data = metric[version]
+                if isinstance(cvss_data, dict) and cvss_data.get('vectorString'):
+                    return True
+    return False</pre>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Software Identification Technical Details -->
+        <div class="tech-category" id="software-identification-tech">
+          <h3><span class="category-points">10 points</span> Software Identification - Technical Implementation</h3>
+          
+          <div class="tech-subsection">
+            <h4>Schema Field Paths Checked:</h4>
+            <div class="code-block">
+              <code>containers.cna.affected[].cpes</code> (array)
+            </div>
+          </div>
+          
+          <div class="tech-subsection">
+            <h4>Validation Logic:</h4>
+            <div class="validation-rule">
+              <strong>Binary Scoring:</strong> Either 10 points or 0 points
+            </div>
+            <div class="validation-rule">
+              <strong>CPE Requirement:</strong> At least one affected product must contain non-empty cpes array
+            </div>
+            <div class="validation-rule">
+              <strong>Search Process:</strong> Iterates through all affected products looking for cpes arrays
+            </div>
+          </div>
+          
+          <div class="tech-subsection">
+            <h4>Code Implementation:</h4>
+            <div class="code-block">
+<pre>def _calculate_software_identification(cve, cna):
+    affected = cna.get('affected', [])
+    if not isinstance(affected, list):
+        return 0
+    
+    has_cpe = _has_cpe_identifiers(affected)
+    return 10 if has_cpe else 0
+
+def _has_cpe_identifiers(affected):
+    for product in affected:
+        if not isinstance(product, dict):
+            continue
+        
+        cpes = product.get('cpes')
+        if isinstance(cpes, list) and len(cpes) > 0:
+            return True
+    
+    return False</pre>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Patch Information Technical Details -->
+        <div class="tech-category" id="patch-information-tech">
+          <h3><span class="category-points">10 points</span> Patch Information - Technical Implementation</h3>
+          
+          <div class="tech-subsection">
+            <h4>Schema Field Paths Checked:</h4>
+            <div class="code-block">
+              <code>containers.cna.references[].tags</code> (array of strings)
+            </div>
+          </div>
+          
+          <div class="tech-subsection">
+            <h4>Validation Logic:</h4>
+            <div class="validation-rule">
+              <strong>Binary Scoring:</strong> Either 10 points or 0 points
+            </div>
+            <div class="validation-rule">
+              <strong>Tag Matching:</strong> Case-insensitive search for "patch" in any tag string
+            </div>
+            <div class="validation-rule">
+              <strong>Search Process:</strong> Iterates through all references → tags arrays
+            </div>
+          </div>
+          
+          <div class="tech-subsection">
+            <h4>Code Implementation:</h4>
+            <div class="code-block">
+<pre>def _calculate_actionable_intelligence(cve, cna):
+    references = cna.get('references', [])
+    if not isinstance(references, list):
+        return 0
+    
+    has_patch_ref = _has_patch_references(references)
+    return 10 if has_patch_ref else 0
+
+def _has_patch_references(references):
+    for ref in references:
+        if not isinstance(ref, dict):
+            continue
+        
+        tags = ref.get('tags', [])
+        if not isinstance(tags, list):
+            continue
+        
+        # Check for patch-related tags (case-insensitive)
+        for tag in tags:
+            if isinstance(tag, str) and 'patch' in tag.lower():
+                return True
+    
+    return False</pre>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Scoring Configuration -->
+        <div class="tech-category" id="scoring-configuration">
+          <h3>Scoring Configuration (rules.json)</h3>
+          
+          <div class="tech-subsection">
+            <h4>Complete Scoring Rules:</h4>
+            <div class="code-block">
+<pre>{
+  "foundationalCompleteness": {
+    "weight": 50,
+    "criteria": ["descriptions", "affected", "references"],
+    "binary": true
+  },
+  "rootCauseAnalysis": {
+    "weight": 15,
+    "criteria": ["validCWE"],
+    "binary": true
+  },
+  "severityAndImpactContext": {
+    "weight": 15,
+    "criteria": ["cvssV3or4", "validVector"],
+    "binary": true
+  },
+  "softwareIdentification": {
+    "weight": 10,
+    "criteria": ["validCPE"],
+    "binary": true
+  },
+  "patchinfo": {
+    "weight": 10,
+    "criteria": ["patchRef"],
+    "binary": true
+  }
+}</pre>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Verification Instructions -->
+        <div class="tech-category" id="verification-instructions">
+          <h3>Verification Instructions for CNAs</h3>
+          
+          <div class="tech-subsection">
+            <h4>How to Verify Your CVE Scoring:</h4>
+            <ol class="verification-steps">
+              <li><strong>Download your CVE JSON:</strong> Get the official CVE record from the CVE database</li>
+              <li><strong>Check field paths:</strong> Verify the exact schema paths listed above exist in your JSON</li>
+              <li><strong>Validate content:</strong> Ensure arrays are non-empty and contain valid data</li>
+              <li><strong>Test scoring logic:</strong> Apply the binary scoring rules to calculate expected points</li>
+              <li><strong>Compare results:</strong> Match against your CNA scorecard results</li>
+            </ol>
+          </div>
+          
+          <div class="tech-subsection">
+            <h4>Common Issues and Solutions:</h4>
+            <div class="issue-solution">
+              <strong>Issue:</strong> Missing foundational completeness points<br>
+              <strong>Check:</strong> Ensure all three arrays (descriptions, affected, references) exist and are non-empty
+            </div>
+            <div class="issue-solution">
+              <strong>Issue:</strong> Missing root cause analysis points<br>
+              <strong>Check:</strong> Verify CWE ID format is "CWE-[number]" and exists in official CWE database
+            </div>
+            <div class="issue-solution">
+              <strong>Issue:</strong> Missing severity context points<br>
+              <strong>Check:</strong> Ensure CVSS object contains valid vectorString field
+            </div>
+            <div class="issue-solution">
+              <strong>Issue:</strong> Missing software identification points<br>
+              <strong>Check:</strong> Verify at least one affected product has non-empty cpes array
+            </div>
+            <div class="issue-solution">
+              <strong>Issue:</strong> Missing patch information points<br>
+              <strong>Check:</strong> Ensure at least one reference has "patch" in its tags array
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
     <!-- Grading Tiers Section -->
     <section class="grading-tiers-card card">
       <h2>Grading Tiers</h2>
@@ -220,6 +588,30 @@
     
     // Load the analysis period when the page loads
     document.addEventListener('DOMContentLoaded', loadAnalysisPeriod);
+    
+    // Technical details toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleButton = document.getElementById('toggleTechnicalDetails');
+      const technicalDetails = document.getElementById('technicalDetails');
+      
+      if (toggleButton && technicalDetails) {
+        toggleButton.addEventListener('click', function() {
+          const isVisible = technicalDetails.style.display !== 'none';
+          
+          if (isVisible) {
+            // Hide technical details
+            technicalDetails.style.display = 'none';
+            toggleButton.textContent = 'Show Technical Details';
+            toggleButton.classList.remove('expanded');
+          } else {
+            // Show technical details
+            technicalDetails.style.display = 'block';
+            toggleButton.textContent = 'Hide Technical Details';
+            toggleButton.classList.add('expanded');
+          }
+        });
+      }
+    });
   </script>
 </body>
 </html>
