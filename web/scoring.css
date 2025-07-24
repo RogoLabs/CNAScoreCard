@@ -83,6 +83,87 @@
   margin: 1.5rem auto 0;
 }
 
+/* Scoring Window Section */
+.scoring-window-card h2 {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.window-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.current-period h3 {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.period-dates {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: #f0f7ff;
+  border-radius: 8px;
+  text-align: center;
+  border-left: 4px solid var(--primary-color);
+}
+
+.period-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 1.05rem;
+}
+
+.window-details h3 {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.window-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.window-features li {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.window-features li:last-child {
+  border-bottom: none;
+}
+
+.window-features li strong {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Responsive design for scoring window */
+@media (max-width: 768px) {
+  .window-info {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .period-dates {
+    font-size: 1.2rem;
+  }
+}
+
 /* Scoring Categories Section */
 .scoring-categories-card h2 {
   font-size: 1.8rem;

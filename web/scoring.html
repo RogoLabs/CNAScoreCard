@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Scoring Methodology - CNA Scorecard</title>
+  <title>CNA Scorecard</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="icon" type="image/png" href="assets/logo.svg">
   <link rel="stylesheet" href="assets/theme.css">
   <link rel="stylesheet" href="shared/shared.css">
   <link rel="stylesheet" href="scoring.css">
@@ -27,6 +29,31 @@
         CVE Numbering Authorities populate essential data fields. The scoring philosophy is simple: complete, actionable 
         vulnerability data leads to better security outcomes for everyone.
       </p>
+    </section>
+
+    <!-- Scoring Window Section -->
+    <section class="scoring-window-card card">
+      <h2>Scoring Window</h2>
+      <div class="window-info">
+        <div class="current-period">
+          <h3>Current Analysis Period</h3>
+          <p class="period-dates" id="currentPeriod">Loading...</p>
+          <p class="period-description">
+            All CNA scores are based on CVE records published during this 6-month window. This ensures 
+            scores reflect recent performance and current data quality practices.
+          </p>
+        </div>
+        
+        <div class="window-details">
+          <h3>How the Scoring Window Works</h3>
+          <ul class="window-features">
+            <li><strong>Rolling 6-Month Window:</strong> The analysis period automatically updates to always cover the most recent 6 months of CVE data.</li>
+            <li><strong>Fresh Data:</strong> Scores are recalculated regularly using only CVEs published within the current window, ensuring relevance and accuracy.</li>
+            <li><strong>Trend Analysis:</strong> Performance trends compare the current 6-month period against the previous 6-month period to show improvement or decline.</li>
+            <li><strong>Fair Comparison:</strong> All CNAs are evaluated using the same time window, creating consistent and comparable scoring across organizations.</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <!-- Scoring Categories Section -->
@@ -138,5 +165,61 @@
     </div>
     <div class="footer-meta">&copy; 2025 RogoLabs. All rights reserved.</div>
   </footer>
+  
+  <script>
+    // Utility function for date formatting (same as homepage)
+    function formatDateRange(dateRangeString) {
+      try {
+        const parts = dateRangeString.split(' to ');
+        if (parts.length !== 2) return dateRangeString;
+        
+        // Parse as UTC to avoid timezone conversion issues
+        const startDate = new Date(parts[0] + 'T12:00:00Z');
+        const endDate = new Date(parts[1] + 'T12:00:00Z');
+        
+        const formatDate = (date) => {
+          const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          
+          const day = date.getDate();
+          const month = months[date.getMonth()];
+          const year = date.getFullYear();
+          
+          // Add ordinal suffix (st, nd, rd, th)
+          const getOrdinal = (n) => {
+            const s = ['th', 'st', 'nd', 'rd'];
+            const v = n % 100;
+            return n + (s[(v - 20) % 10] || s[v] || s[0]);
+          };
+          
+          return `${month} ${getOrdinal(day)}, ${year}`;
+        };
+        
+        return `${formatDate(startDate)} – ${formatDate(endDate)}`;
+      } catch (error) {
+        console.error('Error formatting date range:', error);
+        return dateRangeString;
+      }
+    }
+    
+    // Load and display current analysis period
+    async function loadAnalysisPeriod() {
+      try {
+        const response = await fetch('./data/completeness_summary.json');
+        const data = await response.json();
+        
+        const rawPeriod = data.analysis_period || 'Not available';
+        const formattedPeriod = rawPeriod !== 'Not available' ? formatDateRange(rawPeriod) : rawPeriod;
+        
+        document.getElementById('currentPeriod').textContent = formattedPeriod;
+      } catch (error) {
+        console.error('Error loading analysis period:', error);
+        document.getElementById('currentPeriod').textContent = 'Unable to load current period';
+      }
+    }
+    
+    // Load the analysis period when the page loads
+    document.addEventListener('DOMContentLoaded', loadAnalysisPeriod);
+  </script>
 </body>
 </html>

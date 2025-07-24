@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CNA Scorecard - Measuring the Health of the Vulnerability Ecosystem</title>
+  <title>CNA Scorecard</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="icon" type="image/png" href="assets/logo.svg">
   <link rel="stylesheet" href="assets/theme.css">
   <link rel="stylesheet" href="shared/shared.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -105,6 +107,18 @@
       font-size: 0.9rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+    }
+    
+    /* Date range styling */
+    .date-separator {
+      color: #ccc;
+      margin: 0 0.5rem;
+      font-weight: 300;
+      font-size: 0.9em;
+    }
+    
+    .date-start, .date-end {
+      display: inline-block;
     }
     
     .section {
@@ -346,7 +360,7 @@
     <section class="page-header">
       <h1 class="page-title">CNA Scorecard: Tracking CVE Data Completeness</h1>
       <p class="page-subtitle">
-        Tracks how thoroughly CVE Numbering Authorities populate vulnerability records with actionable intelligence, 
+        Tracks how thoroughly CVE Numbering Authorities populate vulnerability records with actionable intelligence over the last 6 months, 
         helping users of their products better understand, prioritize, and respond to security threats.
       </p>
       <div class="cta-buttons">
@@ -359,8 +373,9 @@
     <section class="section">
       <h2 class="section-title">Understanding CVE Data Completeness: Five Key Categories</h2>
       <p style="color: var(--text-secondary); line-height: 1.6; font-size: 1.1rem; text-align: center; max-width: 1000px; margin: 0 auto 3rem;">
-        The CNA Scorecard tracks how thoroughly CVE Numbering Authorities populate vulnerability records across five essential categories. 
-        Complete data in these areas helps security teams make informed decisions and respond effectively to threats.
+        Complete data in vulnerability records helps security teams make informed decisions and respond effectively to threats. 
+        The CNA Scorecard evaluates how thoroughly CVE Numbering Authorities populate five essential categories over the last 6 months, 
+        with the percentages below showing average completeness scores across all CNAs during this period.
       </p>
       <div class="category-grid" id="categoryGrid">
         <!-- Category cards will be populated by JavaScript -->
@@ -418,6 +433,42 @@
       return num.toString();
     }
 
+    // Utility function for date formatting
+    function formatDateRange(dateRangeString) {
+      try {
+        // Parse the date range string (e.g., "2025-01-23 to 2025-07-23")
+        const parts = dateRangeString.split(' to ');
+        if (parts.length !== 2) return dateRangeString;
+        
+        // Parse as UTC to avoid timezone conversion issues
+        const startDate = new Date(parts[0] + 'T12:00:00Z');
+        const endDate = new Date(parts[1] + 'T12:00:00Z');
+        
+        const formatDate = (date) => {
+          const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          
+          const day = date.getDate();
+          const month = months[date.getMonth()];
+          const year = date.getFullYear();
+          
+          // Add ordinal suffix (st, nd, rd, th)
+          const getOrdinal = (n) => {
+            const s = ['th', 'st', 'nd', 'rd'];
+            const v = n % 100;
+            return n + (s[(v - 20) % 10] || s[v] || s[0]);
+          };
+          
+          return `${month} ${getOrdinal(day)}, ${year}`;
+        };
+        
+        return `<span class="date-start">${formatDate(startDate)}</span><span class="date-separator">–</span><span class="date-end">${formatDate(endDate)}</span>`;
+      } catch (error) {
+        console.error('Error formatting date range:', error);
+        return dateRangeString; // Return original if formatting fails
+      }
+    }
+
     // Load and display key statistics
     async function loadKeyStatistics() {
       try {
@@ -431,7 +482,9 @@
 
         // Calculate statistics from the data
         const totalCNAs = cnaData.length;
-        const totalCVEs = completenessData.cve_count || 0;
+        const totalCVEs = completenessData.total_cves_analyzed || 0;
+        const rawAnalysisPeriod = completenessData.analysis_period || 'Not available';
+        const analysisPeriod = rawAnalysisPeriod !== 'Not available' ? formatDateRange(rawAnalysisPeriod) : rawAnalysisPeriod;
         
         // Calculate average overall score from CNAs with valid scores
         const cnasWithScores = cnaData.filter(cna => cna.scores && cna.scores.overall_average_score > 0);
@@ -445,16 +498,20 @@
         const statsGrid = document.getElementById('statsGrid');
         statsGrid.innerHTML = `
           <div class="stat-card">
-            <div class="stat-value">${formatNumber(totalCVEs)}</div>
             <div class="stat-label">Total CVEs Analyzed</div>
+            <div class="stat-value">${formatNumber(totalCVEs)}</div>
           </div>
           <div class="stat-card">
-            <div class="stat-value">${avgScore}%</div>
             <div class="stat-label">Average Overall Score</div>
+            <div class="stat-value">${avgScore}%</div>
           </div>
           <div class="stat-card">
-            <div class="stat-value">${formatNumber(activeCNAs)}</div>
             <div class="stat-label">Active CNAs</div>
+            <div class="stat-value">${formatNumber(activeCNAs)}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Analysis Period</div>
+            <div class="stat-value" style="font-size: 1.8rem;">${analysisPeriod}</div>
           </div>
         `;
       } catch (error) {
