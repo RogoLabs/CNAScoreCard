@@ -1,136 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CVE Numbering Authorities - CNA ScoreCard</title>
-    <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="cna-styles.css">
-    <link rel="icon" type="image/x-icon" href="../favicon.ico">
-    <style>
-        .nav-links {
-            text-align: center;
-            margin: 20px 0;
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
-        }
-        .nav-links a {
-            color: #222;
-            text-decoration: none;
-            padding: 8px 18px;
-            margin: 0 2px;
-            font-weight: 500;
-            border-radius: 8px;
-            transition: background 0.2s;
-        }
-        .nav-links a.active {
-            background-color: #3182ce !important;
-            color: #fff !important;
-            border-radius: 8px;
-            transition: background 0.2s;
-        }
-        .nav-links a:hover:not(.active) {
-            background: #e2e8f0;
-            color: #222;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNA Scorecard</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/logo.svg">
+  <link rel="icon" type="image/png" href="../assets/logo.svg">
+  <link rel="stylesheet" href="../assets/theme.css">
+  <link rel="stylesheet" href="../shared/shared.css">
+  <link rel="stylesheet" href="cna-index.css">
 </head>
 <body>
-    <div class="nav-links">
-        <a href="../index.html">🏠 Home</a>
-        <a href="index.html" class="active">🏛️ CNAs</a>
-        <a href="../cves/index.html">🔍 CVEs</a>
-        <a href="../field-insights/index.html">🧬 Field Insights</a>
-        <a href="../completeness/index.html">📋 Completeness</a>
-        <a href="../scoring.html">📊 EAS Methodology</a>
-        <a href="https://rogolabs.net" target="_blank" rel="noopener noreferrer" class="rogolabs-link">🔗 RogoLabs</a>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <img src="../assets/logo.svg" alt="CNA Scorecard Logo" class="navbar-logo">
+    <div class="navbar-links">
+      <a href="../index.html">Home</a>
+      <a href="index-refactored.html" class="active">CNAs</a>
+      <a href="../completeness/index.html">Record Completeness</a>
+      <a href="../scoring.html">Methodology</a>
     </div>
-
-    <main class="container" role="main" aria-label="CVE Numbering Authorities">
-        <div class="page-header">
-            <h1><span class="cna-part">CNA</span>ScoreCard</h1>
+  </nav>
+  
+  <!-- Main Content -->
+  <main class="container">
+    <section class="page-header">
+      <h1 class="page-title">CNA Scorecard: Performance Rankings</h1>
+      <p class="page-subtitle">Performance rankings showing which CNAs provide the most complete vulnerability data to help security teams prioritize and respond to threats.</p>
+    </section>
+    
+    <section class="cna-table-section">
+      <!-- Card Container -->
+      <div class="card">
+        <!-- Controls Section -->
+        <div class="controls-container">
+          <div class="control-group search-group">
+            <input type="search" id="searchInput" placeholder="Search CNA..." aria-label="Search CNA" class="search-input">
+          </div>
+          <div class="control-group">
+            <button id="toggleDetailsBtn" class="control-button" data-showing="false">
+              <span>Show Details</span>
+            </button>
+          </div>
+        </div>
+        <!-- Info/Pagination Summary -->
+        <div class="table-info">
+          <span id="resultsSummary">Showing <span id="startIndex">1</span>-<span id="endIndex">25</span> of <span id="totalItems">0</span> CNAs</span>
         </div>
         
-        <div class="header-section">
-            <h2>🏛️ CVE Numbering Authorities (CNAs)</h2>
-            <p class="main-description">
-                Browse individual CNA (CVE Numbering Authority) pages to see detailed scoring breakdowns, 
-                recent CVEs, and performance metrics. CNAs are ranked by their Enhanced Assessment Score (EAS), 
-                which evaluates the quality and completeness of their CVE publications across six key dimensions.
-            </p>
+        <!-- Main Table -->
+        <div class="table-container">
+          <table id="cnaTable">
+            <thead>
+              <tr>
+                <th class="col-rank sortable" data-sort="rank">Rank <span class="sort-indicator"></span></th>
+                <th class="col-name sortable" data-sort="name">CNA Name <span class="sort-indicator"></span></th>
+                <th class="col-type sortable" data-sort="type">CNA Type <span class="sort-indicator"></span></th>
+                <th class="col-count sortable" data-sort="cveCount">CVE Count <span class="sort-indicator"></span></th>
+                <th class="col-score sortable" data-sort="score">CNA ScoreCard Rating <span class="sort-indicator"></span></th>
+                <th class="col-detail sortable" data-sort="foundational" data-column="foundational">Foundational <span class="sort-indicator"></span></th>
+                <th class="col-detail sortable" data-sort="rootcause" data-column="rootcause">Root Cause <span class="sort-indicator"></span></th>
+                <th class="col-detail sortable" data-sort="software" data-column="software">Software ID <span class="sort-indicator"></span></th>
+                <th class="col-detail sortable" data-sort="severity" data-column="severity">Severity & Impact <span class="sort-indicator"></span></th>
+                <th class="col-detail sortable" data-sort="patch" data-column="patch">Patch Info <span class="sort-indicator"></span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Table content will be dynamically generated -->
+            </tbody>
+          </table>
         </div>
-
-        <div class="stats-overview">
-            <div class="stat-card">
-                <h3>📊 Average EAS Score</h3>
-                <div class="stat-value" id="average-score">Loading...</div>
-                <p>Mean score across all active CNAs</p>
-            </div>
-            <div class="stat-card">
-                <h3>🏛️ Active CNAs</h3>
-                <div class="stat-value" id="total-cnas">Loading...</div>
-                <p>CNAs with published CVEs (6mo)</p>
-            </div>
-            <div class="stat-card">
-                <h3>📄 Total CVEs</h3>
-                <div class="stat-value" id="total-cves">Loading...</div>
-                <p>CVEs analyzed in last 6 months</p>
-            </div>
-            <div class="stat-card">
-                <h3>🏆 Top Performer</h3>
-                <div class="stat-value" id="top-performer">Loading...</div>
-                <p>Highest scoring CNA</p>
-            </div>
+        
+        <!-- Pagination Controls -->
+        <div class="pagination-controls" id="paginationControls">
+          <button class="pagination-button" id="prevPageBtn" disabled>&laquo; Previous</button>
+          <div class="pagination-pages" id="paginationPages">
+            <!-- Page numbers will be dynamically generated -->
+          </div>
+          <button class="pagination-button" id="nextPageBtn" disabled>Next &raquo;</button>
         </div>
-
-        <div class="analysis-controls">
-            <div class="search-filter">
-                <input type="text" id="cna-search" placeholder="🔍 Search CNAs..." aria-label="Search CNAs">
-                <select id="sort-select" aria-label="Sort CNAs">
-                    <option value="score">Sort by EAS Score</option>
-                    <option value="name">Sort by Name</option>
-                    <option value="cves">Sort by CVE Count</option>
-                    <option value="rank">Sort by Rank</option>
-                </select>
-            </div>
-        </div>
-
-        <div id="table-view" class="cna-table-container">
-            <div class="table-header">
-                <h2>CNA EAS Score Rankings</h2>
-                <p>CNAs ranked by their Enhanced Assessment Score (EAS). Higher scores indicate better quality and completeness of CVE publications.</p>
-            </div>
-            
-            <div class="table-wrapper">
-                <table class="cna-table" id="cna-table">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>CNA</th>
-                            <th>EAS Score</th>
-                            <th>CVE Count (6mo)</th>
-                            <th>Details</th>
-                        </tr>
-                    </thead>
-                    <tbody id="cna-table-body">
-                        <!-- Data will be populated by JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div id="loading">Loading CNA data...</div>
-    </main>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2025 CNA ScoreCard. Enhanced Assessment Scores based on <a href="../scoring.html">EAS Methodology</a>.</p>
-            <p>Last updated: <span id="last-updated">Loading...</span></p>
-        </div>
-    </footer>
-
-    <script src="cna-script.js"></script>
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <img src="../assets/logo.svg" alt="CNA Scorecard Logo" class="footer-logo">
+        <span class="footer-title">CNA Scorecard</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://rogolabs.net" target="_blank">RogoLabs</a>
+        <a href="https://patchthis.app" target="_blank">PatchThis</a>
+        <a href="https://cveforecast.org" target="_blank">CVEForecast</a>
+        <a href="https://cve.icu" target="_blank">CVE.ICU</a>
+      </div>
+    </div>
+    <div class="footer-meta">&copy; 2025 RogoLabs. All rights reserved.</div>
+  </footer>
+  
+  <!-- Scripts -->
+  <script src="cna-index.js" type="module"></script>
 </body>
 </html>

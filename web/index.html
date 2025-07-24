@@ -1,164 +1,660 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CNA ScoreCard</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Accessibility: ARIA landmarks and improved color contrast -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNA Scorecard</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="icon" type="image/png" href="assets/logo.svg">
+  <link rel="stylesheet" href="assets/theme.css">
+  <link rel="stylesheet" href="shared/shared.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Homepage-specific styles */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    
+    .page-header {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+    
+    .page-title {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    
+    .page-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+      max-width: 900px;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .cta-button {
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .cta-button.primary {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .cta-button.secondary {
+      background: var(--card-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .stat-card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    /* Date range styling */
+    .date-separator {
+      color: #ccc;
+      margin: 0 0.5rem;
+      font-weight: 300;
+      font-size: 0.9em;
+    }
+    
+    .date-start, .date-end {
+      display: inline-block;
+    }
+    
+    .section {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: var(--primary-color);
+    }
+    
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    
+    .chart-container {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+    
+    .chart-canvas {
+      width: 100%;
+      height: 400px;
+    }
+    
+    .performance-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    
+    .performance-column {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+    
+    .performance-column h3 {
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+      font-size: 1.25rem;
+    }
+    
+    .cna-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .cna-item:last-child {
+      border-bottom: none;
+    }
+    
+    .cna-name {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .cna-name:hover {
+      text-decoration: underline;
+    }
+    
+    .cna-score {
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    
+    .centered-cta {
+      text-align: center;
+    }
+    
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .category-grid .category-card:nth-child(1) {
+      grid-column: 1 / 3;
+    }
+    
+    .category-grid .category-card:nth-child(2) {
+      grid-column: 3 / 5;
+    }
+    
+    .category-grid .category-card:nth-child(3) {
+      grid-column: 5 / 7;
+    }
+    
+    .category-grid .category-card:nth-child(4) {
+      grid-column: 2 / 4;
+      grid-row: 2;
+    }
+    
+    .category-grid .category-card:nth-child(5) {
+      grid-column: 4 / 6;
+      grid-row: 2;
+    }
+    
+    @media (max-width: 1024px) {
+      .category-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+      
+      .category-grid .category-card:nth-child(1),
+      .category-grid .category-card:nth-child(2),
+      .category-grid .category-card:nth-child(3),
+      .category-grid .category-card:nth-child(4),
+      .category-grid .category-card:nth-child(5) {
+        grid-column: unset;
+        grid-row: unset;
+      }
+    }
+    
+    .category-card {
+      background: var(--card-bg);
+      padding: 2rem 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .category-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    }
+    
+    .category-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+    
+    .category-score {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 0.75rem;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    
+    .category-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+    
+    .category-description {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+    
+    .category-importance {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-style: italic;
+      line-height: 1.4;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border-color);
+      opacity: 0.9;
+    }
+    
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 2rem;
+      }
+      
+      .two-column,
+      .performance-columns {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
+      .category-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .category-score {
+        font-size: 2.5rem;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .cta-button {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="nav-links">
-        <a href="index.html" class="active">🏠 Home</a>
-        <a href="cna/index.html">🏛️ CNAs</a>
-        <a href="cves/index.html">🔍 CVEs</a>
-        <a href="field-insights/index.html">🧬 Field Insights</a>
-        <a href="completeness/index.html">📋 Completeness</a>
-        <a href="scoring.html">📊 EAS Methodology</a>
-        <a href="https://rogolabs.net" target="_blank" rel="noopener noreferrer" class="rogolabs-link">🔗 RogoLabs</a>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <img src="assets/logo.svg" alt="CNA Scorecard Logo" class="navbar-logo">
+    <div class="navbar-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="cna/index.html">CNAs</a>
+      <a href="completeness/index.html">Record Completeness</a>
+      <a href="scoring.html">Methodology</a>
     </div>
-    <div id="loading" aria-live="polite">Loading CNA data...</div>
-    <main class="container" role="main" aria-label="CNA ScoreCard main content">
-        <div class="page-header">
-            <h1 id="main-title"><span class="cna-part">CNA</span>ScoreCard</h1>
-        </div>
-        <div class="intro-section" aria-labelledby="main-title">
-            <p class="main-description">A comprehensive evaluation platform that analyzes and scores CVE Numbering Authorities (CNAs) based on the quality and completeness of their vulnerability disclosures. Our <a href="scoring.html">Enhanced Aggregate Scoring (EAS) methodology</a> provides objective, data-driven assessments to recognize excellence in vulnerability reporting. The EAS scoring model is open source and available for review in our <a href="https://github.com/jgamblin/CNAScoreCard" target="_blank" rel="noopener noreferrer">GitHub repository</a>.</p>
-        </div>
-        <div class="card-box" style="max-width:1100px;margin:2rem auto 2rem auto;padding:2rem 2.5rem;background:#fff;border-radius:18px;box-shadow:0 2px 16px rgba(0,0,0,0.08);">
-            <div class="filters no-box" style="margin-bottom:1.5rem;background:none;box-shadow:none;border:none;padding:0;">
-                <input type="text" id="searchInput" placeholder="Search CNAs...">
-                <select id="sortSelect">
-                    <option value="score">Sort by Score</option>
-                    <option value="name">Sort by Name</option>
-                    <option value="cveCount">Sort by CVE Count</option>
-                </select>
-                <button type="button" id="hideInactiveToggle" class="filter-button active" data-active="true">
-                    Hide CNAs with 0 CVEs
-                </button>
+  </nav>
+
+  <main class="container">
+    <!-- Page Header -->
+    <section class="page-header">
+      <h1 class="page-title">CNA Scorecard: Tracking CVE Data Completeness</h1>
+      <p class="page-subtitle">
+        Tracks how thoroughly CVE Numbering Authorities populate vulnerability records with actionable intelligence over the last 6 months, 
+        helping users of their products better understand, prioritize, and respond to security threats.
+      </p>
+      <div class="cta-buttons">
+        <a href="cna/index.html" class="cta-button primary">Explore CNA Scores</a>
+        <a href="completeness/index.html" class="cta-button secondary">View Completeness Report</a>
+      </div>
+    </section>
+
+    <!-- Category Breakdown Section -->
+    <section class="section">
+      <h2 class="section-title">Understanding CVE Data Completeness: Five Key Categories</h2>
+      <p style="color: var(--text-secondary); line-height: 1.6; font-size: 1.1rem; text-align: center; max-width: 1000px; margin: 0 auto 3rem;">
+        Complete data in vulnerability records helps security teams make informed decisions and respond effectively to threats. 
+        The CNA Scorecard evaluates how thoroughly CVE Numbering Authorities populate five essential categories over the last 6 months, 
+        with the percentages below showing average completeness scores across all CNAs during this period.
+      </p>
+      <div class="category-grid" id="categoryGrid">
+        <!-- Category cards will be populated by JavaScript -->
+      </div>
+    </section>
+
+    <!-- CNA Performance Snapshot -->
+    <section class="section">
+      <h2 class="section-title">CNA Performance Snapshot</h2>
+      <div class="performance-columns" id="performanceColumns">
+        <!-- Performance columns will be populated by JavaScript -->
+      </div>
+      <div class="centered-cta">
+        <a href="cna/index.html" class="cta-button primary">View Full Leaderboard</a>
+      </div>
+    </section>
+
+    <!-- Key Statistics Section -->
+    <section class="section">
+      <h2 class="section-title">Key Statistics</h2>
+      <div class="stats-grid" id="statsGrid">
+        <!-- Statistics cards will be populated by JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <img src="assets/logo.svg" alt="CNA Scorecard Logo" class="footer-logo">
+        <span class="footer-title">CNA Scorecard</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://rogolabs.net" target="_blank">RogoLabs</a>
+        <a href="https://patchthis.app" target="_blank">PatchThis</a>
+        <a href="https://cveforecast.org" target="_blank">CVEForecast</a>
+        <a href="https://cve.icu" target="_blank">CVE.ICU</a>
+      </div>
+    </div>
+    <div class="footer-meta">&copy; 2025 RogoLabs. All rights reserved.</div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script type="module">
+    import { createHorizontalBarChart } from './shared/charts.js';
+
+    // Utility function for number formatting
+    function formatNumber(num) {
+      if (num >= 1000000) {
+        return (num / 1000000).toFixed(1) + 'M';
+      } else if (num >= 1000) {
+        return (num / 1000).toFixed(1) + 'K';
+      }
+      return num.toString();
+    }
+
+    // Utility function for date formatting
+    function formatDateRange(dateRangeString) {
+      try {
+        // Parse the date range string (e.g., "2025-01-23 to 2025-07-23")
+        const parts = dateRangeString.split(' to ');
+        if (parts.length !== 2) return dateRangeString;
+        
+        // Parse as UTC to avoid timezone conversion issues
+        const startDate = new Date(parts[0] + 'T12:00:00Z');
+        const endDate = new Date(parts[1] + 'T12:00:00Z');
+        
+        const formatDate = (date) => {
+          const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          
+          const day = date.getDate();
+          const month = months[date.getMonth()];
+          const year = date.getFullYear();
+          
+          // Add ordinal suffix (st, nd, rd, th)
+          const getOrdinal = (n) => {
+            const s = ['th', 'st', 'nd', 'rd'];
+            const v = n % 100;
+            return n + (s[(v - 20) % 10] || s[v] || s[0]);
+          };
+          
+          return `${month} ${getOrdinal(day)}, ${year}`;
+        };
+        
+        return `<span class="date-start">${formatDate(startDate)}</span><span class="date-separator">–</span><span class="date-end">${formatDate(endDate)}</span>`;
+      } catch (error) {
+        console.error('Error formatting date range:', error);
+        return dateRangeString; // Return original if formatting fails
+      }
+    }
+
+    // Load and display key statistics
+    async function loadKeyStatistics() {
+      try {
+        const [cnaResponse, completenessResponse] = await Promise.all([
+          fetch('./data/cna_combined.json'),
+          fetch('./data/completeness_summary.json')
+        ]);
+
+        const cnaData = await cnaResponse.json();
+        const completenessData = await completenessResponse.json();
+
+        // Calculate statistics from the data
+        const totalCNAs = cnaData.length;
+        const totalCVEs = completenessData.total_cves_analyzed || 0;
+        const rawAnalysisPeriod = completenessData.analysis_period || 'Not available';
+        const analysisPeriod = rawAnalysisPeriod !== 'Not available' ? formatDateRange(rawAnalysisPeriod) : rawAnalysisPeriod;
+        
+        // Calculate average overall score from CNAs with valid scores
+        const cnasWithScores = cnaData.filter(cna => cna.scores && cna.scores.overall_average_score > 0);
+        const avgScore = cnasWithScores.length > 0 
+          ? (cnasWithScores.reduce((sum, cna) => sum + cna.scores.overall_average_score, 0) / cnasWithScores.length).toFixed(1)
+          : '0.0';
+        
+        // Calculate active CNAs (CNAs that have contributed recent CVEs)
+        const activeCNAs = cnaData.filter(cna => cna.recent_cves && cna.recent_cves > 0).length;
+
+        const statsGrid = document.getElementById('statsGrid');
+        statsGrid.innerHTML = `
+          <div class="stat-card">
+            <div class="stat-label">Total CVEs Analyzed</div>
+            <div class="stat-value">${formatNumber(totalCVEs)}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Average Overall Score</div>
+            <div class="stat-value">${avgScore}%</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Active CNAs</div>
+            <div class="stat-value">${formatNumber(activeCNAs)}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Analysis Period</div>
+            <div class="stat-value" style="font-size: 1.8rem;">${analysisPeriod}</div>
+          </div>
+        `;
+      } catch (error) {
+        console.error('Error loading key statistics:', error);
+        document.getElementById('statsGrid').innerHTML = '<p>Error loading statistics</p>';
+      }
+    }
+
+    // Load and display category breakdown
+    async function loadCategoryBreakdown() {
+      try {
+        const response = await fetch('./data/cna_combined.json');
+        const data = await response.json();
+        
+        // Filter CNAs with valid scores
+        const cnasWithScores = data.filter(cna => cna.scores && cna.scores.overall_average_score > 0);
+        
+        if (cnasWithScores.length === 0) {
+          document.getElementById('categoryGrid').innerHTML = '<p>No scoring data available</p>';
+          return;
+        }
+        
+        // Calculate average scores for each category
+        const categories = [
+          {
+            key: 'foundational_completeness',
+            label: 'Foundational Completeness',
+            description: 'Essential CVE fields like ID, description, and affected products',
+            importance: 'The essential building blocks of every CVE record, required for publication and providing basic context needed to understand any vulnerability'
+          },
+          {
+            key: 'root_cause_analysis', 
+            label: 'Root Cause Analysis',
+            description: 'Common Weakness Enumeration (CWE)',
+            importance: 'Understanding the "why" behind vulnerabilities helps development teams recognize common weakness patterns and implement preventive measures'
+          },
+          {
+            key: 'software_identification',
+            label: 'Software Identification', 
+            description: 'Common Platform Enumeration (CPE)',
+            importance: 'Enabling precise vulnerability detection by allowing security tools to accurately match vulnerabilities to specific software versions'
+          },
+          {
+            key: 'severity_and_impact',
+            label: 'Severity & Impact',
+            description: 'Common Vulnerability Scoring System (CVSS)',
+            importance: 'Supporting informed risk decisions by helping organizations prioritize their response based on potential business impact'
+          },
+          {
+            key: 'patchinfo',
+            label: 'Patch Information',
+            description: 'Links to patches, fixes, or mitigation information',
+            importance: 'Connecting problems to solutions by providing links to patches, fixes, and mitigation guidance for faster remediation'
+          }
+        ];
+        
+        // Calculate averages and create cards
+        const categoryCards = categories.map(category => {
+          const average = cnasWithScores.reduce((sum, cna) => {
+            return sum + (cna.scores[category.key] || 0);
+          }, 0) / cnasWithScores.length;
+          
+          return `
+            <div class="category-card">
+              <div class="category-score" style="color: var(--primary-color)">${average.toFixed(1)}%</div>
+              <div class="category-name">${category.label}</div>
+              <div class="category-description">${category.description}</div>
+              <div class="category-importance">${category.importance}</div>
             </div>
-            <div class="carousel-outer">
-                <button class="carousel-arrow carousel-arrow-up" id="carouselUp" aria-label="Previous CNA cards">&#9650;</button>
-                <div class="carousel-container">
-                    <div id="cnaCards" class="cna-cards carousel-cards" aria-label="CNA Scorecards"></div>
-                </div>
-                <button class="carousel-arrow carousel-arrow-down" id="carouselDown" aria-label="Next CNA cards">&#9660;</button>
-            </div>
-        </div>
-        <div class="card-box" style="max-width:1100px;margin:2rem auto 2rem auto;padding:2rem 2.5rem;background:#fff;border-radius:18px;box-shadow:0 2px 16px rgba(0,0,0,0.08);">
-            <h2 style="text-align:center;font-size:2.1rem;font-weight:800;letter-spacing:-1px;margin-bottom:2rem;">What We Measure</h2>
-            <div class="features-grid">
-                <div class="feature">
-                    <h3>🏗️ Foundational Completeness</h3>
-                    <p>Product identification (either vendor/product or packageName/collectionURL) and high-quality vulnerability descriptions</p>
-                </div>
-                <div class="feature">
-                    <h3>🔍 Root Cause Analysis</h3>
-                    <p>CWE classifications that help developers understand vulnerability patterns</p>
-                </div>
-                <div class="feature">
-                    <h3>🆔 Software Identification</h3>
-                    <p>Presence of valid CPE identifiers for affected products, enabling precise software targeting and automation</p>
-                </div>
-                <div class="feature">
-                    <h3>⚡ Severity Context</h3>
-                    <p>CVSS scores and threat metrics for proper risk assessment</p>
-                </div>
-                <div class="feature">
-                    <h3>🎯 Actionable Intelligence</h3>
-                    <p>References, exploits, and VEX data for immediate security response</p>
-                </div>
-            </div>
-            <div class="data-info" style="margin-top:2.5rem;">
-                <div class="data-stats">
-                    <div class="stat-item">
-                        <strong>Live Data:</strong> Automatically updated every 6 hours from the official CVE database
-                    </div>
-                    <div class="stat-item">
-                        <strong>Time Range:</strong> Last 6 months of CVE publications
-                    </div>
-                    <div class="stat-item">
-                        <strong>Methodology:</strong> Enhanced Aggregate Scoring (EAS) with 100-point scale
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-    <script src="script.js"></script>
-    <style>
-        .carousel-outer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto 2rem auto;
-        }
-        .carousel-arrow {
-            background: #f7fafc;
-            border: none;
-            color: #2980b9;
-            font-size: 2.2rem;
-            cursor: pointer;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            margin: 0.5rem 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s;
-        }
-        .carousel-arrow:active {
-            background: #e2e8f0;
-        }
-        .carousel-container {
-            width: 100%;
-            overflow: hidden;
-            min-height: 340px;
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-        }
-        .carousel-cards {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            gap: 3.5rem;
-            transition: transform 0.4s cubic-bezier(.4,2,.6,1);
-        }
-        .cna-card {
-            min-width: 340px;
-            max-width: 400px;
-            flex: 1 1 340px;
-        }
-        @media (max-width: 700px) {
-            .carousel-cards {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-        .nav-links a.active {
-            background-color: #3182ce !important;
-            color: #fff !important;
-            border-radius: 8px;
-            transition: background 0.2s;
-        }
-        .nav-links a {
-            color: #222;
-            text-decoration: none;
-            padding: 8px 18px;
-            margin: 0 2px;
-            font-weight: 500;
-            border-radius: 8px;
-            transition: background 0.2s;
-        }
-        .nav-links a:hover:not(.active) {
-            background: #e2e8f0;
-            color: #222;
-        }
-    </style>
+          `;
+        }).join('');
+        
+        document.getElementById('categoryGrid').innerHTML = categoryCards;
+        
+      } catch (error) {
+        console.error('Error loading category breakdown data:', error);
+        document.getElementById('categoryGrid').innerHTML = '<p>Error loading category data</p>';
+      }
+    }
+
+    // Load and display CNA performance snapshot
+    async function loadCNAPerformanceSnapshot() {
+      try {
+        const response = await fetch('./data/cna_combined.json');
+        const data = await response.json();
+        
+        // Filter CNAs with valid scores and sort by overall average score
+        const validCNAs = data
+          .filter(cna => cna.scores && cna.scores.overall_average_score > 0)
+          .sort((a, b) => b.scores.overall_average_score - a.scores.overall_average_score);
+        
+        const top5 = validCNAs.slice(0, 5);
+        
+        // Find most active CNAs (highest recent CVE count) that aren't in top 5
+        const mostActive = data
+          .filter(cna => cna.scores && cna.scores.overall_average_score > 0 && 
+                        cna.recent_cves && cna.recent_cves > 0 &&
+                        !top5.some(top => top.shortName === cna.shortName))
+          .sort((a, b) => b.recent_cves - a.recent_cves)
+          .slice(0, 5);
+        
+        const performanceColumns = document.getElementById('performanceColumns');
+        performanceColumns.innerHTML = `
+          <div class="performance-column">
+            <h3>Top 5 Scoring CNAs</h3>
+            ${top5.map(cna => `
+              <div class="cna-item">
+                <a href="cna/cna-detail.html?shortName=${encodeURIComponent(cna.shortName)}" class="cna-name">
+                  ${cna.shortName}
+                </a>
+                <span class="cna-score">${cna.scores.overall_average_score.toFixed(1)}%</span>
+              </div>
+            `).join('')}
+          </div>
+          <div class="performance-column">
+            <h3>Most Active CNAs</h3>
+            ${mostActive.map(cna => `
+              <div class="cna-item">
+                <a href="cna/cna-detail.html?shortName=${encodeURIComponent(cna.shortName)}" class="cna-name">
+                  ${cna.shortName}
+                </a>
+                <span class="cna-score">${cna.recent_cves} CVEs</span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } catch (error) {
+        console.error('Error loading CNA performance data:', error);
+        document.getElementById('performanceColumns').innerHTML = '<p>Error loading performance data</p>';
+      }
+    }
+
+    // Initialize the homepage
+    async function initializeHomepage() {
+      await Promise.all([
+        loadKeyStatistics(),
+        loadCategoryBreakdown(),
+        loadCNAPerformanceSnapshot()
+      ]);
+    }
+
+    // Load everything when the DOM is ready
+    document.addEventListener('DOMContentLoaded', initializeHomepage);
+  </script>
 </body>
 </html>

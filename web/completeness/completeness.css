@@ -1,0 +1,669 @@
+/* Completeness Dashboard Styles */
+.completeness-card {
+  max-width: 900px;
+  margin: 2.5rem auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px 0 rgba(0,0,0,0.06);
+  padding: 2rem;
+}
+
+/* CSS Variables - Match CNA index exactly */
+:root {
+  --primary-color: #0066cc;
+  --primary-hover: #0055aa;
+  --accent-color: #17a2b8;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --light-bg: #f8f9fa;
+  --border-color: #e0e0e0;
+  --text-color: #333333;
+  --text-light: #666666;
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --transition-speed: 0.3s;
+}
+
+/* Card-based table section styling (matches CNA index) */
+.completeness-table-section {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  overflow-x: hidden;
+}
+
+/* Table container improvements */
+.completeness-table-section .table-container {
+  overflow-x: visible;
+  margin-bottom: 1rem;
+}
+
+.completeness-header {
+  margin-bottom: 2.5rem;
+  text-align: left;
+}
+
+.completeness-header h1 {
+  font-size: 2.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.completeness-selector {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#cnaCompletenessSelect {
+  padding: 0.7rem 1.1rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-color);
+  font-size: 1.05em;
+  background: #fff;
+  transition: border 0.2s;
+  min-width: 220px;
+}
+
+#cnaCompletenessSelect:focus {
+  border: 1.5px solid var(--primary-color);
+}
+
+#completenessOverview {
+  margin-top: 2.5rem;
+}
+
+.completeness-table th:nth-child(2), .completeness-table td:nth-child(2) {
+  text-align: center;
+}
+
+/* Table Styles - Exact match to CNA index table */
+.table-container {
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.completeness-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9rem;
+}
+
+.completeness-table th {
+  position: sticky;
+  top: 0;
+  background-color: var(--light-bg);
+  color: var(--text-color);
+  font-weight: 600;
+  padding: 1rem 0.75rem;
+  text-align: left;
+  border-bottom: 2px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.completeness-table td {
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+.completeness-table tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.03) !important;
+}
+
+.completeness-table tbody tr:nth-child(even) {
+  background-color: #f8f9fa !important;
+}
+
+.completeness-table tbody tr:nth-child(odd) {
+  background-color: white;
+}
+
+/* Column data alignment */
+.completeness-table td:nth-child(2) { /* Completeness column */
+  text-align: center !important;
+}
+
+.completeness-table td:nth-child(3) { /* CNAs Populating column */
+  text-align: center !important;
+}
+
+.completeness-table td:nth-child(4) { /* Importance column */
+  text-align: center !important;
+}
+
+/* Sortable header styling - matches CNA index */
+.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--transition-speed) ease;
+}
+
+.sortable:hover {
+  background-color: rgba(0, 102, 204, 0.05);
+}
+
+.sort-indicator {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  opacity: 0.5;
+}
+
+.sortable.sort-asc .sort-indicator::after {
+  content: '↑';
+  opacity: 1;
+}
+
+.sortable.sort-desc .sort-indicator::after {
+  content: '↓';
+  opacity: 1;
+}
+
+.sortable:not(.sort-asc):not(.sort-desc) .sort-indicator::after {
+  content: '↕';
+}
+
+/* Cell Styling */
+.percent-cell {
+  font-weight: 700;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+.count-cell {
+  text-align: center;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.description-cell {
+  color: var(--text-light);
+  line-height: 1.4;
+}
+
+/* Column-specific styling for better layout */
+.completeness-table th:nth-child(1) { /* Field column */
+  text-align: left;
+}
+
+.completeness-table th:nth-child(2) { /* Completeness column */
+  text-align: center !important;
+}
+
+.completeness-table th:nth-child(3) { /* CNAs Populating column */
+  text-align: center !important;
+}
+
+.completeness-table th:nth-child(4) { /* Importance column */
+  text-align: center !important;
+}
+
+.completeness-table th:nth-child(5) { /* Description column */
+  text-align: left;
+}
+
+.schema-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-family: 'SF Mono', 'Monaco', 'Consolas', 'Ubuntu Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.schema-link:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+/* Importance Badges - Exact copy of CNA Type Badge structure */
+.importance-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  margin: 2px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+  background-color: #f0f7ff;
+  color: var(--primary-color);
+}
+
+/* Importance-specific styling (matches CNA type pattern) */
+.importance-high {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+.importance-medium {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.importance-low {
+  background-color: #f5f5f5;
+  color: #757575;
+}
+
+.importance-metadata {
+  background: #e9ecef;
+  color: #495057;
+}
+
+/* Field description styling */
+.field-desc {
+  color: #6c757d;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+
+
+
+
+/* Dashboard statistics */
+.dashboard-stats {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #0074d9 0%, #0056b3 100%);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  flex: 1;
+  min-width: 200px;
+  box-shadow: 0 2px 8px rgba(0, 116, 217, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-label {
+  font-size: 0.9em;
+  font-weight: 500;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 1.4em;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.completeness-fields-row {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2.2rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.completeness-field-card {
+  background: var(--background);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(30,198,230,0.07);
+  padding: 1.2rem 1.4rem 1.1rem 1.4rem;
+  min-width: 160px;
+  flex: 1 1 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border-color);
+}
+
+.field-category {
+  font-weight: 700;
+  font-size: 1.08em;
+  margin-bottom: 0.4em;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.field-percent {
+  font-size: 2.1em;
+  font-weight: 800;
+  margin-bottom: 0.3em;
+}
+
+.field-bar {
+  height: 8px;
+  border-radius: 6px;
+  margin: 0.2em 0 0.8em 0;
+  background: var(--primary-color);
+  width: 100%;
+  transition: width 0.4s;
+}
+
+.field-importance {
+  font-size: 0.97em;
+  color: var(--text-secondary);
+  margin-top: 0.2em;
+}
+
+@media (max-width: 900px) {
+  .completeness-fields-row {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .completeness-field-card {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+
+.completeness-card.card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(30,198,230,0.10);
+  padding: 2.2rem 2.4rem 1.7rem 2.4rem;
+  margin-bottom: 2.5rem;
+  border: 1px solid var(--border-color);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.completeness-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--background);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 10px rgba(30,198,230,0.06);
+}
+
+.completeness-table th, .completeness-table td {
+  padding: 1.15em 1.5em;
+  font-size: 1.09em;
+}
+
+.completeness-table th {
+  background: #f3fafd;
+  color: var(--primary-color);
+  font-weight: 800;
+  border-bottom: 2px solid var(--border-color);
+  text-align: left;
+}
+
+.completeness-table td {
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
+  vertical-align: top;
+}
+
+.completeness-table td:nth-child(2) {
+  text-align: right;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.completeness-table tr:nth-child(even) td {
+  background: #f8fafc;
+}
+
+.completeness-table tr:hover td {
+  background: #e8f8fb;
+}
+
+.completeness-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* CNA ScoreCard Legend */
+.cna-scorecard-legend {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.cna-scorecard-legend h3 {
+  margin: 0 0 1rem 0;
+  color: #495057;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.legend-color.foundational {
+  background: linear-gradient(135deg, #e3f2fd, #1976d2);
+}
+
+.legend-color.root-cause {
+  background: linear-gradient(135deg, #f3e5f5, #7b1fa2);
+}
+
+.legend-color.severity {
+  background: linear-gradient(135deg, #fff3e0, #f57c00);
+}
+
+.legend-color.software-id {
+  background: linear-gradient(135deg, #e8f5e8, #388e3c);
+}
+
+/* CNA ScoreCard Field Indicators - Stars Only (No Row Coloring) */
+
+/* Star indicators are handled by JavaScript with tooltips - no background coloring needed */
+
+/* All CNA ScoreCard row styling removed - using only star indicators */
+
+.completeness-table tr.cna-scorecard-foundational td,
+.completeness-table tr.cna-scorecard-root-cause td,
+.completeness-table tr.cna-scorecard-severity td,
+.completeness-table tr.cna-scorecard-software-id td,
+.completeness-table tr.cna-scorecard-patchinfo td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Add star indicators for CNA ScoreCard measured fields */
+/* Star indicators are now handled by JavaScript with tooltips */
+.star-indicator {
+  color: rgba(33, 150, 243, 0.8);
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+  cursor: help;
+}
+
+/* ================================ */
+/* SEARCH AUTOCOMPLETE DROPDOWN */
+/* ================================ */
+
+/* Search container positioning */
+.search-group {
+  position: relative;
+}
+
+/* Search results dropdown */
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+  display: none;
+  margin-top: -1px;
+}
+
+/* Individual search result items */
+.search-result-item {
+  padding: 0.875rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.95rem;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+  background: white;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Hover effect for search items */
+.search-result-item:hover {
+  background: linear-gradient(135deg, #f8f9ff 0%, #e8f2ff 100%);
+  color: var(--primary-color);
+  transform: translateX(2px);
+}
+
+/* Active/focused search item */
+.search-result-item:active {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  transform: translateX(0);
+}
+
+/* First search item (remove top border) */
+.search-result-item:first-child {
+  border-top: none;
+}
+
+/* Last search item styling */
+.search-result-item:last-child {
+  border-bottom: none;
+  border-radius: 0 0 12px 12px;
+}
+
+/* Special styling for "All CNAs" option */
+.search-result-item[data-cna-id="all"] {
+  background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+  font-weight: 600;
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.search-result-item[data-cna-id="all"]:hover {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  transform: translateX(3px);
+}
+
+/* Add subtle icon for search items */
+.search-result-item:not([data-cna-id="all"])::before {
+  content: "🏢";
+  margin-right: 0.5rem;
+  opacity: 0.6;
+  font-size: 0.85rem;
+}
+
+.search-result-item[data-cna-id="all"]::before {
+  content: "🌐";
+  margin-right: 0.5rem;
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+/* Enhanced search input styling when dropdown is open */
+.search-input:focus + .search-results,
+.search-results:hover {
+  display: block;
+}
+
+/* Smooth scrollbar for dropdown */
+.search-results::-webkit-scrollbar {
+  width: 6px;
+}
+
+.search-results::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 3px;
+  opacity: 0.7;
+}
+
+.search-results::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+  opacity: 1;
+}
+
+/* Loading state for search */
+.search-results.loading {
+  padding: 1rem;
+  text-align: center;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+.search-results.loading::before {
+  content: "🔍 ";
+  opacity: 0.6;
+}
+
+/* Empty state for search */
+.search-results.empty {
+  padding: 1rem;
+  text-align: center;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+.search-results.empty::before {
+  content: "❌ ";
+  opacity: 0.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .search-results {
+    max-height: 250px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .search-result-item {
+    padding: 1rem 0.875rem;
+    font-size: 0.9rem;
+  }
+  
+  .search-result-item:hover {
+    transform: none; /* Disable transform on mobile */
+  }
+}

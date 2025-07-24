@@ -1,0 +1,435 @@
+/* Modern card-based scoring page styles for CNA Scorecard */
+
+.scoring-table.modern-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--background);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 10px rgba(30,198,230,0.06);
+}
+.scoring-table.modern-table th, .scoring-table.modern-table td {
+  padding: 1.15em 1.5em;
+  font-size: 1.09em;
+}
+.scoring-table.modern-table th {
+  background: #f3fafd;
+  color: var(--primary-color);
+  font-weight: 800;
+  border-bottom: 2px solid var(--border-color);
+  text-align: left;
+}
+.scoring-table.modern-table td {
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
+  vertical-align: top;
+}
+.scoring-table.modern-table td:nth-child(2) {
+  text-align: right;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+.scoring-table.modern-table tr:nth-child(even) td {
+  background: #f8fafc;
+}
+.scoring-table.modern-table tr:hover td {
+  background: #e8f8fb;
+}
+.scoring-table.modern-table tr:last-child td {
+  border-bottom: none;
+}
+
+
+.scoring-cards-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 2rem 1rem;
+}
+.card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(30,198,230,0.10);
+  padding: 2.2rem 2.4rem 1.7rem 2.4rem;
+  margin-bottom: 2.5rem;
+  border: 1px solid var(--border-color);
+}
+.scoring-summary-card {
+  text-align: center;
+  margin-bottom: 2.6rem;
+}
+.scoring-title {
+  font-size: 2.3rem;
+  margin-bottom: 0.8rem;
+  font-weight: 800;
+  color: var(--primary-color);
+}
+.main-description {
+  font-size: 1.18em;
+  color: var(--text-secondary);
+  margin-bottom: 1.2rem;
+  line-height: 1.6;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.methodology-philosophy {
+  font-size: 1.1em;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 1.5rem auto 0;
+}
+
+/* Scoring Window Section */
+.scoring-window-card h2 {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.window-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.current-period h3 {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.period-dates {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: #f0f7ff;
+  border-radius: 8px;
+  text-align: center;
+  border-left: 4px solid var(--primary-color);
+}
+
+.period-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 1.05rem;
+}
+
+.window-details h3 {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.window-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.window-features li {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.window-features li:last-child {
+  border-bottom: none;
+}
+
+.window-features li strong {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Responsive design for scoring window */
+@media (max-width: 768px) {
+  .window-info {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .period-dates {
+    font-size: 1.2rem;
+  }
+}
+
+/* Scoring Categories Section */
+.scoring-categories-card h2 {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.categories-intro {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 2.5rem;
+}
+
+.category-detail {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-left: 4px solid var(--primary-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.category-detail:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.category-detail h3 {
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.category-points {
+  background: var(--primary-color);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  min-width: 80px;
+  text-align: center;
+}
+
+.category-what,
+.category-why,
+.category-how {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.category-what {
+  color: var(--text-primary);
+}
+
+.category-why {
+  color: var(--text-secondary);
+}
+
+.category-how {
+  color: var(--text-secondary);
+}
+
+/* Grading Tiers Section */
+.grading-tiers-card h2 {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.grading-intro {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+}
+
+.grading-table {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.grade-row {
+  display: grid;
+  grid-template-columns: 120px 80px 1fr;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 1.5rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border-left: 4px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.grade-row:hover {
+  background: #f0f7ff;
+  border-left-color: var(--primary-color);
+}
+
+.grade-percentage {
+  font-weight: 600;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.grade-description {
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Transparency Section */
+.methodology-notes-card h2 {
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.transparency-statement,
+.open-source-note {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.transparency-statement {
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.open-source-note {
+  background: #f0f7ff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.open-source-note a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.open-source-note a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .scoring-cards-container {
+    padding: 1.5rem 1rem;
+  }
+  
+  .category-detail {
+    padding: 1.5rem;
+  }
+  
+  .category-detail h3 {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .grade-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .grade-percentage {
+    font-size: 1.2rem;
+  }
+}
+.grading-tier-bar {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.1rem;
+}
+.scoring-note {
+  color: var(--text-secondary);
+  font-size: 1.09em;
+  margin-top: 0.7rem;
+}
+.scoring-cards-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+  justify-content: space-between;
+}
+.scoring-card {
+  flex: 1 1 230px;
+  min-width: 210px;
+  max-width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  border-left: 5px solid var(--primary-color);
+  background: linear-gradient(120deg, #f8fafc 85%, #e8f8fb 100%);
+  box-shadow: 0 2px 8px rgba(30,198,230,0.07);
+}
+.card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 600;
+  font-size: 1.09em;
+  margin-bottom: 0.4em;
+}
+.points {
+  background: var(--background);
+  color: var(--primary-color);
+  border-radius: 7px;
+  font-size: 1em;
+  padding: 0.1em 0.8em;
+  font-weight: 700;
+  margin-left: auto;
+  border: 1px solid var(--border-color);
+}
+.card-desc {
+  color: var(--text-secondary);
+  font-size: 1.01em;
+  margin-top: 0.4em;
+}
+.grading-tiers-card {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+.grading-tiers-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  align-items: center;
+  font-size: 1.13em;
+  margin-top: 0.7rem;
+  justify-content: center;
+}
+.methodology-notes-card {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+@media (max-width: 950px) {
+  .scoring-cards-row {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .scoring-card {
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+  }
+}

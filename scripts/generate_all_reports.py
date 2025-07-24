@@ -1,1 +1,0 @@
-cna_data['has_software_identification'] = main.format_precision(cna_json.get('has_software_identification', 0))

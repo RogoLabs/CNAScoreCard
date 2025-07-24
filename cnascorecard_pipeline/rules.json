@@ -1,0 +1,27 @@
+{
+  "foundationalCompleteness": {
+    "weight": 50,
+    "criteria": ["descriptions", "affected", "references"],
+    "binary": true
+  },
+  "rootCauseAnalysis": {
+    "weight": 15,
+    "criteria": ["validCWE"],
+    "binary": true
+  },
+  "severityAndImpactContext": {
+    "weight": 15,
+    "criteria": ["cvssV3or4", "validVector"],
+    "binary": true
+  },
+  "softwareIdentification": {
+    "weight": 10,
+    "criteria": ["validCPE"],
+    "binary": true
+  },
+  "patchinfo": {
+    "weight": 10,
+    "criteria": ["patchRef"],
+    "binary": true
+  }
+}

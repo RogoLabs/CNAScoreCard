@@ -1,0 +1,556 @@
+/* CNA Index Page - Page-Specific Styles */
+
+/* CNA Index Page Controls */
+.search-group {
+  flex: 1;
+  max-width: 400px;
+}
+
+.search-input {
+  /* Uses .form-input from shared.css as base */
+  width: 100%;
+}
+
+.controls-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+  gap: 1rem;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  gap: 0.5rem;
+}
+
+/* Table Info */
+.table-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+/* CNA Table Specific Styles */
+#cnaTable {
+  /* Uses .data-table from shared.css as base */
+  table-layout: fixed;
+  min-width: 1000px;
+}
+
+/* Sortable header styling */
+.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--transition-speed) ease;
+}
+
+.sortable:hover {
+  background-color: rgba(0, 102, 204, 0.05);
+}
+
+.sort-indicator {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  opacity: 0.5;
+}
+
+.sortable.sort-asc .sort-indicator::after {
+  content: '↑';
+  opacity: 1;
+}
+
+.sortable.sort-desc .sort-indicator::after {
+  content: '↓';
+  opacity: 1;
+}
+
+.sortable:not(.sort-asc):not(.sort-desc) .sort-indicator::after {
+  content: '↕';
+}
+
+#cnaTable td {
+  padding: 1rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+#cnaTable tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.03);
+}
+
+#cnaTable tbody tr:nth-child(even) {
+  background-color: var(--light-bg);
+}
+
+/* Column-specific styles */
+.col-rank {
+  width: 60px;
+  text-align: center;
+}
+
+.col-name {
+  width: 280px;
+}
+
+.col-type {
+  width: 160px;
+}
+
+.col-count {
+  width: 90px;
+  text-align: center;
+}
+
+.col-score {
+  width: 110px;
+  text-align: center;
+}
+
+/* Table layout for better column control */
+#cnaTable {
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* Detail columns - completely hidden by default */
+#cnaTable .col-detail,
+#cnaTable th.col-detail,
+#cnaTable td.col-detail {
+  display: none !important;
+  width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+}
+
+/* Medal-style ranking colors for tied rankings */
+.rank-gold {
+  color: #FFD700 !important; /* Gold */
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-shadow: 0 1px 2px rgba(255, 215, 0, 0.3);
+}
+
+.rank-silver {
+  color: #C0C0C0 !important; /* Silver */
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-shadow: 0 1px 2px rgba(192, 192, 192, 0.3);
+}
+
+.rank-bronze {
+  color: #CD7F32 !important; /* Bronze */
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-shadow: 0 1px 2px rgba(205, 127, 50, 0.3);
+}
+
+/* Control Button Styling - Match navbar active state */
+.control-button {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  font-family: var(--font-stack);
+  font-size: 0.9rem;
+}
+
+.control-button:hover {
+  background: var(--primary-hover);
+}
+
+/* CNA Cell Styling */
+.cna-name-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cna-name-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+
+.cna-name-link:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+.cna-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.org-name {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  line-height: 1.3;
+  font-weight: 400;
+}
+
+.percentile {
+  font-size: 0.75rem;
+  background-color: #f0f7ff;
+  color: var(--primary-color);
+  padding: 2px 8px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+/* Score display */
+.score-display {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.score-value {
+  font-weight: 500;
+}
+
+.score-bar {
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.score-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width var(--transition-speed) ease;
+}
+
+.score-great {
+  background-color: var(--success-color);
+}
+
+.score-good {
+  background-color: var(--accent-color);
+}
+
+.score-medium {
+  background-color: var(--warning-color);
+}
+
+.score-low {
+  background-color: var(--danger-color);
+}
+
+/* Trend display */
+.trend-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.trend-indicator {
+  font-size: 1rem;
+}
+
+/* Pagination */
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.pagination-button {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: all var(--transition-speed) ease;
+}
+
+.pagination-button:hover:not([disabled]) {
+  background-color: var(--light-bg);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-pages {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.page-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.9rem;
+  transition: all var(--transition-speed) ease;
+}
+
+.page-number:hover {
+  background-color: #f0f7ff;
+  color: var(--primary-color);
+}
+
+.page-number.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.page-ellipsis {
+  width: 20px;
+  text-align: center;
+  color: var(--text-light);
+  user-select: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .controls-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  #cnaTable {
+    font-size: 0.85rem;
+  }
+  
+  #cnaTable th,
+  #cnaTable td {
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .col-type,
+  .col-trend {
+    display: none;
+  }
+}
+
+/* CNA Type Badges - Stacked vertically to save horizontal space */
+.col-type {
+  width: 160px;
+  max-width: 160px;
+  padding: 0.5rem;
+}
+
+.cna-type-badge {
+  display: block;
+  padding: 4px 10px;
+  margin: 2px 0;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  transition: all 0.2s ease;
+  background-color: #f0f7ff;
+  color: var(--primary-color);
+  width: 100%;
+  box-sizing: border-box;
+  line-height: 1.2;
+}
+
+/* Type-specific styling */
+.cna-type-vendor {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.cna-type-opensource {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.cna-type-cert {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.cna-type-bounty {
+  background-color: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.cna-type-consortium {
+  background-color: #e1f5fe;
+  color: #0277bd;
+}
+
+.cna-type-researcher {
+  background-color: #e0f2f1;
+  color: #00695c;
+}
+
+/* Show/hide detail columns */
+.show-details .col-detail {
+  display: table-cell;
+}
+
+/* Hide CNA Type column when showing details to save space */
+.show-details .col-type {
+  display: none;
+}
+
+/* Optimize table layout for Show Details view */
+.show-details #cnaTable {
+  font-size: 0.85rem;
+}
+
+.show-details #cnaTable th,
+.show-details #cnaTable td {
+  padding: 0.75rem 0.5rem;
+}
+
+/* Clean table borders - match Record Completeness styling */
+#cnaTable {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+#cnaTable th {
+  border-bottom: 2px solid var(--border-color);
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+#cnaTable td {
+  border-bottom: 1px solid var(--border-color);
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+/* Show detail columns when toggled - clean borders */
+#cnaTable.show-details .col-detail,
+#cnaTable.show-details th.col-detail,
+#cnaTable.show-details td.col-detail {
+  display: table-cell !important;
+  width: auto !important;
+  min-width: 75px !important;
+  padding: 0.75rem 0.5rem !important;
+  margin: 0 !important;
+  text-align: center;
+  font-size: 0.85rem;
+  visibility: visible !important;
+  overflow: visible !important;
+}
+
+/* Adjust CNA name column when details are shown */
+.show-details .col-name {
+  min-width: 180px;
+}
+
+/* Make other columns more compact in details view */
+.show-details .col-rank {
+  width: 45px;
+}
+
+.show-details .col-count {
+  width: 70px;
+}
+
+.show-details .col-score {
+  width: 80px;
+}
+
+/* Truncated text with tooltip */
+.truncated {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  cursor: help;
+}
+
+.truncated:hover {
+  text-decoration-style: solid;
+}
+
+/* Inactive CNA styling */
+.inactive-cna {
+  opacity: 0.6;
+  background-color: #f8f9fa;
+}
+
+.inactive-cna td {
+  color: #6c757d;
+}
+
+.inactive-cna .cna-name-link {
+  color: #6c757d;
+}
+
+.inactive-cna .cna-name-link:hover {
+  color: #495057;
+}
+
+.truncated-text:hover {
+  border-bottom-color: var(--primary-color);
+}
+
+/* Ensure organization names don't break table layout */
+.org-name {
+  max-width: 200px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Responsive adjustments for Show Details */
+@media (max-width: 1200px) {
+  .show-details #cnaTable {
+    font-size: 0.8rem;
+  }
+  
+  .show-details #cnaTable th,
+  .show-details #cnaTable td {
+    padding: 0.6rem 0.4rem;
+  }
+  
+  .show-details .col-detail {
+    min-width: 80px;
+  }
+  
+  .show-details .col-name {
+    min-width: 160px;
+  }
+  
+  /* Adjust organization name max width on smaller screens */
+  .show-details .org-name {
+    max-width: 150px;
+  }
+}

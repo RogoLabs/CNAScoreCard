@@ -1,0 +1,143 @@
+/*
+  RogoLabs CNA Scorecard Theme - Single Source of Truth for Design Tokens
+  This file defines all color variables, fonts, spacing, and design tokens
+*/
+:root {
+  /* Primary Brand Colors */
+  --primary-color: #0066cc;     /* Main CNA Scorecard Blue */
+  --primary-hover: #0055aa;     /* Darker blue for hover states */
+  --accent-color: #17a2b8;      /* Teal accent color */
+  
+  /* Grade Colors */
+  --grade-perfect: #ffd700;     /* Gold for "Perfect" */
+  --grade-great: #27ae60;       /* Green for "Great" */
+  --grade-good: #f4d35e;        /* Yellow for "Good" */
+  --grade-needs-work: #e67e22;  /* Orange for "Needs Work" */
+  --grade-missing: #e74c3c;     /* Red for "Missing Data" */
+  
+  /* Semantic Colors */
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --info-color: #1ec6e6;
+  
+  /* Background & Surface Colors */
+  --background: #f8fafc;
+  --card-bg: #fff;
+  --light-bg: #f8f9fa;
+  
+  /* Text Colors */
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-light: #666666;
+  --text-color: #333333;
+  --muted-color: #b0b0b0;
+  
+  /* Border & Shadow */
+  --border-color: #e0e0e0;
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  
+  /* Chart Colors - Consistent across all visualizations */
+  --chart-color-1: #0066cc;     /* Primary blue */
+  --chart-color-2: #27ae60;     /* Green */
+  --chart-color-3: #f4d35e;     /* Yellow */
+  --chart-color-4: #e67e22;     /* Orange */
+  --chart-color-5: #e74c3c;     /* Red */
+  --chart-color-6: #17a2b8;     /* Teal */
+  --chart-color-7: #6f42c1;     /* Purple */
+  --chart-color-8: #fd7e14;     /* Orange variant */
+  
+  /* Typography */
+  --font-stack: 'Inter', 'Segoe UI', Arial, sans-serif;
+  
+  /* Spacing & Layout */
+  --border-radius: 8px;
+  --border-radius-lg: 12px;
+  --transition-speed: 0.3s;
+  
+  /* CNA Type Badge Colors */
+  --type-vendor-bg: #e3f2fd;
+  --type-vendor-text: #1565c0;
+  --type-opensource-bg: #e8f5e9;
+  --type-opensource-text: #2e7d32;
+  --type-cert-bg: #fff3e0;
+  --type-cert-text: #e65100;
+  --type-bounty-bg: #f3e5f5;
+  --type-bounty-text: #6a1b9a;
+  --type-consortium-bg: #e1f5fe;
+  --type-consortium-text: #0277bd;
+  --type-researcher-bg: #e0f2f1;
+  --type-researcher-text: #00695c;
+  --type-government-bg: #fce4ec;
+  --type-government-text: #c2185b;
+  --type-unknown-bg: #f0f7ff;
+  --type-unknown-text: var(--primary-color);
+}
+
+body {
+  font-family: var(--font-stack);
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-stack);
+  color: var(--text-primary);
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+}
+
+.contextual-heading-card.card {
+  display: block;
+  background: var(--card-bg);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(30,198,230,0.10);
+  padding: 2.2rem 2.4rem 1.7rem 2.4rem;
+  margin: 2.5rem auto 2.2rem auto;
+  border: 1px solid var(--border-color);
+  max-width: 900px;
+  text-align: center;
+}
+
+.contextual-heading-title {
+  font-size: 2.1em;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+.contextual-heading-subtitle {
+  font-size: 1.23em;
+  color: var(--text-secondary);
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.badge-grade {
+  display: inline-block;
+  border-radius: 12px;
+  padding: 0.25em 0.8em;
+  font-weight: 700;
+  font-size: 0.95em;
+  color: #fff;
+}
+
+.badge-perfect { background: var(--grade-perfect); color: #333; }
+.badge-great { background: var(--grade-great); }
+.badge-good { background: var(--grade-good); color: #333; }
+.badge-needs-work { background: var(--grade-needs-work); }
+.badge-missing { background: var(--grade-missing); }
