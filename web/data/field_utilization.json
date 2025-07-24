@@ -2,7 +2,7 @@
   {
     "field": "affected.versions",
     "percent": 100.0,
-    "unique_cnas": 303,
+    "unique_cnas": 302,
     "importance": "Medium",
     "description": "Version information",
     "cna_scorecard_category": null
@@ -10,7 +10,7 @@
   {
     "field": "containers.cna.affected",
     "percent": 100.0,
-    "unique_cnas": 303,
+    "unique_cnas": 302,
     "importance": "High",
     "description": "Affected products and versions",
     "cna_scorecard_category": "foundationalCompleteness"
@@ -18,7 +18,7 @@
   {
     "field": "containers.cna.descriptions",
     "percent": 100.0,
-    "unique_cnas": 303,
+    "unique_cnas": 302,
     "importance": "High",
     "description": "Vulnerability descriptions",
     "cna_scorecard_category": "foundationalCompleteness"
@@ -26,7 +26,7 @@
   {
     "field": "containers.cna.references",
     "percent": 100.0,
-    "unique_cnas": 303,
+    "unique_cnas": 302,
     "importance": "High",
     "description": "Patch Info URLs and documentation",
     "cna_scorecard_category": "foundationalCompleteness"
@@ -34,7 +34,7 @@
   {
     "field": "descriptions.english",
     "percent": 100.0,
-    "unique_cnas": 303,
+    "unique_cnas": 302,
     "importance": "Medium",
     "description": "At least one English description",
     "cna_scorecard_category": null
@@ -42,7 +42,7 @@
   {
     "field": "containers.adp",
     "percent": 99.7,
-    "unique_cnas": 302,
+    "unique_cnas": 301,
     "importance": "Low",
     "description": "Authorized Data Publisher container",
     "cna_scorecard_category": null
@@ -50,7 +50,7 @@
   {
     "field": "affected.product",
     "percent": 99.3,
-    "unique_cnas": 301,
+    "unique_cnas": 300,
     "importance": "Medium",
     "description": "Product information in affected products",
     "cna_scorecard_category": null
@@ -58,7 +58,7 @@
   {
     "field": "affected.vendor",
     "percent": 99.3,
-    "unique_cnas": 301,
+    "unique_cnas": 300,
     "importance": "Medium",
     "description": "Vendor information in affected products",
     "cna_scorecard_category": null
@@ -66,46 +66,46 @@
   {
     "field": "containers.cna.problemTypes",
     "percent": 96.4,
-    "unique_cnas": 292,
+    "unique_cnas": 291,
     "importance": "High",
     "description": "Problem type information (CWE, etc.)",
     "cna_scorecard_category": null
   },
   {
     "field": "affected.defaultStatus",
-    "percent": 94.4,
+    "percent": 94.7,
     "unique_cnas": 286,
     "importance": "Medium",
-    "description": "Default vulnerability status",
+    "description": "Default status for affected products",
     "cna_scorecard_category": null
   },
   {
-    "field": "problemTypes.cwe",
-    "percent": 90.8,
-    "unique_cnas": 275,
-    "importance": "High",
-    "description": "Common Weakness Enumeration identifiers",
-    "cna_scorecard_category": "rootCauseAnalysis"
-  },
-  {
     "field": "containers.cna.metrics",
-    "percent": 90.1,
+    "percent": 90.4,
     "unique_cnas": 273,
     "importance": "High",
     "description": "Impact metrics (CVSS scores)",
     "cna_scorecard_category": null
   },
   {
+    "field": "problemTypes.cwe",
+    "percent": 90.4,
+    "unique_cnas": 273,
+    "importance": "High",
+    "description": "Common Weakness Enumeration identifiers",
+    "cna_scorecard_category": "rootCauseAnalysis"
+  },
+  {
     "field": "containers.cna.source",
     "percent": 86.8,
-    "unique_cnas": 263,
+    "unique_cnas": 262,
     "importance": "Medium",
     "description": "Source information",
     "cna_scorecard_category": null
   },
   {
     "field": "metrics.other",
-    "percent": 86.5,
+    "percent": 86.8,
     "unique_cnas": 262,
     "importance": "Medium",
     "description": "Other metric formats",
@@ -113,7 +113,7 @@
   },
   {
     "field": "metrics.scenarios",
-    "percent": 83.2,
+    "percent": 83.4,
     "unique_cnas": 252,
     "importance": "Medium",
     "description": "Metric scenarios",
@@ -121,7 +121,7 @@
   },
   {
     "field": "containers.cna.title",
-    "percent": 79.9,
+    "percent": 80.1,
     "unique_cnas": 242,
     "importance": "Medium",
     "description": "Brief title or headline",
@@ -129,23 +129,23 @@
   },
   {
     "field": "containers.cna.credits",
-    "percent": 61.7,
-    "unique_cnas": 187,
+    "percent": 61.6,
+    "unique_cnas": 186,
     "importance": "Medium",
-    "description": "Credits and acknowledgments",
+    "description": "Credit information",
     "cna_scorecard_category": null
   },
   {
     "field": "metrics.cvssV3_1",
-    "percent": 61.1,
-    "unique_cnas": 185,
+    "percent": 60.9,
+    "unique_cnas": 184,
     "importance": "High",
     "description": "CVSS v3.1 metrics",
     "cna_scorecard_category": "severityAndImpactContext"
   },
   {
     "field": "containers.cna.impacts",
-    "percent": 55.4,
+    "percent": 55.6,
     "unique_cnas": 168,
     "importance": "Medium",
     "description": "Impact descriptions",
@@ -153,7 +153,7 @@
   },
   {
     "field": "metrics.cvssV4_0",
-    "percent": 48.5,
+    "percent": 48.7,
     "unique_cnas": 147,
     "importance": "High",
     "description": "CVSS v4.0 metrics",
@@ -161,48 +161,32 @@
   },
   {
     "field": "containers.cna.datePublic",
-    "percent": 43.6,
+    "percent": 43.7,
     "unique_cnas": 132,
     "importance": "Low",
     "description": "Date the vulnerability was disclosed publicly",
     "cna_scorecard_category": null
   },
   {
-    "field": "affected.platforms",
-    "percent": 39.6,
-    "unique_cnas": 120,
-    "importance": "Medium",
-    "description": "Affected platforms",
-    "cna_scorecard_category": null
-  },
-  {
     "field": "references.advisory",
-    "percent": 31.7,
-    "unique_cnas": 96,
+    "percent": 31.5,
+    "unique_cnas": 95,
     "importance": "Medium",
     "description": "Advisory references",
     "cna_scorecard_category": null
   },
   {
     "field": "containers.cna.solutions",
-    "percent": 28.4,
+    "percent": 28.5,
     "unique_cnas": 86,
     "importance": "Medium",
     "description": "Solutions and remediations",
     "cna_scorecard_category": null
   },
   {
-    "field": "references.vendor",
-    "percent": 27.7,
-    "unique_cnas": 84,
-    "importance": "Medium",
-    "description": "Vendor references",
-    "cna_scorecard_category": null
-  },
-  {
     "field": "affected.modules",
-    "percent": 19.5,
-    "unique_cnas": 59,
+    "percent": 19.2,
+    "unique_cnas": 58,
     "importance": "Medium",
     "description": "Affected modules or components",
     "cna_scorecard_category": null
@@ -220,7 +204,7 @@
     "percent": 12.9,
     "unique_cnas": 39,
     "importance": "Medium",
-    "description": "Workarounds and mitigations",
+    "description": "Workaround information",
     "cna_scorecard_category": null
   },
   {
@@ -233,42 +217,26 @@
   },
   {
     "field": "references.patch",
-    "percent": 9.2,
+    "percent": 9.3,
     "unique_cnas": 28,
     "importance": "High",
     "description": "Patch references",
     "cna_scorecard_category": "patchinfo"
   },
   {
-    "field": "references.named",
-    "percent": 8.9,
-    "unique_cnas": 27,
-    "importance": "Medium",
-    "description": "Named references",
-    "cna_scorecard_category": null
-  },
-  {
     "field": "affected.programFiles",
     "percent": 7.3,
     "unique_cnas": 22,
     "importance": "Medium",
-    "description": "Affected source code files",
-    "cna_scorecard_category": null
-  },
-  {
-    "field": "references.technical",
-    "percent": 7.3,
-    "unique_cnas": 22,
-    "importance": "Medium",
-    "description": "Technical references",
+    "description": "Affected program files",
     "cna_scorecard_category": null
   },
   {
     "field": "containers.cna.configurations",
-    "percent": 6.9,
+    "percent": 7.0,
     "unique_cnas": 21,
     "importance": "Medium",
-    "description": "Required configurations for exploitation",
+    "description": "Configuration requirements",
     "cna_scorecard_category": null
   },
   {
@@ -276,7 +244,7 @@
     "percent": 5.6,
     "unique_cnas": 17,
     "importance": "Medium",
-    "description": "Timeline of significant events",
+    "description": "Vulnerability timeline",
     "cna_scorecard_category": null
   },
   {
@@ -284,32 +252,8 @@
     "percent": 4.0,
     "unique_cnas": 12,
     "importance": "Medium",
-    "description": "Information about known exploits",
+    "description": "Exploit information",
     "cna_scorecard_category": null
-  },
-  {
-    "field": "containers.cna.cpeApplicability",
-    "percent": 3.3,
-    "unique_cnas": 10,
-    "importance": "Medium",
-    "description": "CPE applicability information",
-    "cna_scorecard_category": null
-  },
-  {
-    "field": "references.exploit",
-    "percent": 3.3,
-    "unique_cnas": 10,
-    "importance": "Medium",
-    "description": "Exploit references",
-    "cna_scorecard_category": null
-  },
-  {
-    "field": "affected.cpes",
-    "percent": 3.0,
-    "unique_cnas": 9,
-    "importance": "High",
-    "description": "Common Platform Enumeration identifiers",
-    "cna_scorecard_category": "softwareIdentification"
   },
   {
     "field": "metrics.cvssV3_0",
@@ -318,6 +262,14 @@
     "importance": "High",
     "description": "CVSS v3.0 metrics",
     "cna_scorecard_category": "severityAndImpactContext"
+  },
+  {
+    "field": "affected.cpes",
+    "percent": 2.6,
+    "unique_cnas": 8,
+    "importance": "High",
+    "description": "Common Platform Enumeration identifiers",
+    "cna_scorecard_category": "softwareIdentification"
   },
   {
     "field": "affected.programRoutines",
@@ -352,27 +304,11 @@
     "cna_scorecard_category": null
   },
   {
-    "field": "containers.cna.taxonomyMappings",
-    "percent": 0.0,
-    "unique_cnas": 0,
-    "importance": "Low",
-    "description": "Mappings to security taxonomies",
-    "cna_scorecard_category": null
-  },
-  {
     "field": "descriptions.supporting_media",
     "percent": 0.0,
     "unique_cnas": 0,
     "importance": "Low",
-    "description": "Supporting media (diagrams, etc.)",
-    "cna_scorecard_category": null
-  },
-  {
-    "field": "problemTypes.references",
-    "percent": 0.0,
-    "unique_cnas": 0,
-    "importance": "Low",
-    "description": "Problem type references",
+    "description": "Supporting media in descriptions",
     "cna_scorecard_category": null
   },
   {
@@ -381,6 +317,38 @@
     "unique_cnas": 0,
     "importance": "Medium",
     "description": "Problem type classification",
+    "cna_scorecard_category": null
+  },
+  {
+    "field": "references.article",
+    "percent": 0.0,
+    "unique_cnas": 0,
+    "importance": "Medium",
+    "description": "Article references",
+    "cna_scorecard_category": null
+  },
+  {
+    "field": "references.mailing-list",
+    "percent": 0.0,
+    "unique_cnas": 0,
+    "importance": "Medium",
+    "description": "Mailing list references",
+    "cna_scorecard_category": null
+  },
+  {
+    "field": "references.report",
+    "percent": 0.0,
+    "unique_cnas": 0,
+    "importance": "Medium",
+    "description": "Report references",
+    "cna_scorecard_category": null
+  },
+  {
+    "field": "references.web",
+    "percent": 0.0,
+    "unique_cnas": 0,
+    "importance": "Medium",
+    "description": "Web references",
     "cna_scorecard_category": null
   }
 ]
