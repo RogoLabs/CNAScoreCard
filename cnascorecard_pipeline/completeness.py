@@ -155,10 +155,28 @@ def _custom_check(data: Any, check_type: str) -> bool:
     # ProblemTypes
     if check_type == "has_cwe":
         if isinstance(data, list):
-            return any(
-                any("cweId" in d for d in pt.get("descriptions", []))
-                for pt in data if isinstance(pt, dict)
-            )
+            import re
+            cwe_pattern = re.compile(r'CWE-\d+', re.IGNORECASE)
+            
+            for pt in data:
+                if not isinstance(pt, dict):
+                    continue
+                
+                descriptions = pt.get("descriptions", [])
+                for desc in descriptions:
+                    if not isinstance(desc, dict):
+                        continue
+                    
+                    # Check for explicit cweId field (existing logic)
+                    if "cweId" in desc:
+                        return True
+                    
+                    # Check for CWE ID embedded in description text (new logic)
+                    desc_text = desc.get("description", "")
+                    if desc_text and cwe_pattern.search(desc_text):
+                        return True
+            
+            return False
         return False
     if check_type == "has_type":
         if isinstance(data, list):
