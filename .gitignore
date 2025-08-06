@@ -234,6 +234,5 @@ Thumbs.db
 # CVE data (clone fresh each time)
 cve_data/
 
-# Keep generated web files
-!web/data/
-!web/cna/
+# Note: web/data/ is ignored above to avoid macOS case sensitivity issues
+# GitHub Actions can still write to ignored directories
