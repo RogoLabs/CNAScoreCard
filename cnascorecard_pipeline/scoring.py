@@ -156,6 +156,9 @@ def _find_valid_cwe(problem_types: List[Dict[str, Any]]) -> bool:
     if not problem_types:
         return False
         
+    import re
+    cwe_pattern = re.compile(r'CWE-\d+', re.IGNORECASE)
+        
     for pt in problem_types:
         if not isinstance(pt, dict):
             continue
@@ -164,9 +167,23 @@ def _find_valid_cwe(problem_types: List[Dict[str, Any]]) -> bool:
             if not isinstance(cwe, dict):
                 continue
                 
-            # Prefer cweId, fallback to value, then description
-            cwe_raw = cwe.get('cweId') or cwe.get('value') or cwe.get('description')
+            # Check for explicit cweId field first (existing logic)
+            if "cweId" in cwe:
+                cwe_raw = cwe.get('cweId')
+                if cwe_raw and _is_valid_cwe_id(str(cwe_raw)):
+                    return True
             
+            # Check for CWE ID embedded in description text (new logic)
+            desc_text = cwe.get('description', '')
+            if desc_text:
+                cwe_match = cwe_pattern.search(desc_text)
+                if cwe_match:
+                    extracted_cwe = cwe_match.group(0)
+                    if _is_valid_cwe_id(extracted_cwe):
+                        return True
+            
+            # Fallback to value field
+            cwe_raw = cwe.get('value')
             if cwe_raw and _is_valid_cwe_id(str(cwe_raw)):
                 return True
                 
