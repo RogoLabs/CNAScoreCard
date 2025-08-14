@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNA Scorecard: Performance Trends</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="icon" type="image/png" href="assets/logo.svg">
+  <link rel="stylesheet" href="assets/theme.css">
+  <link rel="stylesheet" href="shared/shared.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .page-header {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .page-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin: 0 auto 1rem;
+      line-height: 1.6;
+      max-width: 800px;
+    }
+
+    .section {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--primary-color);
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .chart-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .chart-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .chart-container {
+      position: relative;
+      height: 300px;
+      width: 100%;
+    }
+
+    .loading-spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 300px;
+      color: var(--text-secondary);
+    }
+
+    .loading-spinner::after {
+      content: '';
+      width: 40px;
+      height: 40px;
+      border: 4px solid var(--border-color);
+      border-top: 4px solid var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-left: 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .improvers-section {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .improvers-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .improvers-table th,
+    .improvers-table td {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .improvers-table th {
+      background-color: var(--background-secondary);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .improvers-table tr:hover {
+      background-color: var(--background-secondary);
+    }
+
+    .cna-name {
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .improvement-positive {
+      color: var(--success-color);
+      font-weight: 600;
+    }
+
+    .improvement-negative {
+      color: var(--error-color);
+      font-weight: 600;
+    }
+
+    .improvement-neutral {
+      color: var(--text-secondary);
+    }
+
+    .category-improvement {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .no-data-message {
+      text-align: center;
+      color: var(--text-secondary);
+      font-style: italic;
+      padding: 2rem;
+    }
+
+    .data-info {
+      background: var(--background-secondary);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .charts-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .chart-card {
+        padding: 1rem;
+      }
+
+      .improvers-table {
+        font-size: 0.9rem;
+      }
+
+      .improvers-table th,
+      .improvers-table td {
+        padding: 0.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <img src="assets/logo.svg" alt="CNA Scorecard Logo" class="navbar-logo">
+    <div class="navbar-links">
+      <a href="index.html">Home</a>
+      <a href="cna/index.html">CNAs</a>
+      <a href="completeness/index.html">Record Completeness</a>
+      <a href="trends.html" class="active">Performance Trends</a>
+      <a href="scoring.html">Methodology</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- Page Header -->
+    <section class="page-header">
+      <h1 class="page-title">CNA Scorecard: Performance Trends</h1>
+      <p class="page-subtitle">
+        Track vulnerability data quality trends over time with rolling 7-day averages.
+        Identify patterns in data completeness and discover which CNAs are leading improvements
+        in vulnerability reporting standards.
+      </p>
+      <div class="data-info" id="dataInfo">
+        Loading analysis period information...
+      </div>
+    </section>
+
+    <!-- Trends Over Time Section -->
+    <section class="section">
+      <h2 class="section-title">Data Quality Trends Over Time</h2>
+      <div class="charts-grid" id="chartsGrid">
+        <div class="chart-card">
+          <h3 class="chart-title">Root Cause Analysis (CWE)</h3>
+          <div class="chart-container">
+            <div class="loading-spinner">Loading chart data</div>
+            <canvas id="cweChart" style="display: none;"></canvas>
+          </div>
+        </div>
+        
+        <div class="chart-card">
+          <h3 class="chart-title">Severity & Impact (CVSS)</h3>
+          <div class="chart-container">
+            <div class="loading-spinner">Loading chart data</div>
+            <canvas id="cvssChart" style="display: none;"></canvas>
+          </div>
+        </div>
+        
+        <div class="chart-card">
+          <h3 class="chart-title">Software Identification (CPE)</h3>
+          <div class="chart-container">
+            <div class="loading-spinner">Loading chart data</div>
+            <canvas id="cpeChart" style="display: none;"></canvas>
+          </div>
+        </div>
+        
+        <div class="chart-card">
+          <h3 class="chart-title">Patch Information</h3>
+          <div class="chart-container">
+            <div class="loading-spinner">Loading chart data</div>
+            <canvas id="patchChart" style="display: none;"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top Improvers Section -->
+    <section class="improvers-section">
+      <h2 class="section-title">Top Improving CNAs</h2>
+      <p class="page-subtitle">
+        CNAs showing the most significant improvement in data quality over the analysis period,
+        comparing their most recent performance with their earliest data points.
+      </p>
+      
+      <div id="improvorsTableContainer">
+        <div class="loading-spinner">Loading improvement data</div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    // Performance Trends Dashboard JavaScript
+    
+    let trendsData = null;
+    let improvorsData = null;
+    let charts = {};
+
+    // Initialize the dashboard
+    async function initializeDashboard() {
+      try {
+        await Promise.all([
+          loadTrendsData(),
+          loadImprovorsData()
+        ]);
+        
+        if (trendsData) {
+          updateDataInfo();
+          createTrendCharts();
+        }
+        
+        if (improvorsData) {
+          renderImprovorsTable();
+        }
+        
+      } catch (error) {
+        console.error('Error initializing Performance Trends dashboard:', error);
+        showErrorMessage();
+      }
+    }
+
+    // Load trends data from API
+    async function loadTrendsData() {
+      try {
+        const response = await fetch('./data/performance_trends.json');
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        trendsData = await response.json();
+        console.log('Loaded trends data:', trendsData);
+      } catch (error) {
+        console.error('Error loading trends data:', error);
+        trendsData = null;
+      }
+    }
+
+    // Load top improvers data from API  
+    async function loadImprovorsData() {
+      try {
+        const response = await fetch('./data/top_improvers.json');
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        improvorsData = await response.json();
+        console.log('Loaded improvers data:', improvorsData);
+      } catch (error) {
+        console.error('Error loading improvers data:', error);
+        improvorsData = null;
+      }
+    }
+
+    // Update data info section
+    function updateDataInfo() {
+      const dataInfoElement = document.getElementById('dataInfo');
+      if (trendsData && trendsData.analysis_period) {
+        const { start_date, end_date, total_days } = trendsData.analysis_period;
+        dataInfoElement.innerHTML = `
+          Analysis Period: ${formatDate(start_date)} to ${formatDate(end_date)} (${total_days} days)
+          <br>Rolling 7-day averages updated daily
+        `;
+      } else {
+        dataInfoElement.innerHTML = 'Analysis period information unavailable';
+      }
+    }
+
+    // Create all trend charts
+    function createTrendCharts() {
+      if (!trendsData || !trendsData.rolling_trends) {
+        showChartsError();
+        return;
+      }
+
+      const categories = [
+        { key: 'root_cause_analysis', chartId: 'cweChart', title: 'Root Cause Analysis', color: '#FF6384' },
+        { key: 'severity_and_impact', chartId: 'cvssChart', title: 'Severity & Impact', color: '#36A2EB' },
+        { key: 'software_identification', chartId: 'cpeChart', title: 'Software Identification', color: '#FFCE56' },
+        { key: 'patch_information', chartId: 'patchChart', title: 'Patch Information', color: '#4BC0C0' }
+      ];
+
+      categories.forEach(category => {
+        createTrendChart(category);
+      });
+    }
+
+    // Create individual trend chart
+    function createTrendChart(category) {
+      const canvas = document.getElementById(category.chartId);
+      const spinner = canvas.parentElement.querySelector('.loading-spinner');
+      
+      try {
+        // Prepare data
+        const chartData = prepareTrendData(category.key);
+        
+        if (!chartData || chartData.labels.length === 0) {
+          showChartNoData(canvas, spinner);
+          return;
+        }
+
+        // Hide spinner and show canvas
+        spinner.style.display = 'none';
+        canvas.style.display = 'block';
+
+        // Create chart
+        const ctx = canvas.getContext('2d');
+        charts[category.chartId] = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: chartData.labels,
+            datasets: [{
+              label: `${category.title} (%)`,
+              data: chartData.data,
+              borderColor: category.color,
+              backgroundColor: category.color + '20',
+              borderWidth: 2,
+              fill: true,
+              tension: 0.1,
+              pointRadius: 3,
+              pointHoverRadius: 5
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false
+              },
+              tooltip: {
+                mode: 'index',
+                intersect: false,
+                callbacks: {
+                  title: function(context) {
+                    return formatDate(context[0].label);
+                  },
+                  label: function(context) {
+                    return `${context.parsed.y?.toFixed(1) || 'N/A'}%`;
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                display: true,
+                title: {
+                  display: true,
+                  text: 'Date'
+                },
+                ticks: {
+                  maxTicksLimit: 8,
+                  callback: function(value, index, values) {
+                    const date = this.getLabelForValue(value);
+                    return formatDateShort(date);
+                  }
+                }
+              },
+              y: {
+                display: true,
+                title: {
+                  display: true,
+                  text: 'Percentage (%)'
+                },
+                min: 0,
+                max: 100,
+                ticks: {
+                  callback: function(value) {
+                    return value + '%';
+                  }
+                }
+              }
+            },
+            interaction: {
+              mode: 'index',
+              intersect: false
+            }
+          }
+        });
+
+      } catch (error) {
+        console.error(`Error creating ${category.title} chart:`, error);
+        showChartError(canvas, spinner);
+      }
+    }
+
+    // Prepare trend data for chart
+    function prepareTrendData(categoryKey) {
+      if (!trendsData || !trendsData.rolling_trends) {
+        return null;
+      }
+
+      const labels = [];
+      const data = [];
+
+      // Sort dates and extract data
+      const sortedDates = Object.keys(trendsData.rolling_trends).sort();
+      
+      for (const date of sortedDates) {
+        const dayData = trendsData.rolling_trends[date];
+        if (dayData && dayData[categoryKey] !== null && dayData[categoryKey] !== undefined) {
+          labels.push(date);
+          data.push(dayData[categoryKey]);
+        }
+      }
+
+      return { labels, data };
+    }
+
+    // Render top improvers table
+    function renderImprovorsTable() {
+      const container = document.getElementById('improvorsTableContainer');
+      
+      if (!improvorsData || !improvorsData.top_improvers || improvorsData.top_improvers.length === 0) {
+        container.innerHTML = '<div class="no-data-message">No improvement data available</div>';
+        return;
+      }
+
+      const tableHTML = `
+        <table class="improvers-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>CNA</th>
+              <th>Total Improvement</th>
+              <th>CVEs Analyzed</th>
+              <th>Best Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${improvorsData.top_improvers.map((cna, index) => {
+              const bestCategory = getBestImprovementCategory(cna.category_improvements);
+              return `
+                <tr>
+                  <td><strong>#${index + 1}</strong></td>
+                  <td><span class="cna-name">${cna.cna_name}</span></td>
+                  <td>${formatImprovement(cna.total_improvement)}</td>
+                  <td>${cna.total_cves_analyzed}</td>
+                  <td class="category-improvement">${bestCategory}</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+
+      container.innerHTML = tableHTML;
+    }
+
+    // Get best improvement category for a CNA
+    function getBestImprovementCategory(categoryImprovements) {
+      let bestCategory = 'None';
+      let bestImprovement = -Infinity;
+
+      const categoryNames = {
+        'root_cause_analysis': 'Root Cause Analysis',
+        'severity_and_impact': 'Severity & Impact', 
+        'software_identification': 'Software Identification',
+        'patch_information': 'Patch Information'
+      };
+
+      for (const [key, data] of Object.entries(categoryImprovements)) {
+        if (data.improvement > bestImprovement) {
+          bestImprovement = data.improvement;
+          bestCategory = `${categoryNames[key]} (+${data.improvement.toFixed(1)}%)`;
+        }
+      }
+
+      return bestCategory;
+    }
+
+    // Format improvement value
+    function formatImprovement(improvement) {
+      const formatted = improvement.toFixed(1);
+      if (improvement > 0) {
+        return `<span class="improvement-positive">+${formatted}%</span>`;
+      } else if (improvement < 0) {
+        return `<span class="improvement-negative">${formatted}%</span>`;
+      } else {
+        return `<span class="improvement-neutral">${formatted}%</span>`;
+      }
+    }
+
+    // Utility functions
+    function formatDate(dateString) {
+      try {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'short', 
+          day: 'numeric' 
+        });
+      } catch {
+        return dateString;
+      }
+    }
+
+    function formatDateShort(dateString) {
+      try {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { 
+          month: 'short', 
+          day: 'numeric' 
+        });
+      } catch {
+        return dateString;
+      }
+    }
+
+    function showChartsError() {
+      const chartCards = document.querySelectorAll('.chart-card');
+      chartCards.forEach(card => {
+        const spinner = card.querySelector('.loading-spinner');
+        const canvas = card.querySelector('canvas');
+        
+        spinner.style.display = 'none';
+        canvas.style.display = 'none';
+        
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'no-data-message';
+        errorDiv.textContent = 'Error loading chart data';
+        card.querySelector('.chart-container').appendChild(errorDiv);
+      });
+    }
+
+    function showChartError(canvas, spinner) {
+      spinner.style.display = 'none';
+      canvas.style.display = 'none';
+      
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'no-data-message';
+      errorDiv.textContent = 'Error loading chart data';
+      canvas.parentElement.appendChild(errorDiv);
+    }
+
+    function showChartNoData(canvas, spinner) {
+      spinner.style.display = 'none';
+      canvas.style.display = 'none';
+      
+      const noDataDiv = document.createElement('div');
+      noDataDiv.className = 'no-data-message';
+      noDataDiv.textContent = 'No data available for this period';
+      canvas.parentElement.appendChild(noDataDiv);
+    }
+
+    function showErrorMessage() {
+      document.getElementById('chartsGrid').innerHTML = 
+        '<div class="no-data-message">Error loading dashboard data. Please try refreshing the page.</div>';
+      document.getElementById('improvorsTableContainer').innerHTML = 
+        '<div class="no-data-message">Error loading improvement data.</div>';
+    }
+
+    // Initialize dashboard when DOM is ready
+    document.addEventListener('DOMContentLoaded', initializeDashboard);
+  </script>
+</body>
+</html>

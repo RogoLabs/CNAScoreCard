@@ -15,6 +15,7 @@ from ingest import load_cve_records, load_cna_list, get_date_range_for_period, v
 from scoring import score_multiple_cves
 from completeness import compute_field_utilization, compute_individual_cna_field_utilization
 from aggregation import aggregate_cna_scores
+from trends import calculate_daily_trends, calculate_top_improvers
 
 from sync_cna_list import sync_cna_list
 
@@ -96,7 +97,10 @@ class CNAScoreCardPipeline:
             # Step 6: Generate completeness analysis
             self._generate_completeness_analysis()
             
-            # Step 7: Generate output files
+            # Step 7: Generate performance trends analysis
+            self._generate_trends_analysis()
+            
+            # Step 8: Generate output files
             output_summary = self._generate_output_files(output_dir)
             
             # Calculate execution time
@@ -256,6 +260,27 @@ class CNAScoreCardPipeline:
         
         self.logger.info(f"Generated completeness analysis for {len(field_list)} fields")
         self.logger.info(f"Generated individual analysis for {len(self.individual_cna_utilization)} CNAs")
+    
+    def _generate_trends_analysis(self) -> None:
+        """Generate performance trends analysis for the dashboard."""
+        self.logger.info("Generating performance trends analysis...")
+        
+        # Calculate daily trends with 7-day rolling averages
+        self.trends_data = calculate_daily_trends(
+            self.cve_records,
+            Path(self.config.get('web_output_dir', '../web/data')),
+            analysis_days=180  # 6 months
+        )
+        
+        # Calculate top improving CNAs
+        self.top_improvers = calculate_top_improvers(
+            self.cve_records,
+            Path(self.config.get('web_output_dir', '../web/data')),
+            top_n=10
+        )
+        
+        self.logger.info(f"Generated trends analysis with {len(self.trends_data['rolling_trends'])} data points")
+        self.logger.info(f"Identified {len(self.top_improvers)} improving CNAs")
     
     def _generate_output_files(self, output_dir: Optional[str] = None) -> Dict[str, str]:
         """
