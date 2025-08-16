@@ -117,6 +117,9 @@ def calculate_daily_trends(cve_records: List[Dict[str, Any]],
         'generated_at': datetime.now().isoformat()
     }
     
+    # Ensure output directory exists
+    output_dir.mkdir(parents=True, exist_ok=True)
+    
     output_file = output_dir / 'performance_trends.json'
     with open(output_file, 'w') as f:
         json.dump(trends_data, f, indent=2)
@@ -227,6 +230,9 @@ def calculate_top_improvers(cve_records: List[Dict[str, Any]],
             'top_n_count': top_n
         }
     }
+    
+    # Ensure output directory exists
+    output_dir.mkdir(parents=True, exist_ok=True)
     
     output_file = output_dir / 'top_improvers.json'
     with open(output_file, 'w') as f:
