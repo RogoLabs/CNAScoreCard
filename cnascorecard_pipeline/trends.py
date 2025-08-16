@@ -34,12 +34,19 @@ def calculate_daily_trends(cve_records: List[Dict[str, Any]],
     """
     logger.info(f"Calculating daily trends for last {analysis_days} days...")
     
-    # Calculate date range
-    end_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    # Calculate date range (ensure timezone-aware for comparison)
+    end_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=None)
     start_date = end_date - timedelta(days=analysis_days)
     
     # Group CVEs by publication date
     daily_cves = defaultdict(list)
+    
+    logger.info(f"Processing {len(cve_records)} CVE records for trends analysis")
+    logger.info(f"Analysis window: {start_date} to {end_date}")
+    
+    parsed_count = 0
+    valid_date_count = 0
+    in_window_count = 0
     
     for cve in cve_records:
         try:
@@ -48,17 +55,28 @@ def calculate_daily_trends(cve_records: List[Dict[str, Any]],
             if not date_published:
                 continue
                 
-            # Parse date (handle various formats)
+            parsed_count += 1
+            
+            # Parse date (handle various formats) and make timezone-naive for comparison
             pub_date = datetime.fromisoformat(date_published.replace('Z', '+00:00'))
-            pub_date = pub_date.replace(hour=0, minute=0, second=0, microsecond=0)
+            pub_date = pub_date.replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=None)
+            
+            valid_date_count += 1
+            
+            # Debug first few dates
+            if valid_date_count <= 5:
+                logger.info(f"Sample CVE date: {date_published} -> parsed: {pub_date}")
             
             # Only include CVEs within our analysis window
             if start_date <= pub_date <= end_date:
                 daily_cves[pub_date.strftime('%Y-%m-%d')].append(cve)
+                in_window_count += 1
                 
         except (ValueError, TypeError) as e:
             logger.debug(f"Skipping CVE with invalid date: {e}")
             continue
+    
+    logger.info(f"Trends analysis stats: {parsed_count} had dates, {valid_date_count} parsed successfully, {in_window_count} within analysis window")
     
     logger.info(f"Found CVEs across {len(daily_cves)} days")
     

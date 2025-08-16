@@ -140,15 +140,5 @@
     <div class="footer-meta">&copy; 2025 RogoLabs. All rights reserved.</div>
   </footer>
   <script src="cna-detail.js" defer></script>
-  <!-- Added timestamp for cache busting and data freshness indication -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Add last updated timestamp to the footer
-      const lastUpdated = document.createElement('div');
-      lastUpdated.className = 'last-updated';
-      lastUpdated.innerHTML = 'Data last updated: ' + new Date().toLocaleString();
-      document.querySelector('.footer-meta').appendChild(lastUpdated);
-    });
-  </script>
 </body>
 </html>

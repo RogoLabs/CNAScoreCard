@@ -57,7 +57,7 @@
 
     .charts-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      grid-template-columns: 1fr;
       gap: 2rem;
       margin-bottom: 2rem;
     }
@@ -227,9 +227,6 @@
         Identify patterns in data completeness and discover which CNAs are leading improvements
         in vulnerability reporting standards.
       </p>
-      <div class="data-info" id="dataInfo">
-        Loading analysis period information...
-      </div>
     </section>
 
     <!-- Trends Over Time Section -->
@@ -267,6 +264,10 @@
             <canvas id="patchChart" style="display: none;"></canvas>
           </div>
         </div>
+      </div>
+      
+      <div class="data-info" id="dataInfo">
+        Loading analysis period information...
       </div>
     </section>
 
@@ -391,6 +392,20 @@
           return;
         }
 
+        // Calculate auto-scaling for Y-axis
+        const dataValues = chartData.data.filter(val => val !== null && val !== undefined);
+        const minValue = Math.min(...dataValues);
+        const maxValue = Math.max(...dataValues);
+        
+        // Add padding around the data range (10% buffer)
+        const range = maxValue - minValue;
+        const buffer = Math.max(range * 0.1, 2); // At least 2% buffer
+        const rawYMin = Math.max(0, minValue - buffer);
+        const yMax = maxValue + buffer;
+        
+        // Round yMin down to nearest whole number ending in 0 or 5
+        const yMin = Math.floor(rawYMin / 5) * 5;
+
         // Hide spinner and show canvas
         spinner.style.display = 'none';
         canvas.style.display = 'block';
@@ -454,8 +469,8 @@
                   display: true,
                   text: 'Percentage (%)'
                 },
-                min: 0,
-                max: 100,
+                min: yMin,
+                max: yMax,
                 ticks: {
                   callback: function(value) {
                     return value + '%';
@@ -645,5 +660,23 @@
     // Initialize dashboard when DOM is ready
     document.addEventListener('DOMContentLoaded', initializeDashboard);
   </script>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <img src="assets/logo.svg" alt="CNA Scorecard Logo" class="footer-logo">
+        <span class="footer-title">CNA Scorecard</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://rogolabs.net" target="_blank">RogoLabs</a>
+        <a href="https://patchthis.app" target="_blank">PatchThis</a>
+        <a href="https://cveforecast.org" target="_blank">CVEForecast</a>
+        <a href="https://cve.icu" target="_blank">CVE.ICU</a>
+      </div>
+    </div>
+    <div class="footer-meta">&copy; 2025 RogoLabs. All rights reserved.</div>
+  </footer>
+
 </body>
 </html>

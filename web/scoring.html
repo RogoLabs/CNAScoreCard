@@ -504,6 +504,40 @@ def _has_patch_references(references):
       </div>
     </section>
 
+    <!-- Performance Trends Section -->
+    <section class="scoring-categories-card card">
+      <h2>Performance Trends Analysis</h2>
+      <p class="categories-intro">
+        Beyond point-in-time scoring, the CNA Scorecard tracks performance trends over time using rolling 7-day averages 
+        to identify patterns and improvements in vulnerability data quality.
+      </p>
+      
+      <div class="category-detail">
+        <h3>Rolling 7-Day Averages</h3>
+        <p class="category-what"><strong>What it tracks:</strong> Daily average scores for each scoring category calculated over sliding 7-day windows, updated daily for the past 6 months.</p>
+        <p class="category-why"><strong>Why it matters:</strong> Smooths out daily fluctuations to reveal genuine trends in data quality improvement or decline. A single bad day doesn't define overall performance.</p>
+        <p class="category-how"><strong>How it works:</strong> Each day's score represents the average of the previous 7 days, creating a smooth trend line that highlights meaningful patterns over noise.</p>
+      </div>
+      
+      <div class="category-detail">
+        <h3>Top Improving CNAs</h3>
+        <p class="category-what"><strong>What it identifies:</strong> CNAs showing the most significant improvement by comparing their earliest versus most recent 7-day performance averages over a 6-month analysis period.</p>
+        <p class="category-why"><strong>Why it's valuable:</strong> Recognizes CNAs making genuine efforts to improve their vulnerability reporting practices and helps identify best practices worth emulating.</p>
+        <p class="category-how"><strong>How it's calculated:</strong> Improvement score equals the difference between the most recent 7-day average and the earliest 7-day average for each CNA with sufficient data.</p>
+      </div>
+      
+      <div class="category-detail">
+        <h3>Trend Visualization</h3>
+        <p class="category-what"><strong>What it shows:</strong> Interactive line charts displaying rolling averages for Root Cause Analysis (CWE), Severity & Impact (CVSS), Software Identification (CPE), and Patch Information categories.</p>
+        <p class="category-why"><strong>Why separate charts:</strong> Each scoring category has different typical ranges and improvement patterns, requiring dedicated visualization for meaningful analysis.</p>
+        <p class="category-how"><strong>How it adapts:</strong> Charts use auto-scaling Y-axes that adjust to actual data ranges, ensuring trend visibility whether scores are high-performing or need improvement.</p>
+      </div>
+      
+      <div class="centered-cta">
+        <a href="trends.html" class="cta-button secondary">View Performance Trends Dashboard</a>
+      </div>
+    </section>
+
     <!-- Transparency Section -->
     <section class="methodology-notes-card card">
       <h2>Transparency & Open Standards</h2>
@@ -519,7 +553,7 @@ def _has_patch_references(references):
       </p>
     </section>
   </main>
-  <footer class="footer modern-footer">
+  <footer class="footer">
     <div class="footer-main">
       <div class="footer-brand">
         <img src="assets/logo.svg" alt="CNA Scorecard Logo" class="footer-logo">
@@ -534,7 +568,6 @@ def _has_patch_references(references):
     </div>
     <div class="footer-meta">&copy; 2025 RogoLabs. All rights reserved.</div>
   </footer>
-  
   <script>
     // Utility function for date formatting (same as homepage)
     function formatDateRange(dateRangeString) {

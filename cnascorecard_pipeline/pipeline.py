@@ -267,14 +267,14 @@ class CNAScoreCardPipeline:
         
         # Calculate daily trends with 7-day rolling averages
         self.trends_data = calculate_daily_trends(
-            self.cve_records,
+            self.filtered_cve_records,
             Path(self.config.get('web_output_dir', '../web/data')),
             analysis_days=180  # 6 months
         )
         
         # Calculate top improving CNAs
         self.top_improvers = calculate_top_improvers(
-            self.cve_records,
+            self.filtered_cve_records,
             Path(self.config.get('web_output_dir', '../web/data')),
             top_n=10
         )
