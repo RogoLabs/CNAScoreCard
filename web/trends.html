@@ -540,7 +540,7 @@
               return `
                 <tr>
                   <td><strong>#${index + 1}</strong></td>
-                  <td><span class="cna-name">${cna.cna_name}</span></td>
+                  <td><a href="cna/cna-detail.html?cna=${encodeURIComponent(cna.cna_name)}" class="cna-name">${cna.cna_name}</a></td>
                   <td>${formatImprovement(cna.total_improvement)}</td>
                   <td>${cna.total_cves_analyzed}</td>
                   <td class="category-improvement">${bestCategory}</td>
