@@ -90,6 +90,9 @@ The CNA Scorecard website provides multiple views to explore CVE data quality an
 ### 📊 **Record Completeness Analysis**
 [**completeness/index.html**](https://cnascorecard.org/completeness/) - Comprehensive analysis of how well CNAs populate CVE record fields according to the official CVE 5.1 schema. Includes field-by-field completeness metrics and visualizations.
 
+### 📈 **Performance Trends**
+[**trends.html**](https://cnascorecard.org/trends.html) - Interactive dashboard showing rolling 7-day performance trends across all scoring categories. Track how CNA data quality evolves over time with auto-scaling charts and comparative analysis.
+
 ### 📖 **Scoring Methodology**
 [**scoring.html**](https://cnascorecard.org/scoring.html) - Detailed documentation of the Enhanced Aggregate Scoring (EAS) methodology, explaining how CNA performance is calculated and what each score component represents.
 
