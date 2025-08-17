@@ -112,72 +112,68 @@
       background: var(--card-bg);
       border-radius: 12px;
       padding: 2rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      margin-top:2.5rem;
     }
 
-    .improvers-table {
+    .card-box {
+      max-width: 1100px;
+      margin: 2rem auto 2rem auto;
+      padding: 2rem 2.5rem;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    }
+
+    .cna-table, .improvers-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 1rem;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border: 1px solid var(--border-color);
     }
-
-    .improvers-table th,
-    .improvers-table td {
-      text-align: left;
+    .cna-table th, .improvers-table th {
+      background-color: #f7fafc;
+      font-weight: 700;
+      color: var(--text-primary);
+      border-bottom: 2px solid var(--border-color);
+      font-size: 1.08em;
+    }
+    .cna-table td, .improvers-table td {
       padding: 0.75rem 1rem;
       border-bottom: 1px solid var(--border-color);
+      font-size: 1.05em;
     }
-
-    .improvers-table th {
-      background-color: var(--background-secondary);
-      font-weight: 600;
-      color: var(--text-primary);
+    .cna-table tr:nth-child(even), .improvers-table tr:nth-child(even) {
+      background: #f7fafc;
     }
-
-    .improvers-table tr:hover {
-      background-color: var(--background-secondary);
+    .cna-table tr:hover, .improvers-table tr:hover {
+      background: #e2e8f0;
     }
-
     .cna-name {
-      font-weight: 600;
-      color: var(--primary-color);
+      font-weight: 700;
+      color: #0074cc;
+      text-decoration: none;
+      font-size: 1.08em;
+      transition: color 0.2s;
     }
-
-    .improvement-positive {
-      color: var(--success-color);
-      font-weight: 600;
+    .cna-name:hover {
+      color: #1a365d;
+      text-decoration: underline;
     }
-
-    .improvement-negative {
-      color: var(--error-color);
-      font-weight: 600;
+    .cna-sub {
+      display: block;
+      font-size: 0.98em;
+      color: #666;
+      font-weight: 400;
+      margin-top: 2px;
     }
-
-    .improvement-neutral {
-      color: var(--text-secondary);
-    }
-
-    .category-improvement {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-    }
-
-    .no-data-message {
-      text-align: center;
-      color: var(--text-secondary);
-      font-style: italic;
-      padding: 2rem;
-    }
-
-    .data-info {
-      background: var(--background-secondary);
-      border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      text-align: center;
-    }
+    .improvement-positive { color: var(--success-color); font-weight: 600; }
+    .improvement-negative { color: var(--danger-color); font-weight: 600; }
+    .improvement-neutral { color: var(--text-secondary); }
+    .category-improvement { font-size: 0.98em; color: var(--text-secondary); }
 
     @media (max-width: 768px) {
       .page-title {
@@ -273,14 +269,12 @@
 
     <!-- Top Improvers Section -->
     <section class="improvers-section">
-      <h2 class="section-title">Top Improving CNAs</h2>
-      <p class="page-subtitle">
-        CNAs showing the most significant improvement in data quality over the analysis period,
-        comparing their most recent performance with their earliest data points.
-      </p>
-      
-      <div id="improvorsTableContainer">
-        <div class="loading-spinner">Loading improvement data</div>
+      <div class="card-box">
+        <h2 style="font-size:2.1rem;font-weight:800;letter-spacing:-1px;margin-bottom:1.2rem;color:var(--primary-color);text-align:center;">Top Improving CNAs</h2>
+        <p style="text-align:center;color:var(--text-secondary);margin-bottom:1.5rem;">CNAs showing the most significant improvement in data quality over the analysis period, comparing their most recent performance with their earliest data points.</p>
+        <div id="improvorsTableContainer">
+          <div class="loading-spinner">Loading improvement data</div>
+        </div>
       </div>
     </section>
   </main>
@@ -540,7 +534,7 @@
               return `
                 <tr>
                   <td><strong>#${index + 1}</strong></td>
-                  <td><a href="cna/cna-detail.html?cna=${encodeURIComponent(cna.cna_name)}" class="cna-name">${cna.cna_name}</a></td>
+                  <td><a href="https://cnascorecard.org/cna/cna-detail.html?shortName=${encodeURIComponent(cna.cna_name)}" class="cna-name">${cna.cna_name}</a><br><span class="cna-sub">${cna.cna_full_name || ''}</span></td>
                   <td>${formatImprovement(cna.total_improvement)}</td>
                   <td>${cna.total_cves_analyzed}</td>
                   <td class="category-improvement">${bestCategory}</td>
