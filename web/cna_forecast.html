@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNA Growth Forecasting - CNA Scorecard</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="stylesheet" href="assets/theme.css">
+  <link rel="stylesheet" href="shared/shared.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    
+    .page-header {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+    
+    .page-title {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    
+    .page-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+      max-width: 900px;
+    }
+    
+    .search-section {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    .search-container {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .search-input {
+      flex: 1;
+      min-width: 300px;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      background: var(--bg-color);
+      color: var(--text-primary);
+    }
+    
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    }
+    
+    .cna-dropdown {
+      position: relative;
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .dropdown-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 1000;
+      display: none;
+    }
+    
+    .dropdown-item {
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-primary);
+    }
+    
+    .dropdown-item:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .dropdown-item:last-child {
+      border-bottom: none;
+    }
+    
+    .forecast-content {
+      display: none;
+    }
+    
+    .forecast-header {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    .cna-title {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+    
+    .cna-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    
+    .stat-card {
+      background: var(--bg-color);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .chart-section {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    .chart-title {
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    
+    .chart-container {
+      position: relative;
+      height: 400px;
+      margin-bottom: 1rem;
+    }
+    
+    .model-legend {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .legend-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 2px;
+    }
+    
+    .legend-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-secondary);
+    }
+    
+    .error {
+      text-align: center;
+      padding: 3rem;
+      color: var(--error-color);
+      background: var(--error-bg);
+      border-radius: 8px;
+      margin: 2rem 0;
+    }
+    
+    .no-data {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-secondary);
+      background: var(--card-bg);
+      border-radius: 8px;
+      margin: 2rem 0;
+    }
+    
+    @media (max-width: 768px) {
+      .search-container {
+        flex-direction: column;
+      }
+      
+      .search-input,
+      .cna-dropdown {
+        min-width: 100%;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .model-legend {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <img src="assets/logo.svg" alt="CNA Scorecard Logo" class="navbar-logo">
+    <div class="navbar-links">
+      <a href="index.html">Home</a>
+      <a href="cna/index.html">CNAs</a>
+      <a href="completeness/index.html">Record Completeness</a>
+      <a href="trends.html">Performance Trends</a>
+      <a href="cna_forecast.html" class="active">CNA Forecasting</a>
+      <a href="scoring.html">Methodology</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- Page Header -->
+    <section class="page-header">
+      <h1 class="page-title">CNA Growth Forecasting</h1>
+      <p class="page-subtitle">
+        Predict individual CNA CVE publication trends using advanced machine learning models. 
+        Our forecasting system analyzes historical patterns to provide 12-month growth predictions 
+        using LightGBM, XGBoost, and Prophet algorithms.
+      </p>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+      <div class="search-container">
+        <div class="cna-dropdown">
+          <input type="text" 
+                 id="cnaSearch" 
+                 class="search-input" 
+                 placeholder="Search for a CNA (e.g., Microsoft, Apache, Linux)..."
+                 autocomplete="off">
+          <div id="dropdownList" class="dropdown-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="loading">
+      <h3>Loading CNA forecast data...</h3>
+      <p>Please wait while we fetch the latest predictions.</p>
+    </div>
+
+    <!-- Error State -->
+    <div id="errorState" class="error" style="display: none;">
+      <h3>Unable to Load Forecast Data</h3>
+      <p>There was an error loading the CNA forecast data. Please try refreshing the page.</p>
+    </div>
+
+    <!-- No Data State -->
+    <div id="noDataState" class="no-data" style="display: none;">
+      <h3>No Forecast Available</h3>
+      <p>This CNA doesn't have sufficient historical data for reliable forecasting. CNAs need at least 100 published CVEs to generate meaningful predictions.</p>
+    </div>
+
+    <!-- Forecast Content -->
+    <div id="forecastContent" class="forecast-content">
+      <!-- CNA Header -->
+      <section class="forecast-header">
+        <h2 id="cnaTitle" class="cna-title"></h2>
+        <p id="cnaSubtitle" class="cna-subtitle"></p>
+        
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div id="totalHistorical" class="stat-value">-</div>
+            <div class="stat-label">Total Historical CVEs</div>
+          </div>
+          <div class="stat-card">
+            <div id="forecast12Month" class="stat-value">-</div>
+            <div class="stat-label">12-Month Forecast</div>
+          </div>
+          <div class="stat-card">
+            <div id="monthlyAverage" class="stat-value">-</div>
+            <div class="stat-label">Avg Monthly (Historical)</div>
+          </div>
+          <div class="stat-card">
+            <div id="forecastAverage" class="stat-value">-</div>
+            <div class="stat-label">Avg Monthly (Forecast)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Chart Section -->
+      <section class="chart-section">
+        <h3 class="chart-title">CVE Publication History & 12-Month Forecast</h3>
+        <div class="chart-container">
+          <canvas id="forecastChart"></canvas>
+        </div>
+        <div class="model-legend">
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #0066cc;"></div>
+            <span class="legend-label">Historical Data</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #28a745;"></div>
+            <span class="legend-label">LightGBM Forecast</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #ffc107;"></div>
+            <span class="legend-label">XGBoost Forecast</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #dc3545;"></div>
+            <span class="legend-label">Prophet Forecast</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: #6f42c1;"></div>
+            <span class="legend-label">Average Forecast</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script type="module">
+    class CNAForecastingApp {
+      constructor() {
+        this.forecastData = null;
+        this.chart = null;
+        this.selectedCNA = null;
+        
+        this.initializeApp();
+      }
+      
+      async initializeApp() {
+        try {
+          await this.loadForecastData();
+          this.setupEventListeners();
+          this.hideLoading();
+        } catch (error) {
+          console.error('Failed to initialize app:', error);
+          this.showError();
+        }
+      }
+      
+      async loadForecastData() {
+        try {
+          const response = await fetch('cna_data.json');
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+          this.forecastData = await response.json();
+          console.log('Loaded forecast data for', this.forecastData.total_cnas_forecasted, 'CNAs');
+        } catch (error) {
+          console.error('Error loading forecast data:', error);
+          throw error;
+        }
+      }
+      
+      setupEventListeners() {
+        const searchInput = document.getElementById('cnaSearch');
+        const dropdownList = document.getElementById('dropdownList');
+        
+        searchInput.addEventListener('input', (e) => {
+          this.handleSearch(e.target.value);
+        });
+        
+        searchInput.addEventListener('focus', () => {
+          if (searchInput.value) {
+            this.handleSearch(searchInput.value);
+          }
+        });
+        
+        document.addEventListener('click', (e) => {
+          if (!e.target.closest('.cna-dropdown')) {
+            dropdownList.style.display = 'none';
+          }
+        });
+      }
+      
+      handleSearch(query) {
+        const dropdownList = document.getElementById('dropdownList');
+        
+        if (!query.trim()) {
+          dropdownList.style.display = 'none';
+          return;
+        }
+        
+        const cnaIds = Object.keys(this.forecastData.cna_forecasts);
+        const filteredCNAs = cnaIds.filter(cnaId => 
+          cnaId.toLowerCase().includes(query.toLowerCase())
+        ).slice(0, 10); // Limit to 10 results
+        
+        if (filteredCNAs.length === 0) {
+          dropdownList.innerHTML = '<div class="dropdown-item">No CNAs found</div>';
+        } else {
+          dropdownList.innerHTML = filteredCNAs.map(cnaId => 
+            `<div class="dropdown-item" data-cna="${cnaId}">${cnaId}</div>`
+          ).join('');
+          
+          // Add click listeners to dropdown items
+          dropdownList.querySelectorAll('.dropdown-item[data-cna]').forEach(item => {
+            item.addEventListener('click', () => {
+              this.selectCNA(item.dataset.cna);
+              document.getElementById('cnaSearch').value = item.dataset.cna;
+              dropdownList.style.display = 'none';
+            });
+          });
+        }
+        
+        dropdownList.style.display = 'block';
+      }
+      
+      selectCNA(cnaId) {
+        this.selectedCNA = cnaId;
+        const cnaData = this.forecastData.cna_forecasts[cnaId];
+        
+        if (!cnaData) {
+          this.showNoData();
+          return;
+        }
+        
+        this.displayCNAForecast(cnaData);
+      }
+      
+      displayCNAForecast(cnaData) {
+        // Update header
+        document.getElementById('cnaTitle').textContent = cnaData.cna_id;
+        document.getElementById('cnaSubtitle').textContent = 
+          `Forecast generated on ${new Date(this.forecastData.generated_at).toLocaleDateString()}`;
+        
+        // Update statistics
+        document.getElementById('totalHistorical').textContent = 
+          cnaData.total_historical_cves.toLocaleString();
+        document.getElementById('forecast12Month').textContent = 
+          Math.round(cnaData.forecast_total_12_months).toLocaleString();
+        
+        const historicalAvg = cnaData.total_historical_cves / cnaData.historical_monthly_counts.length;
+        document.getElementById('monthlyAverage').textContent = Math.round(historicalAvg);
+        
+        const forecastAvg = cnaData.forecast_total_12_months / 12;
+        document.getElementById('forecastAverage').textContent = Math.round(forecastAvg);
+        
+        // Create chart
+        this.createForecastChart(cnaData);
+        
+        // Show content
+        this.showForecastContent();
+      }
+      
+      createForecastChart(cnaData) {
+        const ctx = document.getElementById('forecastChart').getContext('2d');
+        
+        // Destroy existing chart if it exists
+        if (this.chart) {
+          this.chart.destroy();
+        }
+        
+        // Prepare historical data
+        const historicalLabels = cnaData.historical_dates;
+        const historicalData = cnaData.historical_monthly_counts;
+        
+        // Prepare forecast data (next 12 months)
+        const currentDate = new Date();
+        const forecastLabels = [];
+        for (let i = 1; i <= 12; i++) {
+          const futureDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + i, 1);
+          forecastLabels.push(`${futureDate.getFullYear()}-${(futureDate.getMonth() + 1).toString().padStart(2, '0')}`);
+        }
+        
+        // Combine labels
+        const allLabels = [...historicalLabels, ...forecastLabels];
+        
+        // Prepare datasets
+        const datasets = [
+          {
+            label: 'Historical Data',
+            data: [...historicalData, ...new Array(12).fill(null)],
+            borderColor: '#0066cc',
+            backgroundColor: 'rgba(0, 102, 204, 0.1)',
+            fill: false,
+            tension: 0.1
+          }
+        ];
+        
+        // Add forecast datasets
+        const forecastColors = {
+          lightgbm: '#28a745',
+          xgboost: '#ffc107',
+          prophet: '#dc3545'
+        };
+        
+        Object.entries(cnaData.forecasts).forEach(([model, forecast]) => {
+          datasets.push({
+            label: `${model.charAt(0).toUpperCase() + model.slice(1)} Forecast`,
+            data: [...new Array(historicalData.length).fill(null), ...forecast],
+            borderColor: forecastColors[model],
+            backgroundColor: `${forecastColors[model]}20`,
+            borderDash: [5, 5],
+            fill: false,
+            tension: 0.1
+          });
+        });
+        
+        // Add average forecast
+        datasets.push({
+          label: 'Average Forecast',
+          data: [...new Array(historicalData.length).fill(null), ...cnaData.average_forecast],
+          borderColor: '#6f42c1',
+          backgroundColor: 'rgba(111, 66, 193, 0.1)',
+          borderWidth: 3,
+          fill: false,
+          tension: 0.1
+        });
+        
+        this.chart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: allLabels,
+            datasets: datasets
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+              intersect: false,
+              mode: 'index'
+            },
+            plugins: {
+              legend: {
+                display: false // We're using custom legend
+              },
+              tooltip: {
+                callbacks: {
+                  title: function(context) {
+                    return context[0].label;
+                  },
+                  label: function(context) {
+                    const value = context.parsed.y;
+                    return `${context.dataset.label}: ${value !== null ? Math.round(value) : 'N/A'} CVEs`;
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: 'Month'
+                }
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: 'CVE Count'
+                },
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      }
+      
+      showForecastContent() {
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('errorState').style.display = 'none';
+        document.getElementById('noDataState').style.display = 'none';
+        document.getElementById('forecastContent').style.display = 'block';
+      }
+      
+      showError() {
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('forecastContent').style.display = 'none';
+        document.getElementById('noDataState').style.display = 'none';
+        document.getElementById('errorState').style.display = 'block';
+      }
+      
+      showNoData() {
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('forecastContent').style.display = 'none';
+        document.getElementById('errorState').style.display = 'none';
+        document.getElementById('noDataState').style.display = 'block';
+      }
+      
+      hideLoading() {
+        document.getElementById('loadingState').style.display = 'none';
+      }
+    }
+    
+    // Initialize the app when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      new CNAForecastingApp();
+    });
+  </script>
+</body>
+</html>
