@@ -1,8 +1,8 @@
 {
   "cna_info": {
     "cna": "rust",
-    "total_cves": 0,
-    "total_cves_scored": 0,
+    "total_cves": 1,
+    "total_cves_scored": 1,
     "organizationName": "The Rust Project",
     "scope": "Repositories, packages, and websites maintained by the Rust Project. More details: <a href='https://www.rust-lang.org/policies/security#scope' target='_blank'>https://www.rust-lang.org/policies/security#scope</a>.",
     "advisories": [
@@ -32,31 +32,45 @@
     ],
     "rootCnaInfo": {}
   },
-  "trend_direction": "N/A",
-  "trend_description": "No recent CVE data available",
-  "rank": 0,
-  "active_cna_count": 311,
-  "percentile": 0.0,
+  "trend_direction": "steady",
+  "trend_description": "No significant change",
+  "rank": 4,
+  "active_cna_count": 312,
+  "percentile": 99.0,
   "cna_scoring": [
     {
-      "total_cves": 0,
-      "total_cves_scored": 0,
-      "recent_cves_count": 0,
-      "overall_average_score": 0.0,
-      "average_foundational_completeness": 0.0,
-      "average_root_cause_analysis": 0.0,
+      "total_cves": 1,
+      "total_cves_scored": 1,
+      "recent_cves_count": 1,
+      "overall_average_score": 90.0,
+      "average_foundational_completeness": 50.0,
+      "average_root_cause_analysis": 15.0,
       "average_software_identification": 0.0,
-      "average_severity_context": 0.0,
-      "average_patchinfo": 0.0,
-      "percent_foundational_completeness": 0.0,
-      "percent_root_cause_analysis": 0.0,
+      "average_severity_context": 15.0,
+      "average_patchinfo": 10.0,
+      "percent_foundational_completeness": 100.0,
+      "percent_root_cause_analysis": 100.0,
       "percent_software_identification": 0.0,
-      "percent_severity_and_impact": 0.0,
-      "percent_patchinfo": 0.0,
-      "trend_direction": "N/A",
-      "trend_description": "No recent CVE data available",
+      "percent_severity_and_impact": 100.0,
+      "percent_patchinfo": 100.0,
+      "trend_direction": "steady",
+      "trend_description": "No significant change",
       "monthly_trends": []
     }
   ],
-  "recent_cves": []
+  "recent_cves": [
+    {
+      "cveId": "CVE-2025-11233",
+      "assigningCna": "rust",
+      "datePublished": "2025-10-01",
+      "totalCveScore": 90,
+      "scoreBreakdown": {
+        "foundationalCompleteness": 50,
+        "rootCauseAnalysis": 15,
+        "severityAndImpactContext": 15,
+        "softwareIdentification": 0,
+        "patchinfo": 10
+      }
+    }
+  ]
 }
