@@ -269,7 +269,7 @@ class CNAScoreCardPipeline:
         # Note: Use all CVE records, not filtered, to get full 180-day history
         self.trends_data = calculate_daily_trends(
             self.cve_records,
-            Path(self.config.get('web_output_dir', '../web/data')),
+            Path(self.config['directories']['web_data']),
             analysis_days=180  # 6 months
         )
         
@@ -277,7 +277,7 @@ class CNAScoreCardPipeline:
         # Note: Use all CVE records to identify improvements over time
         self.top_improvers = calculate_top_improvers(
             self.cve_records,
-            Path(self.config.get('web_output_dir', '../web/data')),
+            Path(self.config['directories']['web_data']),
             top_n=10
         )
         
