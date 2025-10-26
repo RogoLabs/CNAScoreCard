@@ -18,6 +18,7 @@ from aggregation import aggregate_cna_scores
 from trends import calculate_daily_trends, calculate_top_improvers
 
 from sync_cna_list import sync_cna_list
+from badge_generator import generate_cna_badges, generate_badge_documentation
 
 # Initialize logging
 logger = logging.getLogger('cnascorecard.pipeline')
@@ -314,6 +315,9 @@ class CNAScoreCardPipeline:
         # Generate completeness files
         output_files.update(self._generate_completeness_files(web_data_dir))
         
+        # Generate CNA badges
+        output_files.update(self._generate_cna_badges(web_data_dir))
+        
         self.logger.info(f"Generated {len(output_files)} output files")
         return output_files
     
@@ -352,13 +356,17 @@ class CNAScoreCardPipeline:
         # Sort by score descending for ranking
         sorted_cnas.sort(key=lambda x: x[2], reverse=True)
         
-        # Create rank mapping
+        # Create rank mapping and store in cna_outputs
         rank_mapping = {}
         current_rank = 1
         for i, (cna_name, _, score) in enumerate(sorted_cnas):
             if i > 0 and sorted_cnas[i-1][2] != score:
                 current_rank = i + 1
             rank_mapping[cna_name] = current_rank
+        
+        # Store ranks in cna_outputs for badge generation
+        for cna_name in self.cna_outputs.keys():
+            self.cna_outputs[cna_name]['rank'] = rank_mapping.get(cna_name, 999)
         
         for cna_name, cna_data in self.cna_outputs.items():
             try:
@@ -635,6 +643,28 @@ class CNAScoreCardPipeline:
             output_files[f"completeness_{safe_filename}"] = str(filepath)
         
         return output_files
+    
+    def _generate_cna_badges(self, output_dir: Path) -> Dict[str, str]:
+        """
+        Generate SVG badges for all CNAs.
+        
+        Args:
+            output_dir: Output directory path (web/data)
+            
+        Returns:
+            Dictionary mapping badge identifiers to file paths
+        """
+        self.logger.info("Generating CNA badges")
+        
+        # Generate badges for all CNAs
+        badge_files = generate_cna_badges(self.cna_outputs, output_dir)
+        
+        # Generate badge documentation
+        base_url = self.config.get('website', {}).get('base_url', 'https://cnascorecard.org')
+        generate_badge_documentation(output_dir, base_url)
+        
+        self.logger.info(f"Generated {len(badge_files)} badge files")
+        return badge_files
     
     def _calculate_grade(self, score: float) -> str:
         """

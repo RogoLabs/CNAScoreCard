@@ -15,6 +15,7 @@ This project provides transparent, data-driven insights into how well CVE Number
 • **Modern, responsive web interface** with interactive data visualizations and charts
 • **Fully automated data pipeline** that refreshes data every 6 hours via GitHub Actions
 • **Individual CNA profiles** with detailed performance metrics and recent CVE analysis
+• **Embeddable badges** for CNAs to display their rank and score on their websites, READMEs, or documentation
 • **Mobile-optimized design** for accessibility across all devices
 
 ## How It Works
@@ -102,6 +103,39 @@ The CNA Scorecard website provides multiple views to explore CVE data quality an
 ---
 
 **💡 Pro Tip**: All pages are mobile-optimized and include interactive search, filtering, and sorting capabilities to help you find the information you need quickly.
+
+## CNA Scorecard Badges
+
+CNAs can display their CNA Scorecard rating on their website, README, or documentation using automatically-generated SVG badges. Badges are updated every time the pipeline runs (every 6 hours), so they always reflect the latest score and rank.
+
+### Badge Styles
+
+Three badge styles are available:
+
+- **Rank Badge** - Shows CNA rank (e.g., #1, #5, #42)
+- **Score Badge** - Shows percentage score (e.g., 95.0%)
+- **Combined Badge** - Shows both rank and score (e.g., #1 - 95.0%)
+
+### Get Your Badge
+
+Visit the [Badge Generator](https://cnascorecard.org/badges.html) to search for your CNA and copy the badge code.
+
+**Example (Markdown):**
+```markdown
+![CNA Scorecard](https://cnascorecard.org/badges/Microsoft-rank.svg)
+```
+
+**Example (HTML):**
+```html
+<img src="https://cnascorecard.org/badges/Microsoft-rank.svg" alt="CNA Scorecard">
+```
+
+**Make it clickable:**
+```markdown
+[![CNA Scorecard](https://cnascorecard.org/badges/Microsoft-rank.svg)](https://cnascorecard.org/cna/cna-detail.html?shortName=Microsoft)
+```
+
+Badges are color-coded based on score (green for 90-100%, blue for 70-79%, yellow for 60-69%, red below 60%) to provide quick visual feedback on performance.
 
 ## Contributing
 
