@@ -624,3 +624,41 @@
     width: 100%;
   }
 }
+
+/* CTA Button Styles */
+.centered-cta {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 0.9rem 2rem;
+  background: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  transition: all 0.3s ease;
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 4px 12px rgba(30, 198, 230, 0.2);
+}
+
+.cta-button:hover {
+  background: #1890c6;
+  border-color: #1890c6;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(30, 198, 230, 0.3);
+}
+
+.cta-button.secondary {
+  background: white;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+}
+
+.cta-button.secondary:hover {
+  background: var(--primary-color);
+  color: white;
+}

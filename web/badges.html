@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNA Scorecard Badges</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="stylesheet" href="assets/theme.css">
+  <link rel="stylesheet" href="shared/shared.css">
+  <style>
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    
+    .page-header {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+    
+    .page-title {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    
+    .page-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    
+    .search-section {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.1rem;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      transition: border-color 0.3s;
+    }
+    
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(0, 82, 163, 0.1);
+    }
+    
+    .search-results {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-top: 0.5rem;
+      max-height: 300px;
+      overflow-y: auto;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+    
+    .search-results.active {
+      display: block;
+    }
+    
+    .search-result-item {
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border-color);
+      transition: background 0.2s;
+    }
+    
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
+    
+    .search-result-item:hover {
+      background: #f0f7ff;
+    }
+    
+    .search-result-name {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+    
+    .search-result-org {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    
+    .search-section {
+      position: relative;
+    }
+    
+    .badge-container {
+      display: none;
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    .badge-container.active {
+      display: block;
+    }
+    
+    .cna-name-display {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+    }
+    
+    .badge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .badge-item {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.5rem;
+      background-color: #fafafa;
+    }
+    
+    .badge-title {
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+    
+    .badge-preview {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: white;
+      border-radius: 4px;
+      text-align: center;
+    }
+    
+    .badge-code {
+      background: #f5f5f5;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 1rem;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+      position: relative;
+    }
+    
+    .copy-button {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background 0.3s;
+    }
+    
+    .copy-button:hover {
+      background: #0052a3;
+    }
+    
+    .copy-button.copied {
+      background: #10B981;
+    }
+    
+    .instructions {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    .instructions h2 {
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+    
+    .instructions code {
+      background: #f5f5f5;
+      padding: 0.2rem 0.5rem;
+      border-radius: 3px;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 0.9rem;
+    }
+    
+    .grading-scale {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    .grading-scale h2 {
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+    
+    .grade-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+    
+    .grade-item {
+      padding: 1rem;
+      border-radius: 6px;
+      text-align: center;
+      color: white;
+      font-weight: 600;
+    }
+    
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 2rem;
+      }
+      
+      .badge-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <img src="assets/logo.svg" alt="CNA Scorecard Logo" class="navbar-logo">
+    <div class="navbar-links">
+      <a href="index.html">Home</a>
+      <a href="cna/index.html">CNAs</a>
+      <a href="completeness/index.html">Record Completeness</a>
+      <a href="trends.html">Performance Trends</a>
+      <a href="scoring.html">Methodology</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- Page Header -->
+    <section class="page-header">
+      <h1 class="page-title">CNA Scorecard Badges</h1>
+      <p class="page-subtitle">
+        Display your CNA Scorecard rating on your website, README, or documentation!
+        Choose from three badge styles and copy the code to embed in your content.
+      </p>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+      <label for="cna-search" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Search for your CNA:</label>
+      <input 
+        type="text" 
+        id="cna-search" 
+        placeholder="Enter CNA name (e.g., Microsoft, Cisco, Linux)..."
+        class="search-input"
+      >
+      <div id="search-results" class="search-results"></div>
+    </section>
+
+    <!-- Badge Display Section -->
+    <section id="badge-container" class="badge-container">
+      <h2 class="cna-name-display" id="cna-name-display"></h2>
+      <div class="badge-grid" id="badge-grid"></div>
+    </section>
+
+    <!-- Instructions -->
+    <section class="instructions">
+      <h2>How to Use</h2>
+      <ol style="line-height: 1.8;">
+        <li>Search for your CNA name above</li>
+        <li>Choose your preferred badge style (Rank, Score, or Combined)</li>
+        <li>Click the "Copy" button to copy the badge code</li>
+        <li>Paste the code into your README, website, or documentation</li>
+      </ol>
+      <p style="margin-top: 1.5rem; color: var(--text-secondary);">
+        <strong>Note:</strong> Badges are automatically updated every time the CNA Scorecard pipeline runs, 
+        so your badge will always reflect your latest score!
+      </p>
+    </section>
+
+    <!-- Color Scheme -->
+    <section class="grading-scale">
+      <h2>Badge Color Scheme</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+        Badge colors are determined by CNA scores to provide quick visual feedback on performance.
+      </p>
+      <div class="grade-list">
+        <div class="grade-item" style="background-color: #00A86B;">Excellent<br>90-100%</div>
+        <div class="grade-item" style="background-color: #10B981;">Very Good<br>80-89%</div>
+        <div class="grade-item" style="background-color: #60A5FA;">Good<br>70-79%</div>
+        <div class="grade-item" style="background-color: #FBBF24;">Fair<br>60-69%</div>
+        <div class="grade-item" style="background-color: #EF4444;">Needs Improvement<br>Below 60%</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <img src="assets/logo.svg" alt="CNA Scorecard Logo" class="footer-logo">
+        <span class="footer-title">CNA Scorecard</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/RogoLabs/CNAScoreCard" target="_blank">GitHub</a>
+        <a href="https://rogolabs.net" target="_blank">RogoLabs</a>
+        <a href="https://patchthis.app" target="_blank">PatchThis</a>
+        <a href="https://cveforecast.org" target="_blank">CVEForecast</a>
+        <a href="https://cve.icu" target="_blank">CVE.ICU</a>
+      </div>
+    </div>
+    <div class="footer-meta">&copy; 2025 RogoLabs. All rights reserved.</div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    const baseUrl = window.location.origin;
+    let cnaData = [];
+
+    // Load CNA data
+    async function loadCNAData() {
+      try {
+        const response = await fetch('./data/cna_combined.json');
+        cnaData = await response.json();
+      } catch (error) {
+        console.error('Error loading CNA data:', error);
+      }
+    }
+
+    // Search functionality
+    const searchInput = document.getElementById('cna-search');
+    const searchResults = document.getElementById('search-results');
+    const badgeContainer = document.getElementById('badge-container');
+    const cnaNameDisplay = document.getElementById('cna-name-display');
+    const badgeGrid = document.getElementById('badge-grid');
+
+    searchInput.addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase().trim();
+      
+      if (searchTerm.length < 2) {
+        searchResults.classList.remove('active');
+        badgeContainer.classList.remove('active');
+        return;
+      }
+
+      const matchedCNAs = cnaData.filter(cna => 
+        cna.shortName.toLowerCase().includes(searchTerm) ||
+        cna.organizationName.toLowerCase().includes(searchTerm)
+      );
+
+      if (matchedCNAs.length > 0) {
+        displaySearchResults(matchedCNAs);
+      } else {
+        searchResults.classList.remove('active');
+        badgeContainer.classList.remove('active');
+      }
+    });
+
+    // Close search results when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!searchResults.contains(e.target) && e.target !== searchInput) {
+        searchResults.classList.remove('active');
+      }
+    });
+
+    function displaySearchResults(cnas) {
+      searchResults.innerHTML = cnas.map(cna => `
+        <div class="search-result-item" onclick="selectCNA('${cna.shortName.replace(/'/g, "\\'")}')">
+          <div class="search-result-name">${cna.shortName}</div>
+          <div class="search-result-org">${cna.organizationName}</div>
+        </div>
+      `).join('');
+      searchResults.classList.add('active');
+    }
+
+    window.selectCNA = function(shortName) {
+      const cna = cnaData.find(c => c.shortName === shortName);
+      if (cna) {
+        displayBadges(cna);
+        searchInput.value = cna.shortName;
+        searchResults.classList.remove('active');
+      }
+    }
+
+    function displayBadges(cna) {
+      const safeName = cna.shortName.replace(/\//g, '_').replace(/\\/g, '_');
+      const score = cna.scores.overall_average_score.toFixed(1);
+      
+      cnaNameDisplay.textContent = `${cna.organizationName} (${cna.shortName})`;
+      
+      const badges = [
+        {
+          title: 'Rank Badge',
+          style: 'rank',
+          description: 'Shows CNA rank only'
+        },
+        {
+          title: 'Score Badge',
+          style: 'score',
+          description: 'Shows percentage score only'
+        },
+        {
+          title: 'Combined Badge',
+          style: 'both',
+          description: 'Shows both rank and score'
+        }
+      ];
+
+      badgeGrid.innerHTML = badges.map(badge => `
+        <div class="badge-item">
+          <div class="badge-title">${badge.title}</div>
+          <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
+            ${badge.description}
+          </div>
+          <div class="badge-preview">
+            <img src="${baseUrl}/badges/${safeName}-${badge.style}.svg" alt="${cna.shortName} CNA Scorecard">
+          </div>
+          <div class="badge-code" id="code-${badge.style}">
+            <button class="copy-button" onclick="copyCode('${badge.style}', '${safeName}', '${cna.shortName}')">
+              Copy
+            </button>
+            <div style="padding-right: 70px;">![CNA Scorecard](${baseUrl}/badges/${safeName}-${badge.style}.svg)</div>
+          </div>
+        </div>
+      `).join('');
+
+      badgeContainer.classList.add('active');
+    }
+
+    function copyCode(style, safeName, cnaName) {
+      const code = `![CNA Scorecard](${baseUrl}/badges/${safeName}-${style}.svg)`;
+      
+      navigator.clipboard.writeText(code).then(() => {
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Copied!';
+        button.classList.add('copied');
+        
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', loadCNAData);
+  </script>
+</body>
+</html>
