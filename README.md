@@ -11,6 +11,7 @@ This project provides transparent, data-driven insights into how well CVE Number
 ## Key Features
 
 • **Automated scoring of CNA performance** based on a comprehensive set of data quality rules
+• **CVE 5.1 schema support** including advanced `cpeApplicability` field for precise software identification
 • **Detailed completeness analysis** of CVE record fields against the official CVE 5.1 schema
 • **Modern, responsive web interface** with interactive data visualizations and charts
 • **Fully automated data pipeline** that refreshes data every 6 hours via GitHub Actions
@@ -32,7 +33,7 @@ The Python-based data pipeline follows a systematic four-step process:
    - Foundational Completeness (50 points)
    - Root Cause Analysis (15 points) 
    - Severity and Impact Context (15 points)
-   - Software Identification (10 points)
+   - Software Identification (10 points) - Supports both traditional `affected[].cpes` and CVE 5.1 `cpeApplicability` fields
    - Patch Information (10 points)
 
 3. **Aggregate**: Generates summary statistics, calculates CNA rankings, performs trend analysis, and creates completeness metrics for each CNA.

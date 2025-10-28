@@ -88,9 +88,9 @@
 
       <div class="category-detail">
         <h3><span class="category-points">10 points</span> Software Identification</h3>
-        <p class="category-what"><strong>What it is:</strong> Precise identification of affected software using CPE (Common Platform Enumeration) format, which provides standardized names for software products and versions.</p>
+        <p class="category-what"><strong>What it is:</strong> Precise identification of affected software using CPE (Common Platform Enumeration) format, which provides standardized names for software products and versions. CPE data can be provided in either the traditional <code>affected[].cpes</code> field or the advanced CVE 5.1 <code>cpeApplicability</code> field.</p>
         <p class="category-why"><strong>Why it matters:</strong> CPE data enables automated vulnerability scanners to accurately match vulnerabilities to specific software in an organization's environment. Without it, security tools can't reliably identify what's at risk.</p>
-        <p class="category-how"><strong>How points are awarded:</strong> Points are earned for including valid CPE identifiers that precisely specify the affected software products, versions, and configurations.</p>
+        <p class="category-how"><strong>How points are awarded:</strong> Points are earned for including valid CPE identifiers that precisely specify the affected software products, versions, and configurations. Both traditional CPE lists and advanced applicability statements with version ranges are recognized.</p>
       </div>
 
       <div class="category-detail">
@@ -292,8 +292,15 @@ def _has_valid_cvss_vector(metrics):
           <div class="tech-subsection">
             <h4>Schema Field Paths Checked:</h4>
             <div class="code-block">
-              <code>containers.cna.affected[].cpes</code> (array)
+              <strong>Traditional Field:</strong><br>
+              <code>containers.cna.affected[].cpes</code> (array of CPE 2.3 strings)<br>
+              <br>
+              <strong>CVE 5.1 Advanced Field:</strong><br>
+              <code>containers.cna.cpeApplicability[].nodes[].cpeMatch[].criteria</code> (CPE with operators)
             </div>
+            <p style="margin-top: 1rem; color: var(--text-secondary); font-style: italic;">
+              <strong>Note:</strong> Both field types are checked. Points are awarded if CPE data is found in either location.
+            </p>
           </div>
           
           <div class="tech-subsection">
@@ -302,10 +309,13 @@ def _has_valid_cvss_vector(metrics):
               <strong>Binary Scoring:</strong> Either 10 points or 0 points
             </div>
             <div class="validation-rule">
-              <strong>CPE Requirement:</strong> At least one affected product must contain non-empty cpes array
+              <strong>Dual Field Support:</strong> Checks traditional <code>affected[].cpes</code> first, then CVE 5.1 <code>cpeApplicability</code>
             </div>
             <div class="validation-rule">
-              <strong>Search Process:</strong> Iterates through all affected products looking for cpes arrays
+              <strong>Traditional CPE:</strong> At least one affected product must contain non-empty cpes array
+            </div>
+            <div class="validation-rule">
+              <strong>CPE Applicability:</strong> Must contain valid nodes with cpeMatch entries and criteria strings
             </div>
           </div>
           
@@ -313,14 +323,22 @@ def _has_valid_cvss_vector(metrics):
             <h4>Code Implementation:</h4>
             <div class="code-block">
 <pre>def _calculate_software_identification(cve, cna):
+    # Check traditional affected[].cpes field
     affected = cna.get('affected', [])
-    if not isinstance(affected, list):
-        return 0
+    if isinstance(affected, list):
+        has_cpe_in_affected = _has_cpe_identifiers(affected)
+        if has_cpe_in_affected:
+            return 10
     
-    has_cpe = _has_cpe_identifiers(affected)
-    return 10 if has_cpe else 0
+    # Check CVE 5.1 cpeApplicability field
+    has_cpe_applicability = _has_cpe_applicability(cna)
+    if has_cpe_applicability:
+        return 10
+    
+    return 0
 
 def _has_cpe_identifiers(affected):
+    """Check for traditional CPE lists in affected products"""
     for product in affected:
         if not isinstance(product, dict):
             continue
@@ -329,8 +347,50 @@ def _has_cpe_identifiers(affected):
         if isinstance(cpes, list) and len(cpes) > 0:
             return True
     
+    return False
+
+def _has_cpe_applicability(cna):
+    """Check for CVE 5.1 cpeApplicability with advanced matching"""
+    cpe_applicability = cna.get('cpeApplicability', [])
+    
+    for item in cpe_applicability:
+        nodes = item.get('nodes', [])
+        for node in nodes:
+            cpe_match = node.get('cpeMatch', [])
+            for match in cpe_match:
+                if isinstance(match, dict) and match.get('criteria'):
+                    return True
+    
     return False</pre>
             </div>
+          </div>
+          
+          <div class="tech-subsection">
+            <h4>CVE 5.1 cpeApplicability Structure:</h4>
+            <div class="code-block">
+<pre>{
+  "cpeApplicability": [
+    {
+      "nodes": [
+        {
+          "operator": "OR",
+          "cpeMatch": [
+            {
+              "vulnerable": true,
+              "criteria": "cpe:2.3:a:vendor:product:*:*:*:*:*:*:*:*",
+              "versionEndExcluding": "1.2.3"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}</pre>
+            </div>
+            <p style="margin-top: 1rem; color: var(--text-secondary);">
+              The <code>cpeApplicability</code> field provides NVD-style CPE matching with operators and version ranges, 
+              enabling more precise vulnerability applicability statements than simple CPE lists.
+            </p>
           </div>
         </div>
         
@@ -457,7 +517,7 @@ def _has_patch_references(references):
             </div>
             <div class="issue-solution">
               <strong>Issue:</strong> Missing software identification points<br>
-              <strong>Check:</strong> Verify at least one affected product has non-empty cpes array
+              <strong>Check:</strong> Verify at least one affected product has non-empty cpes array OR the cpeApplicability field contains valid CPE match data with criteria strings
             </div>
             <div class="issue-solution">
               <strong>Issue:</strong> Missing patch information points<br>
