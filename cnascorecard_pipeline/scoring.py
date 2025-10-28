@@ -287,6 +287,7 @@ def _has_valid_cvss_vector(metrics: List[Dict[str, Any]]) -> bool:
 def _calculate_software_identification(cve: Dict[str, Any], cna: Dict[str, Any]) -> int:
     """
     Calculate software identification score based on presence of CPE identifiers.
+    Checks both traditional affected[].cpes and CVE 5.1 cpeApplicability fields.
     
     Args:
         cve: Full CVE record
@@ -296,22 +297,28 @@ def _calculate_software_identification(cve: Dict[str, Any], cna: Dict[str, Any])
         Score for software identification (0 or weight value)
     """
     rule = scoring_config.rules['softwareIdentification']
+    
+    # Check traditional affected[].cpes field
     affected = cna.get('affected', [])
+    if isinstance(affected, list):
+        has_cpe_in_affected = _has_cpe_identifiers(affected)
+        if has_cpe_in_affected:
+            logger.debug(f"Software identification: {rule['weight']}/{rule['weight']} (CPE found in affected[].cpes)")
+            return rule['weight']
     
-    if not isinstance(affected, list):
-        logger.debug("Software identification: 0 (no affected products list)")
-        return 0
+    # Check CVE 5.1 cpeApplicability field
+    has_cpe_applicability = _has_cpe_applicability(cna)
+    if has_cpe_applicability:
+        logger.debug(f"Software identification: {rule['weight']}/{rule['weight']} (CPE found in cpeApplicability)")
+        return rule['weight']
     
-    has_cpe = _has_cpe_identifiers(affected)
-    score = rule['weight'] if has_cpe else 0
-    
-    logger.debug(f"Software identification: {score}/{rule['weight']} (CPE found: {has_cpe})")
-    return score
+    logger.debug("Software identification: 0 (no CPE identifiers found in either field)")
+    return 0
 
 
 def _has_cpe_identifiers(affected: List[Dict[str, Any]]) -> bool:
     """
-    Check if affected products contain CPE identifiers.
+    Check if affected products contain CPE identifiers in traditional affected[].cpes field.
     
     Args:
         affected: List of affected product dictionaries
@@ -328,6 +335,48 @@ def _has_cpe_identifiers(affected: List[Dict[str, Any]]) -> bool:
             return True
             
     return False
+
+
+def _has_cpe_applicability(cna: Dict[str, Any]) -> bool:
+    """
+    Check if CNA container has cpeApplicability field with valid CPE data (CVE 5.1 schema).
+    
+    The cpeApplicability field provides NVD-style CPE matching with operators and version ranges.
+    This is different from the simpler affected[].cpes field.
+    
+    Args:
+        cna: CNA container from CVE record
+        
+    Returns:
+        True if cpeApplicability with CPE match data found, False otherwise
+    """
+    cpe_applicability = cna.get('cpeApplicability')
+    
+    if not isinstance(cpe_applicability, list) or len(cpe_applicability) == 0:
+        return False
+    
+    # Check if any node contains CPE match data
+    for item in cpe_applicability:
+        if not isinstance(item, dict):
+            continue
+            
+        nodes = item.get('nodes', [])
+        if not isinstance(nodes, list):
+            continue
+            
+        for node in nodes:
+            if not isinstance(node, dict):
+                continue
+                
+            cpe_match = node.get('cpeMatch', [])
+            if isinstance(cpe_match, list) and len(cpe_match) > 0:
+                # Found at least one CPE match entry with criteria
+                for match in cpe_match:
+                    if isinstance(match, dict) and match.get('criteria'):
+                        return True
+    
+    return False
+
 
 def _calculate_actionable_intelligence(cve: Dict[str, Any], cna: Dict[str, Any]) -> int:
     """
