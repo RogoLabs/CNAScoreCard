@@ -29,8 +29,36 @@
       "analysis_days": 45
     },
     {
+      "cna_name": "VulnCheck",
+      "total_improvement": 248.20261437908493,
+      "category_improvements": {
+        "root_cause_analysis": {
+          "first_period": 88.8888888888889,
+          "last_period": 100.0,
+          "improvement": 11.1111111111111
+        },
+        "severity_and_impact": {
+          "first_period": 18.51851851851852,
+          "last_period": 100.0,
+          "improvement": 81.48148148148148
+        },
+        "software_identification": {
+          "first_period": 0.0,
+          "last_period": 95.58823529411764,
+          "improvement": 95.58823529411764
+        },
+        "patch_information": {
+          "first_period": 37.03703703703704,
+          "last_period": 97.05882352941175,
+          "improvement": 60.021786492374716
+        }
+      },
+      "total_cves_analyzed": 365,
+      "analysis_days": 73
+    },
+    {
       "cna_name": "ibm",
-      "total_improvement": 207.69230769230768,
+      "total_improvement": 200.54945054945057,
       "category_improvements": {
         "root_cause_analysis": {
           "first_period": 92.3076923076923,
@@ -49,12 +77,12 @@
         },
         "patch_information": {
           "first_period": 0.0,
-          "last_period": 100.0,
-          "improvement": 100.0
+          "last_period": 92.85714285714286,
+          "improvement": 92.85714285714286
         }
       },
-      "total_cves_analyzed": 774,
-      "analysis_days": 282
+      "total_cves_analyzed": 777,
+      "analysis_days": 283
     },
     {
       "cna_name": "jpcert",
@@ -83,34 +111,6 @@
       },
       "total_cves_analyzed": 506,
       "analysis_days": 181
-    },
-    {
-      "cna_name": "VulnCheck",
-      "total_improvement": 184.96732026143786,
-      "category_improvements": {
-        "root_cause_analysis": {
-          "first_period": 88.8888888888889,
-          "last_period": 100.0,
-          "improvement": 11.1111111111111
-        },
-        "severity_and_impact": {
-          "first_period": 18.51851851851852,
-          "last_period": 100.0,
-          "improvement": 81.48148148148148
-        },
-        "software_identification": {
-          "first_period": 0.0,
-          "last_period": 32.35294117647059,
-          "improvement": 32.35294117647059
-        },
-        "patch_information": {
-          "first_period": 37.03703703703704,
-          "last_period": 97.05882352941175,
-          "improvement": 60.021786492374716
-        }
-      },
-      "total_cves_analyzed": 365,
-      "analysis_days": 73
     },
     {
       "cna_name": "trendmicro",
@@ -281,7 +281,7 @@
       "analysis_days": 32
     }
   ],
-  "generated_at": "2025-11-17T18:03:13.082559",
+  "generated_at": "2025-11-18T00:05:06.328317",
   "analysis_criteria": {
     "minimum_cves": 5,
     "top_n_count": 10
