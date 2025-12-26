@@ -1,13 +1,15 @@
 /**
  * CNA Index Page - Main JavaScript
  * Modern implementation with clear separation of concerns
+ * Supports chunked loading for faster initial page loads
  */
 
 // Configuration
 const CONFIG = {
   dataUrl: '../data/cna_combined.json',
   itemsPerPage: 25,
-  defaultSort: 'rank'
+  defaultSort: 'rank',
+  useChunkedLoading: true  // Enable chunked loading when available
 };
 
 // State management
@@ -19,6 +21,8 @@ const STATE = {
   sortDirection: 'asc',
   showingDetails: false,
   searchTerm: '',
+  isChunkedMode: false,
+  dataFullyLoaded: false
 };
 
 // DOM Elements
@@ -41,8 +45,12 @@ const DOM = {
  */
 async function init() {
   try {
-    // Fetch data
-    STATE.data = await fetchData(CONFIG.dataUrl);
+    // Try chunked loading first if enabled and ChunkLoader is available
+    if (CONFIG.useChunkedLoading && typeof ChunkLoader !== 'undefined') {
+      await initWithChunks();
+    } else {
+      await initWithFallback();
+    }
     
     // Set up event listeners
     setupEventListeners();
@@ -54,10 +62,40 @@ async function init() {
     applyFilters();
     
     console.log('CNA Index initialized with', STATE.data.length, 'total CNAs,', STATE.filteredData.length, 'active CNAs shown');
+    if (STATE.isChunkedMode) {
+      console.log('Using chunked loading mode for better performance');
+    }
   } catch (error) {
     console.error('Failed to initialize CNA Index:', error);
     showErrorMessage('Failed to load CNA data. Please try refreshing the page.');
   }
+}
+
+/**
+ * Initialize with chunked loading
+ */
+async function initWithChunks() {
+  const result = await ChunkLoader.init();
+  
+  if (result.mode === 'chunked') {
+    STATE.isChunkedMode = true;
+    // Load all data from chunks - we need all data for proper filtering/sorting
+    STATE.data = await ChunkLoader.loadAll();
+    STATE.dataFullyLoaded = true;
+    console.log(`Loaded ${STATE.data.length} CNAs from ${result.manifest.totalChunks} chunks`);
+  } else {
+    // Fall back to regular loading
+    await initWithFallback();
+  }
+}
+
+/**
+ * Initialize with fallback (load full file)
+ */
+async function initWithFallback() {
+  STATE.data = await fetchData(CONFIG.dataUrl);
+  STATE.dataFullyLoaded = true;
+  STATE.isChunkedMode = false;
 }
 
 /**

@@ -391,13 +391,21 @@ class TestPipelineOutputGeneration(TestPipelineFixtures):
         mock_ensure_dir.assert_called()
     
     @patch('pipeline.write_json_file')
+    @patch('pipeline.write_chunked_cna_data')
+    @patch('pipeline.generate_search_index')
     def test_generate_summary_files(
         self, 
+        mock_search_index,
+        mock_chunked_data,
         mock_write_json,
         sample_config,
         sample_cna_outputs
     ):
         """Test summary file generation."""
+        # Mock chunking functions
+        mock_chunked_data.return_value = {'totalChunks': 1, 'totalCNAs': 1}
+        mock_search_index.return_value = {'totalCNAs': 1}
+        
         pipeline = CNAScoreCardPipeline(sample_config)
         pipeline.cna_outputs = sample_cna_outputs
         pipeline.analysis_periods = {'current': ('2024-01-01', '2024-06-30')}
@@ -408,7 +416,11 @@ class TestPipelineOutputGeneration(TestPipelineFixtures):
         assert 'cna_combined' in result
         assert 'cna_summary' in result
         assert 'completeness_summary' in result
+        assert 'chunk_manifest' in result
+        assert 'search_index' in result
         assert mock_write_json.call_count == 3
+        mock_chunked_data.assert_called_once()
+        mock_search_index.assert_called_once()
     
     @patch('pipeline.write_json_file')
     @patch('pipeline.ensure_directory_exists')

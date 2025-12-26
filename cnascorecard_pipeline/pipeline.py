@@ -16,6 +16,7 @@ from scoring import score_multiple_cves
 from completeness import compute_field_utilization, compute_individual_cna_field_utilization
 from aggregation import aggregate_cna_scores
 from trends import calculate_daily_trends, calculate_top_improvers
+from chunking import write_chunked_cna_data, generate_search_index
 
 from sync_cna_list import sync_cna_list
 from badge_generator import generate_cna_badges, generate_badge_documentation
@@ -613,6 +614,18 @@ class CNAScoreCardPipeline:
         cna_combined_path = output_dir / 'cna_combined.json'
         write_json_file(web_formatted_cnas, cna_combined_path)
         output_files['cna_combined'] = str(cna_combined_path)
+        
+        # Generate chunked data for lazy loading
+        # Sort by rank for consistent chunk ordering
+        sorted_for_chunks = sorted(web_formatted_cnas, key=lambda x: x.get('rank', 999))
+        chunk_manifest = write_chunked_cna_data(sorted_for_chunks, output_dir, chunk_size=50)
+        output_files['chunk_manifest'] = str(output_dir / 'chunks' / 'manifest.json')
+        self.logger.info(f"Generated {chunk_manifest['totalChunks']} CNA chunks for lazy loading")
+        
+        # Generate search index for client-side filtering
+        search_index = generate_search_index(sorted_for_chunks, output_dir)
+        output_files['search_index'] = str(output_dir / 'search_index.json')
+        self.logger.info(f"Generated search index with {search_index['totalCNAs']} CNAs")
         
         # Generate cna_summary.json for completeness page
         cna_summary_list = []
