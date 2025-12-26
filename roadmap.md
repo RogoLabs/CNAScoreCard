@@ -328,7 +328,201 @@ def load_cve_safe(filepath: Path) -> Optional[Dict]:
 - Touch-friendly filtering
 - Swipe navigation between CNAs
 
-### 4.2 Documentation Improvements
+### 4.2 Mobile-First Redesign
+
+#### 4.2.1 Mobile Layout Strategy
+**Goal:** Full-featured mobile experience for security analysts on the go
+
+**Breakpoints:**
+| Breakpoint | Target | Layout |
+|------------|--------|--------|
+| < 480px | Phone portrait | Single column, stacked cards |
+| 480-768px | Phone landscape / Small tablet | Two column grid |
+| 768-1024px | Tablet | Sidebar + content |
+| > 1024px | Desktop | Full layout |
+
+**CSS Implementation:**
+```css
+/* web/assets/mobile.css */
+/* Mobile-first base styles */
+.cna-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+    .cna-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+    .cna-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+```
+
+#### 4.2.2 Mobile Navigation
+**Current:** Desktop-oriented top navigation  
+**Proposed:** Mobile-friendly navigation patterns
+
+- **Bottom navigation bar** for primary actions (Home, CNAs, Trends, Search)
+- **Hamburger menu** for secondary pages (Scoring, Completeness, About)
+- **Sticky headers** that collapse on scroll
+- **Pull-to-refresh** gesture support
+
+```html
+<!-- Mobile bottom navigation -->
+<nav class="mobile-nav">
+    <a href="/" class="nav-item active">
+        <svg class="nav-icon"><!-- home icon --></svg>
+        <span>Home</span>
+    </a>
+    <a href="/cna/" class="nav-item">
+        <svg class="nav-icon"><!-- list icon --></svg>
+        <span>CNAs</span>
+    </a>
+    <a href="/trends.html" class="nav-item">
+        <svg class="nav-icon"><!-- chart icon --></svg>
+        <span>Trends</span>
+    </a>
+    <a href="#search" class="nav-item">
+        <svg class="nav-icon"><!-- search icon --></svg>
+        <span>Search</span>
+    </a>
+</nav>
+```
+
+#### 4.2.3 Mobile-Optimized Data Tables
+**Challenge:** CNA leaderboard tables don't fit on mobile screens  
+**Solution:** Card-based layout with expandable details
+
+```html
+<!-- Mobile CNA card (replaces table row) -->
+<div class="cna-card">
+    <div class="cna-card-header">
+        <span class="cna-rank">#1</span>
+        <span class="cna-name">Microsoft</span>
+        <span class="cna-grade grade-a">A</span>
+    </div>
+    <div class="cna-card-summary">
+        <span class="score">92.5</span>
+        <span class="cve-count">1,234 CVEs</span>
+    </div>
+    <button class="expand-btn" aria-expanded="false">
+        View Details
+    </button>
+    <div class="cna-card-details" hidden>
+        <!-- Expanded scoring breakdown -->
+    </div>
+</div>
+```
+
+#### 4.2.4 Touch-Friendly Interactions
+**Proposed enhancements:**
+
+- **Larger tap targets** (minimum 44x44px per WCAG)
+- **Swipe gestures:**
+  - Swipe left/right between CNA detail pages
+  - Swipe down to refresh data
+  - Swipe up to dismiss modals
+- **Long-press actions:**
+  - Long-press CNA to quick-view score breakdown
+  - Long-press grade badge to copy embed code
+- **Pinch-to-zoom** on trend charts
+
+```javascript
+// web/shared/touch-gestures.js
+class SwipeHandler {
+    constructor(element, options = {}) {
+        this.element = element;
+        this.threshold = options.threshold || 50;
+        this.onSwipeLeft = options.onSwipeLeft || (() => {});
+        this.onSwipeRight = options.onSwipeRight || (() => {});
+        this.init();
+    }
+    
+    init() {
+        let startX = 0;
+        this.element.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+        this.element.addEventListener('touchend', (e) => {
+            const endX = e.changedTouches[0].clientX;
+            const diff = endX - startX;
+            if (Math.abs(diff) > this.threshold) {
+                diff > 0 ? this.onSwipeRight() : this.onSwipeLeft();
+            }
+        });
+    }
+}
+```
+
+#### 4.2.5 Mobile Performance Optimization
+**Goal:** Sub-2-second load time on 3G connections
+
+- **Critical CSS inlining** for above-the-fold content
+- **Lazy load** charts and non-visible CNA data
+- **Image optimization:**
+  - SVG badges (already implemented)
+  - WebP format for any raster images
+  - Responsive image srcsets
+- **Service worker** for offline capability
+- **Data prefetching** for likely next pages
+
+```javascript
+// Intersection Observer for lazy loading
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            loadCNAData(entry.target.dataset.cna);
+            observer.unobserve(entry.target);
+        }
+    });
+}, { rootMargin: '100px' });
+
+document.querySelectorAll('.cna-card[data-cna]').forEach(card => {
+    observer.observe(card);
+});
+```
+
+#### 4.2.6 Progressive Web App (PWA)
+**Proposed:** Convert to installable PWA
+
+- **Web App Manifest** for home screen installation
+- **Service Worker** for offline access to cached data
+- **Push notifications** for CNA score changes (optional)
+
+```json
+// web/manifest.json
+{
+    "name": "CNA Scorecard",
+    "short_name": "Scorecard",
+    "description": "Track CVE data quality across CNAs",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#1a1a2e",
+    "theme_color": "#4a9eff",
+    "icons": [
+        {
+            "src": "/assets/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/assets/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
+```
+
+### 4.3 Documentation Improvements
 
 #### 4.2.1 Data Structure Documentation
 **Proposed:** Document JSON data file structures for developers/integrators
@@ -391,7 +585,16 @@ Complete CNA data including individual CVE scores...
 - [ ] Implement export features
 - [ ] Improve mobile experience
 
-### Phase 5: Documentation & Polish (Week 5-6)
+### Phase 5: Mobile-First Redesign (Week 5-6)
+- [ ] Implement mobile CSS breakpoints and card layouts
+- [ ] Add bottom navigation bar for mobile
+- [ ] Convert data tables to expandable cards
+- [ ] Add touch gestures (swipe, long-press)
+- [ ] Optimize performance for 3G connections
+- [ ] Create PWA manifest and service worker
+- [ ] Test on iOS Safari, Chrome Android, Firefox Mobile
+
+### Phase 6: Documentation & Polish (Week 6-7)
 - [ ] Complete data structure documentation
 - [ ] Update README and guides
 - [ ] Accessibility audit and fixes
@@ -457,11 +660,14 @@ Complete CNA data including individual CVE scores...
 | Metric | Current | Target | Measurement |
 |--------|---------|--------|-------------|
 | Pipeline runtime | ~10 min | < 3 min | Time to process 6 months of CVEs |
-| Web page load | ~2s | < 500ms | Lighthouse performance score |
+| Web page load (desktop) | ~2s | < 500ms | Lighthouse performance score |
+| Web page load (mobile 3G) | Unknown | < 2s | Lighthouse throttled test |
+| Mobile usability | Unknown | 100/100 | Lighthouse mobile score |
 | Test coverage | ~40% | > 80% | pytest-cov report |
 | Schema compliance | 5.1 | 5.2 | dataVersion support |
 | Accessibility | Unknown | WCAG 2.1 AA | Lighthouse accessibility score |
 | Pipeline reliability | Unknown | 99%+ | Successful runs / Total runs |
+| PWA installability | ❌ No | ✅ Yes | Lighthouse PWA audit |
 
 ---
 
