@@ -1,6 +1,56 @@
 /* Shared layout, nav, footer, accessibility, and reusable component styles */
 
 /* ================================
+   ACCESSIBILITY UTILITIES
+   ================================ */
+
+/* Skip Link for Keyboard Navigation */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary-color);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  z-index: 10000;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 0 0 var(--border-radius) 0;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Screen Reader Only Content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ================================
    REUSABLE COMPONENT STYLES
    ================================ */
 

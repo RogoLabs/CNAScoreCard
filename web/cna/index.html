@@ -20,8 +20,11 @@
   <link rel="stylesheet" href="cna-index.css">
 </head>
 <body>
+  <!-- Skip Link for Accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
   <!-- Navigation Bar -->
-  <nav class="navbar">
+  <nav class="navbar" role="navigation" aria-label="Main Navigation">
     <img src="../assets/logo.svg" alt="CNA Scorecard Logo" class="navbar-logo">
     <div class="navbar-links">
       <a href="../index.html">Home</a>
@@ -33,7 +36,7 @@
   </nav>
   
   <!-- Main Content -->
-  <main class="container">
+  <main class="container" id="main-content">
     <section class="page-header">
       <h1 class="page-title">CNA Scorecard: Performance Rankings</h1>
       <p class="page-subtitle">Performance rankings showing which CNAs provide the most complete vulnerability data to help security teams prioritize and respond to threats.</p>

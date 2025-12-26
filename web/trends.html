@@ -17,7 +17,7 @@
   <link rel="icon" type="image/png" href="assets/logo.svg">
   <link rel="stylesheet" href="assets/theme.css">
   <link rel="stylesheet" href="shared/shared.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" async></script>
   <style>
     .container {
       max-width: 1200px;
@@ -241,8 +241,11 @@
 </head>
 
 <body>
+  <!-- Skip Link for Accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
   <!-- Navigation Bar -->
-  <nav class="navbar">
+  <nav class="navbar" role="navigation" aria-label="Main Navigation">
     <img src="assets/logo.svg" alt="CNA Scorecard Logo" class="navbar-logo">
     <div class="navbar-links">
       <a href="index.html">Home</a>
@@ -253,7 +256,7 @@
     </div>
   </nav>
 
-  <main class="container">
+  <main class="container" id="main-content">
     <!-- Page Header -->
     <section class="page-header">
       <h1 class="page-title">CNA Scorecard: Performance Trends</h1>

@@ -21,7 +21,10 @@
   <link rel="stylesheet" href="completeness.css?v=6">
 </head>
 <body>
-  <nav class="navbar">
+  <!-- Skip Link for Accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
+  <nav class="navbar" role="navigation" aria-label="Main Navigation">
     <img src="../assets/logo.svg" alt="CNA Scorecard Logo" class="navbar-logo">
     <div class="navbar-links">
       <a href="../index.html">Home</a>
@@ -31,7 +34,7 @@
       <a href="../scoring.html">Methodology</a>
     </div>
   </nav>
-  <main class="container">
+  <main class="container" id="main-content">
     <section class="page-header">
       <h1 class="page-title">CNA Scorecard: Record Completeness</h1>
       <p class="page-subtitle">Detailed field-level analysis showing how complete CVE data helps security teams make informed decisions and respond effectively to threats.</p>

@@ -9,6 +9,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
+
+#### Phase 4: Usability Improvements
+- **CSV/JSON Export**: Added export functionality to CNA leaderboard and detail pages
+  - Export all CNA data or filtered results
+  - Download individual CNA reports in JSON format
+  - Export recent CVE lists from detail pages
+
+#### Phase 5: Mobile-First Redesign
+- **Mobile Navigation**: Hamburger menu with slide-out navigation for all pages
+  - Touch-friendly controls and tap targets
+  - Auto-closes on navigation or outside click
+  - Consistent across all web pages
+- **Responsive Layouts**: Comprehensive mobile breakpoints at 768px and 480px
+  - CNA detail page optimized for mobile viewing
+  - Category cards wrap properly on small screens
+  - Tables horizontally scrollable on mobile
+  - CTA buttons properly sized for mobile
+- **Chart Improvements**: Fixed y-axis formatting to show whole numbers
+
+#### Phase 6: Documentation & Polish
+- **Data Structure Documentation**: Comprehensive README for `web/data/` directory
+  - Complete JSON schema documentation for all data files
+  - API usage examples for custom integrations
+  - Data refresh cycle explanation
+
+#### CVE 5.1 Schema Support
 - **CPE Applicability Detection**: Added support for CVE 5.1 `cpeApplicability` field for Software Identification scoring
   - Pipeline now checks both traditional `affected[].cpes` and advanced `cpeApplicability` fields
   - Fixes scoring for 7,770+ CVEs that use the CVE 5.1 advanced CPE format
