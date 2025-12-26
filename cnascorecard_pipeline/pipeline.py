@@ -11,11 +11,12 @@ from pathlib import Path
 
 from config import get_config, ANALYSIS_PERIOD_MONTHS
 from utils import setup_logging, ensure_directory_exists, write_json_file, ProgressTracker
-from ingest import load_cve_records, load_cna_list, get_date_range_for_period, validate_date_range
+from ingest import load_cve_records, load_cna_list, get_date_range_for_period, validate_date_range, load_delta_cves
 from scoring import score_multiple_cves
 from completeness import compute_field_utilization, compute_individual_cna_field_utilization
 from aggregation import aggregate_cna_scores
 from trends import calculate_daily_trends, calculate_top_improvers
+from chunking import write_chunked_cna_data, generate_search_index
 
 from sync_cna_list import sync_cna_list
 from badge_generator import generate_cna_badges, generate_badge_documentation
@@ -60,7 +61,9 @@ class CNAScoreCardPipeline:
         self, 
         start_date: Optional[str] = None, 
         end_date: Optional[str] = None,
-        output_dir: Optional[str] = None
+        output_dir: Optional[str] = None,
+        use_delta: bool = False,
+        use_cache: bool = True
     ) -> Dict[str, Any]:
         """
         Run the complete CNA Scorecard pipeline.
@@ -69,6 +72,8 @@ class CNAScoreCardPipeline:
             start_date: Start date for analysis in YYYY-MM-DD format
             end_date: End date for analysis in YYYY-MM-DD format
             output_dir: Output directory for generated files
+            use_delta: If True, only process changed CVEs from delta files
+            use_cache: If True, use score caching for faster processing
             
         Returns:
             Dictionary containing pipeline execution summary
@@ -78,6 +83,7 @@ class CNAScoreCardPipeline:
         """
         try:
             self.logger.info("Starting CNA Scorecard Pipeline execution")
+            self.logger.info(f"Options: delta={use_delta}, cache={use_cache}")
             start_time = datetime.now()
             
             # Step 1: Setup analysis periods
@@ -86,11 +92,14 @@ class CNAScoreCardPipeline:
             # Step 2: Sync CNA metadata
             self._sync_cna_metadata()
             
-            # Step 3: Load CVE data
-            self._load_cve_data()
+            # Step 3: Load CVE data (full or delta mode)
+            if use_delta:
+                self._load_cve_data_delta()
+            else:
+                self._load_cve_data()
             
-            # Step 4: Score CVE records
-            self._score_cve_records()
+            # Step 4: Score CVE records (with optional caching)
+            self._score_cve_records(use_cache=use_cache)
             
             # Step 5: Aggregate CNA scores
             self._aggregate_cna_scores()
@@ -116,6 +125,8 @@ class CNAScoreCardPipeline:
                 'scored_cves_count': len(self.scored_cves),
                 'cnas_processed': len(self.cna_outputs),
                 'output_files': output_summary,
+                'mode': 'delta' if use_delta else 'full',
+                'cache_enabled': use_cache,
                 'status': 'success'
             }
             
@@ -188,8 +199,8 @@ class CNAScoreCardPipeline:
             self.logger.warning(f"CNA metadata sync failed: {e}, continuing with existing data")
     
     def _load_cve_data(self) -> None:
-        """Load CVE data for analysis."""
-        self.logger.info("Loading CVE data")
+        """Load CVE data for analysis (full mode)."""
+        self.logger.info("Loading CVE data (full mode)")
         
         # Load all CVE records (needed for trend analysis)
         self.cve_records = load_cve_records()
@@ -206,11 +217,64 @@ class CNAScoreCardPipeline:
         if not self.filtered_cve_records:
             raise PipelineError("No CVE records found for the specified analysis period")
     
-    def _score_cve_records(self) -> None:
-        """Score CVE records using the CNA Scorecard methodology."""
-        self.logger.info("Scoring CVE records")
+    def _load_cve_data_delta(self) -> None:
+        """Load only changed CVE data using delta files (incremental mode)."""
+        self.logger.info("Loading CVE data (delta mode)")
         
-        self.scored_cves = score_multiple_cves(self.filtered_cve_records)
+        # Load delta CVEs (new and updated)
+        new_cves, updated_cves, delta_meta = load_delta_cves()
+        
+        delta_cves = new_cves + updated_cves
+        self.logger.info(f"Delta: {len(new_cves)} new, {len(updated_cves)} updated CVEs")
+        
+        if delta_meta.get("errors"):
+            for error in delta_meta["errors"]:
+                self.logger.warning(f"Delta error: {error}")
+        
+        if not delta_cves:
+            self.logger.warning("No delta CVEs found, falling back to full load")
+            return self._load_cve_data()
+        
+        # For delta mode, we still need full CVE records for trends
+        # but only score the delta CVEs
+        self.cve_records = load_cve_records()
+        self.logger.info(f"Loaded {len(self.cve_records)} total CVE records for trends")
+        
+        # Filter delta CVEs to current analysis period
+        current_start, current_end = self.analysis_periods['current']
+        start_dt = datetime.strptime(current_start, "%Y-%m-%d")
+        end_dt = datetime.strptime(current_end, "%Y-%m-%d")
+        
+        self.filtered_cve_records = []
+        for cve in delta_cves:
+            date_str = cve.get("cveMetadata", {}).get("datePublished", "")
+            if date_str:
+                try:
+                    # Handle various date formats
+                    if "T" in date_str:
+                        cve_date = datetime.fromisoformat(date_str.replace("Z", "+00:00"))
+                    else:
+                        cve_date = datetime.strptime(date_str[:10], "%Y-%m-%d")
+                    
+                    if start_dt <= cve_date.replace(tzinfo=None) <= end_dt:
+                        self.filtered_cve_records.append(cve)
+                except ValueError:
+                    # Include if date can't be parsed
+                    self.filtered_cve_records.append(cve)
+            else:
+                # Include if no date
+                self.filtered_cve_records.append(cve)
+        
+        self.logger.info(f"Filtered to {len(self.filtered_cve_records)} delta CVEs for current period")
+        
+        if not self.filtered_cve_records:
+            self.logger.warning("No delta CVEs in analysis period, may need full rebuild")
+    
+    def _score_cve_records(self, use_cache: bool = True) -> None:
+        """Score CVE records using the CNA Scorecard methodology."""
+        self.logger.info(f"Scoring CVE records (cache={'enabled' if use_cache else 'disabled'})")
+        
+        self.scored_cves = score_multiple_cves(self.filtered_cve_records, use_cache=use_cache)
         
         if not self.scored_cves:
             raise PipelineError("No CVE records could be scored")
@@ -551,6 +615,18 @@ class CNAScoreCardPipeline:
         write_json_file(web_formatted_cnas, cna_combined_path)
         output_files['cna_combined'] = str(cna_combined_path)
         
+        # Generate chunked data for lazy loading
+        # Sort by rank for consistent chunk ordering
+        sorted_for_chunks = sorted(web_formatted_cnas, key=lambda x: x.get('rank', 999))
+        chunk_manifest = write_chunked_cna_data(sorted_for_chunks, output_dir, chunk_size=50)
+        output_files['chunk_manifest'] = str(output_dir / 'chunks' / 'manifest.json')
+        self.logger.info(f"Generated {chunk_manifest['totalChunks']} CNA chunks for lazy loading")
+        
+        # Generate search index for client-side filtering
+        search_index = generate_search_index(sorted_for_chunks, output_dir)
+        output_files['search_index'] = str(output_dir / 'search_index.json')
+        self.logger.info(f"Generated search index with {search_index['totalCNAs']} CNAs")
+        
         # Generate cna_summary.json for completeness page
         cna_summary_list = []
         for cna_name, cna_data in self.cna_outputs.items():
@@ -714,6 +790,8 @@ Examples:
   python pipeline.py --start 2024-01-01 --end 2024-12-31  # Custom date range
   python pipeline.py --output /custom/output   # Custom output directory
   python pipeline.py --log-level DEBUG         # Enable debug logging
+  python pipeline.py --delta                   # Incremental mode using delta files
+  python pipeline.py --no-cache                # Disable score caching
         """
     )
     
@@ -739,6 +817,16 @@ Examples:
         '--config-file',
         help='Path to custom configuration file'
     )
+    parser.add_argument(
+        '--delta',
+        action='store_true',
+        help='Use delta mode for incremental processing (only process changed CVEs)'
+    )
+    parser.add_argument(
+        '--no-cache',
+        action='store_true',
+        help='Disable score caching (useful for debugging)'
+    )
     
     args = parser.parse_args()
     
@@ -758,12 +846,16 @@ Examples:
         summary = pipeline.run(
             start_date=args.start_date,
             end_date=args.end_date,
-            output_dir=args.output_dir
+            output_dir=args.output_dir,
+            use_delta=args.delta,
+            use_cache=not args.no_cache
         )
         
         # Print execution summary
         logger.info("Pipeline Execution Summary:")
         logger.info(f"  Status: {summary['status']}")
+        logger.info(f"  Mode: {summary.get('mode', 'full')}")
+        logger.info(f"  Cache: {'enabled' if summary.get('cache_enabled', True) else 'disabled'}")
         logger.info(f"  Execution Time: {summary['execution_time']}")
         logger.info(f"  Analysis Period: {summary['analysis_period'][0]} to {summary['analysis_period'][1]}")
         logger.info(f"  CVEs Processed: {summary['total_cves_processed']}")

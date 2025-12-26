@@ -2,13 +2,16 @@
 ingest.py: Load CVE and CNA data from cve_data directory (CVE5 format).
 
 This module provides functions to load and validate CVE records from the filesystem,
-with support for date filtering and CNA extraction.
+with support for date filtering, CNA extraction, and parallel processing.
 """
 import logging
 from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Tuple
 from glob import glob
+from concurrent.futures import ProcessPoolExecutor, as_completed
+import multiprocessing
+import os
 
 from config import CVE_DATA_DIR, DATE_FORMAT
 from utils import load_json_file, validate_cve_record, extract_cna_short_name, ProgressTracker
@@ -144,7 +147,9 @@ def _get_year_files(cves_dir: Path, year: str) -> List[str]:
 def _load_and_filter_cves(
     cve_files: List[str], 
     start_date: Optional[str], 
-    end_date: Optional[str]
+    end_date: Optional[str],
+    use_parallel: bool = True,
+    max_workers: Optional[int] = None
 ) -> List[Dict[str, Any]]:
     """
     Load CVE files and apply date filtering.
@@ -153,13 +158,12 @@ def _load_and_filter_cves(
         cve_files: List of CVE file paths
         start_date: Start date filter
         end_date: End date filter
+        use_parallel: Whether to use parallel processing (default True)
+        max_workers: Number of worker processes (default: CPU count, max 8)
         
     Returns:
         List of filtered CVE records
     """
-    progress = ProgressTracker(len(cve_files), "Loading CVE files")
-    records = []
-    
     # Parse date filters
     start_dt = None
     end_dt = None
@@ -178,6 +182,22 @@ def _load_and_filter_cves(
             logger.error(f"Invalid end date format '{end_date}': {e}")
             return []
     
+    # Choose parallel or sequential processing
+    if use_parallel and len(cve_files) > 100:
+        return _load_cves_parallel(cve_files, start_dt, end_dt, max_workers)
+    else:
+        return _load_cves_sequential(cve_files, start_dt, end_dt)
+
+
+def _load_cves_sequential(
+    cve_files: List[str],
+    start_dt: Optional[datetime],
+    end_dt: Optional[datetime]
+) -> List[Dict[str, Any]]:
+    """Load CVE files sequentially (original method)."""
+    progress = ProgressTracker(len(cve_files), "Loading CVE files")
+    records = []
+    
     for file_path in cve_files:
         try:
             cve_record = _load_single_cve_file(file_path)
@@ -192,21 +212,157 @@ def _load_and_filter_cves(
     return records
 
 
+def _load_cves_parallel(
+    cve_files: List[str],
+    start_dt: Optional[datetime],
+    end_dt: Optional[datetime],
+    max_workers: Optional[int] = None
+) -> List[Dict[str, Any]]:
+    """
+    Load CVE files using parallel processing for improved performance.
+    
+    Args:
+        cve_files: List of CVE file paths
+        start_dt: Start date filter (datetime object)
+        end_dt: End date filter (datetime object)
+        max_workers: Number of worker processes
+        
+    Returns:
+        List of filtered CVE records
+    """
+    if max_workers is None:
+        max_workers = min(multiprocessing.cpu_count(), 8)
+    
+    logger.info(f"Loading {len(cve_files)} CVE files using {max_workers} workers")
+    
+    # Convert datetime to string for pickling across processes
+    start_str = start_dt.strftime(DATE_FORMAT) if start_dt else None
+    end_str = end_dt.strftime(DATE_FORMAT) if end_dt else None
+    
+    records = []
+    failed_count = 0
+    
+    # Process files in batches to reduce overhead
+    batch_size = max(100, len(cve_files) // (max_workers * 4))
+    batches = [cve_files[i:i + batch_size] for i in range(0, len(cve_files), batch_size)]
+    
+    logger.info(f"Processing in {len(batches)} batches of ~{batch_size} files each")
+    
+    with ProcessPoolExecutor(max_workers=max_workers) as executor:
+        futures = {
+            executor.submit(_load_cve_batch, batch, start_str, end_str): i 
+            for i, batch in enumerate(batches)
+        }
+        
+        for future in as_completed(futures):
+            try:
+                batch_records, batch_failed = future.result()
+                records.extend(batch_records)
+                failed_count += batch_failed
+            except Exception as e:
+                logger.error(f"Batch processing error: {e}")
+    
+    logger.info(f"Parallel loading complete: {len(records)} records loaded, {failed_count} files skipped")
+    return records
+
+
+def _load_cve_batch(
+    file_paths: List[str],
+    start_date_str: Optional[str],
+    end_date_str: Optional[str]
+) -> Tuple[List[Dict[str, Any]], int]:
+    """
+    Load a batch of CVE files (designed to run in a worker process).
+    
+    Args:
+        file_paths: List of CVE file paths to load
+        start_date_str: Start date filter string (YYYY-MM-DD)
+        end_date_str: End date filter string (YYYY-MM-DD)
+        
+    Returns:
+        Tuple of (list of valid CVE records, count of failed files)
+    """
+    # Import inside function to avoid pickling issues
+    import json
+    from datetime import datetime
+    
+    DATE_FMT = "%Y-%m-%d"
+    
+    # Parse dates in worker process
+    start_dt = datetime.strptime(start_date_str, DATE_FMT) if start_date_str else None
+    end_dt = datetime.strptime(end_date_str, DATE_FMT) if end_date_str else None
+    
+    records = []
+    failed = 0
+    
+    for file_path in file_paths:
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            
+            # Basic validation
+            if not isinstance(data, dict):
+                failed += 1
+                continue
+                
+            if "cveMetadata" not in data or "containers" not in data:
+                failed += 1
+                continue
+            
+            # Skip rejected CVEs
+            if data.get("cveMetadata", {}).get("state") == "REJECTED":
+                continue
+            
+            # Date filtering
+            pub_date_str = data.get("cveMetadata", {}).get("datePublished")
+            if pub_date_str:
+                pub_date_clean = pub_date_str[:10]
+                try:
+                    pub_dt = datetime.strptime(pub_date_clean, DATE_FMT)
+                    
+                    if start_dt and pub_dt < start_dt:
+                        continue
+                    if end_dt and pub_dt > end_dt:
+                        continue
+                except ValueError:
+                    # If date parsing fails, include the record
+                    pass
+            elif start_dt or end_dt:
+                # No publication date but filter requested - skip
+                continue
+            
+            records.append(data)
+            
+        except Exception:
+            failed += 1
+    
+    return records, failed
+
+
 def _load_single_cve_file(file_path: str) -> Optional[Dict[str, Any]]:
     """
-    Load and validate a single CVE file.
+    Load and validate a single CVE file with comprehensive error handling.
     
     Args:
         file_path: Path to CVE file
         
     Returns:
         CVE record dictionary if valid, None otherwise
+        
+    Note:
+        This function gracefully handles various error conditions:
+        - File not found or permissions errors
+        - Invalid JSON syntax
+        - Missing required CVE fields (cveMetadata, containers)
+        - Rejected CVE state
+        - Unsupported schema versions (logs warning but still loads)
     """
     try:
         data = load_json_file(Path(file_path))
         
         # Validate CVE record structure
         if not validate_cve_record(data):
+            logger.debug(f"Invalid CVE structure in {file_path}")
             return None
         
         # Filter out rejected CVEs
@@ -214,10 +370,27 @@ def _load_single_cve_file(file_path: str) -> Optional[Dict[str, Any]]:
         if cve_state == "REJECTED":
             return None
         
+        # Check schema version (informational, don't reject)
+        data_version = data.get("dataVersion", "unknown")
+        from config import SUPPORTED_SCHEMA_VERSIONS
+        if data_version not in SUPPORTED_SCHEMA_VERSIONS:
+            cve_id = data.get("cveMetadata", {}).get("cveId", "unknown")
+            logger.warning(f"CVE {cve_id} uses unsupported schema version: {data_version}")
+        
         return data
         
+    except FileNotFoundError:
+        logger.debug(f"CVE file not found: {file_path}")
+        return None
+    except PermissionError:
+        logger.warning(f"Permission denied reading CVE file: {file_path}")
+        return None
+    except ValueError as e:
+        # Invalid JSON
+        logger.debug(f"Invalid JSON in CVE file {file_path}: {e}")
+        return None
     except Exception as e:
-        logger.debug(f"Error loading CVE file {file_path}: {e}")
+        logger.debug(f"Unexpected error loading CVE file {file_path}: {type(e).__name__}: {e}")
         return None
 
 
@@ -332,6 +505,270 @@ def validate_date_range(start_date: str, end_date: str) -> bool:
     except ValueError as e:
         logger.error(f"Invalid date format: {e}")
         return False
+
+# =============================================================================
+# Delta Processing Functions
+# =============================================================================
+
+def load_delta_cves(
+    cve_dir: Optional[str] = None,
+    since: Optional[str] = None
+) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], Dict[str, Any]]:
+    """
+    Load only new and updated CVEs from delta files.
+    
+    This function uses the delta.json and deltaLog.json files to identify
+    CVEs that have changed since the last run, enabling incremental processing.
+    
+    Args:
+        cve_dir: Path to CVE data directory (defaults to config value)
+        since: ISO timestamp to filter changes after (e.g., "2025-10-28T00:00:00Z")
+               If None, only the latest delta.json is used.
+        
+    Returns:
+        Tuple of:
+        - List of new CVE records
+        - List of updated CVE records
+        - Metadata dict with fetchTime, numberOfChanges, errors
+        
+    Example:
+        >>> new_cves, updated_cves, meta = load_delta_cves()
+        >>> print(f"Found {len(new_cves)} new, {len(updated_cves)} updated")
+    """
+    if cve_dir is None:
+        cve_dir = str(CVE_DATA_DIR)
+    
+    cves_dir = Path(cve_dir) / "cves"
+    delta_file = cves_dir / "delta.json"
+    delta_log_file = cves_dir / "deltaLog.json"
+    
+    new_records = []
+    updated_records = []
+    metadata = {
+        "fetchTime": None,
+        "numberOfChanges": 0,
+        "errors": []
+    }
+    
+    # Collect delta entries to process
+    delta_entries = []
+    
+    if since:
+        # Load from deltaLog for historical changes
+        delta_entries = _get_delta_entries_since(delta_log_file, since)
+        logger.info(f"Found {len(delta_entries)} delta entries since {since}")
+    else:
+        # Just use latest delta.json
+        if delta_file.exists():
+            try:
+                delta_data = load_json_file(delta_file)
+                delta_entries = [delta_data]
+                logger.info(f"Loaded latest delta with {delta_data.get('numberOfChanges', 0)} changes")
+            except Exception as e:
+                logger.error(f"Error loading delta.json: {e}")
+                metadata["errors"].append(str(e))
+    
+    if not delta_entries:
+        logger.warning("No delta entries found to process")
+        return new_records, updated_records, metadata
+    
+    # Process each delta entry
+    all_new_cve_ids = set()
+    all_updated_cve_ids = set()
+    
+    for delta in delta_entries:
+        fetch_time = delta.get("fetchTime")
+        if metadata["fetchTime"] is None:
+            metadata["fetchTime"] = fetch_time
+        
+        # Collect CVE IDs
+        for cve_entry in delta.get("new", []):
+            all_new_cve_ids.add(cve_entry.get("cveId"))
+        
+        for cve_entry in delta.get("updated", []):
+            all_updated_cve_ids.add(cve_entry.get("cveId"))
+        
+        # Track errors
+        for error in delta.get("error", []):
+            metadata["errors"].append(error)
+    
+    # Remove any CVE from "new" if it also appears in "updated" (was updated after creation)
+    all_new_cve_ids -= all_updated_cve_ids
+    
+    logger.info(f"Processing {len(all_new_cve_ids)} new CVEs and {len(all_updated_cve_ids)} updated CVEs")
+    
+    # Load the actual CVE records
+    new_records = _load_cves_by_id(cves_dir, list(all_new_cve_ids))
+    updated_records = _load_cves_by_id(cves_dir, list(all_updated_cve_ids))
+    
+    metadata["numberOfChanges"] = len(new_records) + len(updated_records)
+    
+    return new_records, updated_records, metadata
+
+
+def _get_delta_entries_since(delta_log_file: Path, since: str) -> List[Dict[str, Any]]:
+    """
+    Get delta entries from deltaLog.json since a specific timestamp.
+    
+    Args:
+        delta_log_file: Path to deltaLog.json
+        since: ISO timestamp to filter from
+        
+    Returns:
+        List of delta entries with fetchTime >= since
+    """
+    if not delta_log_file.exists():
+        logger.warning(f"Delta log file not found: {delta_log_file}")
+        return []
+    
+    try:
+        since_dt = datetime.fromisoformat(since.replace('Z', '+00:00'))
+    except ValueError as e:
+        logger.error(f"Invalid 'since' timestamp format: {since}")
+        return []
+    
+    entries = []
+    try:
+        delta_log = load_json_file(delta_log_file)
+        
+        if not isinstance(delta_log, list):
+            logger.error("deltaLog.json is not a list")
+            return []
+        
+        for entry in delta_log:
+            fetch_time_str = entry.get("fetchTime")
+            if fetch_time_str:
+                try:
+                    fetch_dt = datetime.fromisoformat(fetch_time_str.replace('Z', '+00:00'))
+                    if fetch_dt >= since_dt:
+                        entries.append(entry)
+                except ValueError:
+                    continue
+        
+        return entries
+        
+    except Exception as e:
+        logger.error(f"Error reading deltaLog.json: {e}")
+        return []
+
+
+def _load_cves_by_id(cves_dir: Path, cve_ids: List[str]) -> List[Dict[str, Any]]:
+    """
+    Load CVE records by their CVE IDs.
+    
+    Args:
+        cves_dir: Path to cves directory
+        cve_ids: List of CVE IDs to load (e.g., ["CVE-2025-10150", "CVE-2025-10151"])
+        
+    Returns:
+        List of loaded CVE records
+    """
+    records = []
+    
+    for cve_id in cve_ids:
+        if not cve_id:
+            continue
+            
+        file_path = _cve_id_to_path(cves_dir, cve_id)
+        if file_path and file_path.exists():
+            record = _load_single_cve_file(str(file_path))
+            if record:
+                records.append(record)
+        else:
+            logger.debug(f"CVE file not found for {cve_id}")
+    
+    return records
+
+
+def _cve_id_to_path(cves_dir: Path, cve_id: str) -> Optional[Path]:
+    """
+    Convert a CVE ID to its file path.
+    
+    CVE IDs follow the pattern CVE-YYYY-NNNNN where:
+    - YYYY is the year
+    - NNNNN is a sequence number (variable length)
+    
+    Files are organized as: cves/YYYY/Nxxx/CVE-YYYY-NNNNN.json
+    
+    Args:
+        cves_dir: Path to cves directory
+        cve_id: CVE ID (e.g., "CVE-2025-10150")
+        
+    Returns:
+        Path to CVE file, or None if invalid ID
+    """
+    if not cve_id or not cve_id.startswith("CVE-"):
+        return None
+    
+    parts = cve_id.split("-")
+    if len(parts) != 3:
+        return None
+    
+    try:
+        year = parts[1]
+        seq_num = parts[2]
+        
+        # Determine the subdirectory (e.g., "10xxx" for 10150)
+        if len(seq_num) <= 4:
+            subdir = f"{seq_num[0]}xxx"
+        else:
+            # For longer sequence numbers (e.g., 10150 -> 10xxx)
+            subdir = f"{seq_num[:-3]}xxx"
+        
+        return cves_dir / year / subdir / f"{cve_id}.json"
+        
+    except (IndexError, ValueError) as e:
+        logger.debug(f"Invalid CVE ID format: {cve_id}")
+        return None
+
+
+def get_last_run_timestamp(state_file: Path) -> Optional[str]:
+    """
+    Get the timestamp of the last successful pipeline run.
+    
+    Args:
+        state_file: Path to state file storing last run info
+        
+    Returns:
+        ISO timestamp string of last run, or None if no previous run
+    """
+    if not state_file.exists():
+        return None
+    
+    try:
+        state = load_json_file(state_file)
+        return state.get("last_run_timestamp")
+    except Exception as e:
+        logger.warning(f"Error reading state file: {e}")
+        return None
+
+
+def save_run_timestamp(state_file: Path, timestamp: Optional[str] = None) -> None:
+    """
+    Save the current timestamp as the last run time.
+    
+    Args:
+        state_file: Path to state file
+        timestamp: ISO timestamp to save (defaults to current time)
+    """
+    import json
+    
+    if timestamp is None:
+        timestamp = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+    
+    state = {
+        "last_run_timestamp": timestamp,
+        "updated_at": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+    }
+    
+    try:
+        state_file.parent.mkdir(parents=True, exist_ok=True)
+        with open(state_file, 'w') as f:
+            json.dump(state, f, indent=2)
+        logger.info(f"Saved run timestamp: {timestamp}")
+    except Exception as e:
+        logger.error(f"Error saving state file: {e}")
+
 
 def main() -> None:
     """

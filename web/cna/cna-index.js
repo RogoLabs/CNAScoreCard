@@ -1,13 +1,15 @@
 /**
  * CNA Index Page - Main JavaScript
  * Modern implementation with clear separation of concerns
+ * Supports chunked loading for faster initial page loads
  */
 
 // Configuration
 const CONFIG = {
   dataUrl: '../data/cna_combined.json',
   itemsPerPage: 25,
-  defaultSort: 'rank'
+  defaultSort: 'rank',
+  useChunkedLoading: true  // Enable chunked loading when available
 };
 
 // State management
@@ -19,6 +21,8 @@ const STATE = {
   sortDirection: 'asc',
   showingDetails: false,
   searchTerm: '',
+  isChunkedMode: false,
+  dataFullyLoaded: false
 };
 
 // DOM Elements
@@ -34,6 +38,8 @@ const DOM = {
   prevPageBtn: document.getElementById('prevPageBtn'),
   nextPageBtn: document.getElementById('nextPageBtn'),
   paginationPages: document.getElementById('paginationPages'),
+  exportCsvBtn: document.getElementById('exportCsvBtn'),
+  exportJsonBtn: document.getElementById('exportJsonBtn'),
 };
 
 /**
@@ -41,8 +47,12 @@ const DOM = {
  */
 async function init() {
   try {
-    // Fetch data
-    STATE.data = await fetchData(CONFIG.dataUrl);
+    // Try chunked loading first if enabled and ChunkLoader is available
+    if (CONFIG.useChunkedLoading && typeof ChunkLoader !== 'undefined') {
+      await initWithChunks();
+    } else {
+      await initWithFallback();
+    }
     
     // Set up event listeners
     setupEventListeners();
@@ -54,10 +64,40 @@ async function init() {
     applyFilters();
     
     console.log('CNA Index initialized with', STATE.data.length, 'total CNAs,', STATE.filteredData.length, 'active CNAs shown');
+    if (STATE.isChunkedMode) {
+      console.log('Using chunked loading mode for better performance');
+    }
   } catch (error) {
     console.error('Failed to initialize CNA Index:', error);
     showErrorMessage('Failed to load CNA data. Please try refreshing the page.');
   }
+}
+
+/**
+ * Initialize with chunked loading
+ */
+async function initWithChunks() {
+  const result = await ChunkLoader.init();
+  
+  if (result.mode === 'chunked') {
+    STATE.isChunkedMode = true;
+    // Load all data from chunks - we need all data for proper filtering/sorting
+    STATE.data = await ChunkLoader.loadAll();
+    STATE.dataFullyLoaded = true;
+    console.log(`Loaded ${STATE.data.length} CNAs from ${result.manifest.totalChunks} chunks`);
+  } else {
+    // Fall back to regular loading
+    await initWithFallback();
+  }
+}
+
+/**
+ * Initialize with fallback (load full file)
+ */
+async function initWithFallback() {
+  STATE.data = await fetchData(CONFIG.dataUrl);
+  STATE.dataFullyLoaded = true;
+  STATE.isChunkedMode = false;
 }
 
 /**
@@ -94,6 +134,10 @@ function setupEventListeners() {
   // Pagination buttons
   DOM.prevPageBtn?.addEventListener('click', handlePrevPage);
   DOM.nextPageBtn?.addEventListener('click', handleNextPage);
+  
+  // Export buttons
+  DOM.exportCsvBtn?.addEventListener('click', handleExportCsv);
+  DOM.exportJsonBtn?.addEventListener('click', handleExportJson);
 }
 
 /**
@@ -345,8 +389,8 @@ function renderTable() {
     }
     
     row.innerHTML = `
-      <td class="col-rank ${rankClass}">${rankDisplay}</td>
-      <td class="col-name">
+      <td class="col-rank ${rankClass}" data-label="Rank">${rankDisplay}</td>
+      <td class="col-name" data-label="CNA">
         <div class="cna-name-cell">
           <a href="cna-detail.html?shortName=${cna.shortName}" class="cna-name-link">${cna.shortName}</a>
           <div class="cna-details">
@@ -354,14 +398,14 @@ function renderTable() {
           </div>
         </div>
       </td>
-      <td class="col-type">${formatCnaTypes(cna.cnaTypes, cna.cnaType, cna.shortName)}</td>
-      <td class="col-count">${cna.total_cves || 0}</td>
-      <td class="col-score">${formatScoreWithBar(cna.scores?.overall_average_score || 0, true)}</td>
-      <td class="col-detail" data-column="foundational">${formatScoreWithBar(cna.scores?.foundational_completeness || 0, true)}</td>
-      <td class="col-detail" data-column="rootcause">${formatScoreWithBar(cna.scores?.root_cause_analysis || 0, true)}</td>
-      <td class="col-detail" data-column="software">${formatScoreWithBar(cna.scores?.software_identification || 0, true)}</td>
-      <td class="col-detail" data-column="severity">${formatScoreWithBar(cna.scores?.severity_and_impact || 0, true)}</td>
-      <td class="col-detail" data-column="patch">${formatScoreWithBar(cna.scores?.patchinfo || 0, true)}</td>
+      <td class="col-type" data-label="Type">${formatCnaTypes(cna.cnaTypes, cna.cnaType, cna.shortName)}</td>
+      <td class="col-count" data-label="CVE Count">${cna.total_cves || 0}</td>
+      <td class="col-score" data-label="Score">${formatScoreWithBar(cna.scores?.overall_average_score || 0, true)}</td>
+      <td class="col-detail" data-column="foundational" data-label="Foundational">${formatScoreWithBar(cna.scores?.foundational_completeness || 0, true)}</td>
+      <td class="col-detail" data-column="rootcause" data-label="Root Cause">${formatScoreWithBar(cna.scores?.root_cause_analysis || 0, true)}</td>
+      <td class="col-detail" data-column="software" data-label="Software ID">${formatScoreWithBar(cna.scores?.software_identification || 0, true)}</td>
+      <td class="col-detail" data-column="severity" data-label="Severity">${formatScoreWithBar(cna.scores?.severity_and_impact || 0, true)}</td>
+      <td class="col-detail" data-column="patch" data-label="Patch Info">${formatScoreWithBar(cna.scores?.patchinfo || 0, true)}</td>
     `;
     
     DOM.tableBody.appendChild(row);
@@ -616,6 +660,133 @@ function debounce(func, wait) {
     clearTimeout(timeout);
     timeout = setTimeout(() => func.apply(this, args), wait);
   };
+}
+
+/**
+ * Handle CSV export - exports current filtered view
+ */
+function handleExportCsv() {
+  const dataToExport = STATE.filteredData;
+  
+  if (dataToExport.length === 0) {
+    alert('No data to export');
+    return;
+  }
+  
+  // CSV headers
+  const headers = [
+    'Rank',
+    'Short Name',
+    'Organization Name',
+    'CNA Type',
+    'CVE Count',
+    'Overall Score',
+    'Foundational Completeness',
+    'Root Cause Analysis',
+    'Software Identification',
+    'Severity & Impact',
+    'Patch Info',
+    'Status'
+  ];
+  
+  // Convert data to CSV rows
+  const rows = dataToExport.map(cna => [
+    cna.is_active ? cna.rank : 'N/A',
+    escapeCSVField(cna.shortName || ''),
+    escapeCSVField(cna.organizationName || cna.shortName || ''),
+    escapeCSVField(Array.isArray(cna.cnaTypes) ? cna.cnaTypes.join(', ') : (cna.cnaType || '')),
+    cna.total_cves || 0,
+    (cna.scores?.overall_average_score || 0).toFixed(2),
+    (cna.scores?.foundational_completeness || 0).toFixed(2),
+    (cna.scores?.root_cause_analysis || 0).toFixed(2),
+    (cna.scores?.software_identification || 0).toFixed(2),
+    (cna.scores?.severity_and_impact || 0).toFixed(2),
+    (cna.scores?.patchinfo || 0).toFixed(2),
+    cna.is_active ? 'Active' : 'Inactive'
+  ]);
+  
+  // Build CSV content
+  const csvContent = [
+    headers.join(','),
+    ...rows.map(row => row.join(','))
+  ].join('\n');
+  
+  // Download the file
+  downloadFile(csvContent, 'cna-rankings.csv', 'text/csv;charset=utf-8;');
+}
+
+/**
+ * Handle JSON export - exports current filtered view
+ */
+function handleExportJson() {
+  const dataToExport = STATE.filteredData;
+  
+  if (dataToExport.length === 0) {
+    alert('No data to export');
+    return;
+  }
+  
+  // Create a clean export format
+  const exportData = {
+    exportDate: new Date().toISOString(),
+    totalCNAs: dataToExport.length,
+    filterApplied: STATE.searchTerm ? `Search: "${STATE.searchTerm}"` : 'Active CNAs only',
+    sortedBy: STATE.sortField,
+    sortDirection: STATE.sortDirection,
+    cnas: dataToExport.map(cna => ({
+      rank: cna.is_active ? cna.rank : null,
+      shortName: cna.shortName,
+      organizationName: cna.organizationName || cna.shortName,
+      cnaTypes: cna.cnaTypes || [cna.cnaType].filter(Boolean),
+      cveCount: cna.total_cves || 0,
+      scores: {
+        overall: cna.scores?.overall_average_score || 0,
+        foundational: cna.scores?.foundational_completeness || 0,
+        rootCause: cna.scores?.root_cause_analysis || 0,
+        softwareId: cna.scores?.software_identification || 0,
+        severity: cna.scores?.severity_and_impact || 0,
+        patchInfo: cna.scores?.patchinfo || 0
+      },
+      isActive: cna.is_active
+    }))
+  };
+  
+  // Download the file
+  const jsonContent = JSON.stringify(exportData, null, 2);
+  downloadFile(jsonContent, 'cna-rankings.json', 'application/json');
+}
+
+/**
+ * Escape a field for CSV format
+ * @param {string} field - Field value to escape
+ * @returns {string} - Escaped field
+ */
+function escapeCSVField(field) {
+  if (field === null || field === undefined) return '';
+  const stringField = String(field);
+  // If field contains comma, newline, or quote, wrap in quotes and escape existing quotes
+  if (stringField.includes(',') || stringField.includes('\n') || stringField.includes('"')) {
+    return `"${stringField.replace(/"/g, '""')}"`;
+  }
+  return stringField;
+}
+
+/**
+ * Download a file with the given content
+ * @param {string} content - File content
+ * @param {string} filename - Name of the file
+ * @param {string} mimeType - MIME type of the file
+ */
+function downloadFile(content, filename, mimeType) {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
 }
 
 // Initialize the application when DOM is loaded

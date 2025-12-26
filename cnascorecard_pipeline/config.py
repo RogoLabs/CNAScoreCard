@@ -28,6 +28,10 @@ CNA_DATA_DIR = WEB_DATA_DIR / "cna"
 DATE_FORMAT = "%Y-%m-%d"
 ANALYSIS_PERIOD_MONTHS = 6
 
+# CVE Schema version configuration
+CVE_SCHEMA_VERSION = "5.1"  # Current default version
+SUPPORTED_SCHEMA_VERSIONS = ["5.0", "5.1", "5.2"]  # All versions we can process
+
 # Scoring configuration
 class ScoringConfig:
     """Configuration for CVE scoring logic."""

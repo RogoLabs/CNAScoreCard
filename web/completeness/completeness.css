@@ -666,4 +666,62 @@
   .search-result-item:hover {
     transform: none; /* Disable transform on mobile */
   }
+  
+  /* Mobile table styles */
+  .completeness-card.card {
+    padding: 1rem;
+    margin: 1rem;
+  }
+  
+  .completeness-table th,
+  .completeness-table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.85rem;
+  }
+  
+  .completeness-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .completeness-header p {
+    font-size: 0.9rem;
+  }
+  
+  .completeness-selector {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  #cnaCompletenessSelect {
+    width: 100%;
+    min-width: unset;
+  }
+  
+  /* Make table horizontally scrollable on mobile */
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .completeness-table {
+    min-width: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .completeness-card.card {
+    padding: 0.75rem;
+    margin: 0.5rem;
+    border-radius: 8px;
+  }
+  
+  .completeness-table th,
+  .completeness-table td {
+    padding: 0.5rem 0.35rem;
+    font-size: 0.8rem;
+  }
+  
+  .completeness-header h1 {
+    font-size: 1.25rem;
+  }
 }

@@ -20,7 +20,10 @@
   <link rel="stylesheet" href="scoring.css">
 </head>
 <body>
-  <nav class="navbar">
+  <!-- Skip Link for Accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
+  <nav class="navbar" role="navigation" aria-label="Main Navigation">
     <img src="assets/logo.svg" alt="CNA Scorecard Logo" class="navbar-logo">
     <div class="navbar-links">
       <a href="index.html">Home</a>
@@ -30,7 +33,7 @@
       <a href="scoring.html" class="active">Methodology</a>
     </div>
   </nav>
-  <main class="container scoring-cards-container">
+  <main class="container scoring-cards-container" id="main-content">
     <!-- Introduction Section -->
     <section class="scoring-summary-card card">
       <h1 class="scoring-title">Scoring Methodology</h1>
@@ -742,5 +745,6 @@ def _has_patch_references(references):
       }
     });
   </script>
+  <script src="shared/mobile-nav.js"></script>
 </body>
 </html>

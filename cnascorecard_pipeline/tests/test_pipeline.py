@@ -172,18 +172,22 @@ class TestCNAScoreCardPipeline(TestPipelineFixtures):
             mock_get_config.assert_called_once()
     
     @patch('pipeline.CNAScoreCardPipeline._generate_output_files')
+    @patch('pipeline.CNAScoreCardPipeline._generate_trends_analysis')
     @patch('pipeline.CNAScoreCardPipeline._generate_completeness_analysis')
     @patch('pipeline.CNAScoreCardPipeline._aggregate_cna_scores')
     @patch('pipeline.CNAScoreCardPipeline._score_cve_records')
     @patch('pipeline.CNAScoreCardPipeline._load_cve_data')
+    @patch('pipeline.CNAScoreCardPipeline._sync_cna_metadata')
     @patch('pipeline.CNAScoreCardPipeline._setup_analysis_periods')
     def test_pipeline_run_success(
         self,
         mock_setup_periods,
+        mock_sync_metadata,
         mock_load_data,
         mock_score_cves,
         mock_aggregate,
         mock_completeness,
+        mock_trends,
         mock_output,
         sample_config
     ):
@@ -205,14 +209,18 @@ class TestCNAScoreCardPipeline(TestPipelineFixtures):
         
         # Verify all steps were called
         mock_setup_periods.assert_called_once_with(None, None)
+        mock_sync_metadata.assert_called_once()
         mock_load_data.assert_called_once()
-        mock_score_cves.assert_called_once()
+        mock_score_cves.assert_called_once_with(use_cache=True)
         mock_aggregate.assert_called_once()
         mock_completeness.assert_called_once()
+        mock_trends.assert_called_once()
         mock_output.assert_called_once_with(None)
         
         # Verify result structure
         assert result['status'] == 'success'
+        assert result['mode'] == 'full'
+        assert result['cache_enabled'] == True
         assert 'execution_time' in result
         assert result['analysis_period'] == ('2024-01-01', '2024-06-30')
         assert result['total_cves_processed'] == 1
@@ -294,7 +302,7 @@ class TestCNAScoreCardPipeline(TestPipelineFixtures):
         pipeline._score_cve_records()
         
         assert pipeline.scored_cves == sample_scored_cves
-        mock_score.assert_called_once_with([{'test': 'cve'}])
+        mock_score.assert_called_once_with([{'test': 'cve'}], use_cache=True)
     
     @patch('pipeline.score_multiple_cves')
     def test_score_cve_records_no_scores(self, mock_score, sample_config):
@@ -383,13 +391,21 @@ class TestPipelineOutputGeneration(TestPipelineFixtures):
         mock_ensure_dir.assert_called()
     
     @patch('pipeline.write_json_file')
+    @patch('pipeline.write_chunked_cna_data')
+    @patch('pipeline.generate_search_index')
     def test_generate_summary_files(
         self, 
+        mock_search_index,
+        mock_chunked_data,
         mock_write_json,
         sample_config,
         sample_cna_outputs
     ):
         """Test summary file generation."""
+        # Mock chunking functions
+        mock_chunked_data.return_value = {'totalChunks': 1, 'totalCNAs': 1}
+        mock_search_index.return_value = {'totalCNAs': 1}
+        
         pipeline = CNAScoreCardPipeline(sample_config)
         pipeline.cna_outputs = sample_cna_outputs
         pipeline.analysis_periods = {'current': ('2024-01-01', '2024-06-30')}
@@ -400,7 +416,11 @@ class TestPipelineOutputGeneration(TestPipelineFixtures):
         assert 'cna_combined' in result
         assert 'cna_summary' in result
         assert 'completeness_summary' in result
+        assert 'chunk_manifest' in result
+        assert 'search_index' in result
         assert mock_write_json.call_count == 3
+        mock_chunked_data.assert_called_once()
+        mock_search_index.assert_called_once()
     
     @patch('pipeline.write_json_file')
     @patch('pipeline.ensure_directory_exists')

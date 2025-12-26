@@ -429,15 +429,19 @@ def _has_patch_references(references: List[Dict[str, Any]]) -> bool:
     return False
 
 
-def score_multiple_cves(cves: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+def score_multiple_cves(cves: List[Dict[str, Any]], use_cache: bool = True) -> List[Dict[str, Any]]:
     """
-    Score multiple CVE records with progress tracking.
+    Score multiple CVE records with progress tracking and optional caching.
+    
+    When caching is enabled, scores for unchanged CVEs are retrieved from cache,
+    significantly improving performance for incremental runs.
     
     Args:
         cves: List of CVE record dictionaries
+        use_cache: Whether to use score caching (default: True)
         
     Returns:
-        List of scored CVE records
+        List of scored CVE records (preserves input order and duplicates)
     """
     from utils import ProgressTracker
     
@@ -445,22 +449,78 @@ def score_multiple_cves(cves: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         logger.warning("No CVEs provided for scoring")
         return []
     
-    logger.info(f"Starting to score {len(cves)} CVE records")
-    progress = ProgressTracker(len(cves), "Scoring CVEs")
+    logger.info(f"Starting to score {len(cves)} CVE records (cache={'enabled' if use_cache else 'disabled'})")
     
+    # Initialize cache if enabled
+    cache = None
+    if use_cache:
+        try:
+            from cache import get_cache
+            cache = get_cache()
+        except ImportError:
+            logger.debug("Cache module not available, scoring all CVEs")
+        except Exception as e:
+            logger.warning(f"Cache initialization error: {e}")
+    
+    progress = ProgressTracker(len(cves), "Scoring CVEs")
     scored_cves = []
+    cache_hits = 0
+    cache_misses = 0
+    
     for cve in cves:
         try:
+            cve_id = cve.get("cveMetadata", {}).get("cveId")
+            cached_score = None
+            
+            # Try to get from cache
+            if cache and cve_id:
+                cached_score = cache.get(cve_id, cve)
+                if cached_score:
+                    cache_hits += 1
+                    scored_cves.append(cached_score)
+                    progress.update()
+                    continue
+                else:
+                    cache_misses += 1
+            
+            # Score the CVE
             scored_cve = score_cve_record(cve)
             scored_cves.append(scored_cve)
+            
+            # Cache the result
+            if cache and cve_id:
+                try:
+                    cache.set(cve_id, cve, scored_cve)
+                except Exception as e:
+                    logger.debug(f"Failed to cache score for {cve_id}: {e}")
+                    
         except Exception as e:
-            cve_id = cve.get("cveId", "unknown")
+            cve_id = cve.get("cveId", cve.get("cveMetadata", {}).get("cveId", "unknown"))
             logger.error(f"Failed to score CVE {cve_id}: {e}")
-            continue
+            # Still add a zeroed score for consistency
+            scored_cves.append({
+                "cveId": cve_id if cve_id != "unknown" else "",
+                "datePublished": "",
+                "assigningCna": "Unknown",
+                "totalScore": 0,
+                "scoreBreakdown": {
+                    "foundationalCompleteness": 0,
+                    "rootCauseAnalysis": 0,
+                    "severityAndImpactContext": 0,
+                    "softwareIdentification": 0,
+                    "patchinfo": 0
+                }
+            })
         finally:
             progress.update()
     
     progress.finish()
+    
+    if cache_hits > 0:
+        logger.info(f"Cache: {cache_hits} hits, {cache_misses} misses")
+    
     logger.info(f"Successfully scored {len(scored_cves)} out of {len(cves)} CVE records")
+    
+    return scored_cves
     
     return scored_cves

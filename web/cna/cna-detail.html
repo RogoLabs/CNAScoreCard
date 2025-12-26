@@ -39,12 +39,17 @@
       <a href="../scoring.html">Methodology</a>
     </div>
   </nav>
-  <main class="container">
+  <main class="container" id="main-content">
     <section class="cna-header-section">
       <a href="../index.html" class="back-button" onclick="handleBackNavigation(event)" aria-label="Back to CNA List">
         <span class="back-icon">←</span>
         <span class="back-text">Back to CNA List</span>
       </a>
+      <div class="detail-actions">
+        <button id="exportCnaBtn" class="export-detail-button" title="Export CNA Report">
+          <span class="export-icon">📥</span> Export Report
+        </button>
+      </div>
       <div class="cna-header-content">
         <div class="cna-title-section">
           <h1 id="cnaName">CNA Name</h1>
@@ -149,6 +154,7 @@
     </div>
     <div class="footer-meta">&copy; 2025 RogoLabs. All rights reserved.</div>
   </footer>
+  <script src="../shared/mobile-nav.js"></script>
   <script src="cna-detail.js" defer></script>
 </body>
 </html>
