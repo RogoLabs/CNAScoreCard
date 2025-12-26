@@ -186,25 +186,55 @@
 
     @media (max-width: 768px) {
       .page-title {
-        font-size: 2rem;
+        font-size: 1.5rem;
+      }
+      
+      .page-subtitle {
+        font-size: 0.95rem;
+      }
+      
+      .section {
+        padding: 1rem;
+      }
+      
+      .section-title {
+        font-size: 1.25rem;
       }
 
       .charts-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 1rem;
       }
 
       .chart-card {
-        padding: 1rem;
+        padding: 0.75rem;
+      }
+      
+      .chart-title {
+        font-size: 1rem;
+      }
+      
+      .chart-container {
+        height: 250px;
       }
 
       .improvers-table {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
       }
 
       .improvers-table th,
       .improvers-table td {
-        padding: 0.5rem;
+        padding: 0.5rem 0.35rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .chart-container {
+        height: 200px;
+      }
+      
+      .page-title {
+        font-size: 1.25rem;
       }
     }
   </style>
@@ -404,10 +434,11 @@
         const range = maxValue - minValue;
         const buffer = Math.max(range * 0.1, 2); // At least 2% buffer
         const rawYMin = Math.max(0, minValue - buffer);
-        const yMax = maxValue + buffer;
+        const rawYMax = maxValue + buffer;
         
-        // Round yMin down to nearest whole number ending in 0 or 5
+        // Round yMin down and yMax up to nearest 5
         const yMin = Math.floor(rawYMin / 5) * 5;
+        const yMax = Math.ceil(rawYMax / 5) * 5;
 
         // Hide spinner and show canvas
         spinner.style.display = 'none';
@@ -476,8 +507,9 @@
                 max: yMax,
                 ticks: {
                   callback: function(value) {
-                    return value + '%';
-                  }
+                    return Math.round(value) + '%';
+                  },
+                  stepSize: 5
                 }
               }
             },
