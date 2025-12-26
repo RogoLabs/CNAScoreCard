@@ -8,7 +8,7 @@ for incremental runs.
 import hashlib
 import json
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Any, Optional, List, Tuple
 
@@ -129,7 +129,7 @@ class ScoreCache:
             "cve_id": cve_id,
             "hash": self.compute_hash(cve_data),
             "score": score,
-            "cached_at": datetime.utcnow().isoformat()
+            "cached_at": datetime.now(timezone.utc).isoformat()
         }
         
         # Update memory cache
@@ -235,7 +235,7 @@ class ScoreCache:
         cutoff = None
         if older_than_days:
             from datetime import timedelta
-            cutoff = datetime.utcnow() - timedelta(days=older_than_days)
+            cutoff = datetime.now(timezone.utc) - timedelta(days=older_than_days)
         
         for cache_file in self.cache_dir.rglob("CVE-*.json"):
             try:
