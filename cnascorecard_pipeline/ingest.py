@@ -506,6 +506,270 @@ def validate_date_range(start_date: str, end_date: str) -> bool:
         logger.error(f"Invalid date format: {e}")
         return False
 
+# =============================================================================
+# Delta Processing Functions
+# =============================================================================
+
+def load_delta_cves(
+    cve_dir: Optional[str] = None,
+    since: Optional[str] = None
+) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], Dict[str, Any]]:
+    """
+    Load only new and updated CVEs from delta files.
+    
+    This function uses the delta.json and deltaLog.json files to identify
+    CVEs that have changed since the last run, enabling incremental processing.
+    
+    Args:
+        cve_dir: Path to CVE data directory (defaults to config value)
+        since: ISO timestamp to filter changes after (e.g., "2025-10-28T00:00:00Z")
+               If None, only the latest delta.json is used.
+        
+    Returns:
+        Tuple of:
+        - List of new CVE records
+        - List of updated CVE records
+        - Metadata dict with fetchTime, numberOfChanges, errors
+        
+    Example:
+        >>> new_cves, updated_cves, meta = load_delta_cves()
+        >>> print(f"Found {len(new_cves)} new, {len(updated_cves)} updated")
+    """
+    if cve_dir is None:
+        cve_dir = str(CVE_DATA_DIR)
+    
+    cves_dir = Path(cve_dir) / "cves"
+    delta_file = cves_dir / "delta.json"
+    delta_log_file = cves_dir / "deltaLog.json"
+    
+    new_records = []
+    updated_records = []
+    metadata = {
+        "fetchTime": None,
+        "numberOfChanges": 0,
+        "errors": []
+    }
+    
+    # Collect delta entries to process
+    delta_entries = []
+    
+    if since:
+        # Load from deltaLog for historical changes
+        delta_entries = _get_delta_entries_since(delta_log_file, since)
+        logger.info(f"Found {len(delta_entries)} delta entries since {since}")
+    else:
+        # Just use latest delta.json
+        if delta_file.exists():
+            try:
+                delta_data = load_json_file(delta_file)
+                delta_entries = [delta_data]
+                logger.info(f"Loaded latest delta with {delta_data.get('numberOfChanges', 0)} changes")
+            except Exception as e:
+                logger.error(f"Error loading delta.json: {e}")
+                metadata["errors"].append(str(e))
+    
+    if not delta_entries:
+        logger.warning("No delta entries found to process")
+        return new_records, updated_records, metadata
+    
+    # Process each delta entry
+    all_new_cve_ids = set()
+    all_updated_cve_ids = set()
+    
+    for delta in delta_entries:
+        fetch_time = delta.get("fetchTime")
+        if metadata["fetchTime"] is None:
+            metadata["fetchTime"] = fetch_time
+        
+        # Collect CVE IDs
+        for cve_entry in delta.get("new", []):
+            all_new_cve_ids.add(cve_entry.get("cveId"))
+        
+        for cve_entry in delta.get("updated", []):
+            all_updated_cve_ids.add(cve_entry.get("cveId"))
+        
+        # Track errors
+        for error in delta.get("error", []):
+            metadata["errors"].append(error)
+    
+    # Remove any CVE from "new" if it also appears in "updated" (was updated after creation)
+    all_new_cve_ids -= all_updated_cve_ids
+    
+    logger.info(f"Processing {len(all_new_cve_ids)} new CVEs and {len(all_updated_cve_ids)} updated CVEs")
+    
+    # Load the actual CVE records
+    new_records = _load_cves_by_id(cves_dir, list(all_new_cve_ids))
+    updated_records = _load_cves_by_id(cves_dir, list(all_updated_cve_ids))
+    
+    metadata["numberOfChanges"] = len(new_records) + len(updated_records)
+    
+    return new_records, updated_records, metadata
+
+
+def _get_delta_entries_since(delta_log_file: Path, since: str) -> List[Dict[str, Any]]:
+    """
+    Get delta entries from deltaLog.json since a specific timestamp.
+    
+    Args:
+        delta_log_file: Path to deltaLog.json
+        since: ISO timestamp to filter from
+        
+    Returns:
+        List of delta entries with fetchTime >= since
+    """
+    if not delta_log_file.exists():
+        logger.warning(f"Delta log file not found: {delta_log_file}")
+        return []
+    
+    try:
+        since_dt = datetime.fromisoformat(since.replace('Z', '+00:00'))
+    except ValueError as e:
+        logger.error(f"Invalid 'since' timestamp format: {since}")
+        return []
+    
+    entries = []
+    try:
+        delta_log = load_json_file(delta_log_file)
+        
+        if not isinstance(delta_log, list):
+            logger.error("deltaLog.json is not a list")
+            return []
+        
+        for entry in delta_log:
+            fetch_time_str = entry.get("fetchTime")
+            if fetch_time_str:
+                try:
+                    fetch_dt = datetime.fromisoformat(fetch_time_str.replace('Z', '+00:00'))
+                    if fetch_dt >= since_dt:
+                        entries.append(entry)
+                except ValueError:
+                    continue
+        
+        return entries
+        
+    except Exception as e:
+        logger.error(f"Error reading deltaLog.json: {e}")
+        return []
+
+
+def _load_cves_by_id(cves_dir: Path, cve_ids: List[str]) -> List[Dict[str, Any]]:
+    """
+    Load CVE records by their CVE IDs.
+    
+    Args:
+        cves_dir: Path to cves directory
+        cve_ids: List of CVE IDs to load (e.g., ["CVE-2025-10150", "CVE-2025-10151"])
+        
+    Returns:
+        List of loaded CVE records
+    """
+    records = []
+    
+    for cve_id in cve_ids:
+        if not cve_id:
+            continue
+            
+        file_path = _cve_id_to_path(cves_dir, cve_id)
+        if file_path and file_path.exists():
+            record = _load_single_cve_file(str(file_path))
+            if record:
+                records.append(record)
+        else:
+            logger.debug(f"CVE file not found for {cve_id}")
+    
+    return records
+
+
+def _cve_id_to_path(cves_dir: Path, cve_id: str) -> Optional[Path]:
+    """
+    Convert a CVE ID to its file path.
+    
+    CVE IDs follow the pattern CVE-YYYY-NNNNN where:
+    - YYYY is the year
+    - NNNNN is a sequence number (variable length)
+    
+    Files are organized as: cves/YYYY/Nxxx/CVE-YYYY-NNNNN.json
+    
+    Args:
+        cves_dir: Path to cves directory
+        cve_id: CVE ID (e.g., "CVE-2025-10150")
+        
+    Returns:
+        Path to CVE file, or None if invalid ID
+    """
+    if not cve_id or not cve_id.startswith("CVE-"):
+        return None
+    
+    parts = cve_id.split("-")
+    if len(parts) != 3:
+        return None
+    
+    try:
+        year = parts[1]
+        seq_num = parts[2]
+        
+        # Determine the subdirectory (e.g., "10xxx" for 10150)
+        if len(seq_num) <= 4:
+            subdir = f"{seq_num[0]}xxx"
+        else:
+            # For longer sequence numbers (e.g., 10150 -> 10xxx)
+            subdir = f"{seq_num[:-3]}xxx"
+        
+        return cves_dir / year / subdir / f"{cve_id}.json"
+        
+    except (IndexError, ValueError) as e:
+        logger.debug(f"Invalid CVE ID format: {cve_id}")
+        return None
+
+
+def get_last_run_timestamp(state_file: Path) -> Optional[str]:
+    """
+    Get the timestamp of the last successful pipeline run.
+    
+    Args:
+        state_file: Path to state file storing last run info
+        
+    Returns:
+        ISO timestamp string of last run, or None if no previous run
+    """
+    if not state_file.exists():
+        return None
+    
+    try:
+        state = load_json_file(state_file)
+        return state.get("last_run_timestamp")
+    except Exception as e:
+        logger.warning(f"Error reading state file: {e}")
+        return None
+
+
+def save_run_timestamp(state_file: Path, timestamp: Optional[str] = None) -> None:
+    """
+    Save the current timestamp as the last run time.
+    
+    Args:
+        state_file: Path to state file
+        timestamp: ISO timestamp to save (defaults to current time)
+    """
+    import json
+    
+    if timestamp is None:
+        timestamp = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+    
+    state = {
+        "last_run_timestamp": timestamp,
+        "updated_at": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+    }
+    
+    try:
+        state_file.parent.mkdir(parents=True, exist_ok=True)
+        with open(state_file, 'w') as f:
+            json.dump(state, f, indent=2)
+        logger.info(f"Saved run timestamp: {timestamp}")
+    except Exception as e:
+        logger.error(f"Error saving state file: {e}")
+
+
 def main() -> None:
     """
     Main function for testing ingest functionality.
