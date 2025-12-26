@@ -213,43 +213,33 @@
   box-shadow: 0 6px 20px rgba(0, 116, 217, 0.3);
 }
 
-/* Responsive design for mobile devices */
+/* Back button mobile - convert to bottom navigation bar */
 @media (max-width: 768px) {
   .back-button {
-    bottom: 1.5rem;
-    left: 1.5rem;
-    padding: 0.875rem 1.25rem;
-    font-size: 0.85rem;
-    box-shadow: 0 4px 16px rgba(0, 116, 217, 0.3);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-radius: 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.95rem;
+    justify-content: center;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
   }
   
   .back-button:hover {
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 8px 24px rgba(0, 116, 217, 0.4);
-  }
-}
-
-@media (max-width: 480px) {
-  .back-button {
-    bottom: 1rem;
-    left: 1rem;
-    padding: 0.75rem 1rem;
-    font-size: 0.8rem;
+    transform: none;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.2);
   }
   
   .back-text {
-    display: none;
-  }
-  
-  .back-button {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    padding: 0;
+    display: inline;
   }
   
   .back-icon {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 }
 
@@ -307,15 +297,6 @@
 
 .export-detail-button .export-icon {
   font-size: 1rem;
-}
-
-@media (max-width: 768px) {
-  .detail-actions {
-    position: static;
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 1rem;
-  }
 }
 
 .cna-header-section {
@@ -1302,4 +1283,272 @@ html body main .recent-cve-cards-section .recent-cve-cards .recent-cve-card .cve
   font-weight: 600;
 }
 
+/* ================================
+   MOBILE RESPONSIVE STYLES
+   ================================ */
 
+/* Tablet breakpoint */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem 0.75rem;
+  }
+  
+  .cna-header-section {
+    padding: 1.5rem 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .cna-header-section h1 {
+    font-size: 1.75rem;
+    word-break: break-word;
+  }
+  
+  .organization-name {
+    font-size: 1rem;
+  }
+  
+  .cna-metadata-badges {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .cna-metadata-badges .left-badges {
+    flex-wrap: wrap;
+  }
+  
+  .cna-metadata-badges .right-badges {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  .cna-metadata-badges .uniform-pill {
+    width: auto !important;
+    min-width: 80px !important;
+    padding: 0.4rem 0.75rem !important;
+    font-size: 0.8rem !important;
+  }
+  
+  .cna-details-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .cna-detail-item {
+    padding: 0.75rem;
+  }
+  
+  .header-metric-cards {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+  }
+  
+  .metric-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .metric-card {
+    padding: 1rem;
+  }
+  
+  .metric-card .metric-value {
+    font-size: 2rem;
+  }
+  
+  .metric-card .metric-title {
+    font-size: 0.85rem;
+  }
+  
+  .category-breakdown {
+    padding: 1.25rem;
+  }
+  
+  .category-breakdown h2 {
+    font-size: 1.25rem;
+  }
+  
+  .recent-cve-cards-section {
+    padding: 1.25rem;
+  }
+  
+  .recent-cve-cards-section h2 {
+    font-size: 1.1rem;
+  }
+  
+  .recent-cves-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .cve-sort-controls {
+    width: 100%;
+  }
+  
+  .cve-sort-dropdown {
+    width: 100%;
+  }
+  
+  /* Back button as fixed bottom bar on mobile */
+  .back-button {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 0;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 1000;
+  }
+  
+  /* Add bottom padding to main content to account for fixed back button */
+  main.container {
+    padding-bottom: 5rem;
+  }
+}
+
+/* Phone breakpoint */
+@media (max-width: 480px) {
+  .cna-header-section {
+    padding: 1rem 0.75rem;
+  }
+  
+  .cna-header-section h1 {
+    font-size: 1.5rem;
+  }
+  
+  .organization-name {
+    font-size: 0.9rem;
+  }
+  
+  .cna-metadata-badges .uniform-pill {
+    font-size: 0.75rem !important;
+    padding: 0.35rem 0.6rem !important;
+    min-width: 70px !important;
+  }
+  
+  .cna-type-badge {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+  }
+  
+  .metric-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .metric-card .metric-value {
+    font-size: 1.75rem;
+  }
+  
+  .recent-cve-card {
+    min-width: unset;
+    max-width: unset;
+  }
+  
+  .pagination-controls {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .pagination-button {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+  }
+  
+  .pagination-pages {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .page-number {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+  
+  /* Category breakdown mobile */
+  #categoryCharts {
+    gap: 1rem;
+  }
+  
+  .category-chart-item {
+    padding: 1rem;
+  }
+  
+  .category-chart-value {
+    font-size: 2rem;
+  }
+  
+  .category-chart-label {
+    font-size: 0.85rem;
+  }
+}
+
+/* Detail actions - export button positioning */
+@media (max-width: 768px) {
+  .detail-actions {
+    position: static;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.75rem;
+    order: -1;
+  }
+  
+  .export-detail-button {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.75rem;
+  }
+}
+
+/* Fix for CNA details grid on mobile */
+.cna-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.cna-detail-item {
+  background: rgba(255,255,255,0.7);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.cna-detail-item strong {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.cna-detail-item span {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+/* Action buttons mobile styling */
+.cna-action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  min-height: 44px; /* Touch-friendly size */
+}
+
+@media (max-width: 480px) {
+  .cna-patch-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .cna-action-button {
+    width: 100%;
+  }
+}

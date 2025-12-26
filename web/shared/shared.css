@@ -556,3 +556,31 @@
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
 }
+
+/* Mobile footer responsive */
+@media (max-width: 768px) {
+  .footer-main {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem 1rem;
+    text-align: center;
+  }
+  
+  .footer-brand {
+    justify-content: center;
+  }
+  
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .footer-links a {
+    font-size: 0.95rem;
+  }
+  
+  .footer-title {
+    font-size: 1.1rem;
+  }
+}
