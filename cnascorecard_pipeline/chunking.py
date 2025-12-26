@@ -297,8 +297,8 @@ def cleanup_old_chunks(chunks_dir: Path, keep_latest: int = 1) -> int:
 
 def _get_timestamp() -> str:
     """Get current UTC timestamp in ISO format."""
-    from datetime import datetime
-    return datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+    from datetime import datetime, timezone
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def _grade_sort_key(grade: str) -> int:
