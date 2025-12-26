@@ -959,9 +959,9 @@ html body main .recent-cve-cards-section .recent-cve-cards .recent-cve-card .cve
 }
 
 .category-breakdown {
-  margin: 0 auto 3rem auto;
+  margin: 0 auto 2rem auto;
   background: white;
-  padding: 2.5rem;
+  padding: 2rem 1.5rem;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04), 0 6px 10px rgba(0, 0, 0, 0.02);
   max-width: 1200px;
@@ -978,6 +978,21 @@ html body main .recent-cve-cards-section .recent-cve-cards .recent-cve-card .cve
   font-weight: 600;
 }
 
+@media (max-width: 768px) {
+  .category-breakdown {
+    padding: 1.25rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .category-breakdown h2 {
+    font-size: 1.25rem;
+  }
+  
+  .category-explanation {
+    font-size: 0.85rem;
+  }
+}
+
 .category-explanation {
   margin: 0 0 0.75rem 0;
   color: var(--text-primary);
@@ -990,8 +1005,8 @@ html body main .recent-cve-cards-section .recent-cve-cards .recent-cve-card .cve
 #categoryCharts {
   display: flex;
   justify-content: center;
-  flex-wrap: nowrap;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
   margin-top: 0.75rem;
 }
 
@@ -1002,11 +1017,10 @@ html body main .recent-cve-cards-section .recent-cve-cards .recent-cve-card .cve
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  width: 220px;
-  min-width: 220px;
+  width: 180px;
+  min-width: 150px;
+  flex: 1 1 150px;
   max-width: 220px;
-  flex-shrink: 0;
-  flex-grow: 0;
   border: 1px solid #f0f0f0;
   box-sizing: border-box;
 }
@@ -1025,10 +1039,40 @@ html body main .recent-cve-cards-section .recent-cve-cards .recent-cve-card .cve
 }
 
 .category-score {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 700;
   line-height: 1;
   margin: 0;
+}
+
+/* Mobile category cards */
+@media (max-width: 768px) {
+  #categoryCharts {
+    gap: 0.75rem;
+  }
+  
+  .category-card {
+    flex: 1 1 calc(50% - 0.5rem);
+    min-width: calc(50% - 0.5rem);
+    max-width: calc(50% - 0.5rem);
+    padding: 1rem 0.75rem;
+  }
+  
+  .category-score {
+    font-size: 2rem;
+  }
+  
+  .category-label {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .category-card {
+    flex: 1 1 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
 }
 
 /* Category explanation styling - integrated into cards */
@@ -1416,30 +1460,40 @@ html body main .recent-cve-cards-section .recent-cve-cards .recent-cve-card .cve
   }
   
   .cna-header-section h1 {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
   }
   
   .organization-name {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
   
   .cna-metadata-badges .uniform-pill {
-    font-size: 0.75rem !important;
-    padding: 0.35rem 0.6rem !important;
-    min-width: 70px !important;
+    font-size: 0.7rem !important;
+    padding: 0.3rem 0.5rem !important;
+    min-width: auto !important;
+    width: auto !important;
   }
   
   .cna-type-badge {
-    font-size: 0.75rem;
-    padding: 2px 8px;
+    font-size: 0.7rem;
+    padding: 2px 6px;
   }
   
   .metric-cards {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .metric-card {
+    padding: 0.75rem;
   }
   
   .metric-card .metric-value {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
+  }
+  
+  .metric-card .metric-title {
+    font-size: 0.7rem;
   }
   
   .recent-cve-card {
@@ -1468,21 +1522,12 @@ html body main .recent-cve-cards-section .recent-cve-cards .recent-cve-card .cve
     font-size: 0.8rem;
   }
   
-  /* Category breakdown mobile */
-  #categoryCharts {
-    gap: 1rem;
-  }
-  
-  .category-chart-item {
+  .recent-cve-cards-section {
     padding: 1rem;
   }
   
-  .category-chart-value {
-    font-size: 2rem;
-  }
-  
-  .category-chart-label {
-    font-size: 0.85rem;
+  .recent-cve-cards-section h2 {
+    font-size: 1.1rem;
   }
 }
 
