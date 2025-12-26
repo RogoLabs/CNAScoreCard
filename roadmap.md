@@ -111,66 +111,46 @@ class ScoreCache:
 
 **Features:** Memory + disk caching, SHA256 content hashing, batch operations, LRU eviction
 
-> ⚠️ **Next Steps:** Integrate caching into scoring.py workflow
-
 ### 2.2 Web Performance (Static Site Compatible)
 
 #### 2.2.1 Data Chunking for Lazy Loading ✅
-**Status:** ✅ **COMPLETED** - Chunking module implemented  
-**File:** [cnascorecard_pipeline/chunking.py](cnascorecard_pipeline/chunking.py) (NEW)
+**Status:** ✅ **COMPLETED** - Chunking fully integrated into pipeline and web frontend  
+**Files:** 
+- [cnascorecard_pipeline/chunking.py](cnascorecard_pipeline/chunking.py) - Chunking module
+- [cnascorecard_pipeline/pipeline.py](cnascorecard_pipeline/pipeline.py) - Pipeline integration
+- [web/cna/chunk-loader.js](web/cna/chunk-loader.js) - Client-side chunk loader
+- [web/cna/cna-index.js](web/cna/cna-index.js) - Updated to use chunks
 
 ```python
-# cnascorecard_pipeline/chunking.py - IMPLEMENTED
-def write_chunked_cna_data(cna_data: List[Dict], output_dir: Path, chunk_size: int = 50):
-    """Split CNA data into chunks with manifest for lazy loading."""
-    chunks_dir = output_dir / "chunks" / "cna"
-    chunks_dir.mkdir(parents=True, exist_ok=True)
-    
-    # Write individual chunks
-    for i, chunk in enumerate(chunked(cna_data, chunk_size)):
-        chunk_file = chunks_dir / f"chunk_{i:04d}.json"
-        write_json_file(chunk_file, chunk)
-    
-    # Write manifest
-    manifest = {"totalItems": len(cna_data), "chunkSize": chunk_size, ...}
+# cnascorecard_pipeline/pipeline.py - INTEGRATED
+# After writing cna_combined.json:
+chunk_manifest = write_chunked_cna_data(sorted_for_chunks, output_dir, chunk_size=50)
+search_index = generate_search_index(sorted_for_chunks, output_dir)
 ```
 
-**Features:** CNA chunking, completeness chunking, search index generation, summary stats, old chunk cleanup
-
-> ⚠️ **Next Steps:** Integrate chunking into pipeline.py and update web JavaScript to use chunked data
+**Features:** 
+- CNA data split into 50-item chunks with manifest
+- Search index generated for client-side filtering
+- ChunkLoader.js with automatic fallback to full file
+- Preloading nearby chunks for smooth pagination
 
 ```javascript
-// web/cna/cna-index.js - client-side lazy loading from static chunks
-let manifest = null;
-const loadedChunks = new Map();
-
-async function loadChunk(chunkIndex) {
-    if (loadedChunks.has(chunkIndex)) return loadedChunks.get(chunkIndex);
-    const response = await fetch(`data/chunks/cna_chunk_${chunkIndex}.json`);
-    const chunk = await response.json();
-    loadedChunks.set(chunkIndex, chunk);
-    return chunk;
-}
-
-async function loadCNAPage(page, pageSize = 50) {
-    if (!manifest) {
-        manifest = await fetch('data/chunks/manifest.json').then(r => r.json());
-    }
-    const chunkIndex = Math.floor((page * pageSize) / manifest.chunkSize);
-    return loadChunk(chunkIndex);
-}
+// web/cna/chunk-loader.js - IMPLEMENTED
+const ChunkLoader = {
+    async init() { /* Load manifest or fallback */ },
+    async loadAll() { /* Load all chunks or full file */ },
+    async loadRange(start, end) { /* Load specific range */ }
+};
 ```
 
-#### 2.2.2 Search Index Pre-computation
-**Proposed:** Generate search index during pipeline run
+#### 2.2.2 Search Index Pre-computation ✅
+**Status:** ✅ **COMPLETED** - Integrated with chunking
 
-```javascript
-// web/data/search_index.json
-{
-  "cnas": ["Microsoft", "Google", ...],
-  "products": {"Microsoft": ["Windows", "Office"], ...},
-  "cweIds": ["CWE-79", "CWE-89", ...]
-}
+```python
+# cnascorecard_pipeline/chunking.py - generate_search_index()
+# Generates web/data/search_index.json with:
+# - CNA names, IDs for autocomplete
+# - Types, grades, countries for filtering
 ```
 
 #### 2.2.3 Asset Optimization
@@ -571,7 +551,7 @@ Complete CNA data including individual CVE scores...
 - [x] Update dataVersion tracking to support 5.2
 - [ ] Add regression tests for schema compatibility
 
-### Phase 2: Speed Optimization (Week 2-3) 🟡 IN PROGRESS
+### Phase 2: Speed Optimization (Week 2-3) ✅ COMPLETE
 - [x] Implement parallel CVE loading (~2.9x speedup achieved)
 - [x] Add delta processing support (functions implemented)
 - [x] Implement score caching (ScoreCache module created)
@@ -579,7 +559,7 @@ Complete CNA data including individual CVE scores...
 - [x] Integrate delta processing into pipeline main flow
 - [x] Integrate caching into scoring workflow
 - [x] Add CVE data caching to GitHub Actions
-- [ ] Integrate chunked data loading in web frontend
+- [x] Integrate chunked data loading in web frontend
 
 ### Phase 3: Code Quality (Week 3-4)
 - [ ] Add type hints throughout codebase
