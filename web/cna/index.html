@@ -47,6 +47,14 @@
           <div class="control-group search-group">
             <input type="search" id="searchInput" placeholder="Search CNA..." aria-label="Search CNA" class="search-input">
           </div>
+          <div class="control-group export-group">
+            <button id="exportCsvBtn" class="control-button export-button" title="Export current view to CSV">
+              <span class="export-icon">📥</span> CSV
+            </button>
+            <button id="exportJsonBtn" class="control-button export-button" title="Export current view to JSON">
+              <span class="export-icon">📥</span> JSON
+            </button>
+          </div>
           <div class="control-group">
             <button id="toggleDetailsBtn" class="control-button" data-showing="false">
               <span>Show Details</span>
@@ -112,6 +120,7 @@
   </footer>
   
   <!-- Scripts -->
+  <script src="../shared/mobile-nav.js"></script>
   <script src="chunk-loader.js"></script>
   <script src="cna-index.js" type="module"></script>
 </body>

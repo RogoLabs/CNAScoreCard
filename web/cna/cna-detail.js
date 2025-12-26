@@ -774,6 +774,9 @@ async function initializePage() {
       console.error('Failed to load valid CNA data');
       throw new Error('Invalid CNA data loaded');
     }
+    
+    // Store data for export functionality
+    currentExportData = CNA_DETAIL;
 
     // ================================
     // RENDER CNA HEADER
@@ -1226,8 +1229,78 @@ async function setupClickableBenchmarkScorePill(currentCnaData) {
 
 // Note: forcePopulateBenchmarkDropdown function removed - benchmark functionality now integrated into clickable score pill
 
+// Global variable to store CNA data for export
+let currentExportData = null;
+
+/**
+ * Export CNA detail report as JSON
+ */
+function exportCnaReport() {
+  if (!currentExportData) {
+    alert('No CNA data available to export');
+    return;
+  }
+
+  const exportData = {
+    exportDate: new Date().toISOString(),
+    cna: {
+      name: currentExportData.name,
+      organizationName: currentExportData.organizationName,
+      cnaTypes: currentExportData.cnaTypes || [currentExportData.type],
+      country: currentExportData.country || 'Not Provided',
+      scope: currentExportData.scope || 'Not Provided',
+      officialCnaId: currentExportData.officialCnaID || 'Not Provided',
+      rank: currentExportData.rank,
+      percentile: currentExportData.percentile
+    },
+    scores: {
+      overall: currentExportData.score,
+      grade: currentExportData.grade,
+      categories: currentExportData.categories?.map(cat => ({
+        name: cat.label,
+        score: cat.value,
+        maxScore: cat.max
+      })) || []
+    },
+    metrics: currentExportData.metrics?.map(m => ({
+      title: m.title,
+      value: m.value
+    })) || [],
+    trend: {
+      direction: currentExportData.trend_direction,
+      description: currentExportData.trend_description
+    },
+    recentCves: (currentExportData.recentCves || []).slice(0, 50).map(cve => ({
+      cveId: cve.cveId,
+      datePublished: cve.datePublished || cve.date_published,
+      score: cve.totalCveScore || cve.totalEasScore || 0,
+      scoreBreakdown: cve.scoreBreakdown || {}
+    }))
+  };
+
+  // Download the file
+  const jsonContent = JSON.stringify(exportData, null, 2);
+  const filename = `cna-report-${currentExportData.name?.replace(/[^a-z0-9]/gi, '-').toLowerCase() || 'unknown'}.json`;
+  
+  const blob = new Blob([jsonContent], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
+  // Set up export button
+  const exportBtn = document.getElementById('exportCnaBtn');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', exportCnaReport);
+  }
+  
   // Then run normal initialization
   initializePage();
 });

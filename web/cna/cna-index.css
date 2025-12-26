@@ -342,7 +342,25 @@
 @media (max-width: 768px) {
   .controls-container {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  
+  .search-group {
+    max-width: 100%;
+  }
+  
+  .control-group {
+    justify-content: center;
+  }
+  
+  .export-group {
+    justify-content: center;
+  }
+  
+  .export-button {
+    flex: 1;
+    justify-content: center;
   }
   
   #cnaTable {
@@ -357,6 +375,97 @@
   .col-type,
   .col-trend {
     display: none;
+  }
+  
+  .pagination-controls {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .pagination-button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+  
+  .table-info {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}
+
+/* Very small screens - stack-style table */
+@media (max-width: 480px) {
+  #cnaTable thead {
+    display: none;
+  }
+  
+  #cnaTable,
+  #cnaTable tbody,
+  #cnaTable tr,
+  #cnaTable td {
+    display: block;
+  }
+  
+  #cnaTable tr {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+  }
+  
+  #cnaTable td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  #cnaTable td:last-child {
+    border-bottom: none;
+  }
+  
+  #cnaTable td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+    margin-right: 1rem;
+  }
+  
+  /* Hide columns that don't make sense on mobile cards */
+  .col-rank {
+    display: none !important;
+  }
+  
+  .col-name {
+    width: 100%;
+  }
+  
+  .cna-name-cell {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .cna-name-link {
+    font-size: 1.1rem;
+  }
+  
+  /* Pagination adjustments */
+  .pagination-pages {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .page-number {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
   }
 }
 
@@ -552,5 +661,62 @@
   /* Adjust organization name max width on smaller screens */
   .show-details .org-name {
     max-width: 150px;
+  }
+}
+
+/* Export Button Styling */
+.export-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.export-button {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.85rem;
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.export-button:hover {
+  background: linear-gradient(135deg, #5a6268 0%, #3d4349 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.export-button:active {
+  transform: translateY(0);
+}
+
+.export-icon {
+  font-size: 0.9rem;
+}
+
+/* Mobile responsive for controls */
+@media (max-width: 768px) {
+  .controls-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  
+  .search-group {
+    max-width: 100%;
+  }
+  
+  .control-group {
+    justify-content: center;
+  }
+  
+  .export-group {
+    justify-content: center;
+  }
+  
+  .export-button {
+    flex: 1;
+    justify-content: center;
   }
 }

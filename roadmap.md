@@ -567,11 +567,11 @@ Complete CNA data including individual CVE scores...
 - [x] Expand test coverage to 80%+ (achieved 79%)
 - [x] Add pre-commit hooks for code quality
 
-### Phase 4: Usability (Week 4-5)
-- [ ] Enhance CNA detail pages
-- [ ] Add search functionality
-- [ ] Implement export features
-- [ ] Improve mobile experience
+### Phase 4: Usability (Week 4-5) ✅ COMPLETE
+- [x] Enhance CNA detail pages (added export button, improved metadata display)
+- [x] Add search functionality (CNA search already implemented, CVE search via CNA pages)
+- [x] Implement export features (CSV/JSON export on CNA index and detail pages)
+- [x] Improve mobile experience (mobile nav, responsive tables, touch-friendly controls)
 
 ### Phase 5: Mobile-First Redesign (Week 5-6)
 - [ ] Implement mobile CSS breakpoints and card layouts
