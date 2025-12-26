@@ -17,7 +17,8 @@ This project provides transparent, data-driven insights into how well CVE Number
 • **Fully automated data pipeline** that refreshes data every 6 hours via GitHub Actions
 • **Individual CNA profiles** with detailed performance metrics and recent CVE analysis
 • **Embeddable badges** for CNAs to display their rank and score on their websites, READMEs, or documentation
-• **Mobile-optimized design** for accessibility across all devices
+• **Data export capabilities** with CSV and JSON export on CNA leaderboard and detail pages
+• **Mobile-first responsive design** with hamburger navigation, touch-friendly controls, and optimized layouts for all screen sizes
 
 ## How It Works
 
