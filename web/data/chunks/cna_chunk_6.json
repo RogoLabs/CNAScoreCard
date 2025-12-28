@@ -179,50 +179,6 @@
       ]
     },
     {
-      "shortName": "Huntress",
-      "organizationName": "Huntress Labs Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Researcher"
-      ],
-      "rank": 305,
-      "active_cna_count": 317,
-      "percentile": 4.1,
-      "total_cves": 2,
-      "recent_cves": 2,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 57.5,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 50.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All Huntress products, as well as vulnerabilities in third-party software discovered by Huntress that are not in another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://support.huntress.io/hc/en-us/categories/10962594482579-Vulnerability-Disclosures"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0047",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://support.huntress.io/hc/en-us/categories/10962594482579-Vulnerability-Disclosures"
-        }
-      ]
-    },
-    {
       "shortName": "Chrome",
       "organizationName": "Chrome",
       "cnaType": "Vendor",
@@ -268,6 +224,50 @@
       ]
     },
     {
+      "shortName": "Huntress",
+      "organizationName": "Huntress Labs Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Researcher"
+      ],
+      "rank": 305,
+      "active_cna_count": 317,
+      "percentile": 4.1,
+      "total_cves": 2,
+      "recent_cves": 2,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 57.5,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 50.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All Huntress products, as well as vulnerabilities in third-party software discovered by Huntress that are not in another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://support.huntress.io/hc/en-us/categories/10962594482579-Vulnerability-Disclosures"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0047",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://support.huntress.io/hc/en-us/categories/10962594482579-Vulnerability-Disclosures"
+        }
+      ]
+    },
+    {
       "shortName": "mitre",
       "organizationName": "MITRE Corporation",
       "cnaType": "Unknown",
@@ -277,15 +277,15 @@
       "rank": 307,
       "active_cna_count": 317,
       "percentile": 3.5,
-      "total_cves": 2541,
-      "recent_cves": 2541,
+      "total_cves": 2542,
+      "recent_cves": 2542,
       "is_active": true,
       "scores": {
-        "overall_average_score": 54.13,
+        "overall_average_score": 54.15,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 11.33,
-        "software_identification": 5.55,
-        "severity_and_impact": 12.51,
+        "root_cause_analysis": 11.37,
+        "software_identification": 5.59,
+        "severity_and_impact": 12.55,
         "patchinfo": 0.0
       },
       "trend": {
@@ -311,8 +311,8 @@
       ]
     },
     {
-      "shortName": "debian",
-      "organizationName": "Debian GNU/Linux",
+      "shortName": "XEN",
+      "organizationName": "Xen Project",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor",
@@ -321,8 +321,8 @@
       "rank": 308,
       "active_cna_count": 317,
       "percentile": 3.2,
-      "total_cves": 2,
-      "recent_cves": 2,
+      "total_cves": 10,
+      "recent_cves": 10,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -337,20 +337,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Debian issues only.",
+      "scope": "All sub-projects under Xen Project’s umbrella (see <a href='https://xenproject.org/developers/teams/' target='_blank'>Xen Project Teams</a>), except those sub-projects that have their own security response process; and the Xen components inside other projects, where Xen Project is the primary developer.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.debian.org/security/#DSAS"
+          "url": "https://xenbits.xen.org/xsa/"
         }
       ],
-      "officialCnaID": "CNA-2005-0003",
-      "country": "USA",
+      "officialCnaID": "CNA-2021-0009",
+      "country": "UK",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.debian.org/security/disclosure-policy"
+          "url": "https://xenproject.org/about/security-policy/"
         }
       ]
     },
@@ -398,12 +398,57 @@
       ]
     },
     {
-      "shortName": "Opera",
-      "organizationName": "Opera Norway AS",
+      "shortName": "google_android",
+      "organizationName": "Android (associated with Google Inc. or Open Handset Alliance)",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor",
-        "Open Source"
+        "Open Source",
+        "Researcher"
+      ],
+      "rank": 308,
+      "active_cna_count": 317,
+      "percentile": 3.2,
+      "total_cves": 223,
+      "recent_cves": 223,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Android issues, as well as vulnerabilities in third-party software discovered by Android that are not in another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://source.android.com/security/bulletin"
+        }
+      ],
+      "officialCnaID": "CNA-2011-0002",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://source.android.com/security/overview/updates-resources#report-issues"
+        }
+      ]
+    },
+    {
+      "shortName": "ChromeOS",
+      "organizationName": "ChromeOS Project",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Bug Bounty Provider"
       ],
       "rank": 308,
       "active_cna_count": 317,
@@ -424,20 +469,107 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All Opera group products.",
+      "scope": "Vulnerabilities that are (1) reported to ChromeOS Security, (2) affect ChromeOS device software and hardware, including our open source dependencies, and (3) are not covered by another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://security.opera.com/en/advisories/"
+          "url": "https://chromereleases.googleblog.com/"
         }
       ],
-      "officialCnaID": "CNA-2019-0017",
-      "country": "Norway",
+      "officialCnaID": "CNA-2024-0004",
+      "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://security.opera.com/en/policy/"
+          "url": "https://www.google.com/about/appsecurity/research/"
+        }
+      ]
+    },
+    {
+      "shortName": "mozilla",
+      "organizationName": "Mozilla Corporation",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 308,
+      "active_cna_count": 317,
+      "percentile": 3.2,
+      "total_cves": 99,
+      "recent_cves": 99,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Mozilla issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.mozilla.org/en-US/security/advisories/"
+        }
+      ],
+      "officialCnaID": "CNA-2012-0002",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
+        }
+      ]
+    },
+    {
+      "shortName": "Nokia",
+      "organizationName": "Nokia",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 308,
+      "active_cna_count": 317,
+      "percentile": 3.2,
+      "total_cves": 13,
+      "recent_cves": 13,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All vulnerabilities in Nokia products.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.nokia.com/about-us/security-and-privacy/product-security-advisory/"
+        }
+      ],
+      "officialCnaID": "CNA-2023-0055",
+      "country": "Finland",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.nokia.com/notices/responsible-disclosure/"
         }
       ]
     },
@@ -493,93 +625,6 @@
       ]
     },
     {
-      "shortName": "ChromeOS",
-      "organizationName": "ChromeOS Project",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Bug Bounty Provider"
-      ],
-      "rank": 308,
-      "active_cna_count": 317,
-      "percentile": 3.2,
-      "total_cves": 1,
-      "recent_cves": 1,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities that are (1) reported to ChromeOS Security, (2) affect ChromeOS device software and hardware, including our open source dependencies, and (3) are not covered by another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://chromereleases.googleblog.com/"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0004",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.google.com/about/appsecurity/research/"
-        }
-      ]
-    },
-    {
-      "shortName": "Nokia",
-      "organizationName": "Nokia",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 308,
-      "active_cna_count": 317,
-      "percentile": 3.2,
-      "total_cves": 13,
-      "recent_cves": 13,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All vulnerabilities in Nokia products.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.nokia.com/about-us/security-and-privacy/product-security-advisory/"
-        }
-      ],
-      "officialCnaID": "CNA-2023-0055",
-      "country": "Finland",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.nokia.com/notices/responsible-disclosure/"
-        }
-      ]
-    },
-    {
       "shortName": "jenkins",
       "organizationName": "Jenkins Project",
       "cnaType": "Open Source",
@@ -623,8 +668,8 @@
       ]
     },
     {
-      "shortName": "XEN",
-      "organizationName": "Xen Project",
+      "shortName": "Opera",
+      "organizationName": "Opera Norway AS",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor",
@@ -633,8 +678,8 @@
       "rank": 308,
       "active_cna_count": 317,
       "percentile": 3.2,
-      "total_cves": 10,
-      "recent_cves": 10,
+      "total_cves": 1,
+      "recent_cves": 1,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -649,26 +694,26 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All sub-projects under Xen Project’s umbrella (see <a href='https://xenproject.org/developers/teams/' target='_blank'>Xen Project Teams</a>), except those sub-projects that have their own security response process; and the Xen components inside other projects, where Xen Project is the primary developer.",
+      "scope": "All Opera group products.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://xenbits.xen.org/xsa/"
+          "url": "https://security.opera.com/en/advisories/"
         }
       ],
-      "officialCnaID": "CNA-2021-0009",
-      "country": "UK",
+      "officialCnaID": "CNA-2019-0017",
+      "country": "Norway",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://xenproject.org/about/security-policy/"
+          "url": "https://security.opera.com/en/policy/"
         }
       ]
     },
     {
-      "shortName": "mozilla",
-      "organizationName": "Mozilla Corporation",
+      "shortName": "debian",
+      "organizationName": "Debian GNU/Linux",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor",
@@ -677,8 +722,8 @@
       "rank": 308,
       "active_cna_count": 317,
       "percentile": 3.2,
-      "total_cves": 99,
-      "recent_cves": 99,
+      "total_cves": 2,
+      "recent_cves": 2,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -693,65 +738,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Mozilla issues only.",
+      "scope": "Debian issues only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.mozilla.org/en-US/security/advisories/"
+          "url": "https://www.debian.org/security/#DSAS"
         }
       ],
-      "officialCnaID": "CNA-2012-0002",
+      "officialCnaID": "CNA-2005-0003",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
-        }
-      ]
-    },
-    {
-      "shortName": "google_android",
-      "organizationName": "Android (associated with Google Inc. or Open Handset Alliance)",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source",
-        "Researcher"
-      ],
-      "rank": 308,
-      "active_cna_count": 317,
-      "percentile": 3.2,
-      "total_cves": 223,
-      "recent_cves": 223,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Android issues, as well as vulnerabilities in third-party software discovered by Android that are not in another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://source.android.com/security/bulletin"
-        }
-      ],
-      "officialCnaID": "CNA-2011-0002",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://source.android.com/security/overview/updates-resources#report-issues"
+          "url": "https://www.debian.org/security/disclosure-policy"
         }
       ]
     }
