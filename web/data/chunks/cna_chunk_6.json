@@ -312,18 +312,17 @@
       ]
     },
     {
-      "shortName": "debian",
-      "organizationName": "Debian GNU/Linux",
+      "shortName": "Google_Devices",
+      "organizationName": "Google Devices",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor",
-        "Open Source"
+        "Vendor"
       ],
       "rank": 307,
       "active_cna_count": 316,
       "percentile": 3.2,
-      "total_cves": 1,
-      "recent_cves": 1,
+      "total_cves": 45,
+      "recent_cves": 45,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -338,20 +337,28 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Debian issues only.",
+      "scope": "Google Devices - Pixel, Nest, and Chromecast.",
       "advisories": [
         {
-          "label": "Advisories",
-          "url": "https://www.debian.org/security/#DSAS"
+          "label": "Nest Advisories",
+          "url": "https://support.google.com/product-documentation/topic/12974021?hl=en&amp;ref_topic=10123615&amp;sjid=5419128013624043298-NA"
+        },
+        {
+          "label": "Pixel Advisories",
+          "url": "https://source.android.com/docs/security/bulletin/pixel"
+        },
+        {
+          "label": "Chromecast Advisories",
+          "url": "https://source.android.com/docs/security/bulletin/chromecast"
         }
       ],
-      "officialCnaID": "CNA-2005-0003",
+      "officialCnaID": "CNA-2023-0040",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.debian.org/security/disclosure-policy"
+          "url": "https://support.google.com/product-documentation/answer/13658251?hl=en&amp;ref_topic=12974021&amp;sjid=11464995960873540884-NA"
         }
       ]
     },
@@ -396,6 +403,93 @@
           "label": "Policy",
           "language": "",
           "url": "https://xenproject.org/about/security-policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "Nokia",
+      "organizationName": "Nokia",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 307,
+      "active_cna_count": 316,
+      "percentile": 3.2,
+      "total_cves": 5,
+      "recent_cves": 5,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All vulnerabilities in Nokia products.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.nokia.com/about-us/security-and-privacy/product-security-advisory/"
+        }
+      ],
+      "officialCnaID": "CNA-2023-0055",
+      "country": "Finland",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.nokia.com/notices/responsible-disclosure/"
+        }
+      ]
+    },
+    {
+      "shortName": "ChromeOS",
+      "organizationName": "ChromeOS Project",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Bug Bounty Provider"
+      ],
+      "rank": 307,
+      "active_cna_count": 316,
+      "percentile": 3.2,
+      "total_cves": 1,
+      "recent_cves": 1,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities that are (1) reported to ChromeOS Security, (2) affect ChromeOS device software and hardware, including our open source dependencies, and (3) are not covered by another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://chromereleases.googleblog.com/"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0004",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.google.com/about/appsecurity/research/"
         }
       ]
     },
@@ -445,93 +539,6 @@
       ]
     },
     {
-      "shortName": "Opera",
-      "organizationName": "Opera Norway AS",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 307,
-      "active_cna_count": 316,
-      "percentile": 3.2,
-      "total_cves": 1,
-      "recent_cves": 1,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All Opera group products.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://security.opera.com/en/advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2019-0017",
-      "country": "Norway",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://security.opera.com/en/policy/"
-        }
-      ]
-    },
-    {
-      "shortName": "Nokia",
-      "organizationName": "Nokia",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 307,
-      "active_cna_count": 316,
-      "percentile": 3.2,
-      "total_cves": 5,
-      "recent_cves": 5,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All vulnerabilities in Nokia products.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.nokia.com/about-us/security-and-privacy/product-security-advisory/"
-        }
-      ],
-      "officialCnaID": "CNA-2023-0055",
-      "country": "Finland",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.nokia.com/notices/responsible-disclosure/"
-        }
-      ]
-    },
-    {
       "shortName": "apple",
       "organizationName": "Apple Inc.",
       "cnaType": "Vendor",
@@ -571,50 +578,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://support.apple.com/en-us/HT201220"
-        }
-      ]
-    },
-    {
-      "shortName": "ChromeOS",
-      "organizationName": "ChromeOS Project",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Bug Bounty Provider"
-      ],
-      "rank": 307,
-      "active_cna_count": 316,
-      "percentile": 3.2,
-      "total_cves": 1,
-      "recent_cves": 1,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities that are (1) reported to ChromeOS Security, (2) affect ChromeOS device software and hardware, including our open source dependencies, and (3) are not covered by another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://chromereleases.googleblog.com/"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0004",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.google.com/about/appsecurity/research/"
         }
       ]
     },
@@ -662,17 +625,18 @@
       ]
     },
     {
-      "shortName": "Google_Devices",
-      "organizationName": "Google Devices",
+      "shortName": "Opera",
+      "organizationName": "Opera Norway AS",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor"
+        "Vendor",
+        "Open Source"
       ],
       "rank": 307,
       "active_cna_count": 316,
       "percentile": 3.2,
-      "total_cves": 45,
-      "recent_cves": 45,
+      "total_cves": 1,
+      "recent_cves": 1,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -687,28 +651,64 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Google Devices - Pixel, Nest, and Chromecast.",
+      "scope": "All Opera group products.",
       "advisories": [
         {
-          "label": "Nest Advisories",
-          "url": "https://support.google.com/product-documentation/topic/12974021?hl=en&amp;ref_topic=10123615&amp;sjid=5419128013624043298-NA"
-        },
-        {
-          "label": "Pixel Advisories",
-          "url": "https://source.android.com/docs/security/bulletin/pixel"
-        },
-        {
-          "label": "Chromecast Advisories",
-          "url": "https://source.android.com/docs/security/bulletin/chromecast"
+          "label": "Advisories",
+          "url": "https://security.opera.com/en/advisories/"
         }
       ],
-      "officialCnaID": "CNA-2023-0040",
+      "officialCnaID": "CNA-2019-0017",
+      "country": "Norway",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://security.opera.com/en/policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "debian",
+      "organizationName": "Debian GNU/Linux",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 307,
+      "active_cna_count": 316,
+      "percentile": 3.2,
+      "total_cves": 1,
+      "recent_cves": 1,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Debian issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.debian.org/security/#DSAS"
+        }
+      ],
+      "officialCnaID": "CNA-2005-0003",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://support.google.com/product-documentation/answer/13658251?hl=en&amp;ref_topic=12974021&amp;sjid=11464995960873540884-NA"
+          "url": "https://www.debian.org/security/disclosure-policy"
         }
       ]
     }
