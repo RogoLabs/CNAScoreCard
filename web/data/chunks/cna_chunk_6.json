@@ -102,15 +102,15 @@
       "rank": 303,
       "active_cna_count": 316,
       "percentile": 4.4,
-      "total_cves": 42,
-      "recent_cves": 42,
+      "total_cves": 46,
+      "recent_cves": 46,
       "is_active": true,
       "scores": {
-        "overall_average_score": 58.93,
+        "overall_average_score": 59.46,
         "foundational_completeness": 100.0,
         "root_cause_analysis": 0.0,
         "software_identification": 0.0,
-        "severity_and_impact": 59.52,
+        "severity_and_impact": 63.04,
         "patchinfo": 0.0
       },
       "trend": {
@@ -234,14 +234,14 @@
       "rank": 306,
       "active_cna_count": 316,
       "percentile": 3.5,
-      "total_cves": 2548,
-      "recent_cves": 2548,
+      "total_cves": 2556,
+      "recent_cves": 2556,
       "is_active": true,
       "scores": {
         "overall_average_score": 53.95,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 10.87,
-        "software_identification": 5.1,
+        "root_cause_analysis": 10.88,
+        "software_identification": 5.13,
         "severity_and_impact": 12.05,
         "patchinfo": 0.0
       },
@@ -268,17 +268,18 @@
       ]
     },
     {
-      "shortName": "Nokia",
-      "organizationName": "Nokia",
+      "shortName": "XEN",
+      "organizationName": "Xen Project",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor"
+        "Vendor",
+        "Open Source"
       ],
       "rank": 307,
       "active_cna_count": 316,
       "percentile": 3.2,
-      "total_cves": 5,
-      "recent_cves": 5,
+      "total_cves": 10,
+      "recent_cves": 10,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -293,20 +294,150 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All vulnerabilities in Nokia products.",
+      "scope": "All sub-projects under Xen Project’s umbrella (see <a href='https://xenproject.org/developers/teams/' target='_blank'>Xen Project Teams</a>), except those sub-projects that have their own security response process; and the Xen components inside other projects, where Xen Project is the primary developer.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.nokia.com/about-us/security-and-privacy/product-security-advisory/"
+          "url": "https://xenbits.xen.org/xsa/"
         }
       ],
-      "officialCnaID": "CNA-2023-0055",
-      "country": "Finland",
+      "officialCnaID": "CNA-2021-0009",
+      "country": "UK",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.nokia.com/notices/responsible-disclosure/"
+          "url": "https://xenproject.org/about/security-policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "jenkins",
+      "organizationName": "Jenkins Project",
+      "cnaType": "Open Source",
+      "cnaTypes": [
+        "Open Source"
+      ],
+      "rank": 307,
+      "active_cna_count": 316,
+      "percentile": 3.2,
+      "total_cves": 66,
+      "recent_cves": 66,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Jenkins and Jenkins plugins distributed by the Jenkins Project (listed on <a href='https://plugins.jenkins.io/' target='_blank'>plugins.jenkins.io</a>) only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://jenkins.io/security/advisories/"
+        }
+      ],
+      "officialCnaID": "CNA-2018-0015",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://jenkins.io/security/"
+        }
+      ]
+    },
+    {
+      "shortName": "ChromeOS",
+      "organizationName": "ChromeOS Project",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Bug Bounty Provider"
+      ],
+      "rank": 307,
+      "active_cna_count": 316,
+      "percentile": 3.2,
+      "total_cves": 1,
+      "recent_cves": 1,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities that are (1) reported to ChromeOS Security, (2) affect ChromeOS device software and hardware, including our open source dependencies, and (3) are not covered by another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://chromereleases.googleblog.com/"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0004",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.google.com/about/appsecurity/research/"
+        }
+      ]
+    },
+    {
+      "shortName": "apple",
+      "organizationName": "Apple Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 307,
+      "active_cna_count": 316,
+      "percentile": 3.2,
+      "total_cves": 362,
+      "recent_cves": 362,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Apple issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://support.apple.com/en-us/HT201222"
+        }
+      ],
+      "officialCnaID": "CNA-2009-0002",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://support.apple.com/en-us/HT201220"
         }
       ]
     },
@@ -407,50 +538,6 @@
       ]
     },
     {
-      "shortName": "mozilla",
-      "organizationName": "Mozilla Corporation",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 307,
-      "active_cna_count": 316,
-      "percentile": 3.2,
-      "total_cves": 99,
-      "recent_cves": 99,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Mozilla issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.mozilla.org/en-US/security/advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2012-0002",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
-        }
-      ]
-    },
-    {
       "shortName": "debian",
       "organizationName": "Debian GNU/Linux",
       "cnaType": "Vendor",
@@ -495,17 +582,18 @@
       ]
     },
     {
-      "shortName": "jenkins",
-      "organizationName": "Jenkins Project",
-      "cnaType": "Open Source",
+      "shortName": "mozilla",
+      "organizationName": "Mozilla Corporation",
+      "cnaType": "Vendor",
       "cnaTypes": [
+        "Vendor",
         "Open Source"
       ],
       "rank": 307,
       "active_cna_count": 316,
       "percentile": 3.2,
-      "total_cves": 66,
-      "recent_cves": 66,
+      "total_cves": 99,
+      "recent_cves": 99,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -520,20 +608,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Jenkins and Jenkins plugins distributed by the Jenkins Project (listed on <a href='https://plugins.jenkins.io/' target='_blank'>plugins.jenkins.io</a>) only.",
+      "scope": "Mozilla issues only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://jenkins.io/security/advisories/"
+          "url": "https://www.mozilla.org/en-US/security/advisories/"
         }
       ],
-      "officialCnaID": "CNA-2018-0015",
+      "officialCnaID": "CNA-2012-0002",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://jenkins.io/security/"
+          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
         }
       ]
     },
@@ -582,52 +670,8 @@
       ]
     },
     {
-      "shortName": "XEN",
-      "organizationName": "Xen Project",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 307,
-      "active_cna_count": 316,
-      "percentile": 3.2,
-      "total_cves": 10,
-      "recent_cves": 10,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All sub-projects under Xen Project’s umbrella (see <a href='https://xenproject.org/developers/teams/' target='_blank'>Xen Project Teams</a>), except those sub-projects that have their own security response process; and the Xen components inside other projects, where Xen Project is the primary developer.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://xenbits.xen.org/xsa/"
-        }
-      ],
-      "officialCnaID": "CNA-2021-0009",
-      "country": "UK",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://xenproject.org/about/security-policy/"
-        }
-      ]
-    },
-    {
-      "shortName": "apple",
-      "organizationName": "Apple Inc.",
+      "shortName": "Nokia",
+      "organizationName": "Nokia",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor"
@@ -635,8 +679,8 @@
       "rank": 307,
       "active_cna_count": 316,
       "percentile": 3.2,
-      "total_cves": 362,
-      "recent_cves": 362,
+      "total_cves": 5,
+      "recent_cves": 5,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -651,64 +695,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Apple issues only.",
+      "scope": "All vulnerabilities in Nokia products.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://support.apple.com/en-us/HT201222"
+          "url": "https://www.nokia.com/about-us/security-and-privacy/product-security-advisory/"
         }
       ],
-      "officialCnaID": "CNA-2009-0002",
-      "country": "USA",
+      "officialCnaID": "CNA-2023-0055",
+      "country": "Finland",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://support.apple.com/en-us/HT201220"
-        }
-      ]
-    },
-    {
-      "shortName": "ChromeOS",
-      "organizationName": "ChromeOS Project",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Bug Bounty Provider"
-      ],
-      "rank": 307,
-      "active_cna_count": 316,
-      "percentile": 3.2,
-      "total_cves": 1,
-      "recent_cves": 1,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities that are (1) reported to ChromeOS Security, (2) affect ChromeOS device software and hardware, including our open source dependencies, and (3) are not covered by another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://chromereleases.googleblog.com/"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0004",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.google.com/about/appsecurity/research/"
+          "url": "https://www.nokia.com/notices/responsible-disclosure/"
         }
       ]
     }
