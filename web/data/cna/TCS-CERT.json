@@ -1,8 +1,8 @@
 {
   "cna_info": {
     "cna": "TCS-CERT",
-    "total_cves": 4,
-    "total_cves_scored": 4,
+    "total_cves": 5,
+    "total_cves_scored": 5,
     "organizationName": "TCS-CERT (Thales Cyber Solutions Customer’s CERT)",
     "scope": "Vulnerabilities related to TCS-CERT’s customers’ environment and vulnerabilities related to research conducted by Cyber Solutions by Thales’ Intrusion and Application Security Team.",
     "advisories": [
@@ -33,23 +33,23 @@
   },
   "trend_direction": "steady",
   "trend_description": "No significant change",
-  "rank": 40,
+  "rank": 50,
   "active_cna_count": 316,
-  "percentile": 87.7,
+  "percentile": 84.5,
   "cna_scoring": [
     {
-      "total_cves": 4,
-      "total_cves_scored": 4,
-      "recent_cves_count": 4,
-      "overall_average_score": 85.0,
+      "total_cves": 5,
+      "total_cves_scored": 5,
+      "recent_cves_count": 5,
+      "overall_average_score": 83.0,
       "average_foundational_completeness": 50.0,
-      "average_root_cause_analysis": 15.0,
-      "average_software_identification": 5.0,
+      "average_root_cause_analysis": 12.0,
+      "average_software_identification": 6.0,
       "average_severity_context": 15.0,
       "average_patchinfo": 0.0,
       "percent_foundational_completeness": 100.0,
-      "percent_root_cause_analysis": 100.0,
-      "percent_software_identification": 50.0,
+      "percent_root_cause_analysis": 80.0,
+      "percent_software_identification": 60.0,
       "percent_severity_and_impact": 100.0,
       "percent_patchinfo": 0.0,
       "trend_direction": "steady",
@@ -105,6 +105,19 @@
       "scoreBreakdown": {
         "foundationalCompleteness": 50,
         "rootCauseAnalysis": 15,
+        "severityAndImpactContext": 15,
+        "softwareIdentification": 10,
+        "patchinfo": 0
+      }
+    },
+    {
+      "cveId": "CVE-2025-15479",
+      "assigningCna": "TCS-CERT",
+      "datePublished": "2026-01-07",
+      "totalCveScore": 75,
+      "scoreBreakdown": {
+        "foundationalCompleteness": 50,
+        "rootCauseAnalysis": 0,
         "severityAndImpactContext": 15,
         "softwareIdentification": 10,
         "patchinfo": 0
