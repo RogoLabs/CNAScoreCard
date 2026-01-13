@@ -84,8 +84,40 @@ jobs:
           echo "No changes to commit"
         else
           git commit -m "Automated: Update CNA Scorecard data [skip ci]"
-          git pull --rebase origin main
-          git push
+          
+          # Fetch latest changes
+          git fetch origin main
+          
+          # Try to push, if it fails due to conflicts, resolve them
+          if ! git push origin HEAD:main; then
+            echo "Push failed, attempting to resolve conflicts..."
+            
+            # Pull with merge strategy (not rebase) and auto-resolve conflicts
+            # For data files, always prefer our version (the newer data)
+            git pull origin main --no-rebase --strategy-option=ours || {
+              echo "Merge had conflicts, resolving by keeping our changes..."
+              
+              # For any conflicted files in web/data/, accept our version
+              git checkout --ours web/data/
+              git add web/data/
+              
+              # Complete the merge
+              git -c core.editor=true merge --continue || {
+                echo "Could not auto-resolve, will force push our changes..."
+                git merge --abort
+                git push --force origin HEAD:main
+                exit 0
+              }
+            }
+            
+            # Try pushing again
+            git push origin HEAD:main || {
+              echo "Still failed, force pushing..."
+              git push --force origin HEAD:main
+            }
+          fi
+          
+          echo "Changes pushed successfully"
         fi
     
     - name: Setup Pages
