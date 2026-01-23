@@ -317,6 +317,50 @@
       ]
     },
     {
+      "shortName": "vmware",
+      "organizationName": "VMware by Broadcom",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 258,
+      "active_cna_count": 315,
+      "percentile": 18.4,
+      "total_cves": 16,
+      "recent_cves": 16,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 76.25,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 75.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "VMware, Spring, and Cloud Foundry issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.broadcom.com/support/vmware-security-advisories"
+        }
+      ],
+      "officialCnaID": "CNA-2016-0025",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.broadcom.com/support/vmware-services/security-response"
+        }
+      ]
+    },
+    {
       "shortName": "ProgressSoftware",
       "organizationName": "Progress Software Corporation",
       "cnaType": "Vendor",
@@ -360,23 +404,23 @@
       ]
     },
     {
-      "shortName": "vmware",
-      "organizationName": "VMware by Broadcom",
+      "shortName": "Perforce",
+      "organizationName": "Perforce",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor",
         "Open Source"
       ],
-      "rank": 258,
+      "rank": 260,
       "active_cna_count": 315,
-      "percentile": 18.4,
-      "total_cves": 16,
-      "recent_cves": 16,
+      "percentile": 17.8,
+      "total_cves": 3,
+      "recent_cves": 3,
       "is_active": true,
       "scores": {
-        "overall_average_score": 76.25,
+        "overall_average_score": 75.0,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 75.0,
+        "root_cause_analysis": 66.67,
         "software_identification": 0.0,
         "severity_and_impact": 100.0,
         "patchinfo": 0.0
@@ -386,20 +430,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "VMware, Spring, and Cloud Foundry issues only.",
+      "scope": "All Perforce products.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.broadcom.com/support/vmware-security-advisories"
+          "url": "https://portal.perforce.com/s/cve-dashboard"
         }
       ],
-      "officialCnaID": "CNA-2016-0025",
+      "officialCnaID": "CNA-2016-0023",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.broadcom.com/support/vmware-services/security-response"
+          "url": "https://www.perforce.com/company/security-compliance-policies"
         }
       ]
     },
@@ -449,50 +493,6 @@
       ]
     },
     {
-      "shortName": "Gitea",
-      "organizationName": "Gitea Limited",
-      "cnaType": "Open Source",
-      "cnaTypes": [
-        "Open Source",
-        "Vendor"
-      ],
-      "rank": 260,
-      "active_cna_count": 315,
-      "percentile": 17.8,
-      "total_cves": 9,
-      "recent_cves": 9,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 75.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 100.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Gitea issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://about.gitea.com/security/"
-        }
-      ],
-      "officialCnaID": "CNA-2023-0039",
-      "country": "China",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://github.com/go-gitea/gitea/blob/main/SECURITY.md"
-        }
-      ]
-    },
-    {
       "shortName": "Tanium",
       "organizationName": "Tanium Inc.",
       "cnaType": "Vendor",
@@ -532,6 +532,49 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.tanium.com/vulnerability-reporting-terms/"
+        }
+      ]
+    },
+    {
+      "shortName": "netapp",
+      "organizationName": "NetApp, Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 260,
+      "active_cna_count": 315,
+      "percentile": 17.8,
+      "total_cves": 6,
+      "recent_cves": 6,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 75.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 66.67,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All NetApp products as well as projects hosted on <a href='https://github.com/netapp' target='_blank'>https://github.com/netapp</a>.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://security.netapp.com/advisory/"
+        }
+      ],
+      "officialCnaID": "CNA-2017-0035",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://security.netapp.com/policy/"
         }
       ]
     },
@@ -580,89 +623,46 @@
       ]
     },
     {
-      "shortName": "Perforce",
-      "organizationName": "Perforce",
-      "cnaType": "Vendor",
+      "shortName": "Gitea",
+      "organizationName": "Gitea Limited",
+      "cnaType": "Open Source",
       "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 260,
-      "active_cna_count": 315,
-      "percentile": 17.8,
-      "total_cves": 3,
-      "recent_cves": 3,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 75.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 66.67,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All Perforce products.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://portal.perforce.com/s/cve-dashboard"
-        }
-      ],
-      "officialCnaID": "CNA-2016-0023",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.perforce.com/company/security-compliance-policies"
-        }
-      ]
-    },
-    {
-      "shortName": "netapp",
-      "organizationName": "NetApp, Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
+        "Open Source",
         "Vendor"
       ],
       "rank": 260,
       "active_cna_count": 315,
       "percentile": 17.8,
-      "total_cves": 6,
-      "recent_cves": 6,
+      "total_cves": 9,
+      "recent_cves": 9,
       "is_active": true,
       "scores": {
         "overall_average_score": 75.0,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 66.67,
+        "root_cause_analysis": 100.0,
         "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
+        "severity_and_impact": 0.0,
+        "patchinfo": 100.0
       },
       "trend": {
         "direction": "steady",
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All NetApp products as well as projects hosted on <a href='https://github.com/netapp' target='_blank'>https://github.com/netapp</a>.",
+      "scope": "Gitea issues only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://security.netapp.com/advisory/"
+          "url": "https://about.gitea.com/security/"
         }
       ],
-      "officialCnaID": "CNA-2017-0035",
-      "country": "USA",
+      "officialCnaID": "CNA-2023-0039",
+      "country": "China",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://security.netapp.com/policy/"
+          "url": "https://github.com/go-gitea/gitea/blob/main/SECURITY.md"
         }
       ]
     },
@@ -760,49 +760,6 @@
       ]
     },
     {
-      "shortName": "PostgreSQL",
-      "organizationName": "PostgreSQL",
-      "cnaType": "Open Source",
-      "cnaTypes": [
-        "Open Source"
-      ],
-      "rank": 268,
-      "active_cna_count": 315,
-      "percentile": 15.2,
-      "total_cves": 12,
-      "recent_cves": 12,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 72.5,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 50.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "<a href='https://www.postgresql.org/download/' target='_blank'>postgresql.org/download</a> software and related projects listed at <a href='https://www.postgresql.org/support/security/' target='_blank'>postgresql.org/support/security</a>.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.postgresql.org/support/security/"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0005",
-      "country": "Canada",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.postgresql.org/support/security/"
-        }
-      ]
-    },
-    {
       "shortName": "Omnissa",
       "organizationName": "Omnissa, LLC",
       "cnaType": "Vendor",
@@ -842,6 +799,49 @@
           "label": "Policy",
           "language": "",
           "url": "https://static.omnissa.com/uploads/omnissa-external-vulnerability-response-and-remediation-policy.pdf"
+        }
+      ]
+    },
+    {
+      "shortName": "PostgreSQL",
+      "organizationName": "PostgreSQL",
+      "cnaType": "Open Source",
+      "cnaTypes": [
+        "Open Source"
+      ],
+      "rank": 268,
+      "active_cna_count": 315,
+      "percentile": 15.2,
+      "total_cves": 12,
+      "recent_cves": 12,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 72.5,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 50.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "<a href='https://www.postgresql.org/download/' target='_blank'>postgresql.org/download</a> software and related projects listed at <a href='https://www.postgresql.org/support/security/' target='_blank'>postgresql.org/support/security</a>.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.postgresql.org/support/security/"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0005",
+      "country": "Canada",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.postgresql.org/support/security/"
         }
       ]
     },
@@ -902,15 +902,15 @@
       "rank": 271,
       "active_cna_count": 315,
       "percentile": 14.3,
-      "total_cves": 2916,
-      "recent_cves": 2916,
+      "total_cves": 3012,
+      "recent_cves": 3012,
       "is_active": true,
       "scores": {
-        "overall_average_score": 71.75,
+        "overall_average_score": 71.53,
         "foundational_completeness": 100.0,
         "root_cause_analysis": 99.9,
-        "software_identification": 0.21,
-        "severity_and_impact": 44.96,
+        "software_identification": 0.2,
+        "severity_and_impact": 43.53,
         "patchinfo": 0.0
       },
       "trend": {
@@ -1069,6 +1069,49 @@
       ]
     },
     {
+      "shortName": "glibc",
+      "organizationName": "GNU C Library",
+      "cnaType": "Open Source",
+      "cnaTypes": [
+        "Open Source"
+      ],
+      "rank": 274,
+      "active_cna_count": 315,
+      "percentile": 13.3,
+      "total_cves": 4,
+      "recent_cves": 4,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 68.75,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 25.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Security issues and vulnerabilities in the GNU C Library.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://sourceware.org/git/?p=glibc.git;a=tree;f=advisories;hb=HEAD"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0013",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://sourceware.org/glibc/security.html"
+        }
+      ]
+    },
+    {
       "shortName": "symantec",
       "organizationName": "Symantec - A Division of Broadcom",
       "cnaType": "Vendor",
@@ -1109,49 +1152,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.broadcom.com/support/security-center/vulnerability-management"
-        }
-      ]
-    },
-    {
-      "shortName": "glibc",
-      "organizationName": "GNU C Library",
-      "cnaType": "Open Source",
-      "cnaTypes": [
-        "Open Source"
-      ],
-      "rank": 274,
-      "active_cna_count": 315,
-      "percentile": 13.3,
-      "total_cves": 4,
-      "recent_cves": 4,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 68.75,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 25.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Security issues and vulnerabilities in the GNU C Library.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://sourceware.org/git/?p=glibc.git;a=tree;f=advisories;hb=HEAD"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0013",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://sourceware.org/glibc/security.html"
         }
       ]
     },
@@ -1503,94 +1503,6 @@
       ]
     },
     {
-      "shortName": "DSF",
-      "organizationName": "Django Software Foundation",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 285,
-      "active_cna_count": 315,
-      "percentile": 9.8,
-      "total_cves": 4,
-      "recent_cves": 4,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Only supported and end-of-life Django versions available at <a href='https://www.djangoproject.com/download/' target='_blank'>https://www.djangoproject.com/download/</a> and projects listed at <a href='https://github.com/django' target='_blank'>https://github.com/django</a> (such as Django, channels, and daphne), excluding distributions maintained by third-party redistributors.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://docs.djangoproject.com/en/stable/releases/security/"
-        }
-      ],
-      "officialCnaID": "CNA-2025-0057",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.djangoproject.com/foundation/cve-numbering-authority/"
-        }
-      ]
-    },
-    {
-      "shortName": "TXOne",
-      "organizationName": "TXOne Networks, Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Researcher"
-      ],
-      "rank": 285,
-      "active_cna_count": 315,
-      "percentile": 9.8,
-      "total_cves": 1,
-      "recent_cves": 1,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities in TXOne Networks products, including end-of-life products, or third-party operational technology (OT) and industrial control systems (ICS) products, unless covered by the scope of another CNA.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.txone.com/psirt/advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0032",
-      "country": "Taiwan",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.txone.com/psirt/disclosure-policy/"
-        }
-      ]
-    },
-    {
       "shortName": "curl",
       "organizationName": "curl",
       "cnaType": "Open Source",
@@ -1678,6 +1590,137 @@
       ]
     },
     {
+      "shortName": "imaginationtech",
+      "organizationName": "Imagination Technologies",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 285,
+      "active_cna_count": 315,
+      "percentile": 9.8,
+      "total_cves": 12,
+      "recent_cves": 12,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Imagination Technologies branded products and technologies and Imagination Technologies (IMG) managed open source projects.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.imaginationtech.com/gpu-driver-vulnerabilities/"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0051",
+      "country": "UK",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.imaginationtech.com/product-security-policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "Go",
+      "organizationName": "Go Project",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 285,
+      "active_cna_count": 315,
+      "percentile": 9.8,
+      "total_cves": 23,
+      "recent_cves": 23,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities in software published by the Go Project (including the Go standard library, Go toolchain, and the golang.org modules) and publicly disclosed vulnerabilities in publicly importable packages in the Go ecosystem, unless covered by another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://pkg.go.dev/vuln/list"
+        }
+      ],
+      "officialCnaID": "CNA-2022-0008",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://go.dev/security"
+        }
+      ]
+    },
+    {
+      "shortName": "MediaTek",
+      "organizationName": "MediaTek, Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 285,
+      "active_cna_count": 315,
+      "percentile": 9.8,
+      "total_cves": 111,
+      "recent_cves": 111,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "MediaTek product issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://corp.mediatek.com/product-security-bulletin"
+        }
+      ],
+      "officialCnaID": "CNA-2021-0043",
+      "country": "Taiwan",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "English",
+          "url": "https://corp.mediatek.com/vulnerability-disclosure-policy"
+        }
+      ]
+    },
+    {
       "shortName": "WPScan",
       "organizationName": "WPScan",
       "cnaType": "Vendor",
@@ -1730,61 +1773,18 @@
       ]
     },
     {
-      "shortName": "freebsd",
-      "organizationName": "FreeBSD",
+      "shortName": "TXOne",
+      "organizationName": "TXOne Networks, Inc.",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor",
-        "Open Source"
+        "Researcher"
       ],
       "rank": 285,
       "active_cna_count": 315,
       "percentile": 9.8,
       "total_cves": 1,
       "recent_cves": 1,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Primarily FreeBSD issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.freebsd.org/"
-        }
-      ],
-      "officialCnaID": "CNA-2005-0004",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.freebsd.org/security/"
-        }
-      ]
-    },
-    {
-      "shortName": "hikvision",
-      "organizationName": "Hangzhou Hikvision Digital Technology Co., Ltd.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 285,
-      "active_cna_count": 315,
-      "percentile": 9.8,
-      "total_cves": 9,
-      "recent_cves": 9,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
@@ -1799,150 +1799,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All <a href='http://www.hikvision.com/en/' target='_blank'>Hikvision Internet of Things (IoT) products</a> including cameras and digital video recorders (DVRs).",
+      "scope": "Vulnerabilities in TXOne Networks products, including end-of-life products, or third-party operational technology (OT) and industrial control systems (ICS) products, unless covered by the scope of another CNA.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://us.hikvision.com/en/support-resources/cybersecurity-center/security-notices"
+          "url": "https://www.txone.com/psirt/advisories/"
         }
       ],
-      "officialCnaID": "CNA-2018-0002",
-      "country": "China",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.hikvision.com/en/policies/vulnerability-disclosure-policy/"
-        }
-      ]
-    },
-    {
-      "shortName": "naver",
-      "organizationName": "Naver Corporation",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 285,
-      "active_cna_count": 315,
-      "percentile": 9.8,
-      "total_cves": 9,
-      "recent_cves": 9,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Naver products only, except Line products.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://cve.naver.com/"
-        }
-      ],
-      "officialCnaID": "CNA-2018-0007",
-      "country": "South Korea",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://cve.naver.com/"
-        }
-      ]
-    },
-    {
-      "shortName": "imaginationtech",
-      "organizationName": "Imagination Technologies",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 285,
-      "active_cna_count": 315,
-      "percentile": 9.8,
-      "total_cves": 12,
-      "recent_cves": 12,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Imagination Technologies branded products and technologies and Imagination Technologies (IMG) managed open source projects.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.imaginationtech.com/gpu-driver-vulnerabilities/"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0051",
-      "country": "UK",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.imaginationtech.com/product-security-policy/"
-        }
-      ]
-    },
-    {
-      "shortName": "MediaTek",
-      "organizationName": "MediaTek, Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 285,
-      "active_cna_count": 315,
-      "percentile": 9.8,
-      "total_cves": 111,
-      "recent_cves": 111,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "MediaTek product issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://corp.mediatek.com/product-security-bulletin"
-        }
-      ],
-      "officialCnaID": "CNA-2021-0043",
+      "officialCnaID": "CNA-2024-0032",
       "country": "Taiwan",
       "disclosurePolicy": [
         {
           "label": "Policy",
-          "language": "English",
-          "url": "https://corp.mediatek.com/vulnerability-disclosure-policy"
+          "language": "",
+          "url": "https://www.txone.com/psirt/disclosure-policy/"
         }
       ]
     },
@@ -1990,6 +1860,49 @@
       ]
     },
     {
+      "shortName": "naver",
+      "organizationName": "Naver Corporation",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 285,
+      "active_cna_count": 315,
+      "percentile": 9.8,
+      "total_cves": 9,
+      "recent_cves": 9,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Naver products only, except Line products.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://cve.naver.com/"
+        }
+      ],
+      "officialCnaID": "CNA-2018-0007",
+      "country": "South Korea",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://cve.naver.com/"
+        }
+      ]
+    },
+    {
       "shortName": "LY-Corporation",
       "organizationName": "LY Corporation",
       "cnaType": "Open Source",
@@ -2033,8 +1946,8 @@
       ]
     },
     {
-      "shortName": "Go",
-      "organizationName": "Go Project",
+      "shortName": "freebsd",
+      "organizationName": "FreeBSD",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor",
@@ -2043,8 +1956,8 @@
       "rank": 285,
       "active_cna_count": 315,
       "percentile": 9.8,
-      "total_cves": 23,
-      "recent_cves": 23,
+      "total_cves": 1,
+      "recent_cves": 1,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
@@ -2059,20 +1972,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities in software published by the Go Project (including the Go standard library, Go toolchain, and the golang.org modules) and publicly disclosed vulnerabilities in publicly importable packages in the Go ecosystem, unless covered by another CNA’s scope.",
+      "scope": "Primarily FreeBSD issues only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://pkg.go.dev/vuln/list"
+          "url": "https://www.freebsd.org/"
         }
       ],
-      "officialCnaID": "CNA-2022-0008",
+      "officialCnaID": "CNA-2005-0004",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://go.dev/security"
+          "url": "https://www.freebsd.org/security/"
         }
       ]
     },
@@ -2121,6 +2034,49 @@
       ]
     },
     {
+      "shortName": "hikvision",
+      "organizationName": "Hangzhou Hikvision Digital Technology Co., Ltd.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 285,
+      "active_cna_count": 315,
+      "percentile": 9.8,
+      "total_cves": 9,
+      "recent_cves": 9,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All <a href='http://www.hikvision.com/en/' target='_blank'>Hikvision Internet of Things (IoT) products</a> including cameras and digital video recorders (DVRs).",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://us.hikvision.com/en/support-resources/cybersecurity-center/security-notices"
+        }
+      ],
+      "officialCnaID": "CNA-2018-0002",
+      "country": "China",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.hikvision.com/en/policies/vulnerability-disclosure-policy/"
+        }
+      ]
+    },
+    {
       "shortName": "Absolute",
       "organizationName": "Absolute Software",
       "cnaType": "Vendor",
@@ -2160,6 +2116,50 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.absolute.com/platform/security-information/vulnerability-reporting-management"
+        }
+      ]
+    },
+    {
+      "shortName": "DSF",
+      "organizationName": "Django Software Foundation",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 285,
+      "active_cna_count": 315,
+      "percentile": 9.8,
+      "total_cves": 4,
+      "recent_cves": 4,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Only supported and end-of-life Django versions available at <a href='https://www.djangoproject.com/download/' target='_blank'>https://www.djangoproject.com/download/</a> and projects listed at <a href='https://github.com/django' target='_blank'>https://github.com/django</a> (such as Django, channels, and daphne), excluding distributions maintained by third-party redistributors.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://docs.djangoproject.com/en/stable/releases/security/"
+        }
+      ],
+      "officialCnaID": "CNA-2025-0057",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.djangoproject.com/foundation/cve-numbering-authority/"
         }
       ]
     },
