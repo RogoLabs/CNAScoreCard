@@ -60,13 +60,13 @@
       "rank": 302,
       "active_cna_count": 312,
       "percentile": 3.5,
-      "total_cves": 126,
-      "recent_cves": 126,
+      "total_cves": 125,
+      "recent_cves": 125,
       "is_active": true,
       "scores": {
-        "overall_average_score": 56.67,
+        "overall_average_score": 56.6,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 44.44,
+        "root_cause_analysis": 44.0,
         "software_identification": 0.0,
         "severity_and_impact": 0.0,
         "patchinfo": 0.0
@@ -103,15 +103,15 @@
       "rank": 303,
       "active_cna_count": 312,
       "percentile": 3.2,
-      "total_cves": 2557,
-      "recent_cves": 2557,
+      "total_cves": 2546,
+      "recent_cves": 2546,
       "is_active": true,
       "scores": {
-        "overall_average_score": 53.54,
+        "overall_average_score": 53.55,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 9.66,
-        "software_identification": 4.65,
-        "severity_and_impact": 10.83,
+        "root_cause_analysis": 9.7,
+        "software_identification": 4.67,
+        "severity_and_impact": 10.88,
         "patchinfo": 0.0
       },
       "trend": {
@@ -137,18 +137,17 @@
       ]
     },
     {
-      "shortName": "Opera",
-      "organizationName": "Opera Norway AS",
+      "shortName": "apple",
+      "organizationName": "Apple Inc.",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor",
-        "Open Source"
+        "Vendor"
       ],
       "rank": 304,
       "active_cna_count": 312,
       "percentile": 2.9,
-      "total_cves": 1,
-      "recent_cves": 1,
+      "total_cves": 294,
+      "recent_cves": 294,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -163,20 +162,71 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All Opera group products.",
+      "scope": "Apple issues only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://security.opera.com/en/advisories/"
+          "url": "https://support.apple.com/en-us/HT201222"
         }
       ],
-      "officialCnaID": "CNA-2019-0017",
-      "country": "Norway",
+      "officialCnaID": "CNA-2009-0002",
+      "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://security.opera.com/en/policy/"
+          "url": "https://support.apple.com/en-us/HT201220"
+        }
+      ]
+    },
+    {
+      "shortName": "Google_Devices",
+      "organizationName": "Google Devices",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 304,
+      "active_cna_count": 312,
+      "percentile": 2.9,
+      "total_cves": 46,
+      "recent_cves": 46,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Google Devices - Pixel, Nest, and Chromecast.",
+      "advisories": [
+        {
+          "label": "Nest Advisories",
+          "url": "https://support.google.com/product-documentation/topic/12974021?hl=en&amp;ref_topic=10123615&amp;sjid=5419128013624043298-NA"
+        },
+        {
+          "label": "Pixel Advisories",
+          "url": "https://source.android.com/docs/security/bulletin/pixel"
+        },
+        {
+          "label": "Chromecast Advisories",
+          "url": "https://source.android.com/docs/security/bulletin/chromecast"
+        }
+      ],
+      "officialCnaID": "CNA-2023-0040",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://support.google.com/product-documentation/answer/13658251?hl=en&amp;ref_topic=12974021&amp;sjid=11464995960873540884-NA"
         }
       ]
     },
@@ -226,17 +276,18 @@
       ]
     },
     {
-      "shortName": "apple",
-      "organizationName": "Apple Inc.",
+      "shortName": "Opera",
+      "organizationName": "Opera Norway AS",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor"
+        "Vendor",
+        "Open Source"
       ],
       "rank": 304,
       "active_cna_count": 312,
       "percentile": 2.9,
-      "total_cves": 294,
-      "recent_cves": 294,
+      "total_cves": 1,
+      "recent_cves": 1,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -251,20 +302,64 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Apple issues only.",
+      "scope": "All Opera group products.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://support.apple.com/en-us/HT201222"
+          "url": "https://security.opera.com/en/advisories/"
         }
       ],
-      "officialCnaID": "CNA-2009-0002",
-      "country": "USA",
+      "officialCnaID": "CNA-2019-0017",
+      "country": "Norway",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://support.apple.com/en-us/HT201220"
+          "url": "https://security.opera.com/en/policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "XEN",
+      "organizationName": "Xen Project",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 304,
+      "active_cna_count": 312,
+      "percentile": 2.9,
+      "total_cves": 10,
+      "recent_cves": 10,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All sub-projects under Xen Project’s umbrella (see <a href='https://xenproject.org/developers/teams/' target='_blank'>Xen Project Teams</a>), except those sub-projects that have their own security response process; and the Xen components inside other projects, where Xen Project is the primary developer.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://xenbits.xen.org/xsa/"
+        }
+      ],
+      "officialCnaID": "CNA-2021-0009",
+      "country": "UK",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://xenproject.org/about/security-policy/"
         }
       ]
     },
@@ -356,49 +451,6 @@
       ]
     },
     {
-      "shortName": "jenkins",
-      "organizationName": "Jenkins Project",
-      "cnaType": "Open Source",
-      "cnaTypes": [
-        "Open Source"
-      ],
-      "rank": 304,
-      "active_cna_count": 312,
-      "percentile": 2.9,
-      "total_cves": 35,
-      "recent_cves": 35,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Jenkins and Jenkins plugins distributed by the Jenkins Project (listed on <a href='https://plugins.jenkins.io/' target='_blank'>plugins.jenkins.io</a>) only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://jenkins.io/security/advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2018-0015",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://jenkins.io/security/"
-        }
-      ]
-    },
-    {
       "shortName": "debian",
       "organizationName": "Debian GNU/Linux",
       "cnaType": "Vendor",
@@ -443,69 +495,17 @@
       ]
     },
     {
-      "shortName": "Google_Devices",
-      "organizationName": "Google Devices",
-      "cnaType": "Vendor",
+      "shortName": "jenkins",
+      "organizationName": "Jenkins Project",
+      "cnaType": "Open Source",
       "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 304,
-      "active_cna_count": 312,
-      "percentile": 2.9,
-      "total_cves": 46,
-      "recent_cves": 46,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Google Devices - Pixel, Nest, and Chromecast.",
-      "advisories": [
-        {
-          "label": "Nest Advisories",
-          "url": "https://support.google.com/product-documentation/topic/12974021?hl=en&amp;ref_topic=10123615&amp;sjid=5419128013624043298-NA"
-        },
-        {
-          "label": "Pixel Advisories",
-          "url": "https://source.android.com/docs/security/bulletin/pixel"
-        },
-        {
-          "label": "Chromecast Advisories",
-          "url": "https://source.android.com/docs/security/bulletin/chromecast"
-        }
-      ],
-      "officialCnaID": "CNA-2023-0040",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://support.google.com/product-documentation/answer/13658251?hl=en&amp;ref_topic=12974021&amp;sjid=11464995960873540884-NA"
-        }
-      ]
-    },
-    {
-      "shortName": "XEN",
-      "organizationName": "Xen Project",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
         "Open Source"
       ],
       "rank": 304,
       "active_cna_count": 312,
       "percentile": 2.9,
-      "total_cves": 10,
-      "recent_cves": 10,
+      "total_cves": 35,
+      "recent_cves": 35,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -520,20 +520,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All sub-projects under Xen Project’s umbrella (see <a href='https://xenproject.org/developers/teams/' target='_blank'>Xen Project Teams</a>), except those sub-projects that have their own security response process; and the Xen components inside other projects, where Xen Project is the primary developer.",
+      "scope": "Jenkins and Jenkins plugins distributed by the Jenkins Project (listed on <a href='https://plugins.jenkins.io/' target='_blank'>plugins.jenkins.io</a>) only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://xenbits.xen.org/xsa/"
+          "url": "https://jenkins.io/security/advisories/"
         }
       ],
-      "officialCnaID": "CNA-2021-0009",
-      "country": "UK",
+      "officialCnaID": "CNA-2018-0015",
+      "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://xenproject.org/about/security-policy/"
+          "url": "https://jenkins.io/security/"
         }
       ]
     }
