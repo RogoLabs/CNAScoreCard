@@ -5,17 +5,18 @@
   "count": 16,
   "items": [
     {
-      "shortName": "TECNOMobile",
-      "organizationName": "TECNO Mobile Limited",
+      "shortName": "imaginationtech",
+      "organizationName": "Imagination Technologies",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor"
+        "Vendor",
+        "Open Source"
       ],
       "rank": 286,
       "active_cna_count": 316,
       "percentile": 9.8,
-      "total_cves": 3,
-      "recent_cves": 3,
+      "total_cves": 12,
+      "recent_cves": 12,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
@@ -30,42 +31,43 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities in TECNO products and services only.",
+      "scope": "Imagination Technologies branded products and technologies and Imagination Technologies (IMG) managed open source projects.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://security.tecno.com/SRC/blog"
+          "url": "https://www.imaginationtech.com/gpu-driver-vulnerabilities/"
         }
       ],
-      "officialCnaID": "CNA-2024-0020",
-      "country": "China",
+      "officialCnaID": "CNA-2024-0051",
+      "country": "UK",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://security.tecno.com"
+          "url": "https://www.imaginationtech.com/product-security-policy/"
         }
       ]
     },
     {
-      "shortName": "Absolute",
-      "organizationName": "Absolute Software",
+      "shortName": "WPScan",
+      "organizationName": "WPScan",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor"
+        "Vendor",
+        "Open Source"
       ],
       "rank": 286,
       "active_cna_count": 316,
       "percentile": 9.8,
-      "total_cves": 9,
-      "recent_cves": 9,
+      "total_cves": 119,
+      "recent_cves": 119,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
+        "root_cause_analysis": 100.0,
         "software_identification": 0.0,
-        "severity_and_impact": 100.0,
+        "severity_and_impact": 0.0,
         "patchinfo": 0.0
       },
       "trend": {
@@ -73,20 +75,28 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Absolute issues only.",
+      "scope": "WordPress core, plugins, and themes.",
       "advisories": [
         {
-          "label": "Advisories",
-          "url": "https://www.absolute.com/platform/security-information/vulnerability-archive/"
+          "label": "Word Press Advisories",
+          "url": "https://wpscan.com/wordpresses"
+        },
+        {
+          "label": "Word Press Plug In Advisories",
+          "url": "https://wpscan.com/plugins"
+        },
+        {
+          "label": "Word Press Theme Advisories",
+          "url": "https://wpscan.com/themes"
         }
       ],
-      "officialCnaID": "CNA-2021-0033",
-      "country": "USA",
+      "officialCnaID": "CNA-2021-0002",
+      "country": "France",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.absolute.com/platform/security-information/vulnerability-reporting-management"
+          "url": "https://wpscan.com/vulnerability-disclosure-policy"
         }
       ]
     },
@@ -354,18 +364,17 @@
       ]
     },
     {
-      "shortName": "mozilla",
-      "organizationName": "Mozilla Corporation",
+      "shortName": "Nokia",
+      "organizationName": "Nokia",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor",
-        "Open Source"
+        "Vendor"
       ],
       "rank": 309,
       "active_cna_count": 316,
       "percentile": 2.5,
-      "total_cves": 102,
-      "recent_cves": 102,
+      "total_cves": 5,
+      "recent_cves": 5,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -380,20 +389,64 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Mozilla issues only.",
+      "scope": "All vulnerabilities in Nokia products.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.mozilla.org/en-US/security/advisories/"
+          "url": "https://www.nokia.com/about-us/security-and-privacy/product-security-advisory/"
         }
       ],
-      "officialCnaID": "CNA-2012-0002",
-      "country": "USA",
+      "officialCnaID": "CNA-2023-0055",
+      "country": "Finland",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
+          "url": "https://www.nokia.com/notices/responsible-disclosure/"
+        }
+      ]
+    },
+    {
+      "shortName": "XEN",
+      "organizationName": "Xen Project",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 309,
+      "active_cna_count": 316,
+      "percentile": 2.5,
+      "total_cves": 10,
+      "recent_cves": 10,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All sub-projects under Xen Project’s umbrella (see <a href='https://xenproject.org/developers/teams/' target='_blank'>Xen Project Teams</a>), except those sub-projects that have their own security response process; and the Xen components inside other projects, where Xen Project is the primary developer.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://xenbits.xen.org/xsa/"
+        }
+      ],
+      "officialCnaID": "CNA-2021-0009",
+      "country": "UK",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://xenproject.org/about/security-policy/"
         }
       ]
     },
@@ -492,60 +545,18 @@
       ]
     },
     {
-      "shortName": "Nokia",
-      "organizationName": "Nokia",
+      "shortName": "mozilla",
+      "organizationName": "Mozilla Corporation",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 309,
-      "active_cna_count": 316,
-      "percentile": 2.5,
-      "total_cves": 5,
-      "recent_cves": 5,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All vulnerabilities in Nokia products.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.nokia.com/about-us/security-and-privacy/product-security-advisory/"
-        }
-      ],
-      "officialCnaID": "CNA-2023-0055",
-      "country": "Finland",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.nokia.com/notices/responsible-disclosure/"
-        }
-      ]
-    },
-    {
-      "shortName": "jenkins",
-      "organizationName": "Jenkins Project",
-      "cnaType": "Open Source",
-      "cnaTypes": [
+        "Vendor",
         "Open Source"
       ],
       "rank": 309,
       "active_cna_count": 316,
       "percentile": 2.5,
-      "total_cves": 35,
-      "recent_cves": 35,
+      "total_cves": 102,
+      "recent_cves": 102,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -560,20 +571,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Jenkins and Jenkins plugins distributed by the Jenkins Project (listed on <a href='https://plugins.jenkins.io/' target='_blank'>plugins.jenkins.io</a>) only.",
+      "scope": "Mozilla issues only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://jenkins.io/security/advisories/"
+          "url": "https://www.mozilla.org/en-US/security/advisories/"
         }
       ],
-      "officialCnaID": "CNA-2018-0015",
+      "officialCnaID": "CNA-2012-0002",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://jenkins.io/security/"
+          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
         }
       ]
     },
@@ -667,18 +678,17 @@
       ]
     },
     {
-      "shortName": "XEN",
-      "organizationName": "Xen Project",
-      "cnaType": "Vendor",
+      "shortName": "jenkins",
+      "organizationName": "Jenkins Project",
+      "cnaType": "Open Source",
       "cnaTypes": [
-        "Vendor",
         "Open Source"
       ],
       "rank": 309,
       "active_cna_count": 316,
       "percentile": 2.5,
-      "total_cves": 10,
-      "recent_cves": 10,
+      "total_cves": 35,
+      "recent_cves": 35,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -693,20 +703,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All sub-projects under Xen Project’s umbrella (see <a href='https://xenproject.org/developers/teams/' target='_blank'>Xen Project Teams</a>), except those sub-projects that have their own security response process; and the Xen components inside other projects, where Xen Project is the primary developer.",
+      "scope": "Jenkins and Jenkins plugins distributed by the Jenkins Project (listed on <a href='https://plugins.jenkins.io/' target='_blank'>plugins.jenkins.io</a>) only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://xenbits.xen.org/xsa/"
+          "url": "https://jenkins.io/security/advisories/"
         }
       ],
-      "officialCnaID": "CNA-2021-0009",
-      "country": "UK",
+      "officialCnaID": "CNA-2018-0015",
+      "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://xenproject.org/about/security-policy/"
+          "url": "https://jenkins.io/security/"
         }
       ]
     }
