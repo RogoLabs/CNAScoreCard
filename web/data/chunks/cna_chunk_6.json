@@ -5,98 +5,11 @@
   "count": 17,
   "items": [
     {
-      "shortName": "TXOne",
-      "organizationName": "TXOne Networks, Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Researcher"
-      ],
-      "rank": 287,
-      "active_cna_count": 317,
-      "percentile": 9.8,
-      "total_cves": 1,
-      "recent_cves": 1,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities in TXOne Networks products, including end-of-life products, or third-party operational technology (OT) and industrial control systems (ICS) products, unless covered by the scope of another CNA.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.txone.com/psirt/advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0032",
-      "country": "Taiwan",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.txone.com/psirt/disclosure-policy/"
-        }
-      ]
-    },
-    {
-      "shortName": "curl",
-      "organizationName": "curl",
+      "shortName": "glibc",
+      "organizationName": "GNU C Library",
       "cnaType": "Open Source",
       "cnaTypes": [
         "Open Source"
-      ],
-      "rank": 287,
-      "active_cna_count": 317,
-      "percentile": 9.8,
-      "total_cves": 9,
-      "recent_cves": 9,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All products made and managed by the curl project. This includes curl, libcurl, and trurl.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://curl.se/docs/security.html"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0006",
-      "country": "Sweden",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://curl.se/dev/vuln-disclosure.html"
-        }
-      ]
-    },
-    {
-      "shortName": "TECNOMobile",
-      "organizationName": "TECNO Mobile Limited",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
       ],
       "rank": 287,
       "active_cna_count": 317,
@@ -117,20 +30,108 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities in TECNO products and services only.",
+      "scope": "Security issues and vulnerabilities in the GNU C Library.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://security.tecno.com/SRC/blog"
+          "url": "https://sourceware.org/git/?p=glibc.git;a=tree;f=advisories;hb=HEAD"
         }
       ],
-      "officialCnaID": "CNA-2024-0020",
-      "country": "China",
+      "officialCnaID": "CNA-2024-0013",
+      "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://security.tecno.com"
+          "url": "https://sourceware.org/glibc/security.html"
+        }
+      ]
+    },
+    {
+      "shortName": "Go",
+      "organizationName": "Go Project",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 287,
+      "active_cna_count": 317,
+      "percentile": 9.8,
+      "total_cves": 29,
+      "recent_cves": 29,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities in software published by the Go Project (including the Go standard library, Go toolchain, and the golang.org modules) and publicly disclosed vulnerabilities in publicly importable packages in the Go ecosystem, unless covered by another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://pkg.go.dev/vuln/list"
+        }
+      ],
+      "officialCnaID": "CNA-2022-0008",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://go.dev/security"
+        }
+      ]
+    },
+    {
+      "shortName": "Arm",
+      "organizationName": "Arm Limited",
+      "cnaType": "Open Source",
+      "cnaTypes": [
+        "Open Source",
+        "Vendor"
+      ],
+      "rank": 287,
+      "active_cna_count": 317,
+      "percentile": 9.8,
+      "total_cves": 5,
+      "recent_cves": 5,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Arm-branded products and technologies and Arm-managed open source projects.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://developer.arm.com/Arm%20Security%20Center"
+        }
+      ],
+      "officialCnaID": "CNA-2023-0036",
+      "country": "UK",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://developer.arm.com/documentation/102850/0100"
         }
       ]
     },
@@ -364,15 +365,15 @@
       "rank": 309,
       "active_cna_count": 317,
       "percentile": 2.8,
-      "total_cves": 2451,
-      "recent_cves": 2451,
+      "total_cves": 2452,
+      "recent_cves": 2452,
       "is_active": true,
       "scores": {
-        "overall_average_score": 53.29,
+        "overall_average_score": 53.31,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 8.94,
-        "software_identification": 4.45,
-        "severity_and_impact": 10.04,
+        "root_cause_analysis": 8.97,
+        "software_identification": 4.49,
+        "severity_and_impact": 10.07,
         "patchinfo": 0.0
       },
       "trend": {
@@ -394,137 +395,6 @@
           "label": "N/A",
           "language": "",
           "url": ""
-        }
-      ]
-    },
-    {
-      "shortName": "apple",
-      "organizationName": "Apple Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 310,
-      "active_cna_count": 317,
-      "percentile": 2.5,
-      "total_cves": 368,
-      "recent_cves": 368,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Apple issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://support.apple.com/en-us/HT201222"
-        }
-      ],
-      "officialCnaID": "CNA-2009-0002",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://support.apple.com/en-us/HT201220"
-        }
-      ]
-    },
-    {
-      "shortName": "mozilla",
-      "organizationName": "Mozilla Corporation",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 310,
-      "active_cna_count": 317,
-      "percentile": 2.5,
-      "total_cves": 104,
-      "recent_cves": 104,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Mozilla issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.mozilla.org/en-US/security/advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2012-0002",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
-        }
-      ]
-    },
-    {
-      "shortName": "Opera",
-      "organizationName": "Opera Norway AS",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 310,
-      "active_cna_count": 317,
-      "percentile": 2.5,
-      "total_cves": 1,
-      "recent_cves": 1,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All Opera group products.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://security.opera.com/en/advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2019-0017",
-      "country": "Norway",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://security.opera.com/en/policy/"
         }
       ]
     },
@@ -570,49 +440,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://source.android.com/security/overview/updates-resources#report-issues"
-        }
-      ]
-    },
-    {
-      "shortName": "Nokia",
-      "organizationName": "Nokia",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 310,
-      "active_cna_count": 317,
-      "percentile": 2.5,
-      "total_cves": 5,
-      "recent_cves": 5,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All vulnerabilities in Nokia products.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.nokia.com/about-us/security-and-privacy/product-security-advisory/"
-        }
-      ],
-      "officialCnaID": "CNA-2023-0055",
-      "country": "Finland",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.nokia.com/notices/responsible-disclosure/"
         }
       ]
     },
@@ -711,6 +538,50 @@
       ]
     },
     {
+      "shortName": "mozilla",
+      "organizationName": "Mozilla Corporation",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 310,
+      "active_cna_count": 317,
+      "percentile": 2.5,
+      "total_cves": 104,
+      "recent_cves": 104,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Mozilla issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.mozilla.org/en-US/security/advisories/"
+        }
+      ],
+      "officialCnaID": "CNA-2012-0002",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
+        }
+      ]
+    },
+    {
       "shortName": "XEN",
       "organizationName": "Xen Project",
       "cnaType": "Vendor",
@@ -751,6 +622,136 @@
           "label": "Policy",
           "language": "",
           "url": "https://xenproject.org/about/security-policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "Opera",
+      "organizationName": "Opera Norway AS",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 310,
+      "active_cna_count": 317,
+      "percentile": 2.5,
+      "total_cves": 1,
+      "recent_cves": 1,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All Opera group products.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://security.opera.com/en/advisories/"
+        }
+      ],
+      "officialCnaID": "CNA-2019-0017",
+      "country": "Norway",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://security.opera.com/en/policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "Nokia",
+      "organizationName": "Nokia",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 310,
+      "active_cna_count": 317,
+      "percentile": 2.5,
+      "total_cves": 5,
+      "recent_cves": 5,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All vulnerabilities in Nokia products.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.nokia.com/about-us/security-and-privacy/product-security-advisory/"
+        }
+      ],
+      "officialCnaID": "CNA-2023-0055",
+      "country": "Finland",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.nokia.com/notices/responsible-disclosure/"
+        }
+      ]
+    },
+    {
+      "shortName": "apple",
+      "organizationName": "Apple Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 310,
+      "active_cna_count": 317,
+      "percentile": 2.5,
+      "total_cves": 368,
+      "recent_cves": 368,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Apple issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://support.apple.com/en-us/HT201222"
+        }
+      ],
+      "officialCnaID": "CNA-2009-0002",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://support.apple.com/en-us/HT201220"
         }
       ]
     }
