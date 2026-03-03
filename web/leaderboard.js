@@ -69,7 +69,6 @@ async function loadCNAData() {
     renderLeaderboard(CNA_DATA);
     updateTopCards();
     
-    console.log(`Loaded ${CNA_DATA.length} CNAs`);
   } catch (error) {
     console.error('Error loading CNA data:', error);
     // Fallback to placeholder data
@@ -192,7 +191,6 @@ function renderTopPerformers(data) {
   
   // Check if the container exists (some pages don't have top performers section)
   if (!container) {
-    console.log('Top performers container not found - skipping render');
     return;
   }
   

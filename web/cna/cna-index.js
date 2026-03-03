@@ -63,10 +63,6 @@ async function init() {
     // Apply filters (this will hide inactive CNAs by default and set STATE.filteredData)
     applyFilters();
     
-    console.log('CNA Index initialized with', STATE.data.length, 'total CNAs,', STATE.filteredData.length, 'active CNAs shown');
-    if (STATE.isChunkedMode) {
-      console.log('Using chunked loading mode for better performance');
-    }
   } catch (error) {
     console.error('Failed to initialize CNA Index:', error);
     showErrorMessage('Failed to load CNA data. Please try refreshing the page.');
@@ -84,7 +80,6 @@ async function initWithChunks() {
     // Load all data from chunks - we need all data for proper filtering/sorting
     STATE.data = await ChunkLoader.loadAll();
     STATE.dataFullyLoaded = true;
-    console.log(`Loaded ${STATE.data.length} CNAs from ${result.manifest.totalChunks} chunks`);
   } else {
     // Fall back to regular loading
     await initWithFallback();
