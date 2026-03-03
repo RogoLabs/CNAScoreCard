@@ -521,5 +521,104 @@ class TestDataStructureValidation:
                 assert field in cve_scoring
 
 
+###############################################################################
+# Standalone comprehensive tests for aggregate_cna_scores
+###############################################################################
+
+import json
+
+
+def _make_scored_cve(cve_id, cna_name, total_score, breakdown=None):
+    """Helper to create a scored CVE dict."""
+    if breakdown is None:
+        breakdown = {
+            'foundationalCompleteness': 50,
+            'rootCauseAnalysis': 15,
+            'severityAndImpactContext': 15,
+            'softwareIdentification': 10,
+            'patchinfo': 10
+        }
+    return {
+        'cveId': cve_id,
+        'assigningCna': cna_name,
+        'datePublished': '2026-01-15',
+        'totalScore': total_score,
+        'scoreBreakdown': breakdown,
+        'recent': True
+    }
+
+
+def test_aggregate_empty_input():
+    """aggregate_cna_scores should handle empty input gracefully."""
+    periods = [
+        (datetime(2025, 9, 1), datetime(2026, 3, 1)),
+        (datetime(2025, 3, 1), datetime(2025, 8, 31))
+    ]
+    with patch('os.path.exists', return_value=False):
+        result = aggregate_cna_scores([], periods)
+    assert isinstance(result, dict)
+
+
+def test_aggregate_groups_by_cna():
+    """Scores should be grouped by CNA name."""
+    scored = [
+        _make_scored_cve('CVE-2026-0001', 'TestCNA', 80),
+        _make_scored_cve('CVE-2026-0002', 'TestCNA', 90),
+        _make_scored_cve('CVE-2026-0003', 'OtherCNA', 70),
+    ]
+    periods = [
+        (datetime(2025, 9, 1), datetime(2026, 3, 1)),
+        (datetime(2025, 3, 1), datetime(2025, 8, 31))
+    ]
+    mock_cna_list = [
+        {'shortName': 'TestCNA', 'organizationName': 'Test CNA Org'},
+        {'shortName': 'OtherCNA', 'organizationName': 'Other CNA Org'}
+    ]
+    with patch('builtins.open', mock_open(read_data=json.dumps(mock_cna_list))):
+        with patch('os.path.exists', return_value=True):
+            result = aggregate_cna_scores(scored, periods)
+    assert 'TestCNA' in result
+    assert 'OtherCNA' in result
+
+
+def test_aggregate_calculates_average():
+    """Average score should be calculated correctly."""
+    scored = [
+        _make_scored_cve('CVE-2026-0001', 'TestCNA', 80),
+        _make_scored_cve('CVE-2026-0002', 'TestCNA', 60),
+    ]
+    periods = [
+        (datetime(2025, 9, 1), datetime(2026, 3, 1)),
+        (datetime(2025, 3, 1), datetime(2025, 8, 31))
+    ]
+    mock_cna_list = [{'shortName': 'TestCNA', 'organizationName': 'Test'}]
+    with patch('builtins.open', mock_open(read_data=json.dumps(mock_cna_list))):
+        with patch('os.path.exists', return_value=True):
+            result = aggregate_cna_scores(scored, periods)
+    cna_scoring = result['TestCNA']['cna_scoring'][0]
+    assert cna_scoring['overall_average_score'] == 70.0
+
+
+def test_aggregate_skips_invalid_cves():
+    """Should skip None or non-dict CVE entries."""
+    scored = [
+        None,
+        _make_scored_cve('CVE-2026-0001', 'TestCNA', 80),
+        "not a dict",
+        _make_scored_cve('CVE-2026-0002', 'TestCNA', 90),
+    ]
+    periods = [
+        (datetime(2025, 9, 1), datetime(2026, 3, 1)),
+        (datetime(2025, 3, 1), datetime(2025, 8, 31))
+    ]
+    mock_cna_list = [{'shortName': 'TestCNA', 'organizationName': 'Test'}]
+    with patch('builtins.open', mock_open(read_data=json.dumps(mock_cna_list))):
+        with patch('os.path.exists', return_value=True):
+            result = aggregate_cna_scores(scored, periods)
+    assert 'TestCNA' in result
+    cna_scoring = result['TestCNA']['cna_scoring'][0]
+    assert cna_scoring['overall_average_score'] == 85.0
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
