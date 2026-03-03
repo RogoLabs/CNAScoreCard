@@ -97,7 +97,7 @@ def _get_cve_file_list(
     else:
         # When no date filtering, optimize by only loading recent years
         logger.info("No date filtering - optimizing by loading recent years only")
-        recent_years = ['2024', '2025']
+        recent_years = [str(datetime.now().year), str(datetime.now().year - 1)]
         
         for year in recent_years:
             if (cves_dir / year).exists():
