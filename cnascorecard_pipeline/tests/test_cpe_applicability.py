@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 
 # Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent))
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from scoring import score_cve_record
 
@@ -24,7 +24,7 @@ def test_traditional_cpes():
     print("TEST 1: Traditional affected[].cpes field")
     print("="*70)
     
-    cve_path = Path(__file__).parent.parent / 'cve_data' / 'cves' / '2025' / '0xxx' / 'CVE-2025-0163.json'
+    cve_path = Path(__file__).parent.parent.parent / 'cve_data' / 'cves' / '2025' / '0xxx' / 'CVE-2025-0163.json'
     
     if not cve_path.exists():
         print(f"⚠️  WARNING: Test CVE not found at {cve_path}")
@@ -56,7 +56,7 @@ def test_cpe_applicability():
     print("TEST 2: CVE 5.1 cpeApplicability field")
     print("="*70)
     
-    cve_path = Path(__file__).parent.parent / 'cve_data' / 'cves' / '2025' / '2xxx' / 'CVE-2025-2502.json'
+    cve_path = Path(__file__).parent.parent.parent / 'cve_data' / 'cves' / '2025' / '2xxx' / 'CVE-2025-2502.json'
     
     if not cve_path.exists():
         print(f"⚠️  WARNING: Test CVE not found at {cve_path}")

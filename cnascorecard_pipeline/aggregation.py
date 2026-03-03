@@ -3,8 +3,11 @@ aggregation.py: CNA-level aggregation and trend logic for CNA Scorecard pipeline
 """
 import os
 import json
-from typing import List, Dict, Tuple, Any
+import logging
+from typing import List, Dict, Tuple, Any, Optional
 from datetime import datetime
+
+logger = logging.getLogger('cnascorecard.aggregation')
 
 def aggregate_cna_scores(scored_cves: List[Dict], periods: List[Tuple[datetime, datetime]]) -> Dict[str, Any]:
     """
@@ -17,11 +20,11 @@ def aggregate_cna_scores(scored_cves: List[Dict], periods: List[Tuple[datetime, 
     """
     from collections import defaultdict
     # Simple trend calculation functions (replacing moved trend.py)
-    def calculate_monthly_trend(cves, months=6):
+    def calculate_monthly_trend(cves: List[Dict[str, Any]], months: int = 6) -> List:
         """Simple placeholder for monthly trend calculation."""
         return []
     
-    def summarize_trend(monthly_trends):
+    def summarize_trend(monthly_trends: List) -> Dict[str, str]:
         """Simple placeholder for trend summary."""
         return {
             'trend_direction': 'steady',
@@ -53,14 +56,14 @@ def aggregate_cna_scores(scored_cves: List[Dict], periods: List[Tuple[datetime, 
                         cna_metadata_map[short_name.lower()] = entry
                         official_cna_names.add(short_name)
         except (IOError, OSError, ValueError, json.JSONDecodeError) as e:
-            print(f"[WARNING] Error reading CNA metadata file: {e}")
+            logger.warning("Error reading CNA metadata file: %s", e)
             # Continue with empty metadata - function should still work
     
-    print(f"[DEBUG] Loaded {len(official_cna_names)} official CNAs from metadata")
-    print(f"[DEBUG] Found CVE data for {len(cna_cves)} CNAs")
+    logger.debug("Loaded %d official CNAs from metadata", len(official_cna_names))
+    logger.debug("Found CVE data for %d CNAs", len(cna_cves))
 
     # Create name mapping function to match CVE assigningCna to official CNA names
-    def map_cve_name_to_official(cve_name, official_names, metadata_map):
+    def map_cve_name_to_official(cve_name: str, official_names: set, metadata_map: Dict[str, Any]) -> Optional[str]:
         """Map CVE assigningCna name to official CNA name using various strategies"""
         if not cve_name or cve_name == 'Unknown':
             return None
@@ -101,11 +104,11 @@ def aggregate_cna_scores(scored_cves: List[Dict], periods: List[Tuple[datetime, 
         else:
             unmapped_cves[cve_cna_name].extend(cves)
     
-    print(f"[DEBUG] Mapped CVE data to {len(official_cna_cves)} official CNAs")
+    logger.debug("Mapped CVE data to %d official CNAs", len(official_cna_cves))
     if unmapped_cves:
-        print(f"[DEBUG] {len(unmapped_cves)} CVE groups could not be mapped to official CNAs:")
+        logger.debug("%d CVE groups could not be mapped to official CNAs:", len(unmapped_cves))
         for unmapped_name in list(unmapped_cves.keys())[:5]:  # Show first 5
-            print(f"[DEBUG]   - {unmapped_name} ({len(unmapped_cves[unmapped_name])} CVEs)")
+            logger.debug("  - %s (%d CVEs)", unmapped_name, len(unmapped_cves[unmapped_name]))
     
     cna_outputs = {}
     
@@ -223,7 +226,7 @@ def aggregate_cna_scores(scored_cves: List[Dict], periods: List[Tuple[datetime, 
 
         # DEBUG: Print patchinfo average for Fortinet
         if official_cna_name.lower() == 'fortinet':
-            print(f"[DEBUG] Fortinet patchinfo avg: {cat_avgs.get('patchinfo', 0)} (sum: {cat_sums.get('patchinfo', 0)}, count: {len(recent_cves)})")
+            logger.debug("Fortinet patchinfo avg: %s (sum: %s, count: %d)", cat_avgs.get('patchinfo', 0), cat_sums.get('patchinfo', 0), len(recent_cves))
         # CNA scoring (ensure all expected fields are present)
         total_cves = len(cves)
         total_cves_scored = sum(1 for cve in cves if cve.get('totalScore', 0) > 0)

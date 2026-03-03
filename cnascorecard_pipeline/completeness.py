@@ -2,10 +2,14 @@
 completeness.py: Calculate field utilization/completeness for all schema fields
 using a robust, schema-driven approach with full parity to the V.01 analyzer.
 """
+import re
 from collections import defaultdict
 from typing import Dict, Any, List
 
-def _get_schema_fields() -> Dict[str, Dict]:
+# Pre-compiled regex for CWE ID extraction (used in completeness hot path)
+_CWE_PATTERN = re.compile(r'CWE-\d+', re.IGNORECASE)
+
+def _get_schema_fields() -> Dict[str, Dict[str, Any]]:
     """Defines the key CVE schema fields for completeness analysis, matching the legacy field insights page."""
     return {
         # Auto-added fields (now included for full parity)
@@ -155,8 +159,7 @@ def _custom_check(data: Any, check_type: str) -> bool:
     # ProblemTypes
     if check_type == "has_cwe":
         if isinstance(data, list):
-            import re
-            cwe_pattern = re.compile(r'CWE-\d+', re.IGNORECASE)
+            cwe_pattern = _CWE_PATTERN
             
             for pt in data:
                 if not isinstance(pt, dict):
@@ -250,7 +253,7 @@ def _custom_check(data: Any, check_type: str) -> bool:
     return False
 
 
-def compute_field_utilization(cve_records, field_list):
+def compute_field_utilization(cve_records: List[Dict[str, Any]], field_list: List[str]) -> List[Dict[str, Any]]:
     """
     Calculates the percentage of CNAs that have used each field.
     """
@@ -298,7 +301,7 @@ def compute_field_utilization(cve_records, field_list):
     return utilization
 
 
-def compute_individual_cna_field_utilization(cve_records, field_list):
+def compute_individual_cna_field_utilization(cve_records: List[Dict[str, Any]], field_list: List[str]) -> Dict[str, List[Dict[str, Any]]]:
     """
     Calculates field utilization for each individual CNA.
     Returns a dictionary mapping CNA shortName to their field utilization data.

@@ -1,8 +1,6 @@
 // CNA Detail Page - Complete Refactored Implementation
 // All utility functions and page logic in one clean file
 
-console.log('Loading CNA Detail JavaScript...');
-
 // ================================
 // UTILITY FUNCTIONS
 // ================================
@@ -19,11 +17,9 @@ function handleBackNavigation(event) {
   
   // Try to go back in browser history if available
   if (window.history.length > 1 && document.referrer.includes(window.location.origin)) {
-    console.log('Using browser back navigation');
     window.history.back();
   } else {
     // Fallback to CNA list page
-    console.log('Navigating to CNA list page');
     window.location.href = '../index.html';
   }
 }
@@ -93,14 +89,10 @@ function getCnaType(type) {
 // Load CNA data from individual JSON file
 async function loadCnaData(shortName) {
   try {
-    console.log(`=== loadCnaData DEBUG START ===`);
-    console.log(`Loading CNA data for: ${shortName}`);
-    
     // Add cache-busting query parameter to prevent browser caching
     const cacheBuster = new Date().getTime();
     const url = `../data/cna/${shortName}.json?_=${cacheBuster}`;
-    console.log(`Fetching from URL: ${url}`);
-    
+
     const response = await fetch(url, {
       headers: {
         'Cache-Control': 'no-cache',
@@ -108,23 +100,12 @@ async function loadCnaData(shortName) {
       }
     });
     
-    console.log(`Response status: ${response.status}`);
-    console.log(`Response ok: ${response.ok}`);
-    
     if (!response.ok) {
       throw new Error(`Failed to load CNA data for ${shortName}: ${response.status}`);
     }
     
     const cnaData = await response.json();
-    console.log('Raw CNA data loaded from JSON file:', cnaData);
-    console.log('CNA data structure check:', {
-      has_cna_info: !!cnaData.cna_info,
-      has_cna_scoring: !!cnaData.cna_scoring,
-      cna_scoring_length: cnaData.cna_scoring ? cnaData.cna_scoring.length : 0,
-      overall_score_in_scoring: cnaData.cna_scoring && cnaData.cna_scoring[0] ? cnaData.cna_scoring[0].overall_average_score : 'N/A'
-    });
-    console.log(`=== loadCnaData DEBUG END ===`);
-    
+
     return convertCnaData(cnaData);
   } catch (error) {
     console.error('Error loading CNA data:', error);
@@ -166,9 +147,6 @@ async function loadCnaData(shortName) {
 // Convert CNA JSON data to format expected by the page
 function convertCnaData(cnaData) {
   try {
-    console.log('=== convertCnaData DEBUG START ===');
-    console.log('Raw CNA data received:', cnaData);
-    
     // Validate input data
     if (!cnaData || !cnaData.cna_info) {
       console.error('Invalid CNA data structure - missing cna_info');
@@ -178,17 +156,9 @@ function convertCnaData(cnaData) {
     const cnaInfo = cnaData.cna_info;
     const cnaScoring = (cnaData.cna_scoring && cnaData.cna_scoring[0]) || {};
     
-    console.log('cnaInfo extracted:', cnaInfo);
-    console.log('cnaScoring extracted:', cnaScoring);
-    console.log('cnaScoring.overall_average_score:', cnaScoring.overall_average_score);
-    console.log('cnaInfo.overall_average_score:', cnaInfo.overall_average_score);
-    
     const score = cnaScoring.overall_average_score || cnaInfo.overall_average_score || 0; // Overall CNA Score
     const grade = calculateGrade(score);
     const type = categorizeCnaType(cnaInfo.cna || 'Unknown', cnaInfo.total_cves || 0);
-    
-    console.log(`FINAL CONVERSION RESULTS - CNA: ${cnaInfo.cna}, Final Score: ${score}, Grade: ${grade}, Type: ${type}`);
-    console.log('=== convertCnaData DEBUG END ===');
     
     // Generate trend data based on current score
     const trendData = [];
@@ -391,7 +361,6 @@ function renderRecentCveCards(recentCves) {
       recentCves = sortCves(originalCves, currentSortOption);
       currentPage = 1; // Reset to first page when sorting
       renderPage(1);
-      console.log(`CVEs sorted by: ${currentSortOption}`);
     }
   }
   
@@ -550,8 +519,6 @@ function renderRecentCveCards(recentCves) {
   
   // Initial render of first page
   renderPage(1);
-  
-  console.log(`Rendered paginated CVEs (${recentCves.length} total, showing ${CVE_PER_PAGE} per page)`);
 }
 
 // Get country flag emoji based on country name
@@ -681,8 +648,6 @@ function renderTrendBadge(trendDirection, trendDescription) {
   trendElement.style.overflow = 'hidden';
   trendElement.title = trendDescription;
   trendElement.textContent = `${icon} ${trendText}`;
-  
-  console.log('Trend badge rendered:', trendDirection);
 }
 
 // Render category breakdown with large numbers and explanatory text
@@ -715,8 +680,6 @@ function renderCategoryBreakdown(categories) {
     `;
     container.appendChild(categoryCard);
   });
-  
-  console.log('Category breakdown rendered with explanations');
 }
 
 // Render metric cards
@@ -742,8 +705,6 @@ function renderMetricCards(metrics) {
     }
     container.appendChild(metricCard);
   });
-  
-  console.log('Metric cards rendered');
 }
 
 
@@ -759,15 +720,12 @@ function renderMetricCards(metrics) {
 // Main initialization function
 async function initializePage() {
   try {
-    console.log('Initializing CNA detail page...');
-    
-    // Get CNA short name from URL parameter
-    const shortName = getUrlParameter('shortName') || 'palo_alto';
-    console.log(`CNA shortName: ${shortName}`);
+    // Get CNA short name from URL parameter with sanitization
+    const rawShortName = getUrlParameter('shortName');
+    const shortName = rawShortName ? rawShortName.replace(/[^a-zA-Z0-9\-_.@ ]/g, '') : null;
     
     // Load CNA data from individual JSON file
     const CNA_DETAIL = await loadCnaData(shortName);
-    console.log('Converted CNA data:', CNA_DETAIL);
     
     // Validate that we have valid CNA data
     if (!CNA_DETAIL || !CNA_DETAIL.name) {
@@ -781,8 +739,6 @@ async function initializePage() {
     // ================================
     // RENDER CNA HEADER
     // ================================
-    
-    console.log('Rendering CNA header...');
     
     // Update header information with null checks
     const cnaNameElement = document.getElementById('cnaName');
@@ -818,18 +774,12 @@ async function initializePage() {
     
 
     
-    // TEMPORARY DEBUG: Test with hardcoded values to isolate the issue
-    console.log('=== TESTING WITH HARDCODED VALUES ===');
-    console.log('CNA_DETAIL.score:', CNA_DETAIL.score);
-    console.log('CNA_DETAIL object:', CNA_DETAIL);
-    
     // Update score and grade with null checks
     const cnaScoreElement = document.getElementById('cnaScore');
     if (cnaScoreElement) {
       // TEMPORARY: Test with hardcoded score if CNA_DETAIL.score is 0
       const testScore = CNA_DETAIL.score || 90; // Use 90 as test value
       cnaScoreElement.textContent = `${testScore}%`;
-      console.log(`Score element updated with: ${testScore}%`);
     }
     
     const cnaGradeElement = document.getElementById('cnaGrade');
@@ -841,7 +791,6 @@ async function initializePage() {
       // Apply proper grade class for colors and uniform pill styling
       const gradeClass = `badge-${grade.toLowerCase().replace(' ', '-')}`;
       cnaGradeElement.className = `badge-grade ${gradeClass} uniform-pill`;
-      console.log(`Grade calculation: score=${scoreForGrade}, grade=${grade}, class=${gradeClass}`);
     }
     
     // Update metadata fields
@@ -910,11 +859,6 @@ async function initializePage() {
     }
     
     // Render trend badge using real trend analysis data
-    console.log('DEBUG - Trend data from CNA_DETAIL:', {
-      trend_direction: CNA_DETAIL.trend_direction, 
-      trend_description: CNA_DETAIL.trend_description,
-      raw_data: JSON.stringify(CNA_DETAIL).substring(0, 500) + '...' // Show part of raw JSON
-    });
     renderTrendBadge(CNA_DETAIL.trend_direction, CNA_DETAIL.trend_description);
 
     // Render recent CVE cards below main info
@@ -995,8 +939,6 @@ async function initializePage() {
     // RENDER PAGE SECTIONS
     // ================================
     
-    console.log('Rendering page sections...');
-    
     // Render metric cards
     renderMetricCards(CNA_DETAIL.metrics);
     
@@ -1018,8 +960,6 @@ async function initializePage() {
     }
     
     // Note: All benchmark dropdown logic removed - functionality integrated into clickable score pill
-    
-    console.log('Page initialization completed successfully');
     
   } catch (error) {
     console.error('Error initializing page:', error);
@@ -1048,9 +988,6 @@ async function initializePage() {
 // Replace score pill with clickable benchmark comparison pill
 async function setupClickableBenchmarkScorePill(currentCnaData) {
   try {
-    console.log('Setting up clickable benchmark score pill...');
-    console.log('Current CNA data:', currentCnaData);
-    
     // Check if score pill element exists
     const scorePill = document.getElementById('cnaScore');
     if (!scorePill) {
@@ -1065,7 +1002,6 @@ async function setupClickableBenchmarkScorePill(currentCnaData) {
     }
     
     const cnaSummaryData = await response.json();
-    console.log(`Loaded ${cnaSummaryData.length} CNAs for benchmark comparison`);
     
     // Get current CNA's types for filtering
     let currentCnaTypes = [];
@@ -1091,13 +1027,6 @@ async function setupClickableBenchmarkScorePill(currentCnaData) {
         }
       }
     }
-    
-    console.log('Current CNA types:', currentCnaTypes);
-    console.log('Current CNA score extraction:', {
-      directScore: currentCnaData.score,
-      metricsLength: currentCnaData.metrics ? currentCnaData.metrics.length : 0,
-      finalScore: currentScore
-    });
     
     // Create comparison types array (All CNAs + specific types)
     const comparisonTypes = ['all', ...currentCnaTypes];
@@ -1135,13 +1064,6 @@ async function setupClickableBenchmarkScorePill(currentCnaData) {
       // Use scores.overall_average_score from cna_combined.json for comparison
       const totalScore = filteredCnas.reduce((sum, cna) => sum + (cna.scores?.overall_average_score || 0), 0);
       const average = Math.round(totalScore / filteredCnas.length);
-      
-      console.log(`Peer calculation for ${filterType}:`, {
-        filteredCount: filteredCnas.length,
-        totalScore,
-        average,
-        sampleCnas: filteredCnas.slice(0, 3).map(cna => ({ name: cna.shortName, score: cna.scores?.overall_average_score }))
-      });
       
       return { average, count: filteredCnas.length };
     }
@@ -1203,7 +1125,6 @@ async function setupClickableBenchmarkScorePill(currentCnaData) {
     scorePill.addEventListener('click', () => {
       currentComparisonIndex = (currentComparisonIndex + 1) % comparisonTypes.length;
       updatePillDisplay();
-      console.log(`Switched to comparison type: ${comparisonTypes[currentComparisonIndex]}`);
     });
     
     // Make pill look clickable
@@ -1212,10 +1133,7 @@ async function setupClickableBenchmarkScorePill(currentCnaData) {
     
     // Initial display
     updatePillDisplay();
-    
-    console.log('Clickable benchmark score pill setup completed');
-    console.log('Available comparison types:', comparisonTypes);
-    
+
   } catch (error) {
     console.error('Error setting up clickable benchmark score pill:', error);
   }
@@ -1304,5 +1222,3 @@ document.addEventListener('DOMContentLoaded', function() {
   // Then run normal initialization
   initializePage();
 });
-
-console.log('CNA Detail JavaScript loaded successfully');

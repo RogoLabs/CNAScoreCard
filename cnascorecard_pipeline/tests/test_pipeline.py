@@ -268,26 +268,27 @@ class TestCNAScoreCardPipeline(TestPipelineFixtures):
     
     @patch('pipeline.load_cve_records')
     def test_load_cve_data_success(self, mock_load_cves, sample_config, sample_cve_records):
-        """Test successful CVE data loading."""
-        mock_load_cves.side_effect = [sample_cve_records, [sample_cve_records[0]]]
-        
+        """Test successful CVE data loading (single load, in-memory filter)."""
+        mock_load_cves.return_value = sample_cve_records
+
         pipeline = CNAScoreCardPipeline(sample_config)
         pipeline.analysis_periods = {'current': ('2024-01-01', '2024-06-30')}
-        
+
         pipeline._load_cve_data()
-        
+
         assert len(pipeline.cve_records) == 2
-        assert len(pipeline.filtered_cve_records) == 1
-        assert mock_load_cves.call_count == 2
+        assert len(pipeline.filtered_cve_records) == 2  # Both records fall within the period
+        assert mock_load_cves.call_count == 1
     
     @patch('pipeline.load_cve_records')
     def test_load_cve_data_no_filtered_records(self, mock_load_cves, sample_config):
-        """Test CVE data loading with no filtered records."""
-        mock_load_cves.side_effect = [['some_cve'], []]  # No filtered records
-        
+        """Test CVE data loading with no filtered records (records lack datePublished)."""
+        # Records without cveMetadata.datePublished will be skipped by in-memory filter
+        mock_load_cves.return_value = [{'cveId': 'CVE-2024-9999'}]
+
         pipeline = CNAScoreCardPipeline(sample_config)
         pipeline.analysis_periods = {'current': ('2024-01-01', '2024-06-30')}
-        
+
         with pytest.raises(PipelineError, match="No CVE records found"):
             pipeline._load_cve_data()
     
