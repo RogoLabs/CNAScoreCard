@@ -11,7 +11,8 @@ on:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    
+    timeout-minutes: 30
+
     # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
     permissions:
       contents: write
@@ -22,7 +23,7 @@ jobs:
     # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
     concurrency:
       group: "pages"
-      cancel-in-progress: false
+      cancel-in-progress: true
     
     environment:
       name: github-pages
@@ -84,39 +85,24 @@ jobs:
           echo "No changes to commit"
         else
           git commit -m "Automated: Update CNA Scorecard data [skip ci]"
-          
-          # Fetch latest changes
+
+          # Fetch latest and attempt to push
           git fetch origin main
-          
-          # Try to push, if it fails due to conflicts, resolve them
+
+          # Try to push, if it fails attempt rebase
           if ! git push origin HEAD:main; then
-            echo "Push failed, attempting to resolve conflicts..."
-            
-            # Pull with merge strategy (not rebase) and auto-resolve conflicts
-            # For data files, always prefer our version (the newer data)
-            git pull origin main --no-rebase --strategy-option=ours || {
-              echo "Merge had conflicts, resolving by keeping our changes..."
-              
-              # For any conflicted files in web/data/, accept our version
-              git checkout --ours web/data/
-              git add web/data/
-              
-              # Complete the merge
-              git -c core.editor=true merge --continue || {
-                echo "Could not auto-resolve, will force push our changes..."
-                git merge --abort
-                git push --force origin HEAD:main
-                exit 0
-              }
+            echo "Push failed, attempting to rebase..."
+            git pull origin main --rebase || {
+              echo "ERROR: Could not rebase. Another workflow may be running."
+              echo "This run will be retried on the next scheduled execution."
+              exit 1
             }
-            
-            # Try pushing again
             git push origin HEAD:main || {
-              echo "Still failed, force pushing..."
-              git push --force origin HEAD:main
+              echo "ERROR: Push failed after rebase. Will retry on next run."
+              exit 1
             }
           fi
-          
+
           echo "Changes pushed successfully"
         fi
     
