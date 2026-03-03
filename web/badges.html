@@ -282,7 +282,7 @@
       <h1 class="page-title">CNA Scorecard Badges</h1>
       <p class="page-subtitle">
         Display your CNA Scorecard rating on your website, README, or documentation!
-        Choose from three badge styles and copy the code to embed in your content.
+        Choose from four badge styles and copy the code to embed in your content.
       </p>
     </section>
 
@@ -309,7 +309,7 @@
       <h2>How to Use</h2>
       <ol style="line-height: 1.8;">
         <li>Search for your CNA name above</li>
-        <li>Choose your preferred badge style (Rank, Score, or Combined)</li>
+        <li>Choose your preferred badge style (Rank, Score, Combined, or Detailed)</li>
         <li>Click the "Copy" button to copy the badge code</li>
         <li>Paste the code into your README, website, or documentation</li>
       </ol>
@@ -444,26 +444,55 @@
           title: 'Combined Badge',
           style: 'both',
           description: 'Shows both rank and score'
+        },
+        {
+          title: 'Foundational Completeness',
+          style: 'fc',
+          description: 'Foundational Completeness metric score'
+        },
+        {
+          title: 'Root Cause Analysis',
+          style: 'rc',
+          description: 'Root Cause Analysis metric score'
+        },
+        {
+          title: 'Software Identification',
+          style: 'si',
+          description: 'Software Identification metric score'
+        },
+        {
+          title: 'Severity & Impact',
+          style: 'sv',
+          description: 'Severity & Impact metric score'
+        },
+        {
+          title: 'Patch Info',
+          style: 'pi',
+          description: 'Patch Info metric score'
+        },
+        {
+          title: 'Detailed Badge',
+          style: 'detailed',
+          description: 'Shows all 5 individual metric scores in one badge'
         }
       ];
 
-      badgeGrid.innerHTML = badges.map(badge => `
-        <div class="badge-item">
-          <div class="badge-title">${badge.title}</div>
-          <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
-            ${badge.description}
-          </div>
-          <div class="badge-preview">
-            <img src="${baseUrl}/badges/${safeName}-${badge.style}.svg" alt="${cna.shortName} CNA Scorecard">
-          </div>
-          <div class="badge-code" id="code-${badge.style}">
-            <button class="copy-button" onclick="copyCode('${badge.style}', '${safeName}', '${cna.shortName}')">
-              Copy
-            </button>
-            <div style="padding-right: 70px;">![CNA Scorecard](${baseUrl}/badges/${safeName}-${badge.style}.svg)</div>
-          </div>
-        </div>
-      `).join('');
+      // NOTE: badge data is hardcoded from our own pipeline output, not user-supplied
+      badgeGrid.innerHTML = badges.map(badge => {
+        const fullWidth = badge.style === 'detailed' ? ' style="grid-column: 1 / -1;"' : '';
+        return '<div class="badge-item"' + fullWidth + '>'
+          + '<div class="badge-title">' + badge.title + '</div>'
+          + '<div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">'
+          + badge.description + '</div>'
+          + '<div class="badge-preview">'
+          + '<img src="' + baseUrl + '/badges/' + safeName + '-' + badge.style + '.svg" alt="' + cna.shortName + ' CNA Scorecard">'
+          + '</div>'
+          + '<div class="badge-code" id="code-' + badge.style + '">'
+          + '<button class="copy-button" onclick="copyCode(\'' + badge.style + '\', \'' + safeName + '\', \'' + cna.shortName + '\')">'
+          + 'Copy</button>'
+          + '<div style="padding-right: 70px;">![CNA Scorecard](' + baseUrl + '/badges/' + safeName + '-' + badge.style + '.svg)</div>'
+          + '</div></div>';
+      }).join('');
 
       badgeContainer.classList.add('active');
     }
