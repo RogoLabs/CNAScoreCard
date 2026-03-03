@@ -228,7 +228,7 @@ function renderTopPerformers(data) {
       fieldCard.style.alignItems = 'center';
       fieldCard.style.border = '1px solid var(--border-color)';
       fieldCard.innerHTML = `
-        <div class="field-category" style="font-weight:700;font-size:0.98em;color:#0074d9;margin-bottom:0.18em;text-align:center;">${cat.field}</div>
+        <div class="field-category" style="font-weight:700;font-size:0.98em;color:#0066cc;margin-bottom:0.18em;text-align:center;">${cat.field}</div>
         <div class="badge-grade ${badgeClass}" style="margin-bottom:0.13em;margin-top:0.05em;font-size:0.93em;padding:0.18em 0.7em;">${grade}</div>
       `;
       card.appendChild(fieldCard);

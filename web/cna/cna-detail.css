@@ -40,13 +40,13 @@
 }
 
 .cve-sort-dropdown:hover {
-  border-color: #0074d9;
+  border-color: var(--primary-color);
 }
 
 .cve-sort-dropdown:focus {
   outline: none;
-  border-color: #0074d9;
-  box-shadow: 0 0 0 3px rgba(0, 116, 217, 0.1);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
 }
 
 @media (max-width: 768px) {
@@ -95,14 +95,14 @@
   justify-content: center;
   gap: 0.75rem;
   padding: 1rem 1.5rem;
-  background: linear-gradient(135deg, #0074d9 0%, #005bb5 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
   color: white;
   text-decoration: none;
   border-radius: 50px;
   font-weight: 600;
   font-size: 0.9rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 6px 20px rgba(0, 116, 217, 0.3);
+  box-shadow: 0 6px 20px rgba(0, 102, 204, 0.3);
   border: none;
   cursor: pointer;
   z-index: 1000;
@@ -127,21 +127,21 @@
 }
 
 .back-button:hover {
-  background: linear-gradient(135deg, #005bb5 0%, #004080 100%);
+  background: linear-gradient(135deg, var(--primary-hover) 0%, #004080 100%);
   transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 12px 30px rgba(0, 116, 217, 0.4);
+  box-shadow: 0 12px 30px rgba(0, 102, 204, 0.4);
   text-decoration: none;
   color: white;
 }
 
 .back-button:focus {
-  outline: 3px solid rgba(0, 116, 217, 0.5);
+  outline: 3px solid rgba(0, 102, 204, 0.5);
   outline-offset: 2px;
 }
 
 .back-button:active {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 6px 20px rgba(0, 116, 217, 0.3);
+  box-shadow: 0 6px 20px rgba(0, 102, 204, 0.3);
 }
 
 /* Back button mobile - convert to bottom navigation bar */
@@ -781,7 +781,7 @@ html body main .recent-cve-cards-section .recent-cve-cards .recent-cve-card .cve
   justify-content: center;
   gap: 0.75rem;
   padding: 0.75rem 1.25rem;
-  background: linear-gradient(135deg, #0074d9 0%, #005bb5 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
   color: white !important;
   text-decoration: none !important;
   border-radius: 8px;
@@ -790,19 +790,19 @@ html body main .recent-cve-cards-section .recent-cve-cards .recent-cve-card .cve
   transition: all 0.2s ease;
   border: none;
   cursor: pointer;
-  box-shadow: 0 8px 15px rgba(0, 116, 217, 0.15);
+  box-shadow: 0 8px 15px rgba(0, 102, 204, 0.15);
 }
 
 .cna-action-button:hover {
-  background: linear-gradient(135deg, #005bb5 0%, #004080 100%);
+  background: linear-gradient(135deg, var(--primary-hover) 0%, #004080 100%);
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 116, 217, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 102, 204, 0.3);
   text-decoration: none !important;
 }
 
 .cna-action-button:active {
   transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 116, 217, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 102, 204, 0.2);
 }
 
 /* Icon styling for buttons */
@@ -838,7 +838,7 @@ html body main .recent-cve-cards-section .recent-cve-cards .recent-cve-card .cve
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: linear-gradient(135deg, #0074d9 0%, #005bb5 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
   color: white !important;
   text-decoration: none !important;
   border-radius: 6px;
@@ -847,19 +847,19 @@ html body main .recent-cve-cards-section .recent-cve-cards .recent-cve-card .cve
   transition: all 0.2s ease;
   border: none;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 116, 217, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 102, 204, 0.2);
 }
 
 .cna-action-button:hover {
-  background: linear-gradient(135deg, #005bb5 0%, #004080 100%);
+  background: linear-gradient(135deg, var(--primary-hover) 0%, #004080 100%);
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 116, 217, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 102, 204, 0.3);
   text-decoration: none !important;
 }
 
 .cna-action-button:active {
   transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 116, 217, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 102, 204, 0.2);
 }
 
 /* Icon styling for action buttons */
