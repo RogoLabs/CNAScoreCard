@@ -201,19 +201,30 @@ class CNAScoreCardPipeline:
     def _load_cve_data(self) -> None:
         """Load CVE data for analysis (full mode)."""
         self.logger.info("Loading CVE data (full mode)")
-        
-        # Load all CVE records (needed for trend analysis)
+
+        # Load all CVE records once (needed for trend analysis)
         self.cve_records = load_cve_records()
         self.logger.info(f"Loaded {len(self.cve_records)} total CVE records")
-        
-        # Filter CVE records for current analysis period
+
+        # Filter in-memory for current analysis period instead of re-loading from disk
         current_start, current_end = self.analysis_periods['current']
-        self.filtered_cve_records = load_cve_records(
-            start_date=current_start,
-            end_date=current_end
-        )
+        start_dt = datetime.strptime(current_start, "%Y-%m-%d")
+        end_dt = datetime.strptime(current_end, "%Y-%m-%d")
+
+        self.filtered_cve_records = []
+        for cve in self.cve_records:
+            date_str = cve.get("cveMetadata", {}).get("datePublished", "")
+            if not date_str:
+                continue
+            try:
+                pub_date = datetime.strptime(date_str[:10], "%Y-%m-%d")
+                if start_dt <= pub_date <= end_dt:
+                    self.filtered_cve_records.append(cve)
+            except ValueError:
+                continue
+
         self.logger.info(f"Filtered to {len(self.filtered_cve_records)} CVE records for current period")
-        
+
         if not self.filtered_cve_records:
             raise PipelineError("No CVE records found for the specified analysis period")
     
