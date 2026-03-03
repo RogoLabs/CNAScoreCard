@@ -333,8 +333,13 @@ def _load_cve_batch(
             
             records.append(data)
             
-        except Exception:
+        except Exception as e:
             failed += 1
+            if failed <= 5:
+                import logging
+                logging.getLogger('cnascorecard.ingest').debug(
+                    "Failed to load CVE file %s: %s: %s", file_path, type(e).__name__, e
+                )
     
     return records, failed
 
