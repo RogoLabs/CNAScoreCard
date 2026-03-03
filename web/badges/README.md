@@ -4,11 +4,17 @@ Display your CNA Scorecard rating on your website, README, or documentation!
 
 ## Badge Styles
 
-We provide three badge styles for each CNA:
+We provide nine badge styles for each CNA:
 
 1. **Rank Badge** - Shows your CNA rank (e.g., #1, #5, #42)
 2. **Score Badge** - Shows numerical score percentage
 3. **Combined Badge** - Shows both rank and score
+4. **Detailed Badge** - Shows all 5 individual metric scores (FC, RC, SI, SV, PI)
+5. **FC Badge** - Foundational Completeness score
+6. **RC Badge** - Root Cause Analysis score
+7. **SI Badge** - Software Identification score
+8. **SV Badge** - Severity & Impact score
+9. **PI Badge** - Patch Info score
 
 ## Usage
 
@@ -29,6 +35,20 @@ Replace `{CNA_NAME}` with your CNA shortName (e.g., `Microsoft`, `Cisco`, `Linux
 **Combined Badge:**
 ```markdown
 ![CNA Scorecard]({base_url}/badges/{{CNA_NAME}}-both.svg)
+```
+
+**Detailed Badge:**
+```markdown
+![CNA Scorecard]({base_url}/badges/{{CNA_NAME}}-detailed.svg)
+```
+
+**Individual Metric Badges** (fc, rc, si, sv, pi):
+```markdown
+![CNA Scorecard]({base_url}/badges/{{CNA_NAME}}-fc.svg)
+![CNA Scorecard]({base_url}/badges/{{CNA_NAME}}-rc.svg)
+![CNA Scorecard]({base_url}/badges/{{CNA_NAME}}-si.svg)
+![CNA Scorecard]({base_url}/badges/{{CNA_NAME}}-sv.svg)
+![CNA Scorecard]({base_url}/badges/{{CNA_NAME}}-pi.svg)
 ```
 
 ### HTML
@@ -52,6 +72,11 @@ Replace `{CNA_NAME}` with your CNA shortName (e.g., `Microsoft`, `Cisco`, `Linux
 **Cisco (Combined):**
 ```markdown
 ![CNA Scorecard]({base_url}/badges/Cisco-both.svg)
+```
+
+**HeroDevs (Detailed):**
+```markdown
+![CNA Scorecard]({base_url}/badges/HeroDevs-detailed.svg)
 ```
 
 ## Linking to Your CNA Page
