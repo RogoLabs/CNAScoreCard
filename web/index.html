@@ -523,16 +523,8 @@
     }
 
     // Load and display key statistics
-    async function loadKeyStatistics() {
+    async function loadKeyStatistics(cnaData, completenessData) {
       try {
-        const [cnaResponse, completenessResponse] = await Promise.all([
-          fetch('./data/cna_combined.json'),
-          fetch('./data/completeness_summary.json')
-        ]);
-
-        const cnaData = await cnaResponse.json();
-        const completenessData = await completenessResponse.json();
-
         // Calculate statistics from the data
         const totalCNAs = cnaData.length;
         const totalCVEs = completenessData.total_cves_analyzed || 0;
@@ -574,11 +566,8 @@
     }
 
     // Load and display category breakdown
-    async function loadCategoryBreakdown() {
+    async function loadCategoryBreakdown(data) {
       try {
-        const response = await fetch('./data/cna_combined.json');
-        const data = await response.json();
-        
         // Filter CNAs with valid scores
         const cnasWithScores = data.filter(cna => cna.scores && cna.scores.overall_average_score > 0);
         
@@ -646,11 +635,8 @@
     }
 
     // Load and display CNA performance snapshot
-    async function loadCNAPerformanceSnapshot() {
+    async function loadCNAPerformanceSnapshot(data) {
       try {
-        const response = await fetch('./data/cna_combined.json');
-        const data = await response.json();
-        
         // Filter CNAs with valid scores and sort by overall average score
         const validCNAs = data
           .filter(cna => cna.scores && cna.scores.overall_average_score > 0)
@@ -699,10 +685,21 @@
 
     // Initialize the homepage
     async function initializeHomepage() {
+      // Fetch shared data once and pass to all sections
+      const [cnaResponse, completenessResponse] = await Promise.all([
+        fetch('./data/cna_combined.json'),
+        fetch('./data/completeness_summary.json')
+      ]);
+
+      const [cnaData, completenessData] = await Promise.all([
+        cnaResponse.json(),
+        completenessResponse.json()
+      ]);
+
       await Promise.all([
-        loadKeyStatistics(),
-        loadCategoryBreakdown(),
-        loadCNAPerformanceSnapshot()
+        loadKeyStatistics(cnaData, completenessData),
+        loadCategoryBreakdown(cnaData),
+        loadCNAPerformanceSnapshot(cnaData)
       ]);
     }
 
