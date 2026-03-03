@@ -6,10 +6,14 @@ of key data fields across five categories: foundational completeness, root cause
 severity & impact context, software identification, and patch information.
 """
 import logging
+import re
 from typing import Dict, Any, Optional, List
 
 from config import ScoringConfig
 from utils import extract_cna_short_name, format_date_string
+
+# Pre-compiled regex for CWE ID extraction (used in scoring hot path)
+_CWE_PATTERN = re.compile(r'CWE-\d+', re.IGNORECASE)
 
 # Initialize logging and configuration
 logger = logging.getLogger('cnascorecard.scoring')
@@ -156,8 +160,7 @@ def _find_valid_cwe(problem_types: List[Dict[str, Any]]) -> bool:
     if not problem_types:
         return False
         
-    import re
-    cwe_pattern = re.compile(r'CWE-\d+', re.IGNORECASE)
+    cwe_pattern = _CWE_PATTERN
         
     for pt in problem_types:
         if not isinstance(pt, dict):

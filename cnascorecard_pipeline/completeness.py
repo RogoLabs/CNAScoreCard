@@ -2,8 +2,12 @@
 completeness.py: Calculate field utilization/completeness for all schema fields
 using a robust, schema-driven approach with full parity to the V.01 analyzer.
 """
+import re
 from collections import defaultdict
 from typing import Dict, Any, List
+
+# Pre-compiled regex for CWE ID extraction (used in completeness hot path)
+_CWE_PATTERN = re.compile(r'CWE-\d+', re.IGNORECASE)
 
 def _get_schema_fields() -> Dict[str, Dict]:
     """Defines the key CVE schema fields for completeness analysis, matching the legacy field insights page."""
@@ -155,8 +159,7 @@ def _custom_check(data: Any, check_type: str) -> bool:
     # ProblemTypes
     if check_type == "has_cwe":
         if isinstance(data, list):
-            import re
-            cwe_pattern = re.compile(r'CWE-\d+', re.IGNORECASE)
+            cwe_pattern = _CWE_PATTERN
             
             for pt in data:
                 if not isinstance(pt, dict):
