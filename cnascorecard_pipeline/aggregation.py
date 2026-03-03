@@ -4,7 +4,7 @@ aggregation.py: CNA-level aggregation and trend logic for CNA Scorecard pipeline
 import os
 import json
 import logging
-from typing import List, Dict, Tuple, Any
+from typing import List, Dict, Tuple, Any, Optional
 from datetime import datetime
 
 logger = logging.getLogger('cnascorecard.aggregation')
@@ -20,11 +20,11 @@ def aggregate_cna_scores(scored_cves: List[Dict], periods: List[Tuple[datetime, 
     """
     from collections import defaultdict
     # Simple trend calculation functions (replacing moved trend.py)
-    def calculate_monthly_trend(cves, months=6):
+    def calculate_monthly_trend(cves: List[Dict[str, Any]], months: int = 6) -> List:
         """Simple placeholder for monthly trend calculation."""
         return []
     
-    def summarize_trend(monthly_trends):
+    def summarize_trend(monthly_trends: List) -> Dict[str, str]:
         """Simple placeholder for trend summary."""
         return {
             'trend_direction': 'steady',
@@ -63,7 +63,7 @@ def aggregate_cna_scores(scored_cves: List[Dict], periods: List[Tuple[datetime, 
     logger.debug("Found CVE data for %d CNAs", len(cna_cves))
 
     # Create name mapping function to match CVE assigningCna to official CNA names
-    def map_cve_name_to_official(cve_name, official_names, metadata_map):
+    def map_cve_name_to_official(cve_name: str, official_names: set, metadata_map: Dict[str, Any]) -> Optional[str]:
         """Map CVE assigningCna name to official CNA name using various strategies"""
         if not cve_name or cve_name == 'Unknown':
             return None

@@ -13,23 +13,31 @@ from pathlib import Path
 
 def download_official_cnas_list() -> List[Dict[str, Any]]:
     """Download the official CNAs list from CVE Project GitHub repository."""
+    import time
     url = "https://raw.githubusercontent.com/CVEProject/cve-website/dev/src/assets/data/CNAsList.json"
-    
-    try:
-        logging.info(f"Downloading official CNAs list from: {url}")
-        response = requests.get(url, timeout=30)
-        response.raise_for_status()
-        
-        data = response.json()
-        logging.info(f"Successfully downloaded {len(data)} CNAs from official list")
-        return data
-        
-    except requests.RequestException as e:
-        logging.error(f"Failed to download CNAs list: {e}")
-        raise
-    except json.JSONDecodeError as e:
-        logging.error(f"Failed to parse CNAs list JSON: {e}")
-        raise
+
+    max_retries = 2
+    for attempt in range(max_retries + 1):
+        try:
+            logging.info(f"Downloading official CNAs list from: {url} (attempt {attempt + 1})")
+            response = requests.get(url, timeout=30)
+            response.raise_for_status()
+
+            data = response.json()
+            logging.info(f"Successfully downloaded {len(data)} CNAs from official list")
+            return data
+
+        except requests.RequestException as e:
+            if attempt < max_retries:
+                wait_time = 2 ** attempt
+                logging.warning(f"Download attempt {attempt + 1} failed: {e}. Retrying in {wait_time}s...")
+                time.sleep(wait_time)
+            else:
+                logging.error(f"Failed to download CNAs list after {max_retries + 1} attempts: {e}")
+                raise
+        except json.JSONDecodeError as e:
+            logging.error(f"Failed to parse CNAs list JSON: {e}")
+            raise
 
 
 def create_enhanced_cna_list(official_cnas: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
