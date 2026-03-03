@@ -51,7 +51,7 @@ jobs:
       uses: actions/cache@v4
       with:
         path: cve_data
-        key: cve-data-${{ github.run_number }}
+        key: cve-data-v1
         restore-keys: |
           cve-data-
     
