@@ -74,8 +74,23 @@ jobs:
         ls -la cve_data/
       
     - name: Run the Data Pipeline
-      run: python ./cnascorecard_pipeline/pipeline.py 
-      
+      run: python ./cnascorecard_pipeline/pipeline.py
+
+    - name: Validate pipeline output
+      run: |
+        echo "Validating pipeline output..."
+        for file in web/data/cna_combined.json web/data/field_utilization.json web/data/performance_trends.json; do
+          if [ ! -f "$file" ]; then
+            echo "ERROR: Missing expected output file: $file"
+            exit 1
+          fi
+          python -c "import json; json.load(open('$file'))" || {
+            echo "ERROR: Invalid JSON in $file"
+            exit 1
+          }
+        done
+        echo "All output files validated successfully"
+
     - name: Commit and Push Changes
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
