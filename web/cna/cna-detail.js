@@ -720,8 +720,9 @@ function renderMetricCards(metrics) {
 // Main initialization function
 async function initializePage() {
   try {
-    // Get CNA short name from URL parameter
-    const shortName = getUrlParameter('shortName') || 'palo_alto';
+    // Get CNA short name from URL parameter with sanitization
+    const rawShortName = getUrlParameter('shortName');
+    const shortName = rawShortName ? rawShortName.replace(/[^a-zA-Z0-9\-_.@ ]/g, '') : null;
     
     // Load CNA data from individual JSON file
     const CNA_DETAIL = await loadCnaData(shortName);
