@@ -522,5 +522,3 @@ def score_multiple_cves(cves: List[Dict[str, Any]], use_cache: bool = True) -> L
     logger.info(f"Successfully scored {len(scored_cves)} out of {len(cves)} CVE records")
     
     return scored_cves
-    
-    return scored_cves
