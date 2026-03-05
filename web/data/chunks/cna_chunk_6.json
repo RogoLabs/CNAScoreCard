@@ -1,29 +1,29 @@
 {
   "chunkIndex": 6,
   "startIndex": 300,
-  "endIndex": 322,
-  "count": 22,
+  "endIndex": 323,
+  "count": 23,
   "items": [
     {
-      "shortName": "Octopus",
-      "organizationName": "Octopus Deploy",
+      "shortName": "Go",
+      "organizationName": "Go Project",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor",
         "Open Source"
       ],
-      "rank": 293,
-      "active_cna_count": 322,
+      "rank": 294,
+      "active_cna_count": 323,
       "percentile": 9.3,
-      "total_cves": 1,
-      "recent_cves": 1,
+      "total_cves": 29,
+      "recent_cves": 29,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
+        "root_cause_analysis": 100.0,
         "software_identification": 0.0,
-        "severity_and_impact": 100.0,
+        "severity_and_impact": 0.0,
         "patchinfo": 0.0
       },
       "trend": {
@@ -31,20 +31,63 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All Octopus Deploy products, as well as Octopus Deploy maintained projects hosted on <a href='https://github.com/OctopusDeploy' target='_blank'>https://github.com/OctopusDeploy</a>.",
+      "scope": "Vulnerabilities in software published by the Go Project (including the Go standard library, Go toolchain, and the golang.org modules) and publicly disclosed vulnerabilities in publicly importable packages in the Go ecosystem, unless covered by another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://advisories.octopus.com/"
+          "url": "https://pkg.go.dev/vuln/list"
         }
       ],
-      "officialCnaID": "CNA-2021-0017",
-      "country": "Australia",
+      "officialCnaID": "CNA-2022-0008",
+      "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://octopus.com/security/disclosure"
+          "url": "https://go.dev/security"
+        }
+      ]
+    },
+    {
+      "shortName": "curl",
+      "organizationName": "curl",
+      "cnaType": "Open Source",
+      "cnaTypes": [
+        "Open Source"
+      ],
+      "rank": 294,
+      "active_cna_count": 323,
+      "percentile": 9.3,
+      "total_cves": 10,
+      "recent_cves": 10,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All products made and managed by the curl project. This includes curl, libcurl, and trurl.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://curl.se/docs/security.html"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0006",
+      "country": "Sweden",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://curl.se/dev/vuln-disclosure.html"
         }
       ]
     },
@@ -56,8 +99,8 @@
         "Open Source",
         "Vendor"
       ],
-      "rank": 293,
-      "active_cna_count": 322,
+      "rank": 294,
+      "active_cna_count": 323,
       "percentile": 9.3,
       "total_cves": 6,
       "recent_cves": 6,
@@ -99,8 +142,8 @@
       "cnaTypes": [
         "Vendor"
       ],
-      "rank": 293,
-      "active_cna_count": 322,
+      "rank": 294,
+      "active_cna_count": 323,
       "percentile": 9.3,
       "total_cves": 3,
       "recent_cves": 3,
@@ -143,8 +186,8 @@
         "Vendor",
         "Open Source"
       ],
-      "rank": 293,
-      "active_cna_count": 322,
+      "rank": 294,
+      "active_cna_count": 323,
       "percentile": 9.3,
       "total_cves": 1,
       "recent_cves": 1,
@@ -180,93 +223,6 @@
       ]
     },
     {
-      "shortName": "hpe",
-      "organizationName": "Hewlett Packard Enterprise (HPE)",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 293,
-      "active_cna_count": 322,
-      "percentile": 9.3,
-      "total_cves": 72,
-      "recent_cves": 72,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "HPE and acquisitions issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://support.hpe.com/portal/site/hpsc/public/kb/secBullArchive/"
-        }
-      ],
-      "officialCnaID": "CNA-2016-0003",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=a00100637en_us"
-        }
-      ]
-    },
-    {
-      "shortName": "TXOne",
-      "organizationName": "TXOne Networks, Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Researcher"
-      ],
-      "rank": 293,
-      "active_cna_count": 322,
-      "percentile": 9.3,
-      "total_cves": 1,
-      "recent_cves": 1,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities in TXOne Networks products, including end-of-life products, or third-party operational technology (OT) and industrial control systems (ICS) products, unless covered by the scope of another CNA.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.txone.com/psirt/advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0032",
-      "country": "Taiwan",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.txone.com/psirt/disclosure-policy/"
-        }
-      ]
-    },
-    {
       "shortName": "WPScan",
       "organizationName": "WPScan",
       "cnaType": "Vendor",
@@ -274,11 +230,11 @@
         "Vendor",
         "Open Source"
       ],
-      "rank": 293,
-      "active_cna_count": 322,
+      "rank": 294,
+      "active_cna_count": 323,
       "percentile": 9.3,
-      "total_cves": 116,
-      "recent_cves": 116,
+      "total_cves": 117,
+      "recent_cves": 117,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
@@ -319,14 +275,145 @@
       ]
     },
     {
+      "shortName": "DSF",
+      "organizationName": "Django Software Foundation",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 294,
+      "active_cna_count": 323,
+      "percentile": 9.3,
+      "total_cves": 12,
+      "recent_cves": 12,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Only supported and end-of-life Django versions available at <a href='https://www.djangoproject.com/download/' target='_blank'>https://www.djangoproject.com/download/</a> and projects listed at <a href='https://github.com/django' target='_blank'>https://github.com/django</a> (such as Django, channels, and daphne), excluding distributions maintained by third-party redistributors.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://docs.djangoproject.com/en/stable/releases/security/"
+        }
+      ],
+      "officialCnaID": "CNA-2025-0057",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.djangoproject.com/foundation/cve-numbering-authority/"
+        }
+      ]
+    },
+    {
+      "shortName": "imaginationtech",
+      "organizationName": "Imagination Technologies",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 294,
+      "active_cna_count": 323,
+      "percentile": 9.3,
+      "total_cves": 10,
+      "recent_cves": 10,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Imagination Technologies branded products and technologies and Imagination Technologies (IMG) managed open source projects.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.imaginationtech.com/gpu-driver-vulnerabilities/"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0051",
+      "country": "UK",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.imaginationtech.com/product-security-policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "hikvision",
+      "organizationName": "Hangzhou Hikvision Digital Technology Co., Ltd.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 294,
+      "active_cna_count": 323,
+      "percentile": 9.3,
+      "total_cves": 9,
+      "recent_cves": 9,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All <a href='http://www.hikvision.com/en/' target='_blank'>Hikvision Internet of Things (IoT) products</a> including cameras and digital video recorders (DVRs).",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://us.hikvision.com/en/support-resources/cybersecurity-center/security-notices"
+        }
+      ],
+      "officialCnaID": "CNA-2018-0002",
+      "country": "China",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.hikvision.com/en/policies/vulnerability-disclosure-policy/"
+        }
+      ]
+    },
+    {
       "shortName": "Absolute",
       "organizationName": "Absolute Software",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor"
       ],
-      "rank": 293,
-      "active_cna_count": 322,
+      "rank": 294,
+      "active_cna_count": 323,
       "percentile": 9.3,
       "total_cves": 9,
       "recent_cves": 9,
@@ -362,58 +449,14 @@
       ]
     },
     {
-      "shortName": "Go",
-      "organizationName": "Go Project",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 293,
-      "active_cna_count": 322,
-      "percentile": 9.3,
-      "total_cves": 29,
-      "recent_cves": 29,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities in software published by the Go Project (including the Go standard library, Go toolchain, and the golang.org modules) and publicly disclosed vulnerabilities in publicly importable packages in the Go ecosystem, unless covered by another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://pkg.go.dev/vuln/list"
-        }
-      ],
-      "officialCnaID": "CNA-2022-0008",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://go.dev/security"
-        }
-      ]
-    },
-    {
       "shortName": "hackerone",
       "organizationName": "HackerOne",
       "cnaType": "Bug Bounty Provider",
       "cnaTypes": [
         "Bug Bounty Provider"
       ],
-      "rank": 310,
-      "active_cna_count": 322,
+      "rank": 311,
+      "active_cna_count": 323,
       "percentile": 4.0,
       "total_cves": 53,
       "recent_cves": 53,
@@ -456,8 +499,8 @@
         "Vendor",
         "Open Source"
       ],
-      "rank": 311,
-      "active_cna_count": 322,
+      "rank": 312,
+      "active_cna_count": 323,
       "percentile": 3.7,
       "total_cves": 1383,
       "recent_cves": 1383,
@@ -500,8 +543,8 @@
         "Vendor",
         "Researcher"
       ],
-      "rank": 312,
-      "active_cna_count": 322,
+      "rank": 313,
+      "active_cna_count": 323,
       "percentile": 3.4,
       "total_cves": 2,
       "recent_cves": 2,
@@ -545,8 +588,8 @@
         "Open Source",
         "Researcher"
       ],
-      "rank": 313,
-      "active_cna_count": 322,
+      "rank": 314,
+      "active_cna_count": 323,
       "percentile": 3.1,
       "total_cves": 129,
       "recent_cves": 129,
@@ -588,8 +631,8 @@
       "cnaTypes": [
         "Unknown"
       ],
-      "rank": 314,
-      "active_cna_count": 322,
+      "rank": 315,
+      "active_cna_count": 323,
       "percentile": 2.8,
       "total_cves": 2214,
       "recent_cves": 2214,
@@ -625,6 +668,181 @@
       ]
     },
     {
+      "shortName": "apple",
+      "organizationName": "Apple Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 316,
+      "active_cna_count": 323,
+      "percentile": 2.5,
+      "total_cves": 357,
+      "recent_cves": 357,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Apple issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://support.apple.com/en-us/HT201222"
+        }
+      ],
+      "officialCnaID": "CNA-2009-0002",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://support.apple.com/en-us/HT201220"
+        }
+      ]
+    },
+    {
+      "shortName": "google_android",
+      "organizationName": "Android (associated with Google Inc. or Open Handset Alliance)",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source",
+        "Researcher"
+      ],
+      "rank": 316,
+      "active_cna_count": 323,
+      "percentile": 2.5,
+      "total_cves": 121,
+      "recent_cves": 121,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Android issues, as well as vulnerabilities in third-party software discovered by Android that are not in another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://source.android.com/security/bulletin"
+        }
+      ],
+      "officialCnaID": "CNA-2011-0002",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://source.android.com/security/overview/updates-resources#report-issues"
+        }
+      ]
+    },
+    {
+      "shortName": "XEN",
+      "organizationName": "Xen Project",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 316,
+      "active_cna_count": 323,
+      "percentile": 2.5,
+      "total_cves": 10,
+      "recent_cves": 10,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All sub-projects under Xen Project’s umbrella (see <a href='https://xenproject.org/developers/teams/' target='_blank'>Xen Project Teams</a>), except those sub-projects that have their own security response process; and the Xen components inside other projects, where Xen Project is the primary developer.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://xenbits.xen.org/xsa/"
+        }
+      ],
+      "officialCnaID": "CNA-2021-0009",
+      "country": "UK",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://xenproject.org/about/security-policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "jenkins",
+      "organizationName": "Jenkins Project",
+      "cnaType": "Open Source",
+      "cnaTypes": [
+        "Open Source"
+      ],
+      "rank": 316,
+      "active_cna_count": 323,
+      "percentile": 2.5,
+      "total_cves": 34,
+      "recent_cves": 34,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Jenkins and Jenkins plugins distributed by the Jenkins Project (listed on <a href='https://plugins.jenkins.io/' target='_blank'>plugins.jenkins.io</a>) only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://jenkins.io/security/advisories/"
+        }
+      ],
+      "officialCnaID": "CNA-2018-0015",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://jenkins.io/security/"
+        }
+      ]
+    },
+    {
       "shortName": "mozilla",
       "organizationName": "Mozilla Corporation",
       "cnaType": "Vendor",
@@ -632,8 +850,8 @@
         "Vendor",
         "Open Source"
       ],
-      "rank": 315,
-      "active_cna_count": 322,
+      "rank": 316,
+      "active_cna_count": 323,
       "percentile": 2.5,
       "total_cves": 135,
       "recent_cves": 135,
@@ -669,14 +887,101 @@
       ]
     },
     {
+      "shortName": "Opera",
+      "organizationName": "Opera Norway AS",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 316,
+      "active_cna_count": 323,
+      "percentile": 2.5,
+      "total_cves": 1,
+      "recent_cves": 1,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All Opera group products.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://security.opera.com/en/advisories/"
+        }
+      ],
+      "officialCnaID": "CNA-2019-0017",
+      "country": "Norway",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://security.opera.com/en/policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "Nokia",
+      "organizationName": "Nokia",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 316,
+      "active_cna_count": 323,
+      "percentile": 2.5,
+      "total_cves": 3,
+      "recent_cves": 3,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All vulnerabilities in Nokia products.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.nokia.com/about-us/security-and-privacy/product-security-advisory/"
+        }
+      ],
+      "officialCnaID": "CNA-2023-0055",
+      "country": "Finland",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.nokia.com/notices/responsible-disclosure/"
+        }
+      ]
+    },
+    {
       "shortName": "Google_Devices",
       "organizationName": "Google Devices",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor"
       ],
-      "rank": 315,
-      "active_cna_count": 322,
+      "rank": 316,
+      "active_cna_count": 323,
       "percentile": 2.5,
       "total_cves": 24,
       "recent_cves": 24,
@@ -716,268 +1021,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://support.google.com/product-documentation/answer/13658251?hl=en&amp;ref_topic=12974021&amp;sjid=11464995960873540884-NA"
-        }
-      ]
-    },
-    {
-      "shortName": "Nokia",
-      "organizationName": "Nokia",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 315,
-      "active_cna_count": 322,
-      "percentile": 2.5,
-      "total_cves": 3,
-      "recent_cves": 3,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All vulnerabilities in Nokia products.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.nokia.com/about-us/security-and-privacy/product-security-advisory/"
-        }
-      ],
-      "officialCnaID": "CNA-2023-0055",
-      "country": "Finland",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.nokia.com/notices/responsible-disclosure/"
-        }
-      ]
-    },
-    {
-      "shortName": "google_android",
-      "organizationName": "Android (associated with Google Inc. or Open Handset Alliance)",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source",
-        "Researcher"
-      ],
-      "rank": 315,
-      "active_cna_count": 322,
-      "percentile": 2.5,
-      "total_cves": 121,
-      "recent_cves": 121,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Android issues, as well as vulnerabilities in third-party software discovered by Android that are not in another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://source.android.com/security/bulletin"
-        }
-      ],
-      "officialCnaID": "CNA-2011-0002",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://source.android.com/security/overview/updates-resources#report-issues"
-        }
-      ]
-    },
-    {
-      "shortName": "jenkins",
-      "organizationName": "Jenkins Project",
-      "cnaType": "Open Source",
-      "cnaTypes": [
-        "Open Source"
-      ],
-      "rank": 315,
-      "active_cna_count": 322,
-      "percentile": 2.5,
-      "total_cves": 34,
-      "recent_cves": 34,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Jenkins and Jenkins plugins distributed by the Jenkins Project (listed on <a href='https://plugins.jenkins.io/' target='_blank'>plugins.jenkins.io</a>) only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://jenkins.io/security/advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2018-0015",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://jenkins.io/security/"
-        }
-      ]
-    },
-    {
-      "shortName": "apple",
-      "organizationName": "Apple Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 315,
-      "active_cna_count": 322,
-      "percentile": 2.5,
-      "total_cves": 357,
-      "recent_cves": 357,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Apple issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://support.apple.com/en-us/HT201222"
-        }
-      ],
-      "officialCnaID": "CNA-2009-0002",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://support.apple.com/en-us/HT201220"
-        }
-      ]
-    },
-    {
-      "shortName": "XEN",
-      "organizationName": "Xen Project",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 315,
-      "active_cna_count": 322,
-      "percentile": 2.5,
-      "total_cves": 10,
-      "recent_cves": 10,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All sub-projects under Xen Project’s umbrella (see <a href='https://xenproject.org/developers/teams/' target='_blank'>Xen Project Teams</a>), except those sub-projects that have their own security response process; and the Xen components inside other projects, where Xen Project is the primary developer.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://xenbits.xen.org/xsa/"
-        }
-      ],
-      "officialCnaID": "CNA-2021-0009",
-      "country": "UK",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://xenproject.org/about/security-policy/"
-        }
-      ]
-    },
-    {
-      "shortName": "Opera",
-      "organizationName": "Opera Norway AS",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 315,
-      "active_cna_count": 322,
-      "percentile": 2.5,
-      "total_cves": 1,
-      "recent_cves": 1,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All Opera group products.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://security.opera.com/en/advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2019-0017",
-      "country": "Norway",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://security.opera.com/en/policy/"
         }
       ]
     }
