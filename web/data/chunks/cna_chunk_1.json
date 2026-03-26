@@ -14,16 +14,16 @@
       "rank": 51,
       "active_cna_count": 326,
       "percentile": 84.7,
-      "total_cves": 251,
-      "recent_cves": 251,
+      "total_cves": 254,
+      "recent_cves": 254,
       "is_active": true,
       "scores": {
-        "overall_average_score": 86.35,
+        "overall_average_score": 86.44,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 99.6,
-        "software_identification": 45.02,
+        "root_cause_analysis": 99.61,
+        "software_identification": 45.67,
         "severity_and_impact": 100.0,
-        "patchinfo": 19.12
+        "patchinfo": 19.29
       },
       "trend": {
         "direction": "steady",
@@ -145,50 +145,6 @@
       ]
     },
     {
-      "shortName": "floragunn",
-      "organizationName": "floragunn GmbH",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 54,
-      "active_cna_count": 326,
-      "percentile": 83.7,
-      "total_cves": 4,
-      "recent_cves": 4,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 85.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 50.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All issues related to Search Guard only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://search-guard.com/cve-advisory"
-        }
-      ],
-      "officialCnaID": "CNA-2019-0005",
-      "country": "Germany",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://search-guard.com/disclosure-policy"
-        }
-      ]
-    },
-    {
       "shortName": "JFrog",
       "organizationName": "JFrog",
       "cnaType": "Vendor",
@@ -233,11 +189,13 @@
       ]
     },
     {
-      "shortName": "Toreon",
-      "organizationName": "Toreon",
-      "cnaType": "Researcher",
+      "shortName": "PingIdentity",
+      "organizationName": "Ping Identity Corporation",
+      "cnaType": "Hosted Service",
       "cnaTypes": [
-        "Researcher"
+        "Hosted Service",
+        "Researcher",
+        "Bug Bounty Provider"
       ],
       "rank": 54,
       "active_cna_count": 326,
@@ -258,20 +216,25 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities discovered by or reported to Toreon that are not in another CNA’s scope.",
+      "scope": "All Ping Identity and ForgeRock products (supported products and end-of-life/end-of-service products), as well as vulnerabilities in third-party software discovered by Ping Identity or ForgeRock that are not in another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.toreon.com/news/"
+          "url": "https://docs.pingidentity.com/pingam/latest/release-notes/security-advisories.html"
         }
       ],
-      "officialCnaID": "CNA-2025-0031",
-      "country": "Belgium",
+      "officialCnaID": "CNA-2021-0042",
+      "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.toreon.com/cna-disclosure-policy/"
+          "url": "https://www.pingidentity.com/en/company/security-at-ping-identity.html"
+        },
+        {
+          "label": "Ping Identity PGP Keys",
+          "language": "",
+          "url": "https://www.pingidentity.com/.well-known/security.txt"
         }
       ]
     },
@@ -333,13 +296,11 @@
       ]
     },
     {
-      "shortName": "PingIdentity",
-      "organizationName": "Ping Identity Corporation",
-      "cnaType": "Hosted Service",
+      "shortName": "Toreon",
+      "organizationName": "Toreon",
+      "cnaType": "Researcher",
       "cnaTypes": [
-        "Hosted Service",
-        "Researcher",
-        "Bug Bounty Provider"
+        "Researcher"
       ],
       "rank": 54,
       "active_cna_count": 326,
@@ -360,25 +321,64 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All Ping Identity and ForgeRock products (supported products and end-of-life/end-of-service products), as well as vulnerabilities in third-party software discovered by Ping Identity or ForgeRock that are not in another CNA’s scope.",
+      "scope": "Vulnerabilities discovered by or reported to Toreon that are not in another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://docs.pingidentity.com/pingam/latest/release-notes/security-advisories.html"
+          "url": "https://www.toreon.com/news/"
         }
       ],
-      "officialCnaID": "CNA-2021-0042",
-      "country": "USA",
+      "officialCnaID": "CNA-2025-0031",
+      "country": "Belgium",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.pingidentity.com/en/company/security-at-ping-identity.html"
-        },
+          "url": "https://www.toreon.com/cna-disclosure-policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "floragunn",
+      "organizationName": "floragunn GmbH",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 54,
+      "active_cna_count": 326,
+      "percentile": 83.7,
+      "total_cves": 4,
+      "recent_cves": 4,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 85.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 50.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All issues related to Search Guard only.",
+      "advisories": [
         {
-          "label": "Ping Identity PGP Keys",
+          "label": "Advisories",
+          "url": "https://search-guard.com/cve-advisory"
+        }
+      ],
+      "officialCnaID": "CNA-2019-0005",
+      "country": "Germany",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
           "language": "",
-          "url": "https://www.pingidentity.com/.well-known/security.txt"
+          "url": "https://search-guard.com/disclosure-policy"
         }
       ]
     },
@@ -565,16 +565,16 @@
       "rank": 63,
       "active_cna_count": 326,
       "percentile": 81.0,
-      "total_cves": 2574,
-      "recent_cves": 2574,
+      "total_cves": 2581,
+      "recent_cves": 2581,
       "is_active": true,
       "scores": {
         "overall_average_score": 83.88,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 99.84,
-        "software_identification": 29.72,
+        "root_cause_analysis": 99.85,
+        "software_identification": 29.76,
         "severity_and_impact": 100.0,
-        "patchinfo": 9.29
+        "patchinfo": 9.26
       },
       "trend": {
         "direction": "steady",
@@ -2062,8 +2062,8 @@
       ]
     },
     {
-      "shortName": "TR-CERT",
-      "organizationName": "TR-CERT (Computer Emergency Response Team of the Republic of Türkiye)",
+      "shortName": "CERT-PL",
+      "organizationName": "CERT.PL",
       "cnaType": "CERT",
       "cnaTypes": [
         "CERT"
@@ -2071,55 +2071,6 @@
       "rank": 97,
       "active_cna_count": 326,
       "percentile": 70.6,
-      "total_cves": 139,
-      "recent_cves": 139,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 80.14,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 1.44,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerability assignment related to its vulnerability coordination role.",
-      "advisories": [
-        {
-          "label": "Advisories (Turkish)",
-          "language": "Turkish",
-          "url": "https://www.usom.gov.tr/bildirim"
-        }
-      ],
-      "officialCnaID": "CNA-2021-0034",
-      "country": "Türkiye",
-      "disclosurePolicy": [
-        {
-          "label": "Policy (Turkish)",
-          "language": "Turkish",
-          "url": "https://www.usom.gov.tr/zafiyet-bildirim-politikasi"
-        },
-        {
-          "label": "Policy (English)",
-          "language": "English",
-          "url": "https://www.usom.gov.tr/en/vulnerability-disclosure-policy"
-        }
-      ]
-    },
-    {
-      "shortName": "CERT-PL",
-      "organizationName": "CERT.PL",
-      "cnaType": "CERT",
-      "cnaTypes": [
-        "CERT"
-      ],
-      "rank": 98,
-      "active_cna_count": 326,
-      "percentile": 70.2,
       "total_cves": 109,
       "recent_cves": 109,
       "is_active": true,
@@ -2163,71 +2114,19 @@
       ]
     },
     {
-      "shortName": "Payara",
-      "organizationName": "Payara",
-      "cnaType": "Open Source",
-      "cnaTypes": [
-        "Open Source",
-        "Vendor"
-      ],
-      "rank": 99,
-      "active_cna_count": 326,
-      "percentile": 69.9,
-      "total_cves": 1,
-      "recent_cves": 1,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 80.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All Payara Platform product distributions (Payara Server, Micro, Embedded) for both Enterprise (commercial) and Community (OSS) distributions.",
-      "advisories": [
-        {
-          "label": "Community Edition Advisories",
-          "url": "https://docs.payara.fish/community/docs/Security/Security%20Fix%20List.html"
-        },
-        {
-          "label": "Enterprise Edition Advisories",
-          "url": "https://docs.payara.fish/enterprise/docs/Security/Security%20Fix%20List.html"
-        }
-      ],
-      "officialCnaID": "CNA-2023-0032",
-      "country": "UK",
-      "disclosurePolicy": [
-        {
-          "label": "Community Edition Policy",
-          "language": "",
-          "url": "https://docs.payara.fish/community/docs/Security/Overview.html"
-        },
-        {
-          "label": "Enterprise Edition Policy",
-          "language": "",
-          "url": "https://docs.payara.fish/enterprise/docs/Security/Overview.html"
-        }
-      ]
-    },
-    {
-      "shortName": "Yugabyte",
-      "organizationName": "Yugabyte, Inc.",
+      "shortName": "SN",
+      "organizationName": "ServiceNow",
       "cnaType": "Hosted Service",
       "cnaTypes": [
         "Hosted Service",
+        "Researcher",
         "Vendor"
       ],
-      "rank": 99,
+      "rank": 98,
       "active_cna_count": 326,
-      "percentile": 69.9,
-      "total_cves": 1,
-      "recent_cves": 1,
+      "percentile": 70.2,
+      "total_cves": 4,
+      "recent_cves": 4,
       "is_active": true,
       "scores": {
         "overall_average_score": 80.0,
@@ -2242,20 +2141,106 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Yugabyte products only.",
+      "scope": "All ServiceNow products (supported products and end-of-life/end-of-service products), as well as vulnerabilities in third-party software discovered by ServiceNow that are not in another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://docs.yugabyte.com/latest/secure/vulnerability-disclosure-policy/#security-tracker-cve-list"
+          "url": "https://support.servicenow.com/kb?id=kb_article_view&sysparm_article=KB1226057"
         }
       ],
-      "officialCnaID": "CNA-2021-0047",
+      "officialCnaID": "CNA-2023-0012",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
+          "language": "",
+          "url": "https://www.servicenow.com/company/trust/privacy/responsible-disclosure.html"
+        }
+      ]
+    },
+    {
+      "shortName": "LGE",
+      "organizationName": "LG Electronics",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 98,
+      "active_cna_count": 326,
+      "percentile": 70.2,
+      "total_cves": 1,
+      "recent_cves": 1,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 80.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "LG Electronics products only.",
+      "advisories": [
+        {
+          "label": "Security Bulletins",
+          "url": "https://lgsecurity.lge.com/bulletins"
+        }
+      ],
+      "officialCnaID": "CNA-2021-0037",
+      "country": "South Korea",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
           "language": "English",
-          "url": "https://docs.yugabyte.com/latest/secure/vulnerability-disclosure-policy/"
+          "url": "https://lgsecurity.lge.com/reporting"
+        }
+      ]
+    },
+    {
+      "shortName": "NEC",
+      "organizationName": "NEC Corporation",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 98,
+      "active_cna_count": 326,
+      "percentile": 70.2,
+      "total_cves": 9,
+      "recent_cves": 9,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 80.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "NEC issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://jpn.nec.com/security-info/index.html"
+        }
+      ],
+      "officialCnaID": "CNA-2021-0012",
+      "country": "Japan",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://jpn.nec.com/security-info/policy_en.html"
         }
       ]
     }
