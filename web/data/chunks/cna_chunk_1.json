@@ -189,57 +189,11 @@
       ]
     },
     {
-      "shortName": "JFrog",
-      "organizationName": "JFrog",
-      "cnaType": "Vendor",
+      "shortName": "Toreon",
+      "organizationName": "Toreon",
+      "cnaType": "Researcher",
       "cnaTypes": [
-        "Vendor",
         "Researcher"
-      ],
-      "rank": 54,
-      "active_cna_count": 325,
-      "percentile": 83.7,
-      "total_cves": 10,
-      "recent_cves": 10,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 85.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 50.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All JFrog products (supported products and end-of-life/end-of-service products); vulnerabilities in third-party software discovered by JFrog that are not in another CNA’s scope; and vulnerabilities in third-party software discovered by external researchers and disclosed to JFrog (includes any embedded devices and their associated mobile applications) that are not in another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.jfrog.com/confluence/display/RTF/Fixed+Security+Vulnerabilities"
-        }
-      ],
-      "officialCnaID": "CNA-2021-0039",
-      "country": "Israel",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "English",
-          "url": "https://jfrog.com/trust/report-vulnerability/"
-        }
-      ]
-    },
-    {
-      "shortName": "PingIdentity",
-      "organizationName": "Ping Identity Corporation",
-      "cnaType": "Hosted Service",
-      "cnaTypes": [
-        "Hosted Service",
-        "Researcher",
-        "Bug Bounty Provider"
       ],
       "rank": 54,
       "active_cna_count": 325,
@@ -260,25 +214,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All Ping Identity and ForgeRock products (supported products and end-of-life/end-of-service products), as well as vulnerabilities in third-party software discovered by Ping Identity or ForgeRock that are not in another CNA’s scope.",
+      "scope": "Vulnerabilities discovered by or reported to Toreon that are not in another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://docs.pingidentity.com/pingam/latest/release-notes/security-advisories.html"
+          "url": "https://www.toreon.com/news/"
         }
       ],
-      "officialCnaID": "CNA-2021-0042",
-      "country": "USA",
+      "officialCnaID": "CNA-2025-0031",
+      "country": "Belgium",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.pingidentity.com/en/company/security-at-ping-identity.html"
-        },
-        {
-          "label": "Ping Identity PGP Keys",
-          "language": "",
-          "url": "https://www.pingidentity.com/.well-known/security.txt"
+          "url": "https://www.toreon.com/cna-disclosure-policy/"
         }
       ]
     },
@@ -340,11 +289,13 @@
       ]
     },
     {
-      "shortName": "Toreon",
-      "organizationName": "Toreon",
-      "cnaType": "Researcher",
+      "shortName": "PingIdentity",
+      "organizationName": "Ping Identity Corporation",
+      "cnaType": "Hosted Service",
       "cnaTypes": [
-        "Researcher"
+        "Hosted Service",
+        "Researcher",
+        "Bug Bounty Provider"
       ],
       "rank": 54,
       "active_cna_count": 325,
@@ -365,20 +316,69 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities discovered by or reported to Toreon that are not in another CNA’s scope.",
+      "scope": "All Ping Identity and ForgeRock products (supported products and end-of-life/end-of-service products), as well as vulnerabilities in third-party software discovered by Ping Identity or ForgeRock that are not in another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.toreon.com/news/"
+          "url": "https://docs.pingidentity.com/pingam/latest/release-notes/security-advisories.html"
         }
       ],
-      "officialCnaID": "CNA-2025-0031",
-      "country": "Belgium",
+      "officialCnaID": "CNA-2021-0042",
+      "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.toreon.com/cna-disclosure-policy/"
+          "url": "https://www.pingidentity.com/en/company/security-at-ping-identity.html"
+        },
+        {
+          "label": "Ping Identity PGP Keys",
+          "language": "",
+          "url": "https://www.pingidentity.com/.well-known/security.txt"
+        }
+      ]
+    },
+    {
+      "shortName": "JFrog",
+      "organizationName": "JFrog",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Researcher"
+      ],
+      "rank": 54,
+      "active_cna_count": 325,
+      "percentile": 83.7,
+      "total_cves": 10,
+      "recent_cves": 10,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 85.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 50.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All JFrog products (supported products and end-of-life/end-of-service products); vulnerabilities in third-party software discovered by JFrog that are not in another CNA’s scope; and vulnerabilities in third-party software discovered by external researchers and disclosed to JFrog (includes any embedded devices and their associated mobile applications) that are not in another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.jfrog.com/confluence/display/RTF/Fixed+Security+Vulnerabilities"
+        }
+      ],
+      "officialCnaID": "CNA-2021-0039",
+      "country": "Israel",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "English",
+          "url": "https://jfrog.com/trust/report-vulnerability/"
         }
       ]
     },
@@ -568,15 +568,58 @@
       ]
     },
     {
+      "shortName": "VulDB",
+      "organizationName": "VulDB",
+      "cnaType": "Researcher",
+      "cnaTypes": [
+        "Researcher"
+      ],
+      "rank": 63,
+      "active_cna_count": 325,
+      "percentile": 80.9,
+      "total_cves": 2553,
+      "recent_cves": 2553,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 83.95,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 99.84,
+        "software_identification": 30.47,
+        "severity_and_impact": 100.0,
+        "patchinfo": 9.24
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities in VulDB products and vulnerabilities discovered by, or reported to, the VulDB vulnerability database that are not in another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://vuldb.com/?cna.recent"
+        }
+      ],
+      "officialCnaID": "CNA-2001-0063",
+      "country": "Switzerland",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://vuldb.com/?doc.submission"
+        }
+      ]
+    },
+    {
       "shortName": "ASUS",
       "organizationName": "ASUSTeK Computer Incorporation",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor"
       ],
-      "rank": 63,
+      "rank": 64,
       "active_cna_count": 325,
-      "percentile": 80.9,
+      "percentile": 80.6,
       "total_cves": 33,
       "recent_cves": 33,
       "is_active": true,
@@ -607,49 +650,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.asus.com/content/asus-product-security-advisory/"
-        }
-      ]
-    },
-    {
-      "shortName": "VulDB",
-      "organizationName": "VulDB",
-      "cnaType": "Researcher",
-      "cnaTypes": [
-        "Researcher"
-      ],
-      "rank": 63,
-      "active_cna_count": 325,
-      "percentile": 80.9,
-      "total_cves": 2548,
-      "recent_cves": 2548,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 83.94,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 99.84,
-        "software_identification": 30.42,
-        "severity_and_impact": 100.0,
-        "patchinfo": 9.26
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities in VulDB products and vulnerabilities discovered by, or reported to, the VulDB vulnerability database that are not in another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://vuldb.com/?cna.recent"
-        }
-      ],
-      "officialCnaID": "CNA-2001-0063",
-      "country": "Switzerland",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://vuldb.com/?doc.submission"
         }
       ]
     },
@@ -1397,49 +1397,6 @@
       ]
     },
     {
-      "shortName": "tenable",
-      "organizationName": "Tenable Network Security, Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 82,
-      "active_cna_count": 325,
-      "percentile": 75.1,
-      "total_cves": 11,
-      "recent_cves": 11,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 80.91,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 81.82,
-        "software_identification": 36.36,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Tenable products and third-party products it researches not covered by another CNA.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.tenable.com/security"
-        }
-      ],
-      "officialCnaID": "CNA-2017-0023",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.tenable.com/security/report"
-        }
-      ]
-    },
-    {
       "shortName": "Canon",
       "organizationName": "Canon Inc.",
       "cnaType": "Vendor",
@@ -1522,6 +1479,49 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.asrg.io/disclosure/"
+        }
+      ]
+    },
+    {
+      "shortName": "tenable",
+      "organizationName": "Tenable Network Security, Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 82,
+      "active_cna_count": 325,
+      "percentile": 75.1,
+      "total_cves": 11,
+      "recent_cves": 11,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 80.91,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 81.82,
+        "software_identification": 36.36,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Tenable products and third-party products it researches not covered by another CNA.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.tenable.com/security"
+        }
+      ],
+      "officialCnaID": "CNA-2017-0023",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.tenable.com/security/report"
         }
       ]
     },
@@ -2114,57 +2114,11 @@
       ]
     },
     {
-      "shortName": "Dragos",
-      "organizationName": "Dragos, Inc.",
+      "shortName": "FERMAX",
+      "organizationName": "Fermax Technologies SLU",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor",
-        "Researcher"
-      ],
-      "rank": 98,
-      "active_cna_count": 325,
-      "percentile": 70.2,
-      "total_cves": 7,
-      "recent_cves": 7,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 80.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Dragos products and third-party products it researches related to operational technology (OT)/industrial control systems (ICS) not covered by another CNA.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.dragos.com/advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2022-0030",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.dragos.com/vulnerabilities-policy"
-        }
-      ]
-    },
-    {
-      "shortName": "MON-CSIRT",
-      "organizationName": "Monash University - Cyber Security Incident Response Team",
-      "cnaType": "CERT",
-      "cnaTypes": [
-        "CERT",
-        "Open Source",
-        "Researcher"
+        "Vendor"
       ],
       "rank": 98,
       "active_cna_count": 325,
@@ -2185,26 +2139,26 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities in any Monash University developed products, or vulnerabilities identified in third-party vendor products used by Monash University, unless covered by the scope of another CNA.",
+      "scope": "Vulnerabilities discovered in the services and applications of the MeetMe and DuoxMe products that are not covered by another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.monash.edu/cybersecurity/about/mon-csirt"
+          "url": "https://www.fermax.com/security-advisories"
         }
       ],
-      "officialCnaID": "CNA-2024-0059",
-      "country": "Australia",
+      "officialCnaID": "CNA-2025-0032",
+      "country": "Spain",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.monash.edu/cybersecurity/about/mon-csirt"
+          "url": "https://www.fermax.com/legal/en/vulnerability-management-policy"
         }
       ]
     },
     {
-      "shortName": "INCD",
-      "organizationName": "Israel National Cyber Directorate (INCD)",
+      "shortName": "krcert",
+      "organizationName": "KrCERT/CC",
       "cnaType": "CERT",
       "cnaTypes": [
         "CERT"
@@ -2212,8 +2166,8 @@
       "rank": 98,
       "active_cna_count": 325,
       "percentile": 70.2,
-      "total_cves": 11,
-      "recent_cves": 11,
+      "total_cves": 4,
+      "recent_cves": 4,
       "is_active": true,
       "scores": {
         "overall_average_score": 80.0,
@@ -2232,16 +2186,63 @@
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.gov.il/en/departments/faq/cve_advisories"
+          "url": "https://www.krcert.or.kr/kr/bbs/list.do?menuNo=205023&bbsId=B0000302"
         }
       ],
-      "officialCnaID": "CNA-2021-0030",
-      "country": "Israel",
+      "officialCnaID": "CNA-2016-0021",
+      "country": "South Korea",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.gov.il/en/departments/general/cve_policy"
+          "url": "https://knvd.krcert.or.kr/processingProcedures.do"
+        }
+      ]
+    },
+    {
+      "shortName": "Esri",
+      "organizationName": "Environmental Systems Research Institute, Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 98,
+      "active_cna_count": 325,
+      "percentile": 70.2,
+      "total_cves": 21,
+      "recent_cves": 21,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 80.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All Esri products only, including ArcGIS.",
+      "advisories": [
+        {
+          "label": "Trust Center",
+          "url": "https://trust.arcgis.com/en/"
+        },
+        {
+          "label": "Security Advisories",
+          "url": "https://www.esri.com/arcgis-blog/?s=#&amp;products=trust-arcgis"
+        }
+      ],
+      "officialCnaID": "CNA-2021-0011",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://trust.arcgis.com/en/security-concern/"
         }
       ]
     }
