@@ -5,18 +5,17 @@
   "count": 50,
   "items": [
     {
-      "shortName": "Insyde",
-      "organizationName": "Insyde Software",
+      "shortName": "N-able",
+      "organizationName": "N-able",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor",
-        "Researcher"
+        "Vendor"
       ],
       "rank": 101,
       "active_cna_count": 329,
       "percentile": 69.6,
-      "total_cves": 5,
-      "recent_cves": 5,
+      "total_cves": 4,
+      "recent_cves": 4,
       "is_active": true,
       "scores": {
         "overall_average_score": 80.0,
@@ -31,35 +30,35 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities in all of Insyde Software’s firmware and software products, as well as vulnerabilities discovered by Insyde Software that are not covered by another CNA’s scope.",
+      "scope": "N-able branded products and technologies only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.insyde.com/security-pledge/"
+          "url": "https://me.n-able.com/s/global-search/%40uri#t=All&amp;sort=relevancy&amp;f:@repositorytype=[Security_Advisory]"
         }
       ],
-      "officialCnaID": "CNA-2025-0022",
+      "officialCnaID": "CNA-2024-0030",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.insyde.com/security-pledge/"
+          "url": "https://www.n-able.com/security-and-privacy/vulnerability-disclosure-policy"
         }
       ]
     },
     {
-      "shortName": "OpenHarmony",
-      "organizationName": "OpenHarmony",
-      "cnaType": "Open Source",
+      "shortName": "TRO",
+      "organizationName": "Teradyne Robotics",
+      "cnaType": "Vendor",
       "cnaTypes": [
-        "Open Source"
+        "Vendor"
       ],
       "rank": 101,
       "active_cna_count": 329,
       "percentile": 69.6,
-      "total_cves": 7,
-      "recent_cves": 7,
+      "total_cves": 1,
+      "recent_cves": 1,
       "is_active": true,
       "scores": {
         "overall_average_score": 80.0,
@@ -74,21 +73,29 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "openHarmony issues only.",
+      "scope": "All products released by Teradyne Robotics subsidiaries, Universal Robots (UR) and Mobile Industrial Robots (MiR), including both actively supported and end-of-life/end-of-service products, as well as vulnerabilities in third-party software identified by Teradyne Robotics that are outside the scope of another CNA.",
       "advisories": [
         {
-          "label": "Advisories",
-          "language": "English",
-          "url": "https://gitee.com/openharmony/security/tree/master/en/security-disclosure"
+          "label": "UR Advisories",
+          "url": "https://www.universal-robots.com/articles/?filter_Applications[]=226617&filters[]=226617"
+        },
+        {
+          "label": "MiR Advisories",
+          "url": "https://mobile-industrial-robots.com/security-advisories"
         }
       ],
-      "officialCnaID": "CNA-2022-0026",
-      "country": "China",
+      "officialCnaID": "CNA-2025-0028",
+      "country": "Denmark",
       "disclosurePolicy": [
         {
-          "label": "Policy",
-          "language": "English",
-          "url": "https://gitee.com/openharmony/security/tree/master/en/security-process"
+          "label": "UR Policy",
+          "language": "",
+          "url": "https://www.universal-robots.com/articles/coordinated-disclosure/"
+        },
+        {
+          "label": "MiR Policy",
+          "language": "",
+          "url": "https://mobile-industrial-robots.com/coordinated-disclosure"
         }
       ]
     },
@@ -887,6 +894,94 @@
       ]
     },
     {
+      "shortName": "openssl",
+      "organizationName": "OpenSSL Software Foundation",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 271,
+      "active_cna_count": 329,
+      "percentile": 17.9,
+      "total_cves": 20,
+      "recent_cves": 20,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 75.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 100.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "OpenSSL software projects only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.openssl.org/news/vulnerabilities.html"
+        }
+      ],
+      "officialCnaID": "CNA-2016-0019",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.openssl.org/policies/secpolicy.html"
+        }
+      ]
+    },
+    {
+      "shortName": "Gitea",
+      "organizationName": "Gitea Limited",
+      "cnaType": "Open Source",
+      "cnaTypes": [
+        "Open Source",
+        "Vendor"
+      ],
+      "rank": 271,
+      "active_cna_count": 329,
+      "percentile": 17.9,
+      "total_cves": 9,
+      "recent_cves": 9,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 75.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 100.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Gitea issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://about.gitea.com/security/"
+        }
+      ],
+      "officialCnaID": "CNA-2023-0039",
+      "country": "China",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://github.com/go-gitea/gitea/blob/main/SECURITY.md"
+        }
+      ]
+    },
+    {
       "shortName": "tibco",
       "organizationName": "TIBCO Software Inc.",
       "cnaType": "Vendor",
@@ -969,94 +1064,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://korelogic.com/KoreLogic-Public-Vulnerability-Disclosure-Policy"
-        }
-      ]
-    },
-    {
-      "shortName": "Gitea",
-      "organizationName": "Gitea Limited",
-      "cnaType": "Open Source",
-      "cnaTypes": [
-        "Open Source",
-        "Vendor"
-      ],
-      "rank": 271,
-      "active_cna_count": 329,
-      "percentile": 17.9,
-      "total_cves": 9,
-      "recent_cves": 9,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 75.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 100.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Gitea issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://about.gitea.com/security/"
-        }
-      ],
-      "officialCnaID": "CNA-2023-0039",
-      "country": "China",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://github.com/go-gitea/gitea/blob/main/SECURITY.md"
-        }
-      ]
-    },
-    {
-      "shortName": "openssl",
-      "organizationName": "OpenSSL Software Foundation",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 271,
-      "active_cna_count": 329,
-      "percentile": 17.9,
-      "total_cves": 20,
-      "recent_cves": 20,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 75.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 100.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "OpenSSL software projects only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.openssl.org/news/vulnerabilities.html"
-        }
-      ],
-      "officialCnaID": "CNA-2016-0019",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.openssl.org/policies/secpolicy.html"
         }
       ]
     },
@@ -1328,6 +1335,51 @@
       ]
     },
     {
+      "shortName": "securin",
+      "organizationName": "Securin",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source",
+        "Researcher"
+      ],
+      "rank": 280,
+      "active_cna_count": 329,
+      "percentile": 15.2,
+      "total_cves": 2,
+      "recent_cves": 2,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 72.5,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 50.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities found in Securin products and services (including end-of-life/end-of-service products), as well as vulnerabilities in third-party software discovered by Securin that are not in another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.securin.io/discover-zero-days"
+        }
+      ],
+      "officialCnaID": "CNA-2023-0054",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.securin.io/disclosure-policy"
+        }
+      ]
+    },
+    {
       "shortName": "NetScaler",
       "organizationName": "NetScaler",
       "cnaType": "Vendor",
@@ -1377,18 +1429,18 @@
       "cnaTypes": [
         "Researcher"
       ],
-      "rank": 280,
+      "rank": 283,
       "active_cna_count": 329,
-      "percentile": 15.2,
-      "total_cves": 38,
-      "recent_cves": 38,
+      "percentile": 14.3,
+      "total_cves": 39,
+      "recent_cves": 39,
       "is_active": true,
       "scores": {
-        "overall_average_score": 72.5,
+        "overall_average_score": 72.31,
         "foundational_completeness": 100.0,
         "root_cause_analysis": 100.0,
         "software_identification": 0.0,
-        "severity_and_impact": 50.0,
+        "severity_and_impact": 48.72,
         "patchinfo": 0.0
       },
       "trend": {
@@ -1410,51 +1462,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://sec-consult.com/vulnerability-lab/responsible-disclosure-policy/"
-        }
-      ]
-    },
-    {
-      "shortName": "securin",
-      "organizationName": "Securin",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source",
-        "Researcher"
-      ],
-      "rank": 280,
-      "active_cna_count": 329,
-      "percentile": 15.2,
-      "total_cves": 2,
-      "recent_cves": 2,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 72.5,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 50.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities found in Securin products and services (including end-of-life/end-of-service products), as well as vulnerabilities in third-party software discovered by Securin that are not in another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.securin.io/discover-zero-days"
-        }
-      ],
-      "officialCnaID": "CNA-2023-0054",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.securin.io/disclosure-policy"
         }
       ]
     },
@@ -1600,15 +1607,15 @@
       "rank": 287,
       "active_cna_count": 329,
       "percentile": 13.1,
-      "total_cves": 154,
-      "recent_cves": 154,
+      "total_cves": 158,
+      "recent_cves": 158,
       "is_active": true,
       "scores": {
-        "overall_average_score": 69.35,
+        "overall_average_score": 69.3,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 94.81,
-        "software_identification": 5.19,
-        "severity_and_impact": 14.29,
+        "root_cause_analysis": 94.94,
+        "software_identification": 5.06,
+        "severity_and_impact": 13.92,
         "patchinfo": 24.68
       },
       "trend": {
@@ -2039,92 +2046,6 @@
       ]
     },
     {
-      "shortName": "hikvision",
-      "organizationName": "Hangzhou Hikvision Digital Technology Co., Ltd.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 297,
-      "active_cna_count": 329,
-      "percentile": 10.0,
-      "total_cves": 9,
-      "recent_cves": 9,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All <a href='http://www.hikvision.com/en/' target='_blank'>Hikvision Internet of Things (IoT) products</a> including cameras and digital video recorders (DVRs).",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://us.hikvision.com/en/support-resources/cybersecurity-center/security-notices"
-        }
-      ],
-      "officialCnaID": "CNA-2018-0002",
-      "country": "China",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.hikvision.com/en/policies/vulnerability-disclosure-policy/"
-        }
-      ]
-    },
-    {
-      "shortName": "netapp",
-      "organizationName": "NetApp, Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 297,
-      "active_cna_count": 329,
-      "percentile": 10.0,
-      "total_cves": 3,
-      "recent_cves": 3,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All NetApp products as well as projects hosted on <a href='https://github.com/netapp' target='_blank'>https://github.com/netapp</a>.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://security.netapp.com/advisory/"
-        }
-      ],
-      "officialCnaID": "CNA-2017-0035",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://security.netapp.com/policy/"
-        }
-      ]
-    },
-    {
       "shortName": "MediaTek",
       "organizationName": "MediaTek, Inc.",
       "cnaType": "Vendor",
@@ -2164,6 +2085,93 @@
           "label": "Policy",
           "language": "English",
           "url": "https://corp.mediatek.com/vulnerability-disclosure-policy"
+        }
+      ]
+    },
+    {
+      "shortName": "hpe",
+      "organizationName": "Hewlett Packard Enterprise (HPE)",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 297,
+      "active_cna_count": 329,
+      "percentile": 10.0,
+      "total_cves": 68,
+      "recent_cves": 68,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "HPE and acquisitions issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://support.hpe.com/portal/site/hpsc/public/kb/secBullArchive/"
+        }
+      ],
+      "officialCnaID": "CNA-2016-0003",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=a00100637en_us"
+        }
+      ]
+    },
+    {
+      "shortName": "TXOne",
+      "organizationName": "TXOne Networks, Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Researcher"
+      ],
+      "rank": 297,
+      "active_cna_count": 329,
+      "percentile": 10.0,
+      "total_cves": 1,
+      "recent_cves": 1,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities in TXOne Networks products, including end-of-life products, or third-party operational technology (OT) and industrial control systems (ICS) products, unless covered by the scope of another CNA.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.txone.com/psirt/advisories/"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0032",
+      "country": "Taiwan",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.txone.com/psirt/disclosure-policy/"
         }
       ]
     },
