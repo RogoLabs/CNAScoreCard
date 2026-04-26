@@ -5,17 +5,19 @@
   "count": 50,
   "items": [
     {
-      "shortName": "Vivo",
-      "organizationName": "Vivo Mobile Communication Co., Ltd.",
-      "cnaType": "Vendor",
+      "shortName": "MON-CSIRT",
+      "organizationName": "Monash University - Cyber Security Incident Response Team",
+      "cnaType": "CERT",
       "cnaTypes": [
-        "Vendor"
+        "CERT",
+        "Open Source",
+        "Researcher"
       ],
       "rank": 102,
       "active_cna_count": 330,
       "percentile": 69.4,
-      "total_cves": 3,
-      "recent_cves": 3,
+      "total_cves": 1,
+      "recent_cves": 1,
       "is_active": true,
       "scores": {
         "overall_average_score": 80.0,
@@ -30,20 +32,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vivo issues only.",
+      "scope": "Vulnerabilities in any Monash University developed products, or vulnerabilities identified in third-party vendor products used by Monash University, unless covered by the scope of another CNA.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.vivo.com/en/activity/security-advisory"
+          "url": "https://www.monash.edu/cybersecurity/about/mon-csirt"
         }
       ],
-      "officialCnaID": "CNA-2020-0008",
-      "country": "China",
+      "officialCnaID": "CNA-2024-0059",
+      "country": "Australia",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.vivo.com/en/activity/security-advisory"
+          "url": "https://www.monash.edu/cybersecurity/about/mon-csirt"
         }
       ]
     },
@@ -401,6 +403,51 @@
       ]
     },
     {
+      "shortName": "rami.io",
+      "organizationName": "rami.io GmbH",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Hosted Service",
+        "Open Source"
+      ],
+      "rank": 260,
+      "active_cna_count": 330,
+      "percentile": 21.5,
+      "total_cves": 9,
+      "recent_cves": 9,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 78.33,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 88.89,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All rami.io GmbH products and open source projects, including pretix, official pretix plugins and apps, and Venueless.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://rami.io/security/advisories/"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0023",
+      "country": "Germany",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://rami.io/security/disclosure/"
+        }
+      ]
+    },
+    {
       "shortName": "Perforce",
       "organizationName": "Perforce",
       "cnaType": "Vendor",
@@ -489,51 +536,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://openvpn.net/vulnerability-disclosure-policy/"
-        }
-      ]
-    },
-    {
-      "shortName": "rami.io",
-      "organizationName": "rami.io GmbH",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Hosted Service",
-        "Open Source"
-      ],
-      "rank": 260,
-      "active_cna_count": 330,
-      "percentile": 21.5,
-      "total_cves": 9,
-      "recent_cves": 9,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 78.33,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 88.89,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All rami.io GmbH products and open source projects, including pretix, official pretix plugins and apps, and Venueless.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://rami.io/security/advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0023",
-      "country": "Germany",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://rami.io/security/disclosure/"
         }
       ]
     },
@@ -754,6 +756,50 @@
       ]
     },
     {
+      "shortName": "symantec",
+      "organizationName": "Symantec - A Division of Broadcom",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Researcher"
+      ],
+      "rank": 268,
+      "active_cna_count": 330,
+      "percentile": 19.1,
+      "total_cves": 5,
+      "recent_cves": 5,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 77.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 80.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Symantec Enterprise products as well as vulnerabilities in third-party software discovered by Symantec that are not in another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://support.broadcom.com/security-advisory/security-advisories-list.html"
+        }
+      ],
+      "officialCnaID": "CNA-2012-0003",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.broadcom.com/support/security-center/vulnerability-management"
+        }
+      ]
+    },
+    {
       "shortName": "Meta",
       "organizationName": "Meta Platforms, Inc.",
       "cnaType": "Vendor",
@@ -795,50 +841,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.facebook.com/security/advisories/Vulnerability-Disclosure-Policy"
-        }
-      ]
-    },
-    {
-      "shortName": "symantec",
-      "organizationName": "Symantec - A Division of Broadcom",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Researcher"
-      ],
-      "rank": 268,
-      "active_cna_count": 330,
-      "percentile": 19.1,
-      "total_cves": 5,
-      "recent_cves": 5,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 77.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 80.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Symantec Enterprise products as well as vulnerabilities in third-party software discovered by Symantec that are not in another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://support.broadcom.com/security-advisory/security-advisories-list.html"
-        }
-      ],
-      "officialCnaID": "CNA-2012-0003",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.broadcom.com/support/security-center/vulnerability-management"
         }
       ]
     },
@@ -886,50 +888,6 @@
       ]
     },
     {
-      "shortName": "Gitea",
-      "organizationName": "Gitea Limited",
-      "cnaType": "Open Source",
-      "cnaTypes": [
-        "Open Source",
-        "Vendor"
-      ],
-      "rank": 271,
-      "active_cna_count": 330,
-      "percentile": 18.2,
-      "total_cves": 9,
-      "recent_cves": 9,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 75.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 100.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Gitea issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://about.gitea.com/security/"
-        }
-      ],
-      "officialCnaID": "CNA-2023-0039",
-      "country": "China",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://github.com/go-gitea/gitea/blob/main/SECURITY.md"
-        }
-      ]
-    },
-    {
       "shortName": "openssl",
       "organizationName": "OpenSSL Software Foundation",
       "cnaType": "Vendor",
@@ -970,6 +928,50 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.openssl.org/policies/secpolicy.html"
+        }
+      ]
+    },
+    {
+      "shortName": "Gitea",
+      "organizationName": "Gitea Limited",
+      "cnaType": "Open Source",
+      "cnaTypes": [
+        "Open Source",
+        "Vendor"
+      ],
+      "rank": 271,
+      "active_cna_count": 330,
+      "percentile": 18.2,
+      "total_cves": 9,
+      "recent_cves": 9,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 75.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 100.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Gitea issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://about.gitea.com/security/"
+        }
+      ],
+      "officialCnaID": "CNA-2023-0039",
+      "country": "China",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://github.com/go-gitea/gitea/blob/main/SECURITY.md"
         }
       ]
     },
@@ -1281,49 +1283,6 @@
       ]
     },
     {
-      "shortName": "tibco",
-      "organizationName": "TIBCO Software Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 279,
-      "active_cna_count": 330,
-      "percentile": 15.8,
-      "total_cves": 2,
-      "recent_cves": 2,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 72.5,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 50.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "TIBCO issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.tibco.com/services/support/advisories"
-        }
-      ],
-      "officialCnaID": "CNA-2017-0001",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.tibco.com/security/vulnerability-disclosure-policy"
-        }
-      ]
-    },
-    {
       "shortName": "securin",
       "organizationName": "Securin",
       "cnaType": "Vendor",
@@ -1365,6 +1324,49 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.securin.io/disclosure-policy"
+        }
+      ]
+    },
+    {
+      "shortName": "tibco",
+      "organizationName": "TIBCO Software Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 279,
+      "active_cna_count": 330,
+      "percentile": 15.8,
+      "total_cves": 2,
+      "recent_cves": 2,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 72.5,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 50.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "TIBCO issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.tibco.com/services/support/advisories"
+        }
+      ],
+      "officialCnaID": "CNA-2017-0001",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.tibco.com/security/vulnerability-disclosure-policy"
         }
       ]
     },
@@ -1814,51 +1816,6 @@
       ]
     },
     {
-      "shortName": "GRAFANA",
-      "organizationName": "Grafana Labs",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 292,
-      "active_cna_count": 330,
-      "percentile": 11.8,
-      "total_cves": 21,
-      "recent_cves": 21,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 67.14,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 14.29,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All Grafana Labs open source and commercial products.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "language": "",
-          "url": "https://grafana.com/security/security-advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2022-0048",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://grafana.com/security.txt"
-        }
-      ]
-    },
-    {
       "shortName": "NCSC-NL",
       "organizationName": "National Cyber Security Centre Netherlands (NCSC-NL)",
       "cnaType": "Vendor",
@@ -1903,6 +1860,51 @@
           "label": "Policy",
           "language": "English",
           "url": "https://english.ncsc.nl/contact/reporting-a-vulnerability-cvd"
+        }
+      ]
+    },
+    {
+      "shortName": "GRAFANA",
+      "organizationName": "Grafana Labs",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 292,
+      "active_cna_count": 330,
+      "percentile": 11.8,
+      "total_cves": 21,
+      "recent_cves": 21,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 67.14,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 14.29,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All Grafana Labs open source and commercial products.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "language": "",
+          "url": "https://grafana.com/security/security-advisories/"
+        }
+      ],
+      "officialCnaID": "CNA-2022-0048",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://grafana.com/security.txt"
         }
       ]
     },
@@ -2037,6 +2039,137 @@
       ]
     },
     {
+      "shortName": "freebsd",
+      "organizationName": "FreeBSD",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 297,
+      "active_cna_count": 330,
+      "percentile": 10.3,
+      "total_cves": 12,
+      "recent_cves": 12,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Primarily FreeBSD issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.freebsd.org/"
+        }
+      ],
+      "officialCnaID": "CNA-2005-0004",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.freebsd.org/security/"
+        }
+      ]
+    },
+    {
+      "shortName": "LY-Corporation",
+      "organizationName": "LY Corporation",
+      "cnaType": "Open Source",
+      "cnaTypes": [
+        "Open Source"
+      ],
+      "rank": 297,
+      "active_cna_count": 330,
+      "percentile": 10.3,
+      "total_cves": 7,
+      "recent_cves": 7,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Current versions of LINE Messenger Application for iOS, Android, Mac, and Windows, plus LINE Open Source projects hosted on <a href='https://github.com/line' target='_blank'>https://github.com/line</a>.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://line.github.io/security-advisory-blog/advisory"
+        }
+      ],
+      "officialCnaID": "CNA-2020-0038",
+      "country": "Japan",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://line.github.io/security-advisory-blog/"
+        }
+      ]
+    },
+    {
+      "shortName": "DSF",
+      "organizationName": "Django Software Foundation",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 297,
+      "active_cna_count": 330,
+      "percentile": 10.3,
+      "total_cves": 17,
+      "recent_cves": 17,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Only supported and end-of-life Django versions available at <a href='https://www.djangoproject.com/download/' target='_blank'>https://www.djangoproject.com/download/</a> and projects listed at <a href='https://github.com/django' target='_blank'>https://github.com/django</a> (such as Django, channels, and daphne), excluding distributions maintained by third-party redistributors.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://docs.djangoproject.com/en/stable/releases/security/"
+        }
+      ],
+      "officialCnaID": "CNA-2025-0057",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.djangoproject.com/foundation/cve-numbering-authority/"
+        }
+      ]
+    },
+    {
       "shortName": "glibc",
       "organizationName": "GNU C Library",
       "cnaType": "Open Source",
@@ -2076,136 +2209,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://sourceware.org/glibc/security.html"
-        }
-      ]
-    },
-    {
-      "shortName": "TECNOMobile",
-      "organizationName": "TECNO Mobile Limited",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 297,
-      "active_cna_count": 330,
-      "percentile": 10.3,
-      "total_cves": 4,
-      "recent_cves": 4,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities in TECNO products and services only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://security.tecno.com/SRC/blog"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0020",
-      "country": "China",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://security.tecno.com"
-        }
-      ]
-    },
-    {
-      "shortName": "Huntress",
-      "organizationName": "Huntress Labs Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Researcher"
-      ],
-      "rank": 297,
-      "active_cna_count": 330,
-      "percentile": 10.3,
-      "total_cves": 1,
-      "recent_cves": 1,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All Huntress products, as well as vulnerabilities in third-party software discovered by Huntress that are not in another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://support.huntress.io/hc/en-us/categories/10962594482579-Vulnerability-Disclosures"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0047",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://support.huntress.io/hc/en-us/categories/10962594482579-Vulnerability-Disclosures"
-        }
-      ]
-    },
-    {
-      "shortName": "hpe",
-      "organizationName": "Hewlett Packard Enterprise (HPE)",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 297,
-      "active_cna_count": 330,
-      "percentile": 10.3,
-      "total_cves": 50,
-      "recent_cves": 50,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "HPE and acquisitions issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://support.hpe.com/portal/site/hpsc/public/kb/secBullArchive/"
-        }
-      ],
-      "officialCnaID": "CNA-2016-0003",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=a00100637en_us"
         }
       ]
     }
