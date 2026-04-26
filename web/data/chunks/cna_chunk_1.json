@@ -535,16 +535,16 @@
       "rank": 63,
       "active_cna_count": 330,
       "percentile": 81.2,
-      "total_cves": 2826,
-      "recent_cves": 2826,
+      "total_cves": 2836,
+      "recent_cves": 2836,
       "is_active": true,
       "scores": {
-        "overall_average_score": 84.24,
+        "overall_average_score": 84.23,
         "foundational_completeness": 100.0,
         "root_cause_analysis": 99.68,
-        "software_identification": 33.33,
+        "software_identification": 33.22,
         "severity_and_impact": 100.0,
-        "patchinfo": 9.55
+        "patchinfo": 9.59
       },
       "trend": {
         "direction": "steady",
@@ -612,6 +612,61 @@
       ]
     },
     {
+      "shortName": "Docker",
+      "organizationName": "Docker Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 65,
+      "active_cna_count": 330,
+      "percentile": 80.6,
+      "total_cves": 5,
+      "recent_cves": 5,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 84.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 20.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 20.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All Docker products, including Docker Desktop and Docker Hub, as well as Docker maintained open source projects.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "language": "",
+          "url": "https://docs.docker.com/security/"
+        },
+        {
+          "label": "Desktop Release Notes",
+          "language": "",
+          "url": "https://docs.docker.com/desktop/release-notes/"
+        },
+        {
+          "label": "Engine Release Notes",
+          "language": "",
+          "url": "https://docs.docker.com/engine/release-notes/"
+        }
+      ],
+      "officialCnaID": "CNA-2022-0050",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.docker.com/trust/vulnerability-disclosure-policy/"
+        }
+      ]
+    },
+    {
       "shortName": "ESET",
       "organizationName": "ESET, spol. s r.o.",
       "cnaType": "Vendor",
@@ -664,61 +719,6 @@
           "label": "Outbound Reports Policy",
           "language": "",
           "url": "https://www.eset.com/int/research/vulnerability-disclosure-policy/"
-        }
-      ]
-    },
-    {
-      "shortName": "Docker",
-      "organizationName": "Docker Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 65,
-      "active_cna_count": 330,
-      "percentile": 80.6,
-      "total_cves": 5,
-      "recent_cves": 5,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 84.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 20.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 20.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All Docker products, including Docker Desktop and Docker Hub, as well as Docker maintained open source projects.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "language": "",
-          "url": "https://docs.docker.com/security/"
-        },
-        {
-          "label": "Desktop Release Notes",
-          "language": "",
-          "url": "https://docs.docker.com/desktop/release-notes/"
-        },
-        {
-          "label": "Engine Release Notes",
-          "language": "",
-          "url": "https://docs.docker.com/engine/release-notes/"
-        }
-      ],
-      "officialCnaID": "CNA-2022-0050",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.docker.com/trust/vulnerability-disclosure-policy/"
         }
       ]
     },
@@ -852,50 +852,6 @@
       ]
     },
     {
-      "shortName": "Carrier",
-      "organizationName": "Carrier Global Corporation",
-      "cnaType": "Hosted Service",
-      "cnaTypes": [
-        "Hosted Service",
-        "Vendor"
-      ],
-      "rank": 70,
-      "active_cna_count": 330,
-      "percentile": 79.1,
-      "total_cves": 3,
-      "recent_cves": 3,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 83.33,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 33.33,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Carrier Global products only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.corporate.carrier.com/product-security/advisories-resources/"
-        }
-      ],
-      "officialCnaID": "CNA-2021-0054",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.corporate.carrier.com/product-security/reporting-response-disclosures/"
-        }
-      ]
-    },
-    {
       "shortName": "PingIdentity",
       "organizationName": "Ping Identity Corporation",
       "cnaType": "Hosted Service",
@@ -946,6 +902,50 @@
       ]
     },
     {
+      "shortName": "Carrier",
+      "organizationName": "Carrier Global Corporation",
+      "cnaType": "Hosted Service",
+      "cnaTypes": [
+        "Hosted Service",
+        "Vendor"
+      ],
+      "rank": 70,
+      "active_cna_count": 330,
+      "percentile": 79.1,
+      "total_cves": 3,
+      "recent_cves": 3,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 83.33,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 33.33,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Carrier Global products only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.corporate.carrier.com/product-security/advisories-resources/"
+        }
+      ],
+      "officialCnaID": "CNA-2021-0054",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.corporate.carrier.com/product-security/reporting-response-disclosures/"
+        }
+      ]
+    },
+    {
       "shortName": "SolarWinds",
       "organizationName": "SolarWinds",
       "cnaType": "Vendor",
@@ -985,6 +985,49 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.solarwinds.com/information-security/vulnerability-disclosure-policy"
+        }
+      ]
+    },
+    {
+      "shortName": "Moxa",
+      "organizationName": "Moxa Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 73,
+      "active_cna_count": 330,
+      "percentile": 78.2,
+      "total_cves": 7,
+      "recent_cves": 7,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 82.86,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 28.57,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Moxa products only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.moxa.com/en/support/product-support/security-advisory"
+        }
+      ],
+      "officialCnaID": "CNA-2023-0029",
+      "country": "Taiwan",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.moxa.com/en/support/product-support/security-advisory/cybersecurity-vulnerability-management-policy"
         }
       ]
     },
@@ -1029,49 +1072,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://search-guard.com/disclosure-policy"
-        }
-      ]
-    },
-    {
-      "shortName": "Moxa",
-      "organizationName": "Moxa Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 73,
-      "active_cna_count": 330,
-      "percentile": 78.2,
-      "total_cves": 7,
-      "recent_cves": 7,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 82.86,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 28.57,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Moxa products only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.moxa.com/en/support/product-support/security-advisory"
-        }
-      ],
-      "officialCnaID": "CNA-2023-0029",
-      "country": "Taiwan",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.moxa.com/en/support/product-support/security-advisory/cybersecurity-vulnerability-management-policy"
         }
       ]
     },
