@@ -1,169 +1,308 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQJ07VQQQN"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-MQJ07VQQQN"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-    gtag('config', 'G-MQJ07VQQQN');
-  </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Learn how CNA Scorecard scores CVE records across 5 categories: completeness, root cause, severity, software identification, and patch info.">
-  <link rel="canonical" href="https://cnascorecard.org/scoring.html">
-  <title>CNA Scorecard</title>
-  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
-  <link rel="icon" type="image/png" href="assets/logo.svg">
-  <link rel="stylesheet" href="assets/theme.css">
-  <link rel="stylesheet" href="shared/shared.css">
-  <link rel="stylesheet" href="scoring.css">
-</head>
-<body>
-  <!-- Skip Link for Accessibility -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-  
-  <nav class="navbar" role="navigation" aria-label="Main Navigation">
-    <img src="assets/logo.svg" alt="CNA Scorecard Logo" class="navbar-logo">
-    <div class="navbar-links">
-      <a href="index.html">Home</a>
-      <a href="cna/index.html">CNAs</a>
-      <a href="completeness/index.html">Record Completeness</a>
-      <a href="trends.html">Performance Trends</a>
-      <a href="scoring.html" class="active">Methodology</a>
-    </div>
-  </nav>
-  <main class="container scoring-cards-container" id="main-content">
-    <!-- Introduction Section -->
-    <section class="scoring-summary-card card">
-      <h1 class="scoring-title">Scoring Methodology</h1>
-      <p class="main-description">
-        The CNA Scorecard promotes transparency and accountability in vulnerability reporting by measuring how completely 
-        CVE Numbering Authorities populate essential data fields. The scoring philosophy is simple: complete, actionable 
-        vulnerability data leads to better security outcomes for everyone.
-      </p>
-    </section>
+      gtag("config", "G-MQJ07VQQQN");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Learn how CNA Scorecard scores CVE records across 5 categories: completeness, root cause, severity, software identification, and patch info."
+    />
+    <link rel="canonical" href="https://cnascorecard.org/scoring.html" />
+    <title>CNA Scorecard</title>
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+    <link rel="icon" type="image/png" href="assets/logo.svg" />
+    <link rel="stylesheet" href="assets/theme.css" />
+    <link rel="stylesheet" href="shared/shared.css" />
+    <link rel="stylesheet" href="scoring.css" />
+  </head>
+  <body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Scoring Window Section -->
-    <section class="scoring-window-card card">
-      <h2>Scoring Window</h2>
-      <div class="window-info">
-        <div class="current-period">
-          <h3>Current Analysis Period</h3>
-          <p class="period-dates" id="currentPeriod">Loading...</p>
-          <p class="period-description">
-            All CNA scores are based on CVE records published during this 6-month window. This ensures 
-            scores reflect recent performance and current data quality practices.
+    <nav class="navbar" role="navigation" aria-label="Main Navigation">
+      <img src="assets/logo.svg" alt="CNA Scorecard Logo" class="navbar-logo" />
+      <div class="navbar-links">
+        <a href="index.html">Home</a>
+        <a href="cna/index.html">CNAs</a>
+        <a href="completeness/index.html">Record Completeness</a>
+        <a href="trends.html">Performance Trends</a>
+        <a href="scoring.html" class="active">Methodology</a>
+      </div>
+    </nav>
+    <main class="container scoring-cards-container" id="main-content">
+      <!-- Introduction Section -->
+      <section class="scoring-summary-card card">
+        <h1 class="scoring-title">Scoring Methodology</h1>
+        <p class="main-description">
+          The CNA Scorecard promotes transparency and accountability in
+          vulnerability reporting by measuring how completely CVE Numbering
+          Authorities populate essential data fields. The scoring philosophy is
+          simple: complete, actionable vulnerability data leads to better
+          security outcomes for everyone.
+        </p>
+      </section>
+
+      <!-- Scoring Window Section -->
+      <section class="scoring-window-card card">
+        <h2>Scoring Window</h2>
+        <div class="window-info">
+          <div class="current-period">
+            <h3>Current Analysis Period</h3>
+            <p class="period-dates" id="currentPeriod">Loading...</p>
+            <p class="period-description">
+              All CNA scores are based on CVE records published during this
+              6-month window. This ensures scores reflect recent performance and
+              current data quality practices.
+            </p>
+          </div>
+
+          <div class="window-details">
+            <h3>How the Scoring Window Works</h3>
+            <ul class="window-features">
+              <li>
+                <strong>Rolling 6-Month Window:</strong> The analysis period
+                automatically updates to always cover the most recent 6 months
+                of CVE data.
+              </li>
+              <li>
+                <strong>Fresh Data:</strong> Scores are recalculated regularly
+                using only CVEs published within the current window, ensuring
+                relevance and accuracy.
+              </li>
+              <li>
+                <strong>Trend Analysis:</strong> Performance trends compare the
+                current 6-month period against the previous 6-month period to
+                show improvement or decline.
+              </li>
+              <li>
+                <strong>Fair Comparison:</strong> All CNAs are evaluated using
+                the same time window, creating consistent and comparable scoring
+                across organizations.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scoring Categories Section -->
+      <section class="scoring-categories-card card">
+        <h2>Scoring Categories</h2>
+        <p class="categories-intro">
+          The scoring system evaluates CVE records across five essential
+          categories, with points allocated based on the relative importance of
+          each type of information for security decision-making.
+        </p>
+
+        <div class="category-detail">
+          <h3>
+            <span class="category-points">50 points</span> Foundational
+            Completeness
+          </h3>
+          <p class="category-what">
+            <strong>What it is:</strong> The essential building blocks of every
+            CVE record, including problem types, affected products, references,
+            and descriptions.
+          </p>
+          <p class="category-why">
+            <strong>Why it matters:</strong> These are the minimum fields
+            required for CVE publication and provide the basic context needed to
+            understand any vulnerability. Without complete foundational data,
+            security teams cannot properly identify or assess threats.
+          </p>
+          <p class="category-how">
+            <strong>How points are awarded:</strong> Points are earned for
+            including comprehensive problem type classifications, detailed
+            affected product information, relevant reference links, and clear
+            vulnerability descriptions.
           </p>
         </div>
-        
-        <div class="window-details">
-          <h3>How the Scoring Window Works</h3>
-          <ul class="window-features">
-            <li><strong>Rolling 6-Month Window:</strong> The analysis period automatically updates to always cover the most recent 6 months of CVE data.</li>
-            <li><strong>Fresh Data:</strong> Scores are recalculated regularly using only CVEs published within the current window, ensuring relevance and accuracy.</li>
-            <li><strong>Trend Analysis:</strong> Performance trends compare the current 6-month period against the previous 6-month period to show improvement or decline.</li>
-            <li><strong>Fair Comparison:</strong> All CNAs are evaluated using the same time window, creating consistent and comparable scoring across organizations.</li>
-          </ul>
+
+        <div class="category-detail">
+          <h3>
+            <span class="category-points">15 points</span> Root Cause Analysis
+          </h3>
+          <p class="category-what">
+            <strong>What it is:</strong> Information about the underlying
+            weakness that caused the vulnerability, typically expressed as a CWE
+            (Common Weakness Enumeration) identifier.
+          </p>
+          <p class="category-why">
+            <strong>Why it matters:</strong> CWE data helps development teams
+            understand patterns in security flaws and implement preventive
+            measures. It's like knowing that a house fire was caused by faulty
+            wiring versus a gas leak—the root cause determines the best
+            prevention strategy.
+          </p>
+          <p class="category-how">
+            <strong>How points are awarded:</strong> Points are earned for
+            including valid CWE identifiers that accurately describe the
+            specific type of weakness, rather than generic classifications.
+          </p>
         </div>
-      </div>
-    </section>
 
-    <!-- Scoring Categories Section -->
-    <section class="scoring-categories-card card">
-      <h2>Scoring Categories</h2>
-      <p class="categories-intro">
-        The scoring system evaluates CVE records across five essential categories, with points allocated based on 
-        the relative importance of each type of information for security decision-making.
-      </p>
-      
-      <div class="category-detail">
-        <h3><span class="category-points">50 points</span> Foundational Completeness</h3>
-        <p class="category-what"><strong>What it is:</strong> The essential building blocks of every CVE record, including problem types, affected products, references, and descriptions.</p>
-        <p class="category-why"><strong>Why it matters:</strong> These are the minimum fields required for CVE publication and provide the basic context needed to understand any vulnerability. Without complete foundational data, security teams cannot properly identify or assess threats.</p>
-        <p class="category-how"><strong>How points are awarded:</strong> Points are earned for including comprehensive problem type classifications, detailed affected product information, relevant reference links, and clear vulnerability descriptions.</p>
-      </div>
+        <div class="category-detail">
+          <h3>
+            <span class="category-points">15 points</span> Severity & Impact
+            Context
+          </h3>
+          <p class="category-what">
+            <strong>What it is:</strong> Standardized severity ratings using
+            CVSS (Common Vulnerability Scoring System) metrics, which provide
+            numerical scores from 0-10 indicating how serious a vulnerability
+            is.
+          </p>
+          <p class="category-why">
+            <strong>Why it matters:</strong> CVSS scores help organizations
+            prioritize which vulnerabilities to fix first based on potential
+            impact. A CVSS score of 9.8 demands immediate attention, while a 3.1
+            might be scheduled for routine patching.
+          </p>
+          <p class="category-how">
+            <strong>How points are awarded:</strong> Points are earned for
+            including complete CVSS v3 or v4 metrics with valid vector strings
+            that accurately reflect the vulnerability's exploitability and
+            impact.
+          </p>
+        </div>
 
-      <div class="category-detail">
-        <h3><span class="category-points">15 points</span> Root Cause Analysis</h3>
-        <p class="category-what"><strong>What it is:</strong> Information about the underlying weakness that caused the vulnerability, typically expressed as a CWE (Common Weakness Enumeration) identifier.</p>
-        <p class="category-why"><strong>Why it matters:</strong> CWE data helps development teams understand patterns in security flaws and implement preventive measures. It's like knowing that a house fire was caused by faulty wiring versus a gas leak—the root cause determines the best prevention strategy.</p>
-        <p class="category-how"><strong>How points are awarded:</strong> Points are earned for including valid CWE identifiers that accurately describe the specific type of weakness, rather than generic classifications.</p>
-      </div>
+        <div class="category-detail">
+          <h3>
+            <span class="category-points">10 points</span> Software
+            Identification
+          </h3>
+          <p class="category-what">
+            <strong>What it is:</strong> Precise identification of affected
+            software using CPE (Common Platform Enumeration) format, which
+            provides standardized names for software products and versions. CPE
+            data can be provided in either the traditional
+            <code>affected[].cpes</code> field or the advanced CVE 5.1
+            <code>cpeApplicability</code> field.
+          </p>
+          <p class="category-why">
+            <strong>Why it matters:</strong> CPE data enables automated
+            vulnerability scanners to accurately match vulnerabilities to
+            specific software in an organization's environment. Without it,
+            security tools can't reliably identify what's at risk.
+          </p>
+          <p class="category-how">
+            <strong>How points are awarded:</strong> Points are earned for
+            including valid CPE identifiers that precisely specify the affected
+            software products, versions, and configurations. Both traditional
+            CPE lists and advanced applicability statements with version ranges
+            are recognized.
+          </p>
+        </div>
 
-      <div class="category-detail">
-        <h3><span class="category-points">15 points</span> Severity & Impact Context</h3>
-        <p class="category-what"><strong>What it is:</strong> Standardized severity ratings using CVSS (Common Vulnerability Scoring System) metrics, which provide numerical scores from 0-10 indicating how serious a vulnerability is.</p>
-        <p class="category-why"><strong>Why it matters:</strong> CVSS scores help organizations prioritize which vulnerabilities to fix first based on potential impact. A CVSS score of 9.8 demands immediate attention, while a 3.1 might be scheduled for routine patching.</p>
-        <p class="category-how"><strong>How points are awarded:</strong> Points are earned for including complete CVSS v3 or v4 metrics with valid vector strings that accurately reflect the vulnerability's exploitability and impact.</p>
-      </div>
+        <div class="category-detail">
+          <h3>
+            <span class="category-points">10 points</span> Patch Information
+          </h3>
+          <p class="category-what">
+            <strong>What it is:</strong> References tagged with
+            <code>patch</code> in the CVE record, indicating a direct link to a
+            fix for the vulnerability.
+          </p>
+          <p class="category-why">
+            <strong>Why it matters:</strong> Patch information bridges the gap
+            between identifying a vulnerability and actually fixing it. The
+            <code>patch</code> tag is the clearest structured signal that a
+            specific fix is available, making it easy for security teams and
+            automated tools to find remediation quickly.
+          </p>
+          <p class="category-how">
+            <strong>How points are awarded:</strong> Points are earned when at
+            least one reference in the CVE record includes the
+            <code>patch</code> tag. Other reference tags such as
+            <code>vendor-advisory</code> are not currently counted, as they may
+            not always indicate a specific fix is available.
+          </p>
+        </div>
+      </section>
 
-      <div class="category-detail">
-        <h3><span class="category-points">10 points</span> Software Identification</h3>
-        <p class="category-what"><strong>What it is:</strong> Precise identification of affected software using CPE (Common Platform Enumeration) format, which provides standardized names for software products and versions. CPE data can be provided in either the traditional <code>affected[].cpes</code> field or the advanced CVE 5.1 <code>cpeApplicability</code> field.</p>
-        <p class="category-why"><strong>Why it matters:</strong> CPE data enables automated vulnerability scanners to accurately match vulnerabilities to specific software in an organization's environment. Without it, security tools can't reliably identify what's at risk.</p>
-        <p class="category-how"><strong>How points are awarded:</strong> Points are earned for including valid CPE identifiers that precisely specify the affected software products, versions, and configurations. Both traditional CPE lists and advanced applicability statements with version ranges are recognized.</p>
-      </div>
+      <!-- Technical Documentation Section -->
+      <section class="technical-docs-card card" id="technical-documentation">
+        <h2>Technical Documentation for CNAs</h2>
+        <p class="tech-intro">
+          This section provides the exact technical implementation details for
+          CNAs who want to verify the scoring methodology. All field paths
+          reference the official CVE JSON 5.0 schema.
+        </p>
 
-      <div class="category-detail">
-        <h3><span class="category-points">10 points</span> Patch Information</h3>
-        <p class="category-what"><strong>What it is:</strong> Direct links to patches, fixes, or official vendor advisories that provide remediation guidance.</p>
-        <p class="category-why"><strong>Why it matters:</strong> Patch information bridges the gap between identifying a vulnerability and actually fixing it. Security teams need clear paths to remediation, not just problem descriptions.</p>
-        <p class="category-how"><strong>How points are awarded:</strong> Points are earned for including direct links to official patches or vendor advisories, rather than generic references or third-party discussions.</p>
-      </div>
-    </section>
+        <div class="tech-toggle-container">
+          <button class="btn btn-primary" id="toggleTechnicalDetails">
+            Show Technical Details
+          </button>
+        </div>
 
-    <!-- Technical Documentation Section -->
-    <section class="technical-docs-card card" id="technical-documentation">
-      <h2>Technical Documentation for CNAs</h2>
-      <p class="tech-intro">
-        This section provides the exact technical implementation details for CNAs who want to verify 
-        the scoring methodology. All field paths reference the official CVE JSON 5.0 schema.
-      </p>
-      
-      <div class="tech-toggle-container">
-        <button class="btn btn-primary" id="toggleTechnicalDetails">Show Technical Details</button>
-      </div>
-      
-      <div class="technical-details" id="technicalDetails" style="display: none;">
-        
-        <!-- Foundational Completeness Technical Details -->
-        <div class="tech-category" id="foundational-completeness-tech">
-          <h3><span class="category-points">50 points</span> Foundational Completeness - Technical Implementation</h3>
-          
-          <div class="tech-subsection">
-            <h4>Schema Field Paths Checked:</h4>
-            <div class="code-block">
-              <code>containers.cna.descriptions</code> (array)<br>
-              <code>containers.cna.affected</code> (array)<br>
-              <code>containers.cna.references</code> (array)
+        <div
+          class="technical-details"
+          id="technicalDetails"
+          style="display: none"
+        >
+          <!-- Foundational Completeness Technical Details -->
+          <div class="tech-category" id="foundational-completeness-tech">
+            <h3>
+              <span class="category-points">50 points</span> Foundational
+              Completeness - Technical Implementation
+            </h3>
+
+            <div class="tech-subsection">
+              <h4>Schema Field Paths Checked:</h4>
+              <div class="code-block">
+                <code>containers.cna.descriptions</code> (array)<br />
+                <code>containers.cna.affected</code> (array)<br />
+                <code>containers.cna.references</code> (array)
+              </div>
             </div>
-          </div>
-          
-          <div class="tech-subsection">
-            <h4>Validation Logic:</h4>
-            <div class="validation-rule">
-              <strong>Binary Scoring:</strong> All-or-nothing - either 50 points or 0 points
+
+            <div class="tech-subsection">
+              <h4>Validation Logic:</h4>
+              <div class="validation-rule">
+                <strong>Binary Scoring:</strong> All-or-nothing - either 50
+                points or 0 points
+              </div>
+              <div class="validation-rule">
+                <strong>Requirements:</strong> All three field arrays must exist
+                AND contain at least one valid entry
+              </div>
+              <div class="validation-rule">
+                <strong>Validation Criteria:</strong>
+                <ul>
+                  <li>
+                    <code>descriptions</code>: Must be non-empty array with at
+                    least one description object
+                  </li>
+                  <li>
+                    <code>affected</code>: Must be non-empty array with at least
+                    one affected product object
+                  </li>
+                  <li>
+                    <code>references</code>: Must be non-empty array with at
+                    least one reference object
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div class="validation-rule">
-              <strong>Requirements:</strong> All three field arrays must exist AND contain at least one valid entry
-            </div>
-            <div class="validation-rule">
-              <strong>Validation Criteria:</strong>
-              <ul>
-                <li><code>descriptions</code>: Must be non-empty array with at least one description object</li>
-                <li><code>affected</code>: Must be non-empty array with at least one affected product object</li>
-                <li><code>references</code>: Must be non-empty array with at least one reference object</li>
-              </ul>
-            </div>
-          </div>
-          
-          <div class="tech-subsection">
-            <h4>Code Implementation:</h4>
-            <div class="code-block">
-<pre>def _calculate_foundational_completeness(cve, cna):
+
+            <div class="tech-subsection">
+              <h4>Code Implementation:</h4>
+              <div class="code-block">
+                <pre>
+def _calculate_foundational_completeness(cve, cna):
     descriptions = cna.get('descriptions', [])
     affected = cna.get('affected', [])
     references = cna.get('references', [])
@@ -172,42 +311,51 @@
     has_affected = isinstance(affected, list) and len(affected) > 0
     has_references = isinstance(references, list) and len(references) > 0
     
-    return 50 if (has_descriptions and has_affected and has_references) else 0</pre>
+    return 50 if (has_descriptions and has_affected and has_references) else 0</pre
+                >
+              </div>
             </div>
           </div>
-        </div>
-        
-        <!-- Root Cause Analysis Technical Details -->
-        <div class="tech-category" id="root-cause-analysis-tech">
-          <h3><span class="category-points">15 points</span> Root Cause Analysis - Technical Implementation</h3>
-          
-          <div class="tech-subsection">
-            <h4>Schema Field Paths Checked:</h4>
-            <div class="code-block">
-              <code>containers.cna.problemTypes[].descriptions[].cweId</code> (string)
+
+          <!-- Root Cause Analysis Technical Details -->
+          <div class="tech-category" id="root-cause-analysis-tech">
+            <h3>
+              <span class="category-points">15 points</span> Root Cause Analysis
+              - Technical Implementation
+            </h3>
+
+            <div class="tech-subsection">
+              <h4>Schema Field Paths Checked:</h4>
+              <div class="code-block">
+                <code>containers.cna.problemTypes[].descriptions[].cweId</code>
+                (string)
+              </div>
             </div>
-          </div>
-          
-          <div class="tech-subsection">
-            <h4>Validation Logic:</h4>
-            <div class="validation-rule">
-              <strong>Binary Scoring:</strong> Either 15 points or 0 points
+
+            <div class="tech-subsection">
+              <h4>Validation Logic:</h4>
+              <div class="validation-rule">
+                <strong>Binary Scoring:</strong> Either 15 points or 0 points
+              </div>
+              <div class="validation-rule">
+                <strong>CWE ID Format:</strong> Must match pattern
+                <code>CWE-[0-9]+</code> (case-insensitive)
+              </div>
+              <div class="validation-rule">
+                <strong>Valid CWE List:</strong> Must exist in official MITRE
+                CWE database (loaded from cwe_ids.json)
+              </div>
+              <div class="validation-rule">
+                <strong>Search Process:</strong> Iterates through all
+                problemTypes → descriptions → cweId fields
+              </div>
             </div>
-            <div class="validation-rule">
-              <strong>CWE ID Format:</strong> Must match pattern <code>CWE-[0-9]+</code> (case-insensitive)
-            </div>
-            <div class="validation-rule">
-              <strong>Valid CWE List:</strong> Must exist in official MITRE CWE database (loaded from cwe_ids.json)
-            </div>
-            <div class="validation-rule">
-              <strong>Search Process:</strong> Iterates through all problemTypes → descriptions → cweId fields
-            </div>
-          </div>
-          
-          <div class="tech-subsection">
-            <h4>Code Implementation:</h4>
-            <div class="code-block">
-<pre>def _calculate_root_cause_analysis(cve, cna):
+
+            <div class="tech-subsection">
+              <h4>Code Implementation:</h4>
+              <div class="code-block">
+                <pre>
+def _calculate_root_cause_analysis(cve, cna):
     problem_types = cna.get('problemTypes', [])
     if not isinstance(problem_types, list):
         return 0
@@ -234,44 +382,52 @@ def _is_valid_cwe_id(cwe_raw):
         return False
     
     # Check against official CWE database
-    return cwe_raw.upper() in scoring_config.valid_cwe_ids</pre>
+    return cwe_raw.upper() in scoring_config.valid_cwe_ids</pre
+                >
+              </div>
             </div>
           </div>
-        </div>
-        
-        <!-- Severity & Impact Context Technical Details -->
-        <div class="tech-category" id="severity-impact-context-tech">
-          <h3><span class="category-points">15 points</span> Severity & Impact Context - Technical Implementation</h3>
-          
-          <div class="tech-subsection">
-            <h4>Schema Field Paths Checked:</h4>
-            <div class="code-block">
-              <code>containers.cna.metrics[].cvssV3_0</code> (object)<br>
-              <code>containers.cna.metrics[].cvssV3_1</code> (object)<br>
-              <code>containers.cna.metrics[].cvssV4_0</code> (object)
+
+          <!-- Severity & Impact Context Technical Details -->
+          <div class="tech-category" id="severity-impact-context-tech">
+            <h3>
+              <span class="category-points">15 points</span> Severity & Impact
+              Context - Technical Implementation
+            </h3>
+
+            <div class="tech-subsection">
+              <h4>Schema Field Paths Checked:</h4>
+              <div class="code-block">
+                <code>containers.cna.metrics[].cvssV3_0</code> (object)<br />
+                <code>containers.cna.metrics[].cvssV3_1</code> (object)<br />
+                <code>containers.cna.metrics[].cvssV4_0</code> (object)
+              </div>
             </div>
-          </div>
-          
-          <div class="tech-subsection">
-            <h4>Validation Logic:</h4>
-            <div class="validation-rule">
-              <strong>Binary Scoring:</strong> Either 15 points or 0 points
+
+            <div class="tech-subsection">
+              <h4>Validation Logic:</h4>
+              <div class="validation-rule">
+                <strong>Binary Scoring:</strong> Either 15 points or 0 points
+              </div>
+              <div class="validation-rule">
+                <strong>CVSS Version Support:</strong> Accepts CVSS v3.0, v3.1,
+                or v4.0
+              </div>
+              <div class="validation-rule">
+                <strong>Vector String Required:</strong> Must contain valid
+                <code>vectorString</code> field
+              </div>
+              <div class="validation-rule">
+                <strong>Search Process:</strong> Iterates through metrics array
+                looking for any valid CVSS object
+              </div>
             </div>
-            <div class="validation-rule">
-              <strong>CVSS Version Support:</strong> Accepts CVSS v3.0, v3.1, or v4.0
-            </div>
-            <div class="validation-rule">
-              <strong>Vector String Required:</strong> Must contain valid <code>vectorString</code> field
-            </div>
-            <div class="validation-rule">
-              <strong>Search Process:</strong> Iterates through metrics array looking for any valid CVSS object
-            </div>
-          </div>
-          
-          <div class="tech-subsection">
-            <h4>Code Implementation:</h4>
-            <div class="code-block">
-<pre>def _calculate_severity_context(cve, cna):
+
+            <div class="tech-subsection">
+              <h4>Code Implementation:</h4>
+              <div class="code-block">
+                <pre>
+def _calculate_severity_context(cve, cna):
     metrics = cna.get('metrics', [])
     if not isinstance(metrics, list):
         return 0
@@ -294,49 +450,69 @@ def _has_valid_cvss_vector(metrics):
                 cvss_data = metric[version]
                 if isinstance(cvss_data, dict) and cvss_data.get('vectorString'):
                     return True
-    return False</pre>
+    return False</pre
+                >
+              </div>
             </div>
           </div>
-        </div>
-        
-        <!-- Software Identification Technical Details -->
-        <div class="tech-category" id="software-identification-tech">
-          <h3><span class="category-points">10 points</span> Software Identification - Technical Implementation</h3>
-          
-          <div class="tech-subsection">
-            <h4>Schema Field Paths Checked:</h4>
-            <div class="code-block">
-              <strong>Traditional Field:</strong><br>
-              <code>containers.cna.affected[].cpes</code> (array of CPE 2.3 strings)<br>
-              <br>
-              <strong>CVE 5.1 Advanced Field:</strong><br>
-              <code>containers.cna.cpeApplicability[].nodes[].cpeMatch[].criteria</code> (CPE with operators)
+
+          <!-- Software Identification Technical Details -->
+          <div class="tech-category" id="software-identification-tech">
+            <h3>
+              <span class="category-points">10 points</span> Software
+              Identification - Technical Implementation
+            </h3>
+
+            <div class="tech-subsection">
+              <h4>Schema Field Paths Checked:</h4>
+              <div class="code-block">
+                <strong>Traditional Field:</strong><br />
+                <code>containers.cna.affected[].cpes</code> (array of CPE 2.3
+                strings)<br />
+                <br />
+                <strong>CVE 5.1 Advanced Field:</strong><br />
+                <code
+                  >containers.cna.cpeApplicability[].nodes[].cpeMatch[].criteria</code
+                >
+                (CPE with operators)
+              </div>
+              <p
+                style="
+                  margin-top: 1rem;
+                  color: var(--text-secondary);
+                  font-style: italic;
+                "
+              >
+                <strong>Note:</strong> Both field types are checked. Points are
+                awarded if CPE data is found in either location.
+              </p>
             </div>
-            <p style="margin-top: 1rem; color: var(--text-secondary); font-style: italic;">
-              <strong>Note:</strong> Both field types are checked. Points are awarded if CPE data is found in either location.
-            </p>
-          </div>
-          
-          <div class="tech-subsection">
-            <h4>Validation Logic:</h4>
-            <div class="validation-rule">
-              <strong>Binary Scoring:</strong> Either 10 points or 0 points
+
+            <div class="tech-subsection">
+              <h4>Validation Logic:</h4>
+              <div class="validation-rule">
+                <strong>Binary Scoring:</strong> Either 10 points or 0 points
+              </div>
+              <div class="validation-rule">
+                <strong>Dual Field Support:</strong> Checks traditional
+                <code>affected[].cpes</code> first, then CVE 5.1
+                <code>cpeApplicability</code>
+              </div>
+              <div class="validation-rule">
+                <strong>Traditional CPE:</strong> At least one affected product
+                must contain non-empty cpes array
+              </div>
+              <div class="validation-rule">
+                <strong>CPE Applicability:</strong> Must contain valid nodes
+                with cpeMatch entries and criteria strings
+              </div>
             </div>
-            <div class="validation-rule">
-              <strong>Dual Field Support:</strong> Checks traditional <code>affected[].cpes</code> first, then CVE 5.1 <code>cpeApplicability</code>
-            </div>
-            <div class="validation-rule">
-              <strong>Traditional CPE:</strong> At least one affected product must contain non-empty cpes array
-            </div>
-            <div class="validation-rule">
-              <strong>CPE Applicability:</strong> Must contain valid nodes with cpeMatch entries and criteria strings
-            </div>
-          </div>
-          
-          <div class="tech-subsection">
-            <h4>Code Implementation:</h4>
-            <div class="code-block">
-<pre>def _calculate_software_identification(cve, cna):
+
+            <div class="tech-subsection">
+              <h4>Code Implementation:</h4>
+              <div class="code-block">
+                <pre>
+def _calculate_software_identification(cve, cna):
     # Check traditional affected[].cpes field
     affected = cna.get('affected', [])
     if isinstance(affected, list):
@@ -375,14 +551,16 @@ def _has_cpe_applicability(cna):
                 if isinstance(match, dict) and match.get('criteria'):
                     return True
     
-    return False</pre>
+    return False</pre
+                >
+              </div>
             </div>
-          </div>
-          
-          <div class="tech-subsection">
-            <h4>CVE 5.1 cpeApplicability Structure:</h4>
-            <div class="code-block">
-<pre>{
+
+            <div class="tech-subsection">
+              <h4>CVE 5.1 cpeApplicability Structure:</h4>
+              <div class="code-block">
+                <pre>
+{
   "cpeApplicability": [
     {
       "nodes": [
@@ -399,43 +577,52 @@ def _has_cpe_applicability(cna):
       ]
     }
   ]
-}</pre>
-            </div>
-            <p style="margin-top: 1rem; color: var(--text-secondary);">
-              The <code>cpeApplicability</code> field provides NVD-style CPE matching with operators and version ranges, 
-              enabling more precise vulnerability applicability statements than simple CPE lists.
-            </p>
-          </div>
-        </div>
-        
-        <!-- Patch Information Technical Details -->
-        <div class="tech-category" id="patch-information-tech">
-          <h3><span class="category-points">10 points</span> Patch Information - Technical Implementation</h3>
-          
-          <div class="tech-subsection">
-            <h4>Schema Field Paths Checked:</h4>
-            <div class="code-block">
-              <code>containers.cna.references[].tags</code> (array of strings)
+}</pre
+                >
+              </div>
+              <p style="margin-top: 1rem; color: var(--text-secondary)">
+                The <code>cpeApplicability</code> field provides NVD-style CPE
+                matching with operators and version ranges, enabling more
+                precise vulnerability applicability statements than simple CPE
+                lists.
+              </p>
             </div>
           </div>
-          
-          <div class="tech-subsection">
-            <h4>Validation Logic:</h4>
-            <div class="validation-rule">
-              <strong>Binary Scoring:</strong> Either 10 points or 0 points
+
+          <!-- Patch Information Technical Details -->
+          <div class="tech-category" id="patch-information-tech">
+            <h3>
+              <span class="category-points">10 points</span> Patch Information -
+              Technical Implementation
+            </h3>
+
+            <div class="tech-subsection">
+              <h4>Schema Field Paths Checked:</h4>
+              <div class="code-block">
+                <code>containers.cna.references[].tags</code> (array of strings)
+              </div>
             </div>
-            <div class="validation-rule">
-              <strong>Tag Matching:</strong> Case-insensitive search for "patch" in any tag string
+
+            <div class="tech-subsection">
+              <h4>Validation Logic:</h4>
+              <div class="validation-rule">
+                <strong>Binary Scoring:</strong> Either 10 points or 0 points
+              </div>
+              <div class="validation-rule">
+                <strong>Tag Matching:</strong> Case-insensitive search for
+                "patch" in any tag string
+              </div>
+              <div class="validation-rule">
+                <strong>Search Process:</strong> Iterates through all references
+                → tags arrays
+              </div>
             </div>
-            <div class="validation-rule">
-              <strong>Search Process:</strong> Iterates through all references → tags arrays
-            </div>
-          </div>
-          
-          <div class="tech-subsection">
-            <h4>Code Implementation:</h4>
-            <div class="code-block">
-<pre>def _calculate_actionable_intelligence(cve, cna):
+
+            <div class="tech-subsection">
+              <h4>Code Implementation:</h4>
+              <div class="code-block">
+                <pre>
+def _calculate_actionable_intelligence(cve, cna):
     references = cna.get('references', [])
     if not isinstance(references, list):
         return 0
@@ -457,19 +644,21 @@ def _has_patch_references(references):
             if isinstance(tag, str) and 'patch' in tag.lower():
                 return True
     
-    return False</pre>
+    return False</pre
+                >
+              </div>
             </div>
           </div>
-        </div>
-        
-        <!-- Scoring Configuration -->
-        <div class="tech-category" id="scoring-configuration">
-          <h3>Scoring Configuration (rules.json)</h3>
-          
-          <div class="tech-subsection">
-            <h4>Complete Scoring Rules:</h4>
-            <div class="code-block">
-<pre>{
+
+          <!-- Scoring Configuration -->
+          <div class="tech-category" id="scoring-configuration">
+            <h3>Scoring Configuration (rules.json)</h3>
+
+            <div class="tech-subsection">
+              <h4>Complete Scoring Rules:</h4>
+              <div class="code-block">
+                <pre>
+{
   "foundationalCompleteness": {
     "weight": 50,
     "criteria": ["descriptions", "affected", "references"],
@@ -495,258 +684,392 @@ def _has_patch_references(references):
     "criteria": ["patchRef"],
     "binary": true
   }
-}</pre>
+}</pre
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Verification Instructions -->
+          <div class="tech-category" id="verification-instructions">
+            <h3>Verification Instructions for CNAs</h3>
+
+            <div class="tech-subsection">
+              <h4>How to Verify Your CVE Scoring:</h4>
+              <ol class="verification-steps">
+                <li>
+                  <strong>Download your CVE JSON:</strong> Get the official CVE
+                  record from the CVE database
+                </li>
+                <li>
+                  <strong>Check field paths:</strong> Verify the exact schema
+                  paths listed above exist in your JSON
+                </li>
+                <li>
+                  <strong>Validate content:</strong> Ensure arrays are non-empty
+                  and contain valid data
+                </li>
+                <li>
+                  <strong>Test scoring logic:</strong> Apply the binary scoring
+                  rules to calculate expected points
+                </li>
+                <li>
+                  <strong>Compare results:</strong> Match against your CNA
+                  scorecard results
+                </li>
+              </ol>
+            </div>
+
+            <div class="tech-subsection">
+              <h4>Common Issues and Solutions:</h4>
+              <div class="issue-solution">
+                <strong>Issue:</strong> Missing foundational completeness
+                points<br />
+                <strong>Check:</strong> Ensure all three arrays (descriptions,
+                affected, references) exist and are non-empty
+              </div>
+              <div class="issue-solution">
+                <strong>Issue:</strong> Missing root cause analysis points<br />
+                <strong>Check:</strong> Verify CWE ID format is "CWE-[number]"
+                and exists in official CWE database
+              </div>
+              <div class="issue-solution">
+                <strong>Issue:</strong> Missing severity context points<br />
+                <strong>Check:</strong> Ensure CVSS object contains valid
+                vectorString field
+              </div>
+              <div class="issue-solution">
+                <strong>Issue:</strong> Missing software identification
+                points<br />
+                <strong>Check:</strong> Verify at least one affected product has
+                non-empty cpes array OR the cpeApplicability field contains
+                valid CPE match data with criteria strings
+              </div>
+              <div class="issue-solution">
+                <strong>Issue:</strong> Missing patch information points<br />
+                <strong>Check:</strong> Ensure at least one reference has
+                "patch" in its tags array
+              </div>
             </div>
           </div>
         </div>
-        
-        <!-- Verification Instructions -->
-        <div class="tech-category" id="verification-instructions">
-          <h3>Verification Instructions for CNAs</h3>
-          
-          <div class="tech-subsection">
-            <h4>How to Verify Your CVE Scoring:</h4>
-            <ol class="verification-steps">
-              <li><strong>Download your CVE JSON:</strong> Get the official CVE record from the CVE database</li>
-              <li><strong>Check field paths:</strong> Verify the exact schema paths listed above exist in your JSON</li>
-              <li><strong>Validate content:</strong> Ensure arrays are non-empty and contain valid data</li>
-              <li><strong>Test scoring logic:</strong> Apply the binary scoring rules to calculate expected points</li>
-              <li><strong>Compare results:</strong> Match against your CNA scorecard results</li>
-            </ol>
-          </div>
-          
-          <div class="tech-subsection">
-            <h4>Common Issues and Solutions:</h4>
-            <div class="issue-solution">
-              <strong>Issue:</strong> Missing foundational completeness points<br>
-              <strong>Check:</strong> Ensure all three arrays (descriptions, affected, references) exist and are non-empty
-            </div>
-            <div class="issue-solution">
-              <strong>Issue:</strong> Missing root cause analysis points<br>
-              <strong>Check:</strong> Verify CWE ID format is "CWE-[number]" and exists in official CWE database
-            </div>
-            <div class="issue-solution">
-              <strong>Issue:</strong> Missing severity context points<br>
-              <strong>Check:</strong> Ensure CVSS object contains valid vectorString field
-            </div>
-            <div class="issue-solution">
-              <strong>Issue:</strong> Missing software identification points<br>
-              <strong>Check:</strong> Verify at least one affected product has non-empty cpes array OR the cpeApplicability field contains valid CPE match data with criteria strings
-            </div>
-            <div class="issue-solution">
-              <strong>Issue:</strong> Missing patch information points<br>
-              <strong>Check:</strong> Ensure at least one reference has "patch" in its tags array
-            </div>
-          </div>
-        </div>
-        
-      </div>
-    </section>
+      </section>
 
-    <!-- Grading Tiers Section -->
-    <section class="grading-tiers-card card">
-      <h2>Grading Tiers</h2>
-      <p class="grading-intro">
-        Scores are calculated as a percentage of total possible points (100), then mapped to letter grades for easy interpretation:
-      </p>
-      <div class="grading-table">
-        <div class="grade-row">
-          <span class="badge-grade badge-perfect">Perfect</span>
-          <span class="grade-percentage">100%</span>
-          <span class="grade-description">All essential data fields are complete and accurate</span>
-        </div>
-        <div class="grade-row">
-          <span class="badge-grade badge-great">Great</span>
-          <span class="grade-percentage">&gt;75%</span>
-          <span class="grade-description">Most critical information is provided with minor gaps</span>
-        </div>
-        <div class="grade-row">
-          <span class="badge-grade badge-good">Good</span>
-          <span class="grade-percentage">&gt;50%</span>
-          <span class="grade-description">Basic requirements met with room for improvement</span>
-        </div>
-        <div class="grade-row">
-          <span class="badge-grade badge-needs-work">Needs Work</span>
-          <span class="grade-percentage">&lt;50%</span>
-          <span class="grade-description">Significant gaps in essential vulnerability data</span>
-        </div>
-        <div class="grade-row">
-          <span class="badge-grade badge-missing">Missing Data</span>
-          <span class="grade-percentage">0%</span>
-          <span class="grade-description">No scoring data available for this CNA</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Performance Trends Section -->
-    <section class="scoring-categories-card card">
-      <h2>Performance Trends Analysis</h2>
-      <p class="categories-intro">
-        Beyond point-in-time scoring, the CNA Scorecard tracks performance trends over time using rolling 7-day averages 
-        to identify patterns and improvements in vulnerability data quality.
-      </p>
-      
-      <div class="category-detail">
-        <h3>Rolling 7-Day Averages</h3>
-        <p class="category-what"><strong>What it tracks:</strong> Daily average scores for each scoring category calculated over sliding 7-day windows, updated daily for the past 6 months.</p>
-        <p class="category-why"><strong>Why it matters:</strong> Smooths out daily fluctuations to reveal genuine trends in data quality improvement or decline. A single bad day doesn't define overall performance.</p>
-        <p class="category-how"><strong>How it works:</strong> Each day's score represents the average of the previous 7 days, creating a smooth trend line that highlights meaningful patterns over noise.</p>
-      </div>
-      
-      <div class="category-detail">
-        <h3>Top Improving CNAs</h3>
-        <p class="category-what"><strong>What it identifies:</strong> CNAs showing the most significant improvement by comparing their earliest versus most recent 7-day performance averages over a 6-month analysis period.</p>
-        <p class="category-why"><strong>Why it's valuable:</strong> Recognizes CNAs making genuine efforts to improve their vulnerability reporting practices and helps identify best practices worth emulating.</p>
-        <p class="category-how"><strong>How it's calculated:</strong> Improvement score equals the difference between the most recent 7-day average and the earliest 7-day average for each CNA with sufficient data.</p>
-      </div>
-      
-      <div class="category-detail">
-        <h3>Trend Visualization</h3>
-        <p class="category-what"><strong>What it shows:</strong> Interactive line charts displaying rolling averages for Root Cause Analysis (CWE), Severity & Impact (CVSS), Software Identification (CPE), and Patch Information categories.</p>
-        <p class="category-why"><strong>Why separate charts:</strong> Each scoring category has different typical ranges and improvement patterns, requiring dedicated visualization for meaningful analysis.</p>
-        <p class="category-how"><strong>How it adapts:</strong> Charts use auto-scaling Y-axes that adjust to actual data ranges, ensuring trend visibility whether scores are high-performing or need improvement.</p>
-      </div>
-      
-      <div class="centered-cta">
-        <a href="trends.html" class="cta-button secondary">View Performance Trends Dashboard</a>
-      </div>
-    </section>
-
-    <!-- CNA Badges Section -->
-    <section class="methodology-notes-card card" style="text-align: left;">
-      <h2 style="text-align: left;">CNA Scorecard Badges</h2>
-      <p>
-        CNAs can display their CNA Scorecard rating on their website, README, or documentation using automatically-generated SVG badges. 
-        Badges are updated every time the pipeline runs, so they always reflect the latest score and rank.
-      </p>
-      <div style="margin: 1.5rem 0; padding: 1.5rem; background: #f5f5f5; border-radius: 8px; border-left: 4px solid var(--primary-color);">
-        <h3 style="margin-top: 0; color: var(--primary-color);">Three Badge Styles Available:</h3>
-        <div style="line-height: 1.8;">
-          <div><strong>Rank Badge</strong> - Shows CNA rank (e.g., #1, #5, #42)</div>
-          <div><strong>Score Badge</strong> - Shows percentage score (e.g., 95.0%)</div>
-          <div><strong>Combined Badge</strong> - Shows both rank and score (e.g., #1 - 95.0%)</div>
-        </div>
-        <p style="margin-bottom: 0;">
-          <strong>🎯 Get Your Badge:</strong> 
-          <a href="badges.html" style="color: var(--primary-color); font-weight: 600;">Visit the Badge Generator →</a>
+      <!-- Grading Tiers Section -->
+      <section class="grading-tiers-card card">
+        <h2>Grading Tiers</h2>
+        <p class="grading-intro">
+          Scores are calculated as a percentage of total possible points (100),
+          then mapped to letter grades for easy interpretation:
         </p>
-      </div>
-      <p style="color: var(--text-secondary); font-style: italic; text-align: left;">
-        Badges are color-coded based on score (green for 90-100%, blue for 70-79%, yellow for 60-69%, red below 60%) 
-        to provide quick visual feedback on performance.
-      </p>
-    </section>
+        <div class="grading-table">
+          <div class="grade-row">
+            <span class="badge-grade badge-perfect">Perfect</span>
+            <span class="grade-percentage">100%</span>
+            <span class="grade-description"
+              >All essential data fields are complete and accurate</span
+            >
+          </div>
+          <div class="grade-row">
+            <span class="badge-grade badge-great">Great</span>
+            <span class="grade-percentage">&gt;75%</span>
+            <span class="grade-description"
+              >Most critical information is provided with minor gaps</span
+            >
+          </div>
+          <div class="grade-row">
+            <span class="badge-grade badge-good">Good</span>
+            <span class="grade-percentage">&gt;50%</span>
+            <span class="grade-description"
+              >Basic requirements met with room for improvement</span
+            >
+          </div>
+          <div class="grade-row">
+            <span class="badge-grade badge-needs-work">Needs Work</span>
+            <span class="grade-percentage">&lt;50%</span>
+            <span class="grade-description"
+              >Significant gaps in essential vulnerability data</span
+            >
+          </div>
+          <div class="grade-row">
+            <span class="badge-grade badge-missing">Missing Data</span>
+            <span class="grade-percentage">0%</span>
+            <span class="grade-description"
+              >No scoring data available for this CNA</span
+            >
+          </div>
+        </div>
+      </section>
 
-    <!-- Transparency Section -->
-    <section class="methodology-notes-card card">
-      <h2>Transparency & Open Standards</h2>
-      <p class="transparency-statement">
-        The CNA Scorecard is committed to complete transparency in methodology. Every aspect of the scoring system is based on 
-        established industry standards and open specifications. The scoring logic is fully documented and publicly 
-        available, ensuring that CNAs and security professionals can understand exactly how scores are calculated.
-      </p>
-      <p class="open-source-note">
-        All scoring algorithms, data processing methods, and evaluation criteria are open source and available for 
-        review in the <a href="https://github.com/jgamblin/CNAScoreCard" target="_blank">project repository</a>. 
-        Feedback and contributions from the security community are welcome to continuously improve the methodology.
-      </p>
-    </section>
-  </main>
-  <footer class="footer">
-    <div class="footer-main">
-      <div class="footer-brand">
-        <img src="assets/logo.svg" alt="CNA Scorecard Logo" class="footer-logo">
-        <span class="footer-title">CNA Scorecard</span>
+      <!-- Performance Trends Section -->
+      <section class="scoring-categories-card card">
+        <h2>Performance Trends Analysis</h2>
+        <p class="categories-intro">
+          Beyond point-in-time scoring, the CNA Scorecard tracks performance
+          trends over time using rolling 7-day averages to identify patterns and
+          improvements in vulnerability data quality.
+        </p>
+
+        <div class="category-detail">
+          <h3>Rolling 7-Day Averages</h3>
+          <p class="category-what">
+            <strong>What it tracks:</strong> Daily average scores for each
+            scoring category calculated over sliding 7-day windows, updated
+            daily for the past 6 months.
+          </p>
+          <p class="category-why">
+            <strong>Why it matters:</strong> Smooths out daily fluctuations to
+            reveal genuine trends in data quality improvement or decline. A
+            single bad day doesn't define overall performance.
+          </p>
+          <p class="category-how">
+            <strong>How it works:</strong> Each day's score represents the
+            average of the previous 7 days, creating a smooth trend line that
+            highlights meaningful patterns over noise.
+          </p>
+        </div>
+
+        <div class="category-detail">
+          <h3>Top Improving CNAs</h3>
+          <p class="category-what">
+            <strong>What it identifies:</strong> CNAs showing the most
+            significant improvement by comparing their earliest versus most
+            recent 7-day performance averages over a 6-month analysis period.
+          </p>
+          <p class="category-why">
+            <strong>Why it's valuable:</strong> Recognizes CNAs making genuine
+            efforts to improve their vulnerability reporting practices and helps
+            identify best practices worth emulating.
+          </p>
+          <p class="category-how">
+            <strong>How it's calculated:</strong> Improvement score equals the
+            difference between the most recent 7-day average and the earliest
+            7-day average for each CNA with sufficient data.
+          </p>
+        </div>
+
+        <div class="category-detail">
+          <h3>Trend Visualization</h3>
+          <p class="category-what">
+            <strong>What it shows:</strong> Interactive line charts displaying
+            rolling averages for Root Cause Analysis (CWE), Severity & Impact
+            (CVSS), Software Identification (CPE), and Patch Information
+            categories.
+          </p>
+          <p class="category-why">
+            <strong>Why separate charts:</strong> Each scoring category has
+            different typical ranges and improvement patterns, requiring
+            dedicated visualization for meaningful analysis.
+          </p>
+          <p class="category-how">
+            <strong>How it adapts:</strong> Charts use auto-scaling Y-axes that
+            adjust to actual data ranges, ensuring trend visibility whether
+            scores are high-performing or need improvement.
+          </p>
+        </div>
+
+        <div class="centered-cta">
+          <a href="trends.html" class="cta-button secondary"
+            >View Performance Trends Dashboard</a
+          >
+        </div>
+      </section>
+
+      <!-- CNA Badges Section -->
+      <section class="methodology-notes-card card" style="text-align: left">
+        <h2 style="text-align: left">CNA Scorecard Badges</h2>
+        <p>
+          CNAs can display their CNA Scorecard rating on their website, README,
+          or documentation using automatically-generated SVG badges. Badges are
+          updated every time the pipeline runs, so they always reflect the
+          latest score and rank.
+        </p>
+        <div
+          style="
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: #f5f5f5;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+          "
+        >
+          <h3 style="margin-top: 0; color: var(--primary-color)">
+            Three Badge Styles Available:
+          </h3>
+          <div style="line-height: 1.8">
+            <div>
+              <strong>Rank Badge</strong> - Shows CNA rank (e.g., #1, #5, #42)
+            </div>
+            <div>
+              <strong>Score Badge</strong> - Shows percentage score (e.g.,
+              95.0%)
+            </div>
+            <div>
+              <strong>Combined Badge</strong> - Shows both rank and score (e.g.,
+              #1 - 95.0%)
+            </div>
+          </div>
+          <p style="margin-bottom: 0">
+            <strong>🎯 Get Your Badge:</strong>
+            <a
+              href="badges.html"
+              style="color: var(--primary-color); font-weight: 600"
+              >Visit the Badge Generator →</a
+            >
+          </p>
+        </div>
+        <p
+          style="
+            color: var(--text-secondary);
+            font-style: italic;
+            text-align: left;
+          "
+        >
+          Badges are color-coded based on score (green for 90-100%, blue for
+          70-79%, yellow for 60-69%, red below 60%) to provide quick visual
+          feedback on performance.
+        </p>
+      </section>
+
+      <!-- Transparency Section -->
+      <section class="methodology-notes-card card">
+        <h2>Transparency & Open Standards</h2>
+        <p class="transparency-statement">
+          The CNA Scorecard is committed to complete transparency in
+          methodology. Every aspect of the scoring system is based on
+          established industry standards and open specifications. The scoring
+          logic is fully documented and publicly available, ensuring that CNAs
+          and security professionals can understand exactly how scores are
+          calculated.
+        </p>
+        <p class="open-source-note">
+          All scoring algorithms, data processing methods, and evaluation
+          criteria are open source and available for review in the
+          <a href="https://github.com/jgamblin/CNAScoreCard" target="_blank"
+            >project repository</a
+          >. Feedback and contributions from the security community are welcome
+          to continuously improve the methodology.
+        </p>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <img
+            src="assets/logo.svg"
+            alt="CNA Scorecard Logo"
+            class="footer-logo"
+          />
+          <span class="footer-title">CNA Scorecard</span>
+        </div>
+        <div class="footer-links">
+          <a href="https://github.com/RogoLabs/CNAScoreCard" target="_blank"
+            >GitHub</a
+          >
+          <a href="https://rogolabs.net" target="_blank">RogoLabs</a>
+          <a href="https://patchthis.app" target="_blank">PatchThis</a>
+          <a href="https://cveforecast.org" target="_blank">CVEForecast</a>
+          <a href="https://cve.icu" target="_blank">CVE.ICU</a>
+        </div>
       </div>
-      <div class="footer-links">
-        <a href="https://github.com/RogoLabs/CNAScoreCard" target="_blank">GitHub</a>
-        <a href="https://rogolabs.net" target="_blank">RogoLabs</a>
-        <a href="https://patchthis.app" target="_blank">PatchThis</a>
-        <a href="https://cveforecast.org" target="_blank">CVEForecast</a>
-        <a href="https://cve.icu" target="_blank">CVE.ICU</a>
-      </div>
-    </div>
-    <div class="footer-meta">&copy; 2025 RogoLabs. All rights reserved.</div>
-  </footer>
-  <script>
-    // Utility function for date formatting (same as homepage)
-    function formatDateRange(dateRangeString) {
-      try {
-        const parts = dateRangeString.split(' to ');
-        if (parts.length !== 2) return dateRangeString;
-        
-        // Parse as UTC to avoid timezone conversion issues
-        const startDate = new Date(parts[0] + 'T12:00:00Z');
-        const endDate = new Date(parts[1] + 'T12:00:00Z');
-        
-        const formatDate = (date) => {
-          const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-          
-          const day = date.getDate();
-          const month = months[date.getMonth()];
-          const year = date.getFullYear();
-          
-          // Add ordinal suffix (st, nd, rd, th)
-          const getOrdinal = (n) => {
-            const s = ['th', 'st', 'nd', 'rd'];
-            const v = n % 100;
-            return n + (s[(v - 20) % 10] || s[v] || s[0]);
+      <div class="footer-meta">&copy; 2025 RogoLabs. All rights reserved.</div>
+    </footer>
+    <script>
+      // Utility function for date formatting (same as homepage)
+      function formatDateRange(dateRangeString) {
+        try {
+          const parts = dateRangeString.split(" to ");
+          if (parts.length !== 2) return dateRangeString;
+
+          // Parse as UTC to avoid timezone conversion issues
+          const startDate = new Date(parts[0] + "T12:00:00Z");
+          const endDate = new Date(parts[1] + "T12:00:00Z");
+
+          const formatDate = (date) => {
+            const months = [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec",
+            ];
+
+            const day = date.getDate();
+            const month = months[date.getMonth()];
+            const year = date.getFullYear();
+
+            // Add ordinal suffix (st, nd, rd, th)
+            const getOrdinal = (n) => {
+              const s = ["th", "st", "nd", "rd"];
+              const v = n % 100;
+              return n + (s[(v - 20) % 10] || s[v] || s[0]);
+            };
+
+            return `${month} ${getOrdinal(day)}, ${year}`;
           };
-          
-          return `${month} ${getOrdinal(day)}, ${year}`;
-        };
-        
-        return `${formatDate(startDate)} – ${formatDate(endDate)}`;
-      } catch (error) {
-        console.error('Error formatting date range:', error);
-        return dateRangeString;
+
+          return `${formatDate(startDate)} – ${formatDate(endDate)}`;
+        } catch (error) {
+          console.error("Error formatting date range:", error);
+          return dateRangeString;
+        }
       }
-    }
-    
-    // Load and display current analysis period
-    async function loadAnalysisPeriod() {
-      try {
-        const response = await fetch('./data/completeness_summary.json');
-        const data = await response.json();
-        
-        const rawPeriod = data.analysis_period || 'Not available';
-        const formattedPeriod = rawPeriod !== 'Not available' ? formatDateRange(rawPeriod) : rawPeriod;
-        
-        document.getElementById('currentPeriod').textContent = formattedPeriod;
-      } catch (error) {
-        console.error('Error loading analysis period:', error);
-        document.getElementById('currentPeriod').textContent = 'Unable to load current period';
+
+      // Load and display current analysis period
+      async function loadAnalysisPeriod() {
+        try {
+          const response = await fetch("./data/completeness_summary.json");
+          const data = await response.json();
+
+          const rawPeriod = data.analysis_period || "Not available";
+          const formattedPeriod =
+            rawPeriod !== "Not available"
+              ? formatDateRange(rawPeriod)
+              : rawPeriod;
+
+          document.getElementById("currentPeriod").textContent =
+            formattedPeriod;
+        } catch (error) {
+          console.error("Error loading analysis period:", error);
+          document.getElementById("currentPeriod").textContent =
+            "Unable to load current period";
+        }
       }
-    }
-    
-    // Load the analysis period when the page loads
-    document.addEventListener('DOMContentLoaded', loadAnalysisPeriod);
-    
-    // Technical details toggle functionality
-    document.addEventListener('DOMContentLoaded', function() {
-      const toggleButton = document.getElementById('toggleTechnicalDetails');
-      const technicalDetails = document.getElementById('technicalDetails');
-      
-      if (toggleButton && technicalDetails) {
-        toggleButton.addEventListener('click', function() {
-          const isVisible = technicalDetails.style.display !== 'none';
-          
-          if (isVisible) {
-            // Hide technical details
-            technicalDetails.style.display = 'none';
-            toggleButton.textContent = 'Show Technical Details';
-            toggleButton.classList.remove('expanded');
-          } else {
-            // Show technical details
-            technicalDetails.style.display = 'block';
-            toggleButton.textContent = 'Hide Technical Details';
-            toggleButton.classList.add('expanded');
-          }
-        });
-      }
-    });
-  </script>
-  <script src="shared/mobile-nav.js"></script>
-</body>
+
+      // Load the analysis period when the page loads
+      document.addEventListener("DOMContentLoaded", loadAnalysisPeriod);
+
+      // Technical details toggle functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const toggleButton = document.getElementById("toggleTechnicalDetails");
+        const technicalDetails = document.getElementById("technicalDetails");
+
+        if (toggleButton && technicalDetails) {
+          toggleButton.addEventListener("click", function () {
+            const isVisible = technicalDetails.style.display !== "none";
+
+            if (isVisible) {
+              // Hide technical details
+              technicalDetails.style.display = "none";
+              toggleButton.textContent = "Show Technical Details";
+              toggleButton.classList.remove("expanded");
+            } else {
+              // Show technical details
+              technicalDetails.style.display = "block";
+              toggleButton.textContent = "Hide Technical Details";
+              toggleButton.classList.add("expanded");
+            }
+          });
+        }
+      });
+    </script>
+    <script src="shared/mobile-nav.js"></script>
+  </body>
 </html>
