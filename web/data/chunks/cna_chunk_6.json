@@ -5,8 +5,8 @@
   "count": 23,
   "items": [
     {
-      "shortName": "netapp",
-      "organizationName": "NetApp, Inc.",
+      "shortName": "sonicwall",
+      "organizationName": "SonicWall, Inc.",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor"
@@ -14,15 +14,15 @@
       "rank": 291,
       "active_cna_count": 323,
       "percentile": 10.2,
-      "total_cves": 4,
-      "recent_cves": 4,
+      "total_cves": 19,
+      "recent_cves": 19,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
+        "root_cause_analysis": 100.0,
         "software_identification": 0.0,
-        "severity_and_impact": 100.0,
+        "severity_and_impact": 0.0,
         "patchinfo": 0.0
       },
       "trend": {
@@ -30,42 +30,43 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All NetApp products as well as projects hosted on <a href='https://github.com/netapp' target='_blank'>https://github.com/netapp</a>.",
+      "scope": "SonicWall issues only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://security.netapp.com/advisory/"
+          "url": "https://psirt.global.sonicwall.com/vuln-list"
         }
       ],
-      "officialCnaID": "CNA-2017-0035",
+      "officialCnaID": "CNA-2018-0004",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://security.netapp.com/policy/"
+          "url": "https://psirt.global.sonicwall.com/vuln-policy"
         }
       ]
     },
     {
-      "shortName": "hpe",
-      "organizationName": "Hewlett Packard Enterprise (HPE)",
+      "shortName": "freebsd",
+      "organizationName": "FreeBSD",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor"
+        "Vendor",
+        "Open Source"
       ],
       "rank": 291,
       "active_cna_count": 323,
       "percentile": 10.2,
-      "total_cves": 82,
-      "recent_cves": 82,
+      "total_cves": 18,
+      "recent_cves": 18,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
+        "root_cause_analysis": 100.0,
         "software_identification": 0.0,
-        "severity_and_impact": 100.0,
+        "severity_and_impact": 0.0,
         "patchinfo": 0.0
       },
       "trend": {
@@ -73,20 +74,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "HPE and acquisitions issues only.",
+      "scope": "Primarily FreeBSD issues only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://support.hpe.com/portal/site/hpsc/public/kb/secBullArchive/"
+          "url": "https://www.freebsd.org/"
         }
       ],
-      "officialCnaID": "CNA-2016-0003",
+      "officialCnaID": "CNA-2005-0004",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=a00100637en_us"
+          "url": "https://www.freebsd.org/security/"
         }
       ]
     },
@@ -135,50 +136,6 @@
       ]
     },
     {
-      "shortName": "Mandiant",
-      "organizationName": "Mandiant Inc.",
-      "cnaType": "Researcher",
-      "cnaTypes": [
-        "Researcher",
-        "Vendor"
-      ],
-      "rank": 291,
-      "active_cna_count": 323,
-      "percentile": 10.2,
-      "total_cves": 6,
-      "recent_cves": 6,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities in Mandiant products or discovered by Mandiant while performing vulnerability research or security assessments, unless covered by another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://github.com/mandiant/Vulnerability-Disclosures"
-        }
-      ],
-      "officialCnaID": "CNA-2023-0051",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://about.google/intl/ALL_us/appsecurity/"
-        }
-      ]
-    },
-    {
       "shortName": "TXOne",
       "organizationName": "TXOne Networks, Inc.",
       "cnaType": "Vendor",
@@ -223,8 +180,8 @@
       ]
     },
     {
-      "shortName": "NCSC-NL",
-      "organizationName": "National Cyber Security Centre Netherlands (NCSC-NL)",
+      "shortName": "TECNOMobile",
+      "organizationName": "TECNO Mobile Limited",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor"
@@ -232,8 +189,51 @@
       "rank": 291,
       "active_cna_count": 323,
       "percentile": 10.2,
-      "total_cves": 6,
-      "recent_cves": 6,
+      "total_cves": 4,
+      "recent_cves": 4,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities in TECNO products and services only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://security.tecno.com/SRC/blog"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0020",
+      "country": "China",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://security.tecno.com"
+        }
+      ]
+    },
+    {
+      "shortName": "hpe",
+      "organizationName": "Hewlett Packard Enterprise (HPE)",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 291,
+      "active_cna_count": 323,
+      "percentile": 10.2,
+      "total_cves": 82,
+      "recent_cves": 82,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
@@ -248,25 +248,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities in software discovered by NCSC-NL, and vulnerabilities reported to NCSC-NL for coordinated disclosure, which are not in another CNA's scope.",
+      "scope": "HPE and acquisitions issues only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.ncsc.nl/actueel/beveiligingsadviezen"
+          "url": "https://support.hpe.com/portal/site/hpsc/public/kb/secBullArchive/"
         }
       ],
-      "officialCnaID": "CNA-2022-0022",
-      "country": "Netherlands",
+      "officialCnaID": "CNA-2016-0003",
+      "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
-          "language": "Dutch",
-          "url": "https://www.ncsc.nl/contact/kwetsbaarheid-melden"
-        },
-        {
-          "label": "Policy",
-          "language": "English",
-          "url": "https://english.ncsc.nl/contact/reporting-a-vulnerability-cvd"
+          "language": "",
+          "url": "https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=a00100637en_us"
         }
       ]
     },
@@ -281,8 +276,8 @@
       "rank": 291,
       "active_cna_count": 323,
       "percentile": 10.2,
-      "total_cves": 109,
-      "recent_cves": 109,
+      "total_cves": 108,
+      "recent_cves": 108,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
@@ -323,18 +318,17 @@
       ]
     },
     {
-      "shortName": "Arm",
-      "organizationName": "Arm Limited",
+      "shortName": "curl",
+      "organizationName": "curl",
       "cnaType": "Open Source",
       "cnaTypes": [
-        "Open Source",
-        "Vendor"
+        "Open Source"
       ],
       "rank": 291,
       "active_cna_count": 323,
       "percentile": 10.2,
-      "total_cves": 5,
-      "recent_cves": 5,
+      "total_cves": 19,
+      "recent_cves": 19,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
@@ -349,20 +343,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Arm-branded products and technologies and Arm-managed open source projects.",
+      "scope": "All products made and managed by the curl project. This includes curl, libcurl, and trurl.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://developer.arm.com/Arm%20Security%20Center"
+          "url": "https://curl.se/docs/security.html"
         }
       ],
-      "officialCnaID": "CNA-2023-0036",
-      "country": "UK",
+      "officialCnaID": "CNA-2024-0006",
+      "country": "Sweden",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://developer.arm.com/documentation/102850/0100"
+          "url": "https://curl.se/dev/vuln-disclosure.html"
         }
       ]
     },
@@ -553,13 +547,13 @@
       "rank": 313,
       "active_cna_count": 323,
       "percentile": 3.4,
-      "total_cves": 409,
-      "recent_cves": 409,
+      "total_cves": 484,
+      "recent_cves": 484,
       "is_active": true,
       "scores": {
-        "overall_average_score": 60.23,
+        "overall_average_score": 60.48,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 68.22,
+        "root_cause_analysis": 69.83,
         "software_identification": 0.0,
         "severity_and_impact": 0.0,
         "patchinfo": 0.0
@@ -640,15 +634,15 @@
       "rank": 315,
       "active_cna_count": 323,
       "percentile": 2.8,
-      "total_cves": 2256,
-      "recent_cves": 2256,
+      "total_cves": 2236,
+      "recent_cves": 2236,
       "is_active": true,
       "scores": {
-        "overall_average_score": 54.77,
+        "overall_average_score": 54.81,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 12.28,
-        "software_identification": 6.96,
-        "severity_and_impact": 14.85,
+        "root_cause_analysis": 12.39,
+        "software_identification": 7.02,
+        "severity_and_impact": 14.98,
         "patchinfo": 0.0
       },
       "trend": {
@@ -813,6 +807,50 @@
       ]
     },
     {
+      "shortName": "mozilla",
+      "organizationName": "Mozilla Corporation",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 318,
+      "active_cna_count": 323,
+      "percentile": 1.9,
+      "total_cves": 202,
+      "recent_cves": 202,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Mozilla issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.mozilla.org/en-US/security/advisories/"
+        }
+      ],
+      "officialCnaID": "CNA-2012-0002",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
+        }
+      ]
+    },
+    {
       "shortName": "XEN",
       "organizationName": "Xen Project",
       "cnaType": "Vendor",
@@ -853,49 +891,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://xenproject.org/about/security-policy/"
-        }
-      ]
-    },
-    {
-      "shortName": "Cribl",
-      "organizationName": "Cribl, Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 318,
-      "active_cna_count": 323,
-      "percentile": 1.9,
-      "total_cves": 3,
-      "recent_cves": 3,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities identified in Cribl products, and vulnerabilities discovered by, or reported to, Cribl that are not in another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://trust.cribl.io/notifications"
-        }
-      ],
-      "officialCnaID": "CNA-2026-0015",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://cribl.io/vulnerability-disclosure-program/"
         }
       ]
     },
@@ -986,18 +981,17 @@
       ]
     },
     {
-      "shortName": "mozilla",
-      "organizationName": "Mozilla Corporation",
+      "shortName": "Cribl",
+      "organizationName": "Cribl, Inc.",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor",
-        "Open Source"
+        "Vendor"
       ],
       "rank": 318,
       "active_cna_count": 323,
       "percentile": 1.9,
-      "total_cves": 202,
-      "recent_cves": 202,
+      "total_cves": 3,
+      "recent_cves": 3,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -1012,20 +1006,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Mozilla issues only.",
+      "scope": "Vulnerabilities identified in Cribl products, and vulnerabilities discovered by, or reported to, Cribl that are not in another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.mozilla.org/en-US/security/advisories/"
+          "url": "https://trust.cribl.io/notifications"
         }
       ],
-      "officialCnaID": "CNA-2012-0002",
+      "officialCnaID": "CNA-2026-0015",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
+          "url": "https://cribl.io/vulnerability-disclosure-program/"
         }
       ]
     }
