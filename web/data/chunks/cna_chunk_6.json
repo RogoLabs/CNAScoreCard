@@ -5,18 +5,61 @@
   "count": 21,
   "items": [
     {
-      "shortName": "Mandiant",
-      "organizationName": "Mandiant Inc.",
-      "cnaType": "Researcher",
+      "shortName": "CSA",
+      "organizationName": "Cyber Security Agency of Singapore",
+      "cnaType": "CERT",
       "cnaTypes": [
-        "Researcher",
-        "Vendor"
+        "CERT"
       ],
       "rank": 289,
       "active_cna_count": 321,
       "percentile": 10.3,
-      "total_cves": 6,
-      "recent_cves": 6,
+      "total_cves": 7,
+      "recent_cves": 7,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities reported to CSA unless covered by the scope of another CNA.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.csa.gov.sg/alerts-advisories"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0071",
+      "country": "Singapore",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.csa.gov.sg/resources/singcert/csa-as-a-cve-numbering-authority--cna-"
+        }
+      ]
+    },
+    {
+      "shortName": "Go",
+      "organizationName": "Go Project",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 289,
+      "active_cna_count": 321,
+      "percentile": 10.3,
+      "total_cves": 52,
+      "recent_cves": 52,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
@@ -31,42 +74,42 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities in Mandiant products or discovered by Mandiant while performing vulnerability research or security assessments, unless covered by another CNA’s scope.",
+      "scope": "Vulnerabilities in software published by the Go Project (including the Go standard library, Go toolchain, and the golang.org modules) and publicly disclosed vulnerabilities in publicly importable packages in the Go ecosystem, unless covered by another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://github.com/mandiant/Vulnerability-Disclosures"
+          "url": "https://pkg.go.dev/vuln/list"
         }
       ],
-      "officialCnaID": "CNA-2023-0051",
+      "officialCnaID": "CNA-2022-0008",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://about.google/intl/ALL_us/appsecurity/"
+          "url": "https://go.dev/security"
         }
       ]
     },
     {
-      "shortName": "netapp",
-      "organizationName": "NetApp, Inc.",
-      "cnaType": "Vendor",
+      "shortName": "glibc",
+      "organizationName": "GNU C Library",
+      "cnaType": "Open Source",
       "cnaTypes": [
-        "Vendor"
+        "Open Source"
       ],
       "rank": 289,
       "active_cna_count": 321,
       "percentile": 10.3,
-      "total_cves": 4,
-      "recent_cves": 4,
+      "total_cves": 11,
+      "recent_cves": 11,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
+        "root_cause_analysis": 100.0,
         "software_identification": 0.0,
-        "severity_and_impact": 100.0,
+        "severity_and_impact": 0.0,
         "patchinfo": 0.0
       },
       "trend": {
@@ -74,111 +117,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All NetApp products as well as projects hosted on <a href='https://github.com/netapp' target='_blank'>https://github.com/netapp</a>.",
+      "scope": "Security issues and vulnerabilities in the GNU C Library.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://security.netapp.com/advisory/"
+          "url": "https://sourceware.org/git/?p=glibc.git;a=tree;f=advisories;hb=HEAD"
         }
       ],
-      "officialCnaID": "CNA-2017-0035",
+      "officialCnaID": "CNA-2024-0013",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://security.netapp.com/policy/"
-        }
-      ]
-    },
-    {
-      "shortName": "hpe",
-      "organizationName": "Hewlett Packard Enterprise (HPE)",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 289,
-      "active_cna_count": 321,
-      "percentile": 10.3,
-      "total_cves": 82,
-      "recent_cves": 82,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "HPE and acquisitions issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://support.hpe.com/portal/site/hpsc/public/kb/secBullArchive/"
-        }
-      ],
-      "officialCnaID": "CNA-2016-0003",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=a00100637en_us"
-        }
-      ]
-    },
-    {
-      "shortName": "NCSC-NL",
-      "organizationName": "National Cyber Security Centre Netherlands (NCSC-NL)",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 289,
-      "active_cna_count": 321,
-      "percentile": 10.3,
-      "total_cves": 6,
-      "recent_cves": 6,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities in software discovered by NCSC-NL, and vulnerabilities reported to NCSC-NL for coordinated disclosure, which are not in another CNA's scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.ncsc.nl/actueel/beveiligingsadviezen"
-        }
-      ],
-      "officialCnaID": "CNA-2022-0022",
-      "country": "Netherlands",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "Dutch",
-          "url": "https://www.ncsc.nl/contact/kwetsbaarheid-melden"
-        },
-        {
-          "label": "Policy",
-          "language": "English",
-          "url": "https://english.ncsc.nl/contact/reporting-a-vulnerability-cvd"
+          "url": "https://sourceware.org/glibc/security.html"
         }
       ]
     },
@@ -227,8 +179,8 @@
       ]
     },
     {
-      "shortName": "MediaTek",
-      "organizationName": "MediaTek, Inc.",
+      "shortName": "hikvision",
+      "organizationName": "Hangzhou Hikvision Digital Technology Co., Ltd.",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor"
@@ -236,15 +188,15 @@
       "rank": 289,
       "active_cna_count": 321,
       "percentile": 10.3,
-      "total_cves": 109,
-      "recent_cves": 109,
+      "total_cves": 13,
+      "recent_cves": 13,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
+        "root_cause_analysis": 0.0,
         "software_identification": 0.0,
-        "severity_and_impact": 0.0,
+        "severity_and_impact": 100.0,
         "patchinfo": 0.0
       },
       "trend": {
@@ -252,63 +204,106 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "MediaTek product issues only.",
+      "scope": "All <a href='http://www.hikvision.com/en/' target='_blank'>Hikvision Internet of Things (IoT) products</a> including cameras and digital video recorders (DVRs).",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://corp.mediatek.com/product-security-bulletin"
+          "url": "https://us.hikvision.com/en/support-resources/cybersecurity-center/security-notices"
         }
       ],
-      "officialCnaID": "CNA-2021-0043",
-      "country": "Taiwan",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "English",
-          "url": "https://corp.mediatek.com/vulnerability-disclosure-policy"
-        }
-      ]
-    },
-    {
-      "shortName": "naver",
-      "organizationName": "Naver Corporation",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 289,
-      "active_cna_count": 321,
-      "percentile": 10.3,
-      "total_cves": 6,
-      "recent_cves": 6,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Naver products only, except Line products.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://cve.naver.com/"
-        }
-      ],
-      "officialCnaID": "CNA-2018-0007",
-      "country": "South Korea",
+      "officialCnaID": "CNA-2018-0002",
+      "country": "China",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://cve.naver.com/"
+          "url": "https://www.hikvision.com/en/policies/vulnerability-disclosure-policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "TECNOMobile",
+      "organizationName": "TECNO Mobile Limited",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 289,
+      "active_cna_count": 321,
+      "percentile": 10.3,
+      "total_cves": 4,
+      "recent_cves": 4,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities in TECNO products and services only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://security.tecno.com/SRC/blog"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0020",
+      "country": "China",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://security.tecno.com"
+        }
+      ]
+    },
+    {
+      "shortName": "hpe",
+      "organizationName": "Hewlett Packard Enterprise (HPE)",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 289,
+      "active_cna_count": 321,
+      "percentile": 10.3,
+      "total_cves": 73,
+      "recent_cves": 73,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "HPE and acquisitions issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://support.hpe.com/portal/site/hpsc/public/kb/secBullArchive/"
+        }
+      ],
+      "officialCnaID": "CNA-2016-0003",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=a00100637en_us"
         }
       ]
     },
@@ -543,15 +538,15 @@
       "rank": 313,
       "active_cna_count": 321,
       "percentile": 2.8,
-      "total_cves": 2245,
-      "recent_cves": 2245,
+      "total_cves": 2209,
+      "recent_cves": 2209,
       "is_active": true,
       "scores": {
-        "overall_average_score": 54.78,
+        "overall_average_score": 54.85,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 12.29,
-        "software_identification": 6.99,
-        "severity_and_impact": 14.92,
+        "root_cause_analysis": 12.49,
+        "software_identification": 7.11,
+        "severity_and_impact": 15.12,
         "patchinfo": 0.0
       },
       "trend": {
@@ -639,15 +634,15 @@
       "rank": 315,
       "active_cna_count": 321,
       "percentile": 2.2,
-      "total_cves": 119,
-      "recent_cves": 119,
+      "total_cves": 118,
+      "recent_cves": 118,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.13,
         "foundational_completeness": 100.0,
         "root_cause_analysis": 0.0,
         "software_identification": 0.0,
-        "severity_and_impact": 0.84,
+        "severity_and_impact": 0.85,
         "patchinfo": 0.0
       },
       "trend": {
@@ -669,93 +664,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://source.android.com/security/overview/updates-resources#report-issues"
-        }
-      ]
-    },
-    {
-      "shortName": "apple",
-      "organizationName": "Apple Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 316,
-      "active_cna_count": 321,
-      "percentile": 1.9,
-      "total_cves": 354,
-      "recent_cves": 354,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Apple issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://support.apple.com/en-us/HT201222"
-        }
-      ],
-      "officialCnaID": "CNA-2009-0002",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://support.apple.com/en-us/HT201220"
-        }
-      ]
-    },
-    {
-      "shortName": "mozilla",
-      "organizationName": "Mozilla Corporation",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 316,
-      "active_cna_count": 321,
-      "percentile": 1.9,
-      "total_cves": 202,
-      "recent_cves": 202,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Mozilla issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.mozilla.org/en-US/security/advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2012-0002",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
         }
       ]
     },
@@ -799,6 +707,49 @@
           "label": "Policy",
           "language": "",
           "url": "https://cribl.io/vulnerability-disclosure-program/"
+        }
+      ]
+    },
+    {
+      "shortName": "apple",
+      "organizationName": "Apple Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 316,
+      "active_cna_count": 321,
+      "percentile": 1.9,
+      "total_cves": 354,
+      "recent_cves": 354,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Apple issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://support.apple.com/en-us/HT201222"
+        }
+      ],
+      "officialCnaID": "CNA-2009-0002",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://support.apple.com/en-us/HT201220"
         }
       ]
     },
@@ -929,6 +880,50 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.nokia.com/notices/responsible-disclosure/"
+        }
+      ]
+    },
+    {
+      "shortName": "mozilla",
+      "organizationName": "Mozilla Corporation",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 316,
+      "active_cna_count": 321,
+      "percentile": 1.9,
+      "total_cves": 202,
+      "recent_cves": 202,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Mozilla issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.mozilla.org/en-US/security/advisories/"
+        }
+      ],
+      "officialCnaID": "CNA-2012-0002",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
         }
       ]
     }
