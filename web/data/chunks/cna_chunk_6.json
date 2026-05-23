@@ -5,10 +5,11 @@
   "count": 23,
   "items": [
     {
-      "shortName": "NCSC-NL",
-      "organizationName": "National Cyber Security Centre Netherlands (NCSC-NL)",
-      "cnaType": "Vendor",
+      "shortName": "Mandiant",
+      "organizationName": "Mandiant Inc.",
+      "cnaType": "Researcher",
       "cnaTypes": [
+        "Researcher",
         "Vendor"
       ],
       "rank": 290,
@@ -16,6 +17,101 @@
       "percentile": 10.5,
       "total_cves": 6,
       "recent_cves": 6,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities in Mandiant products or discovered by Mandiant while performing vulnerability research or security assessments, unless covered by another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://github.com/mandiant/Vulnerability-Disclosures"
+        }
+      ],
+      "officialCnaID": "CNA-2023-0051",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://about.google/intl/ALL_us/appsecurity/"
+        }
+      ]
+    },
+    {
+      "shortName": "WPScan",
+      "organizationName": "WPScan",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 290,
+      "active_cna_count": 323,
+      "percentile": 10.5,
+      "total_cves": 112,
+      "recent_cves": 112,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "WordPress core, plugins, and themes.",
+      "advisories": [
+        {
+          "label": "Word Press Advisories",
+          "url": "https://wpscan.com/wordpresses"
+        },
+        {
+          "label": "Word Press Plug In Advisories",
+          "url": "https://wpscan.com/plugins"
+        },
+        {
+          "label": "Word Press Theme Advisories",
+          "url": "https://wpscan.com/themes"
+        }
+      ],
+      "officialCnaID": "CNA-2021-0002",
+      "country": "France",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://wpscan.com/vulnerability-disclosure-policy"
+        }
+      ]
+    },
+    {
+      "shortName": "hikvision",
+      "organizationName": "Hangzhou Hikvision Digital Technology Co., Ltd.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 290,
+      "active_cna_count": 323,
+      "percentile": 10.5,
+      "total_cves": 13,
+      "recent_cves": 13,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
@@ -30,25 +126,63 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities in software discovered by NCSC-NL, and vulnerabilities reported to NCSC-NL for coordinated disclosure, which are not in another CNA's scope.",
+      "scope": "All <a href='http://www.hikvision.com/en/' target='_blank'>Hikvision Internet of Things (IoT) products</a> including cameras and digital video recorders (DVRs).",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.ncsc.nl/actueel/beveiligingsadviezen"
+          "url": "https://us.hikvision.com/en/support-resources/cybersecurity-center/security-notices"
         }
       ],
-      "officialCnaID": "CNA-2022-0022",
-      "country": "Netherlands",
+      "officialCnaID": "CNA-2018-0002",
+      "country": "China",
       "disclosurePolicy": [
         {
           "label": "Policy",
-          "language": "Dutch",
-          "url": "https://www.ncsc.nl/contact/kwetsbaarheid-melden"
-        },
+          "language": "",
+          "url": "https://www.hikvision.com/en/policies/vulnerability-disclosure-policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "curl",
+      "organizationName": "curl",
+      "cnaType": "Open Source",
+      "cnaTypes": [
+        "Open Source"
+      ],
+      "rank": 290,
+      "active_cna_count": 323,
+      "percentile": 10.5,
+      "total_cves": 19,
+      "recent_cves": 19,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All products made and managed by the curl project. This includes curl, libcurl, and trurl.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://curl.se/docs/security.html"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0006",
+      "country": "Sweden",
+      "disclosurePolicy": [
         {
           "label": "Policy",
-          "language": "English",
-          "url": "https://english.ncsc.nl/contact/reporting-a-vulnerability-cvd"
+          "language": "",
+          "url": "https://curl.se/dev/vuln-disclosure.html"
         }
       ]
     },
@@ -96,61 +230,18 @@
       ]
     },
     {
-      "shortName": "Go",
-      "organizationName": "Go Project",
+      "shortName": "TXOne",
+      "organizationName": "TXOne Networks, Inc.",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor",
-        "Open Source"
+        "Researcher"
       ],
       "rank": 290,
       "active_cna_count": 323,
       "percentile": 10.5,
-      "total_cves": 70,
-      "recent_cves": 70,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities in software published by the Go Project (including the Go standard library, Go toolchain, and the golang.org modules) and publicly disclosed vulnerabilities in publicly importable packages in the Go ecosystem, unless covered by another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://pkg.go.dev/vuln/list"
-        }
-      ],
-      "officialCnaID": "CNA-2022-0008",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://go.dev/security"
-        }
-      ]
-    },
-    {
-      "shortName": "9front",
-      "organizationName": "9front Systems",
-      "cnaType": "Open Source",
-      "cnaTypes": [
-        "Open Source"
-      ],
-      "rank": 290,
-      "active_cna_count": 323,
-      "percentile": 10.5,
-      "total_cves": 2,
-      "recent_cves": 2,
+      "total_cves": 1,
+      "recent_cves": 1,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
@@ -165,20 +256,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All software produced as part of the Plan9front open source operating system, as well as its applications and cyberinfrastructure. Vulnerabilities discovered by or reported to 9front Systems for all Plan 9 software not covered by the scope of another CNA.",
+      "scope": "Vulnerabilities in TXOne Networks products, including end-of-life products, or third-party operational technology (OT) and industrial control systems (ICS) products, unless covered by the scope of another CNA.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "http://bugs.9front.org/"
+          "url": "https://www.txone.com/psirt/advisories/"
         }
       ],
-      "officialCnaID": "CNA-2024-0049",
-      "country": "USA",
+      "officialCnaID": "CNA-2024-0032",
+      "country": "Taiwan",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "http://bugs.9front.org/disclosure"
+          "url": "https://www.txone.com/psirt/disclosure-policy/"
         }
       ]
     },
@@ -270,25 +361,25 @@
       ]
     },
     {
-      "shortName": "Huntress",
-      "organizationName": "Huntress Labs Inc.",
+      "shortName": "Go",
+      "organizationName": "Go Project",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor",
-        "Researcher"
+        "Open Source"
       ],
       "rank": 290,
       "active_cna_count": 323,
       "percentile": 10.5,
-      "total_cves": 1,
-      "recent_cves": 1,
+      "total_cves": 70,
+      "recent_cves": 70,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
+        "root_cause_analysis": 100.0,
         "software_identification": 0.0,
-        "severity_and_impact": 100.0,
+        "severity_and_impact": 0.0,
         "patchinfo": 0.0
       },
       "trend": {
@@ -296,106 +387,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All Huntress products, as well as vulnerabilities in third-party software discovered by Huntress that are not in another CNA’s scope.",
+      "scope": "Vulnerabilities in software published by the Go Project (including the Go standard library, Go toolchain, and the golang.org modules) and publicly disclosed vulnerabilities in publicly importable packages in the Go ecosystem, unless covered by another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://support.huntress.io/hc/en-us/categories/10962594482579-Vulnerability-Disclosures"
+          "url": "https://pkg.go.dev/vuln/list"
         }
       ],
-      "officialCnaID": "CNA-2024-0047",
+      "officialCnaID": "CNA-2022-0008",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://support.huntress.io/hc/en-us/categories/10962594482579-Vulnerability-Disclosures"
-        }
-      ]
-    },
-    {
-      "shortName": "MediaTek",
-      "organizationName": "MediaTek, Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 290,
-      "active_cna_count": 323,
-      "percentile": 10.5,
-      "total_cves": 109,
-      "recent_cves": 109,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "MediaTek product issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://corp.mediatek.com/product-security-bulletin"
-        }
-      ],
-      "officialCnaID": "CNA-2021-0043",
-      "country": "Taiwan",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "English",
-          "url": "https://corp.mediatek.com/vulnerability-disclosure-policy"
-        }
-      ]
-    },
-    {
-      "shortName": "TECNOMobile",
-      "organizationName": "TECNO Mobile Limited",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 290,
-      "active_cna_count": 323,
-      "percentile": 10.5,
-      "total_cves": 4,
-      "recent_cves": 4,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities in TECNO products and services only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://security.tecno.com/SRC/blog"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0020",
-      "country": "China",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://security.tecno.com"
+          "url": "https://go.dev/security"
         }
       ]
     },
@@ -498,15 +503,15 @@
       "rank": 312,
       "active_cna_count": 323,
       "percentile": 3.7,
-      "total_cves": 2010,
-      "recent_cves": 2010,
+      "total_cves": 2012,
+      "recent_cves": 2012,
       "is_active": true,
       "scores": {
         "overall_average_score": 63.43,
         "foundational_completeness": 100.0,
         "root_cause_analysis": 0.0,
         "software_identification": 100.0,
-        "severity_and_impact": 22.89,
+        "severity_and_impact": 22.86,
         "patchinfo": 0.0
       },
       "trend": {
@@ -760,93 +765,6 @@
       ]
     },
     {
-      "shortName": "mozilla",
-      "organizationName": "Mozilla Corporation",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 318,
-      "active_cna_count": 323,
-      "percentile": 1.9,
-      "total_cves": 234,
-      "recent_cves": 234,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Mozilla issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.mozilla.org/en-US/security/advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2012-0002",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
-        }
-      ]
-    },
-    {
-      "shortName": "jenkins",
-      "organizationName": "Jenkins Project",
-      "cnaType": "Open Source",
-      "cnaTypes": [
-        "Open Source"
-      ],
-      "rank": 318,
-      "active_cna_count": 323,
-      "percentile": 1.9,
-      "total_cves": 22,
-      "recent_cves": 22,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Jenkins and Jenkins plugins distributed by the Jenkins Project (listed on <a href='https://plugins.jenkins.io/' target='_blank'>plugins.jenkins.io</a>) only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://jenkins.io/security/advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2018-0015",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://jenkins.io/security/"
-        }
-      ]
-    },
-    {
       "shortName": "Cribl",
       "organizationName": "Cribl, Inc.",
       "cnaType": "Vendor",
@@ -1016,6 +934,93 @@
           "label": "Policy",
           "language": "",
           "url": "https://xenproject.org/about/security-policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "mozilla",
+      "organizationName": "Mozilla Corporation",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 318,
+      "active_cna_count": 323,
+      "percentile": 1.9,
+      "total_cves": 234,
+      "recent_cves": 234,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Mozilla issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.mozilla.org/en-US/security/advisories/"
+        }
+      ],
+      "officialCnaID": "CNA-2012-0002",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
+        }
+      ]
+    },
+    {
+      "shortName": "jenkins",
+      "organizationName": "Jenkins Project",
+      "cnaType": "Open Source",
+      "cnaTypes": [
+        "Open Source"
+      ],
+      "rank": 318,
+      "active_cna_count": 323,
+      "percentile": 1.9,
+      "total_cves": 22,
+      "recent_cves": 22,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Jenkins and Jenkins plugins distributed by the Jenkins Project (listed on <a href='https://plugins.jenkins.io/' target='_blank'>plugins.jenkins.io</a>) only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://jenkins.io/security/advisories/"
+        }
+      ],
+      "officialCnaID": "CNA-2018-0015",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://jenkins.io/security/"
         }
       ]
     }
