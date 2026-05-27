@@ -29,18 +29,46 @@
       "analysis_days": 10
     },
     {
-      "cna_name": "ibm",
-      "total_improvement": 106.15384615384616,
+      "cna_name": "VulDB",
+      "total_improvement": 111.23595505617976,
       "category_improvements": {
         "root_cause_analysis": {
           "first_period": 100.0,
-          "last_period": 92.3076923076923,
-          "improvement": -7.692307692307693
+          "last_period": 99.25093632958801,
+          "improvement": -0.7490636704119851
         },
         "severity_and_impact": {
           "first_period": 100.0,
-          "last_period": 98.46153846153847,
-          "improvement": -1.538461538461533
+          "last_period": 100.0,
+          "improvement": 0.0
+        },
+        "software_identification": {
+          "first_period": 0.0,
+          "last_period": 99.625468164794,
+          "improvement": 99.625468164794
+        },
+        "patch_information": {
+          "first_period": 0.0,
+          "last_period": 12.359550561797752,
+          "improvement": 12.359550561797752
+        }
+      },
+      "total_cves_analyzed": 8591,
+      "analysis_days": 417
+    },
+    {
+      "cna_name": "ibm",
+      "total_improvement": 106.56108597285066,
+      "category_improvements": {
+        "root_cause_analysis": {
+          "first_period": 100.0,
+          "last_period": 92.6470588235294,
+          "improvement": -7.352941176470594
+        },
+        "severity_and_impact": {
+          "first_period": 100.0,
+          "last_period": 98.52941176470587,
+          "improvement": -1.4705882352941302
         },
         "software_identification": {
           "first_period": 69.23076923076923,
@@ -53,36 +81,8 @@
           "improvement": 84.61538461538461
         }
       },
-      "total_cves_analyzed": 532,
+      "total_cves_analyzed": 535,
       "analysis_days": 155
-    },
-    {
-      "cna_name": "VulDB",
-      "total_improvement": 104.52961672473867,
-      "category_improvements": {
-        "root_cause_analysis": {
-          "first_period": 100.0,
-          "last_period": 99.30313588850174,
-          "improvement": -0.6968641114982574
-        },
-        "severity_and_impact": {
-          "first_period": 100.0,
-          "last_period": 100.0,
-          "improvement": 0.0
-        },
-        "software_identification": {
-          "first_period": 0.0,
-          "last_period": 93.37979094076655,
-          "improvement": 93.37979094076655
-        },
-        "patch_information": {
-          "first_period": 0.0,
-          "last_period": 11.846689895470384,
-          "improvement": 11.846689895470384
-        }
-      },
-      "total_cves_analyzed": 8575,
-      "analysis_days": 416
     },
     {
       "cna_name": "hackerone",
@@ -281,7 +281,7 @@
       "analysis_days": 12
     }
   ],
-  "generated_at": "2026-05-26T18:44:30.165421",
+  "generated_at": "2026-05-27T00:22:59.622999",
   "analysis_criteria": {
     "minimum_cves": 5,
     "top_n_count": 10
