@@ -460,25 +460,12 @@
           return;
         }
 
-        // Calculate auto-scaling for Y-axis
+        // Use a consistent 0-100 scale across all category charts so values are directly comparable.
         const dataValues = chartData.data.filter(val => Number.isFinite(val));
         if (dataValues.length === 0) {
           showChartNoData(canvas, spinner);
           return;
         }
-
-        const minValue = Math.min(...dataValues);
-        const maxValue = Math.max(...dataValues);
-        
-        // Add padding around the data range (10% buffer)
-        const range = maxValue - minValue;
-        const buffer = Math.max(range * 0.1, 2); // At least 2% buffer
-        const rawYMin = Math.max(0, minValue - buffer);
-        const rawYMax = maxValue + buffer;
-        
-        // Round yMin down and yMax up to nearest 5
-        const yMin = Math.floor(rawYMin / 5) * 5;
-        const yMax = Math.ceil(rawYMax / 5) * 5;
 
         // Hide spinner and show canvas
         spinner.style.display = 'none';
@@ -543,8 +530,8 @@
                   display: true,
                   text: 'Percentage (%)'
                 },
-                min: yMin,
-                max: yMax,
+                min: 0,
+                max: 100,
                 ticks: {
                   callback: function(value) {
                     return Math.round(value) + '%';
