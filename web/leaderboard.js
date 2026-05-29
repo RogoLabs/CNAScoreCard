@@ -42,6 +42,7 @@ async function loadCNAData() {
     CNA_DATA = data.map(cna => ({
       name: cna.shortName || '',
       shortName: cna.shortName || '',
+      detailFile: cna.detailFile || '',
       organizationName: cna.organizationName || cna.shortName || '',
       score: cna.scores?.overall_average_score || 0,
       foundationalCompleteness: cna.scores?.foundational_completeness || 0,
@@ -129,12 +130,14 @@ function renderLeaderboard(data) {
     };
     
     const formatScore = (score) => score ? score.toFixed(1) : '0.0';
+    const detailFileParam = cna.detailFile ? `&detailFile=${encodeURIComponent(cna.detailFile)}` : '';
+    const detailHref = `cna-detail.html?shortName=${encodeURIComponent(cna.shortName || '')}${detailFileParam}`;
     
     tr.innerHTML = `
       <td>${cna.rank}</td>
       <td>
         <div class="cna-name-cell">
-          <a href="cna-detail.html?shortName=${cna.shortName}" class="cna-name-link">
+          <a href="${detailHref}" class="cna-name-link">
             <strong>${cna.name}</strong>
           </a>
           <div class="cna-details">

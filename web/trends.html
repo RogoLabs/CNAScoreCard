@@ -19,7 +19,7 @@
   <link rel="icon" type="image/png" href="assets/logo.svg">
   <link rel="stylesheet" href="assets/theme.css">
   <link rel="stylesheet" href="shared/shared.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js" async></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
   <style>
     .container {
       max-width: 1200px;
@@ -337,10 +337,18 @@
           loadTrendsData(),
           loadImprovorsData()
         ]);
+
+        const chartJsReady = await waitForChartJs();
+        if (!chartJsReady) {
+          console.error('Chart.js did not load within the expected time window');
+          showChartsError();
+        }
         
-        if (trendsData) {
+        if (trendsData && chartJsReady) {
           updateDataInfo();
           createTrendCharts();
+        } else if (trendsData) {
+          updateDataInfo();
         }
         
         if (improvorsData) {
@@ -351,6 +359,23 @@
         console.error('Error initializing Performance Trends dashboard:', error);
         showErrorMessage();
       }
+    }
+
+    // Wait for Chart.js in case CDN delivery is delayed.
+    async function waitForChartJs(maxWaitMs = 6000) {
+      if (typeof window.Chart !== 'undefined') {
+        return true;
+      }
+
+      const start = Date.now();
+      while (Date.now() - start < maxWaitMs) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        if (typeof window.Chart !== 'undefined') {
+          return true;
+        }
+      }
+
+      return false;
     }
 
     // Load trends data from API
@@ -399,6 +424,11 @@
 
     // Create all trend charts
     function createTrendCharts() {
+      if (typeof window.Chart === 'undefined') {
+        showChartsError();
+        return;
+      }
+
       if (!trendsData || !trendsData.rolling_trends) {
         showChartsError();
         return;
@@ -431,7 +461,12 @@
         }
 
         // Calculate auto-scaling for Y-axis
-        const dataValues = chartData.data.filter(val => val !== null && val !== undefined);
+        const dataValues = chartData.data.filter(val => Number.isFinite(val));
+        if (dataValues.length === 0) {
+          showChartNoData(canvas, spinner);
+          return;
+        }
+
         const minValue = Math.min(...dataValues);
         const maxValue = Math.max(...dataValues);
         
@@ -545,9 +580,10 @@
       
       for (const date of sortedDates) {
         const dayData = trendsData.rolling_trends[date];
-        if (dayData && dayData[categoryKey] !== null && dayData[categoryKey] !== undefined) {
+        const numericValue = Number(dayData?.[categoryKey]);
+        if (Number.isFinite(numericValue)) {
           labels.push(date);
-          data.push(dayData[categoryKey]);
+          data.push(numericValue);
         }
       }
 

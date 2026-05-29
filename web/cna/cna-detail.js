@@ -11,6 +11,57 @@ function getUrlParameter(name) {
   return urlParams.get(name);
 }
 
+let cnaListCache = null;
+
+function sanitizeCnaFilePart(value) {
+  if (!value) return '';
+  return String(value)
+    .split('')
+    .filter(char => /[a-zA-Z0-9_.-]/.test(char))
+    .join('');
+}
+
+function buildCnaDetailFilename(shortName, officialCnaId = '') {
+  const safeShortName = sanitizeCnaFilePart(shortName) || 'unknown_cna';
+  const safeCnaId = sanitizeCnaFilePart(officialCnaId);
+  return safeCnaId ? `${safeShortName}__${safeCnaId}.json` : `${safeShortName}.json`;
+}
+
+function isSafeDetailFileName(fileName) {
+  return /^[a-zA-Z0-9_.-]+\.json$/.test(fileName || '');
+}
+
+async function resolveCnaDetailFilename(shortName, detailFileParam) {
+  if (isSafeDetailFileName(detailFileParam)) {
+    return detailFileParam;
+  }
+
+  try {
+    if (!cnaListCache) {
+      const response = await fetch('../data/cna_list.json', {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        }
+      });
+      if (response.ok) {
+        cnaListCache = await response.json();
+      }
+    }
+
+    if (Array.isArray(cnaListCache)) {
+      const cnaMeta = cnaListCache.find(item => item.shortName === shortName);
+      if (cnaMeta) {
+        return buildCnaDetailFilename(shortName, cnaMeta.cnaID || '');
+      }
+    }
+  } catch (error) {
+    console.warn('Unable to resolve CNA detail filename from CNA list:', error);
+  }
+
+  return buildCnaDetailFilename(shortName);
+}
+
 // Handle back button navigation with smart fallback
 function handleBackNavigation(event) {
   event.preventDefault();
@@ -89,24 +140,34 @@ function getCnaType(type) {
 // Load CNA data from individual JSON file
 async function loadCnaData(shortName) {
   try {
+    const detailFileParam = getUrlParameter('detailFile');
+    const resolvedDetailFile = await resolveCnaDetailFilename(shortName, detailFileParam);
+    const fallbackDetailFile = buildCnaDetailFilename(shortName);
+    const candidateFiles = [...new Set([resolvedDetailFile, fallbackDetailFile].filter(Boolean))];
+
     // Add cache-busting query parameter to prevent browser caching
     const cacheBuster = new Date().getTime();
-    const url = `../data/cna/${shortName}.json?_=${cacheBuster}`;
 
-    const response = await fetch(url, {
-      headers: {
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache'
+    let lastError = null;
+    for (const detailFile of candidateFiles) {
+      const url = `../data/cna/${encodeURIComponent(detailFile)}?_=${cacheBuster}`;
+      const response = await fetch(url, {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        }
+      });
+
+      if (!response.ok) {
+        lastError = new Error(`Failed to load CNA data for ${shortName}: ${response.status}`);
+        continue;
       }
-    });
-    
-    if (!response.ok) {
-      throw new Error(`Failed to load CNA data for ${shortName}: ${response.status}`);
-    }
-    
-    const cnaData = await response.json();
 
-    return convertCnaData(cnaData);
+      const cnaData = await response.json();
+      return convertCnaData(cnaData);
+    }
+
+    throw lastError || new Error(`Failed to load CNA data for ${shortName}`);
   } catch (error) {
     console.error('Error loading CNA data:', error);
     

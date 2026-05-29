@@ -382,12 +382,15 @@ function renderTable() {
         rankClass = 'rank-bronze';
       }
     }
+
+    const detailFileParam = cna.detailFile ? `&detailFile=${encodeURIComponent(cna.detailFile)}` : '';
+    const detailHref = `cna-detail.html?shortName=${encodeURIComponent(cna.shortName || '')}${detailFileParam}`;
     
     row.innerHTML = `
       <td class="col-rank ${rankClass}" data-label="Rank">${rankDisplay}</td>
       <td class="col-name" data-label="CNA">
         <div class="cna-name-cell">
-          <a href="cna-detail.html?shortName=${cna.shortName}" class="cna-name-link">${cna.shortName}</a>
+          <a href="${detailHref}" class="cna-name-link">${cna.shortName}</a>
           <div class="cna-details">
             <div class="org-name">${truncateWithTooltip(cna.organizationName || cna.shortName, 45)}</div>
           </div>

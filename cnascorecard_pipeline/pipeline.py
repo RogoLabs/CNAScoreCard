@@ -56,6 +56,27 @@ class CNAScoreCardPipeline:
         self.analysis_periods: Dict[str, Tuple[str, str]] = {}
         
         self.logger.info("CNA Scorecard Pipeline initialized")
+
+    @staticmethod
+    def _sanitize_cna_filename_part(value: str) -> str:
+        """Create a filesystem-safe filename segment from CNA metadata."""
+        if not value:
+            return ""
+        return ''.join(
+            c for c in str(value)
+            if c.isalnum() or c in ('-', '_', '.')
+        ).rstrip()
+
+    def _build_cna_detail_filename(self, cna_name: str, official_cna_id: str = "") -> str:
+        """Build a stable CNA detail filename that avoids case-only collisions."""
+        safe_short_name = self._sanitize_cna_filename_part(cna_name)
+        if not safe_short_name:
+            safe_short_name = "unknown_cna"
+
+        safe_cna_id = self._sanitize_cna_filename_part(official_cna_id)
+        if safe_cna_id:
+            return f"{safe_short_name}__{safe_cna_id}.json"
+        return f"{safe_short_name}.json"
     
     def run(
         self, 
@@ -445,20 +466,16 @@ class CNAScoreCardPipeline:
         
         for cna_name, cna_data in self.cna_outputs.items():
             try:
-                # Create safe filename
-                safe_filename = ''.join(
-                    c for c in cna_name 
-                    if c.isalnum() or c in ('-', '_', '.')
-                ).rstrip()
-                
-                if not safe_filename:
-                    safe_filename = "unknown_cna"
-                
-                filename = f"{safe_filename}.json"
-                filepath = cna_dir / filename
-                
                 # Get official metadata
                 official_meta = official_cna_metadata.get(cna_name, {})
+
+                # Use CNA ID when available to avoid case-only filename collisions.
+                filename = self._build_cna_detail_filename(
+                    cna_name,
+                    official_meta.get('cnaID', '')
+                )
+                filepath = cna_dir / filename
+                safe_filename = filename.rsplit('.json', 1)[0]
                 
                 # Get CNA info and scoring data
                 cna_info = cna_data['cna_info'][0] if cna_data['cna_info'] else {}
@@ -591,6 +608,10 @@ class CNAScoreCardPipeline:
             
             web_cna = {
                 "shortName": cna_name,
+                "detailFile": self._build_cna_detail_filename(
+                    cna_name,
+                    official_meta.get('cnaID', '')
+                ),
                 "organizationName": official_meta.get('organizationName', cna_name),
                 "cnaType": primary_type,
                 "cnaTypes": types_array,
