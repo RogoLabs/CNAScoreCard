@@ -5,7 +5,7 @@ This module provides functions to load and validate CVE records from the filesys
 with support for date filtering, CNA extraction, and parallel processing.
 """
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Tuple
 from glob import glob
@@ -759,11 +759,11 @@ def save_run_timestamp(state_file: Path, timestamp: Optional[str] = None) -> Non
     import json
     
     if timestamp is None:
-        timestamp = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-    
+        timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+
     state = {
         "last_run_timestamp": timestamp,
-        "updated_at": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+        "updated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
     }
     
     try:
