@@ -5,18 +5,18 @@
   "count": 50,
   "items": [
     {
-      "shortName": "DIVD",
-      "detailFile": "DIVD__CNA-2022-0001.json",
-      "organizationName": "Dutch Institute for Vulnerability Disclosure (DIVD)",
-      "cnaType": "Researcher",
+      "shortName": "Hitachi",
+      "detailFile": "Hitachi__CNA-2022-0014.json",
+      "organizationName": "Hitachi, Ltd.",
+      "cnaType": "Vendor",
       "cnaTypes": [
-        "Researcher"
+        "Vendor"
       ],
       "rank": 97,
       "active_cna_count": 331,
       "percentile": 71.0,
-      "total_cves": 1,
-      "recent_cves": 1,
+      "total_cves": 14,
+      "recent_cves": 14,
       "is_active": true,
       "scores": {
         "overall_average_score": 80.0,
@@ -31,20 +31,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities in software discovered by DIVD, and vulnerabilities reported to DIVD for coordinated disclosure, which are not in another CNA’s scope.",
+      "scope": "Hitachi products excluding Hitachi Energy and Hitachi Vantara products.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://csirt.divd.nl/cves/"
+          "url": "https://www.hitachi.com/hirt/security/security.html"
         }
       ],
-      "officialCnaID": "CNA-2022-0001",
-      "country": "Netherlands",
+      "officialCnaID": "CNA-2022-0014",
+      "country": "Japan",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.divd.nl/code/"
+          "url": "https://www.hitachi.com/hirt/publications/hirt-pub10008"
         }
       ]
     },
@@ -696,6 +696,50 @@
       ]
     },
     {
+      "shortName": "Eaton",
+      "detailFile": "Eaton__CNA-2019-0014.json",
+      "organizationName": "Eaton",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 266,
+      "active_cna_count": 331,
+      "percentile": 19.9,
+      "total_cves": 7,
+      "recent_cves": 7,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 77.86,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 85.71,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Eaton issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.eaton.com/us/en-us/company/news-insights/cybersecurity/security-notifications.html"
+        }
+      ],
+      "officialCnaID": "CNA-2019-0014",
+      "country": "Ireland",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.eaton.com/us/en-us/company/news-insights/cybersecurity/vulnerabilitydisclosure.html"
+        }
+      ]
+    },
+    {
       "shortName": "symantec",
       "detailFile": "symantec__CNA-2012-0003.json",
       "organizationName": "Symantec - A Division of Broadcom",
@@ -737,50 +781,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.broadcom.com/support/security-center/vulnerability-management"
-        }
-      ]
-    },
-    {
-      "shortName": "Eaton",
-      "detailFile": "Eaton__CNA-2019-0014.json",
-      "organizationName": "Eaton",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 266,
-      "active_cna_count": 331,
-      "percentile": 19.9,
-      "total_cves": 7,
-      "recent_cves": 7,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 77.86,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 85.71,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Eaton issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.eaton.com/us/en-us/company/news-insights/cybersecurity/security-notifications.html"
-        }
-      ],
-      "officialCnaID": "CNA-2019-0014",
-      "country": "Ireland",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.eaton.com/us/en-us/company/news-insights/cybersecurity/vulnerabilitydisclosure.html"
         }
       ]
     },
@@ -1283,6 +1283,95 @@
       ]
     },
     {
+      "shortName": "openssl",
+      "detailFile": "openssl__CNA-2016-0019.json",
+      "organizationName": "OpenSSL Software Foundation",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 279,
+      "active_cna_count": 331,
+      "percentile": 16.0,
+      "total_cves": 38,
+      "recent_cves": 38,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 75.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 100.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "OpenSSL software projects only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.openssl.org/news/vulnerabilities.html"
+        }
+      ],
+      "officialCnaID": "CNA-2016-0019",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.openssl.org/policies/secpolicy.html"
+        }
+      ]
+    },
+    {
+      "shortName": "KoreLogic",
+      "detailFile": "KoreLogic__CNA-2024-0040.json",
+      "organizationName": "KoreLogic Security",
+      "cnaType": "Researcher",
+      "cnaTypes": [
+        "Researcher"
+      ],
+      "rank": 279,
+      "active_cna_count": 331,
+      "percentile": 16.0,
+      "total_cves": 1,
+      "recent_cves": 1,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 75.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 100.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities in the KoreLogic website and other KoreLogic controlled assets, as well as vulnerabilities discovered by or reported to KoreLogic, unless covered by the scope of another CNA.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://korelogic.com/advisories.html"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0040",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://korelogic.com/KoreLogic-Public-Vulnerability-Disclosure-Policy"
+        }
+      ]
+    },
+    {
       "shortName": "SK-CERT",
       "detailFile": "SK-CERT__CNA-2022-0034.json",
       "organizationName": "National Cyber Security Centre SK-CERT",
@@ -1372,51 +1461,6 @@
       ]
     },
     {
-      "shortName": "openssl",
-      "detailFile": "openssl__CNA-2016-0019.json",
-      "organizationName": "OpenSSL Software Foundation",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 279,
-      "active_cna_count": 331,
-      "percentile": 16.0,
-      "total_cves": 38,
-      "recent_cves": 38,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 75.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 100.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "OpenSSL software projects only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.openssl.org/news/vulnerabilities.html"
-        }
-      ],
-      "officialCnaID": "CNA-2016-0019",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.openssl.org/policies/secpolicy.html"
-        }
-      ]
-    },
-    {
       "shortName": "OPPO",
       "detailFile": "OPPO__CNA-2019-0006.json",
       "organizationName": "OPPO Mobile Telecommunication Corp., Ltd.",
@@ -1457,50 +1501,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://security.oppo.com/en/responsibleDisclosure"
-        }
-      ]
-    },
-    {
-      "shortName": "KoreLogic",
-      "detailFile": "KoreLogic__CNA-2024-0040.json",
-      "organizationName": "KoreLogic Security",
-      "cnaType": "Researcher",
-      "cnaTypes": [
-        "Researcher"
-      ],
-      "rank": 279,
-      "active_cna_count": 331,
-      "percentile": 16.0,
-      "total_cves": 1,
-      "recent_cves": 1,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 75.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 100.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities in the KoreLogic website and other KoreLogic controlled assets, as well as vulnerabilities discovered by or reported to KoreLogic, unless covered by the scope of another CNA.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://korelogic.com/advisories.html"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0040",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://korelogic.com/KoreLogic-Public-Vulnerability-Disclosure-Policy"
         }
       ]
     },
@@ -1639,6 +1639,50 @@
       ]
     },
     {
+      "shortName": "tibco",
+      "detailFile": "tibco__CNA-2017-0001.json",
+      "organizationName": "TIBCO Software Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 287,
+      "active_cna_count": 331,
+      "percentile": 13.6,
+      "total_cves": 2,
+      "recent_cves": 2,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 72.5,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 50.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "TIBCO issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.tibco.com/services/support/advisories"
+        }
+      ],
+      "officialCnaID": "CNA-2017-0001",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.tibco.com/security/vulnerability-disclosure-policy"
+        }
+      ]
+    },
+    {
       "shortName": "NetScaler",
       "detailFile": "NetScaler__CNA-2025-0061.json",
       "organizationName": "NetScaler",
@@ -1723,50 +1767,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.gevernova.com/gas-power/products/digital-and-controls/cybersecurity/vulnerability-response"
-        }
-      ]
-    },
-    {
-      "shortName": "tibco",
-      "detailFile": "tibco__CNA-2017-0001.json",
-      "organizationName": "TIBCO Software Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 287,
-      "active_cna_count": 331,
-      "percentile": 13.6,
-      "total_cves": 2,
-      "recent_cves": 2,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 72.5,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 50.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "TIBCO issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.tibco.com/services/support/advisories"
-        }
-      ],
-      "officialCnaID": "CNA-2017-0001",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.tibco.com/security/vulnerability-disclosure-policy"
         }
       ]
     },
@@ -1916,16 +1916,16 @@
       "rank": 293,
       "active_cna_count": 331,
       "percentile": 11.8,
-      "total_cves": 128,
-      "recent_cves": 128,
+      "total_cves": 130,
+      "recent_cves": 130,
       "is_active": true,
       "scores": {
-        "overall_average_score": 70.39,
+        "overall_average_score": 70.46,
         "foundational_completeness": 100.0,
         "root_cause_analysis": 100.0,
         "software_identification": 0.0,
         "severity_and_impact": 0.0,
-        "patchinfo": 53.91
+        "patchinfo": 54.62
       },
       "trend": {
         "direction": "steady",
