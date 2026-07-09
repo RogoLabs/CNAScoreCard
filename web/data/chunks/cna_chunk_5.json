@@ -5,12 +5,12 @@
   "count": 50,
   "items": [
     {
-      "shortName": "krcert",
-      "detailFile": "krcert__CNA-2016-0021.json",
-      "organizationName": "KrCERT/CC",
-      "cnaType": "CERT",
+      "shortName": "upKeeper",
+      "detailFile": "upKeeper__CNA-2024-0043.json",
+      "organizationName": "upKeeper Solutions",
+      "cnaType": "Vendor",
       "cnaTypes": [
-        "CERT"
+        "Vendor"
       ],
       "rank": 95,
       "active_cna_count": 331,
@@ -31,20 +31,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerability assignment related to its vulnerability coordination role.",
+      "scope": "All upKeeper Solutions products, excluding end-of-life (EOL) as listed in the upKeeper Solutions End of Life Policy.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.krcert.or.kr/kr/bbs/list.do?menuNo=205023&bbsId=B0000302"
+          "url": "https://support.upkeeper.se/hc/en-us/articles/14170844051868-Security-Advisories"
         }
       ],
-      "officialCnaID": "CNA-2016-0021",
-      "country": "South Korea",
+      "officialCnaID": "CNA-2024-0043",
+      "country": "Sweden",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://knvd.krcert.or.kr/processingProcedures.do"
+          "url": "https://support.upkeeper.se/hc/en-us/articles/14123589368092-Coordinated-Vulnerability-Disclosure"
         }
       ]
     },
@@ -789,6 +789,50 @@
       ]
     },
     {
+      "shortName": "HCL",
+      "detailFile": "HCL__CNA-2019-0010.json",
+      "organizationName": "HCL Software",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 268,
+      "active_cna_count": 331,
+      "percentile": 19.3,
+      "total_cves": 115,
+      "recent_cves": 115,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 77.78,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 85.22,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All HCL products only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://support.hcl-software.com/community?id=community_forum&amp;sys_id=038a2b921b7bb34c77761fc58d4bcb0d"
+        }
+      ],
+      "officialCnaID": "CNA-2019-0010",
+      "country": "India",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.hcl-software.com/resources/psirt"
+        }
+      ]
+    },
+    {
       "shortName": "vmware",
       "detailFile": "vmware__CNA-2016-0025.json",
       "organizationName": "VMware by Broadcom",
@@ -797,9 +841,9 @@
         "Vendor",
         "Open Source"
       ],
-      "rank": 268,
+      "rank": 269,
       "active_cna_count": 331,
-      "percentile": 19.3,
+      "percentile": 19.0,
       "total_cves": 159,
       "recent_cves": 159,
       "is_active": true,
@@ -830,50 +874,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.broadcom.com/support/vmware-services/security-response"
-        }
-      ]
-    },
-    {
-      "shortName": "HCL",
-      "detailFile": "HCL__CNA-2019-0010.json",
-      "organizationName": "HCL Software",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 269,
-      "active_cna_count": 331,
-      "percentile": 19.0,
-      "total_cves": 112,
-      "recent_cves": 112,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 77.72,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 84.82,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All HCL products only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://support.hcl-software.com/community?id=community_forum&amp;sys_id=038a2b921b7bb34c77761fc58d4bcb0d"
-        }
-      ],
-      "officialCnaID": "CNA-2019-0010",
-      "country": "India",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.hcl-software.com/resources/psirt"
         }
       ]
     },
@@ -937,15 +937,15 @@
       "rank": 271,
       "active_cna_count": 331,
       "percentile": 18.4,
-      "total_cves": 60,
-      "recent_cves": 60,
+      "total_cves": 62,
+      "recent_cves": 62,
       "is_active": true,
       "scores": {
-        "overall_average_score": 76.75,
+        "overall_average_score": 76.85,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 96.67,
+        "root_cause_analysis": 96.77,
         "software_identification": 0.0,
-        "severity_and_impact": 81.67,
+        "severity_and_impact": 82.26,
         "patchinfo": 0.0
       },
       "trend": {
@@ -1194,51 +1194,6 @@
       ]
     },
     {
-      "shortName": "openssl",
-      "detailFile": "openssl__CNA-2016-0019.json",
-      "organizationName": "OpenSSL Software Foundation",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 277,
-      "active_cna_count": 331,
-      "percentile": 16.6,
-      "total_cves": 38,
-      "recent_cves": 38,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 75.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 100.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "OpenSSL software projects only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.openssl.org/news/vulnerabilities.html"
-        }
-      ],
-      "officialCnaID": "CNA-2016-0019",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.openssl.org/policies/secpolicy.html"
-        }
-      ]
-    },
-    {
       "shortName": "OPPO",
       "detailFile": "OPPO__CNA-2019-0006.json",
       "organizationName": "OPPO Mobile Telecommunication Corp., Ltd.",
@@ -1279,50 +1234,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://security.oppo.com/en/responsibleDisclosure"
-        }
-      ]
-    },
-    {
-      "shortName": "Supermicro",
-      "detailFile": "Supermicro__CNA-2024-0058.json",
-      "organizationName": "Super Micro Computer, Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 277,
-      "active_cna_count": 331,
-      "percentile": 16.6,
-      "total_cves": 3,
-      "recent_cves": 3,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 75.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 66.67,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Supermicro branded products, managed system, or software projects.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.supermicro.com/en/support/security_center#!advisories"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0058",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.supermicro.com/en/support/security_center#!report"
         }
       ]
     },
@@ -1368,6 +1279,95 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.sk-cert.sk/wp-content/uploads/2019/10/Vulnerability_reporting.pdf"
+        }
+      ]
+    },
+    {
+      "shortName": "openssl",
+      "detailFile": "openssl__CNA-2016-0019.json",
+      "organizationName": "OpenSSL Software Foundation",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 277,
+      "active_cna_count": 331,
+      "percentile": 16.6,
+      "total_cves": 38,
+      "recent_cves": 38,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 75.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 100.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "OpenSSL software projects only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.openssl.org/news/vulnerabilities.html"
+        }
+      ],
+      "officialCnaID": "CNA-2016-0019",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.openssl.org/policies/secpolicy.html"
+        }
+      ]
+    },
+    {
+      "shortName": "Supermicro",
+      "detailFile": "Supermicro__CNA-2024-0058.json",
+      "organizationName": "Super Micro Computer, Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 277,
+      "active_cna_count": 331,
+      "percentile": 16.6,
+      "total_cves": 3,
+      "recent_cves": 3,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 75.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 66.67,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Supermicro branded products, managed system, or software projects.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.supermicro.com/en/support/security_center#!advisories"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0058",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.supermicro.com/en/support/security_center#!report"
         }
       ]
     },
@@ -1550,6 +1550,94 @@
       ]
     },
     {
+      "shortName": "NetScaler",
+      "detailFile": "NetScaler__CNA-2025-0061.json",
+      "organizationName": "NetScaler",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 284,
+      "active_cna_count": 331,
+      "percentile": 14.5,
+      "total_cves": 8,
+      "recent_cves": 8,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 72.5,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 50.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "NetScaler issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://support.citrix.com/support-home/topic-article-list?trendingCategory=20&trendingTopicName=Security%20Bulletin"
+        }
+      ],
+      "officialCnaID": "CNA-2025-0061",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.cloud.com/trust-center/product-security/vulnerability-response"
+        }
+      ]
+    },
+    {
+      "shortName": "GE_Vernova",
+      "detailFile": "GE_Vernova__CNA-2022-0009.json",
+      "organizationName": "GE Vernova",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 284,
+      "active_cna_count": 331,
+      "percentile": 14.5,
+      "total_cves": 2,
+      "recent_cves": 2,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 72.5,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 50.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All GE Vernova products.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.gevernova.com/gas-power/products/digital-and-controls/cybersecurity/security-advisories"
+        }
+      ],
+      "officialCnaID": "CNA-2022-0009",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.gevernova.com/gas-power/products/digital-and-controls/cybersecurity/vulnerability-response"
+        }
+      ]
+    },
+    {
       "shortName": "DSF",
       "detailFile": "DSF__CNA-2025-0057.json",
       "organizationName": "Django Software Foundation",
@@ -1595,50 +1683,6 @@
       ]
     },
     {
-      "shortName": "NetScaler",
-      "detailFile": "NetScaler__CNA-2025-0061.json",
-      "organizationName": "NetScaler",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 284,
-      "active_cna_count": 331,
-      "percentile": 14.5,
-      "total_cves": 8,
-      "recent_cves": 8,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 72.5,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 50.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "NetScaler issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://support.citrix.com/support-home/topic-article-list?trendingCategory=20&trendingTopicName=Security%20Bulletin"
-        }
-      ],
-      "officialCnaID": "CNA-2025-0061",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.cloud.com/trust-center/product-security/vulnerability-response"
-        }
-      ]
-    },
-    {
       "shortName": "OAI",
       "detailFile": "OAI__CNA-2026-0026.json",
       "organizationName": "OpenAI",
@@ -1679,50 +1723,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://openai.com/policies/openai-cve-assignment-policy/"
-        }
-      ]
-    },
-    {
-      "shortName": "GE_Vernova",
-      "detailFile": "GE_Vernova__CNA-2022-0009.json",
-      "organizationName": "GE Vernova",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 284,
-      "active_cna_count": 331,
-      "percentile": 14.5,
-      "total_cves": 2,
-      "recent_cves": 2,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 72.5,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 50.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All GE Vernova products.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.gevernova.com/gas-power/products/digital-and-controls/cybersecurity/security-advisories"
-        }
-      ],
-      "officialCnaID": "CNA-2022-0009",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.gevernova.com/gas-power/products/digital-and-controls/cybersecurity/vulnerability-response"
         }
       ]
     },
@@ -2186,15 +2186,15 @@
       "rank": 299,
       "active_cna_count": 331,
       "percentile": 10.0,
-      "total_cves": 102,
-      "recent_cves": 102,
+      "total_cves": 104,
+      "recent_cves": 104,
       "is_active": true,
       "scores": {
-        "overall_average_score": 65.15,
+        "overall_average_score": 65.14,
         "foundational_completeness": 100.0,
         "root_cause_analysis": 100.0,
         "software_identification": 0.0,
-        "severity_and_impact": 0.98,
+        "severity_and_impact": 0.96,
         "patchinfo": 0.0
       },
       "trend": {
@@ -2220,9 +2220,9 @@
       ]
     },
     {
-      "shortName": "netapp",
-      "detailFile": "netapp__CNA-2017-0035.json",
-      "organizationName": "NetApp, Inc.",
+      "shortName": "Absolute",
+      "detailFile": "Absolute__CNA-2021-0033.json",
+      "organizationName": "Absolute Software",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor"
@@ -2230,8 +2230,8 @@
       "rank": 300,
       "active_cna_count": 331,
       "percentile": 9.7,
-      "total_cves": 6,
-      "recent_cves": 6,
+      "total_cves": 13,
+      "recent_cves": 13,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
@@ -2246,20 +2246,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All NetApp products as well as projects hosted on <a href='https://github.com/netapp' target='_blank'>https://github.com/netapp</a>.",
+      "scope": "Absolute issues only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://security.netapp.com/advisory/"
+          "url": "https://www.absolute.com/platform/security-information/vulnerability-archive/"
         }
       ],
-      "officialCnaID": "CNA-2017-0035",
+      "officialCnaID": "CNA-2021-0033",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://security.netapp.com/policy/"
+          "url": "https://www.absolute.com/platform/security-information/vulnerability-reporting-management"
         }
       ]
     }
