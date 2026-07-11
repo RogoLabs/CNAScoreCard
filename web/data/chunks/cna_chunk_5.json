@@ -5,14 +5,12 @@
   "count": 50,
   "items": [
     {
-      "shortName": "PingIdentity",
-      "detailFile": "PingIdentity__CNA-2021-0042.json",
-      "organizationName": "Ping Identity Corporation",
-      "cnaType": "Hosted Service",
+      "shortName": "Toreon",
+      "detailFile": "Toreon__CNA-2025-0031.json",
+      "organizationName": "Toreon",
+      "cnaType": "Researcher",
       "cnaTypes": [
-        "Hosted Service",
-        "Researcher",
-        "Bug Bounty Provider"
+        "Researcher"
       ],
       "rank": 95,
       "active_cna_count": 331,
@@ -33,25 +31,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All Ping Identity and ForgeRock products (supported products and end-of-life/end-of-service products), as well as vulnerabilities in third-party software discovered by Ping Identity or ForgeRock that are not in another CNA’s scope.",
+      "scope": "Vulnerabilities discovered by or reported to Toreon that are not in another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://docs.pingidentity.com/pingam/latest/release-notes/security-advisories.html"
+          "url": "https://www.toreon.com/news/"
         }
       ],
-      "officialCnaID": "CNA-2021-0042",
-      "country": "USA",
+      "officialCnaID": "CNA-2025-0031",
+      "country": "Belgium",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.pingidentity.com/en/company/security-at-ping-identity.html"
-        },
-        {
-          "label": "Ping Identity PGP Keys",
-          "language": "",
-          "url": "https://www.pingidentity.com/.well-known/security.txt"
+          "url": "https://www.toreon.com/cna-disclosure-policy/"
         }
       ]
     },
@@ -70,8 +63,8 @@
       "rank": 252,
       "active_cna_count": 331,
       "percentile": 24.2,
-      "total_cves": 2627,
-      "recent_cves": 2627,
+      "total_cves": 2628,
+      "recent_cves": 2628,
       "is_active": true,
       "scores": {
         "overall_average_score": 79.99,
@@ -118,16 +111,16 @@
       "rank": 253,
       "active_cna_count": 331,
       "percentile": 23.9,
-      "total_cves": 253,
-      "recent_cves": 253,
+      "total_cves": 257,
+      "recent_cves": 257,
       "is_active": true,
       "scores": {
         "overall_average_score": 79.98,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 99.6,
+        "root_cause_analysis": 99.61,
         "software_identification": 0.0,
         "severity_and_impact": 100.0,
-        "patchinfo": 0.4
+        "patchinfo": 0.39
       },
       "trend": {
         "direction": "steady",
@@ -663,50 +656,6 @@
       ]
     },
     {
-      "shortName": "ZTE",
-      "detailFile": "ZTE__CNA-2017-0019.json",
-      "organizationName": "ZTE Corporation",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 265,
-      "active_cna_count": 331,
-      "percentile": 20.2,
-      "total_cves": 14,
-      "recent_cves": 14,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 77.86,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 85.71,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "<a href='https://www.zte.com.cn/global/products' target='_blank'>ZTE products</a> only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "http://support.zte.com.cn/support/news/NewsMain.aspx"
-        }
-      ],
-      "officialCnaID": "CNA-2017-0019",
-      "country": "China",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.zte.com.cn/global/cybersecurity/ztepsirt/bug-bounty/products.html"
-        }
-      ]
-    },
-    {
       "shortName": "Eaton",
       "detailFile": "Eaton__CNA-2019-0014.json",
       "organizationName": "Eaton",
@@ -747,6 +696,50 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.eaton.com/us/en-us/company/news-insights/cybersecurity/vulnerabilitydisclosure.html"
+        }
+      ]
+    },
+    {
+      "shortName": "ZTE",
+      "detailFile": "ZTE__CNA-2017-0019.json",
+      "organizationName": "ZTE Corporation",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 265,
+      "active_cna_count": 331,
+      "percentile": 20.2,
+      "total_cves": 14,
+      "recent_cves": 14,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 77.86,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 85.71,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "<a href='https://www.zte.com.cn/global/products' target='_blank'>ZTE products</a> only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "http://support.zte.com.cn/support/news/NewsMain.aspx"
+        }
+      ],
+      "officialCnaID": "CNA-2017-0019",
+      "country": "China",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.zte.com.cn/global/cybersecurity/ztepsirt/bug-bounty/products.html"
         }
       ]
     },
@@ -1201,6 +1194,51 @@
       ]
     },
     {
+      "shortName": "SK-CERT",
+      "detailFile": "SK-CERT__CNA-2022-0034.json",
+      "organizationName": "National Cyber Security Centre SK-CERT",
+      "cnaType": "CERT",
+      "cnaTypes": [
+        "CERT"
+      ],
+      "rank": 277,
+      "active_cna_count": 331,
+      "percentile": 16.6,
+      "total_cves": 3,
+      "recent_cves": 3,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 75.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 66.67,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities in software discovered by National Cyber Security Centre SK-CERT, and vulnerabilities reported to National Cyber Security Centre SK-CERT for coordinated disclosure, which are not in another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "language": "",
+          "url": "https://www.sk-cert.sk/threat/"
+        }
+      ],
+      "officialCnaID": "CNA-2022-0034",
+      "country": "Slovak Republic",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.sk-cert.sk/wp-content/uploads/2019/10/Vulnerability_reporting.pdf"
+        }
+      ]
+    },
+    {
       "shortName": "Supermicro",
       "detailFile": "Supermicro__CNA-2024-0058.json",
       "organizationName": "Super Micro Computer, Inc.",
@@ -1241,50 +1279,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.supermicro.com/en/support/security_center#!report"
-        }
-      ]
-    },
-    {
-      "shortName": "OPPO",
-      "detailFile": "OPPO__CNA-2019-0006.json",
-      "organizationName": "OPPO Mobile Telecommunication Corp., Ltd.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 277,
-      "active_cna_count": 331,
-      "percentile": 16.6,
-      "total_cves": 3,
-      "recent_cves": 3,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 75.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 66.67,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "OPPO devices only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://security.oppo.com/en/notice"
-        }
-      ],
-      "officialCnaID": "CNA-2019-0006",
-      "country": "China",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://security.oppo.com/en/responsibleDisclosure"
         }
       ]
     },
@@ -1334,12 +1328,12 @@
       ]
     },
     {
-      "shortName": "SK-CERT",
-      "detailFile": "SK-CERT__CNA-2022-0034.json",
-      "organizationName": "National Cyber Security Centre SK-CERT",
-      "cnaType": "CERT",
+      "shortName": "OPPO",
+      "detailFile": "OPPO__CNA-2019-0006.json",
+      "organizationName": "OPPO Mobile Telecommunication Corp., Ltd.",
+      "cnaType": "Vendor",
       "cnaTypes": [
-        "CERT"
+        "Vendor"
       ],
       "rank": 277,
       "active_cna_count": 331,
@@ -1360,21 +1354,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities in software discovered by National Cyber Security Centre SK-CERT, and vulnerabilities reported to National Cyber Security Centre SK-CERT for coordinated disclosure, which are not in another CNA’s scope.",
+      "scope": "OPPO devices only.",
       "advisories": [
         {
           "label": "Advisories",
-          "language": "",
-          "url": "https://www.sk-cert.sk/threat/"
+          "url": "https://security.oppo.com/en/notice"
         }
       ],
-      "officialCnaID": "CNA-2022-0034",
-      "country": "Slovak Republic",
+      "officialCnaID": "CNA-2019-0006",
+      "country": "China",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.sk-cert.sk/wp-content/uploads/2019/10/Vulnerability_reporting.pdf"
+          "url": "https://security.oppo.com/en/responsibleDisclosure"
         }
       ]
     },
@@ -1513,51 +1506,6 @@
       ]
     },
     {
-      "shortName": "DSF",
-      "detailFile": "DSF__CNA-2025-0057.json",
-      "organizationName": "Django Software Foundation",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 284,
-      "active_cna_count": 331,
-      "percentile": 14.5,
-      "total_cves": 26,
-      "recent_cves": 26,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 72.5,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 50.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Only supported and end-of-life Django versions available at <a href='https://www.djangoproject.com/download/' target='_blank'>https://www.djangoproject.com/download/</a> and projects listed at <a href='https://github.com/django' target='_blank'>https://github.com/django</a> (such as Django, channels, and daphne), excluding distributions maintained by third-party redistributors.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://docs.djangoproject.com/en/stable/releases/security/"
-        }
-      ],
-      "officialCnaID": "CNA-2025-0057",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.djangoproject.com/foundation/cve-numbering-authority/"
-        }
-      ]
-    },
-    {
       "shortName": "tibco",
       "detailFile": "tibco__CNA-2017-0001.json",
       "organizationName": "TIBCO Software Inc.",
@@ -1602,25 +1550,26 @@
       ]
     },
     {
-      "shortName": "NetScaler",
-      "detailFile": "NetScaler__CNA-2025-0061.json",
-      "organizationName": "NetScaler",
+      "shortName": "DSF",
+      "detailFile": "DSF__CNA-2025-0057.json",
+      "organizationName": "Django Software Foundation",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor"
+        "Vendor",
+        "Open Source"
       ],
       "rank": 284,
       "active_cna_count": 331,
       "percentile": 14.5,
-      "total_cves": 8,
-      "recent_cves": 8,
+      "total_cves": 26,
+      "recent_cves": 26,
       "is_active": true,
       "scores": {
         "overall_average_score": 72.5,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 50.0,
+        "root_cause_analysis": 100.0,
         "software_identification": 0.0,
-        "severity_and_impact": 100.0,
+        "severity_and_impact": 50.0,
         "patchinfo": 0.0
       },
       "trend": {
@@ -1628,20 +1577,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "NetScaler issues only.",
+      "scope": "Only supported and end-of-life Django versions available at <a href='https://www.djangoproject.com/download/' target='_blank'>https://www.djangoproject.com/download/</a> and projects listed at <a href='https://github.com/django' target='_blank'>https://github.com/django</a> (such as Django, channels, and daphne), excluding distributions maintained by third-party redistributors.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://support.citrix.com/support-home/topic-article-list?trendingCategory=20&trendingTopicName=Security%20Bulletin"
+          "url": "https://docs.djangoproject.com/en/stable/releases/security/"
         }
       ],
-      "officialCnaID": "CNA-2025-0061",
+      "officialCnaID": "CNA-2025-0057",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.cloud.com/trust-center/product-security/vulnerability-response"
+          "url": "https://www.djangoproject.com/foundation/cve-numbering-authority/"
         }
       ]
     },
@@ -1730,6 +1679,50 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.gevernova.com/gas-power/products/digital-and-controls/cybersecurity/vulnerability-response"
+        }
+      ]
+    },
+    {
+      "shortName": "NetScaler",
+      "detailFile": "NetScaler__CNA-2025-0061.json",
+      "organizationName": "NetScaler",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 284,
+      "active_cna_count": 331,
+      "percentile": 14.5,
+      "total_cves": 8,
+      "recent_cves": 8,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 72.5,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 50.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "NetScaler issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://support.citrix.com/support-home/topic-article-list?trendingCategory=20&trendingTopicName=Security%20Bulletin"
+        }
+      ],
+      "officialCnaID": "CNA-2025-0061",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.cloud.com/trust-center/product-security/vulnerability-response"
         }
       ]
     },
@@ -1924,16 +1917,16 @@
       "rank": 293,
       "active_cna_count": 331,
       "percentile": 11.8,
-      "total_cves": 413,
-      "recent_cves": 413,
+      "total_cves": 410,
+      "recent_cves": 410,
       "is_active": true,
       "scores": {
-        "overall_average_score": 69.27,
+        "overall_average_score": 69.29,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 97.58,
-        "software_identification": 1.94,
-        "severity_and_impact": 16.71,
-        "patchinfo": 19.37
+        "root_cause_analysis": 97.56,
+        "software_identification": 2.2,
+        "severity_and_impact": 17.07,
+        "patchinfo": 18.78
       },
       "trend": {
         "direction": "steady",
@@ -2094,51 +2087,6 @@
       ]
     },
     {
-      "shortName": "drupal",
-      "detailFile": "drupal__CNA-2017-0002.json",
-      "organizationName": "Drupal.org",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 297,
-      "active_cna_count": 331,
-      "percentile": 10.6,
-      "total_cves": 60,
-      "recent_cves": 60,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 67.25,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 98.33,
-        "software_identification": 0.0,
-        "severity_and_impact": 16.67,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All projects hosted under <a href='https://www.drupal.org' target='_blank'>drupal.org</a>, including End of Life (EOL) code.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.drupal.org/security"
-        }
-      ],
-      "officialCnaID": "CNA-2017-0002",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.drupal.org/drupal-security-team/security-advisory-process-and-permissions-policy"
-        }
-      ]
-    },
-    {
       "shortName": "XEN",
       "detailFile": "XEN__CNA-2021-0009.json",
       "organizationName": "Xen Project",
@@ -2147,9 +2095,9 @@
         "Vendor",
         "Open Source"
       ],
-      "rank": 298,
+      "rank": 297,
       "active_cna_count": 331,
-      "percentile": 10.3,
+      "percentile": 10.6,
       "total_cves": 21,
       "recent_cves": 21,
       "is_active": true,
@@ -2180,6 +2128,51 @@
           "label": "Policy",
           "language": "",
           "url": "https://xenproject.org/about/security-policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "drupal",
+      "detailFile": "drupal__CNA-2017-0002.json",
+      "organizationName": "Drupal.org",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 298,
+      "active_cna_count": 331,
+      "percentile": 10.3,
+      "total_cves": 106,
+      "recent_cves": 106,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.42,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 93.4,
+        "software_identification": 0.0,
+        "severity_and_impact": 9.43,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All projects hosted under <a href='https://www.drupal.org' target='_blank'>drupal.org</a>, including End of Life (EOL) code.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.drupal.org/security"
+        }
+      ],
+      "officialCnaID": "CNA-2017-0002",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.drupal.org/drupal-security-team/security-advisory-process-and-permissions-policy"
         }
       ]
     },
@@ -2228,26 +2221,25 @@
       ]
     },
     {
-      "shortName": "imaginationtech",
-      "detailFile": "imaginationtech__CNA-2024-0051.json",
-      "organizationName": "Imagination Technologies",
+      "shortName": "hikvision",
+      "detailFile": "hikvision__CNA-2018-0002.json",
+      "organizationName": "Hangzhou Hikvision Digital Technology Co., Ltd.",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor",
-        "Open Source"
+        "Vendor"
       ],
       "rank": 300,
       "active_cna_count": 331,
       "percentile": 9.7,
-      "total_cves": 23,
-      "recent_cves": 23,
+      "total_cves": 11,
+      "recent_cves": 11,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
+        "root_cause_analysis": 0.0,
         "software_identification": 0.0,
-        "severity_and_impact": 0.0,
+        "severity_and_impact": 100.0,
         "patchinfo": 0.0
       },
       "trend": {
@@ -2255,20 +2247,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Imagination Technologies branded products and technologies and Imagination Technologies (IMG) managed open source projects.",
+      "scope": "All <a href='http://www.hikvision.com/en/' target='_blank'>Hikvision Internet of Things (IoT) products</a> including cameras and digital video recorders (DVRs).",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.imaginationtech.com/gpu-driver-vulnerabilities/"
+          "url": "https://us.hikvision.com/en/support-resources/cybersecurity-center/security-notices"
         }
       ],
-      "officialCnaID": "CNA-2024-0051",
-      "country": "UK",
+      "officialCnaID": "CNA-2018-0002",
+      "country": "China",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.imaginationtech.com/product-security-policy/"
+          "url": "https://www.hikvision.com/en/policies/vulnerability-disclosure-policy/"
         }
       ]
     }
