@@ -837,51 +837,6 @@
       ]
     },
     {
-      "shortName": "Go",
-      "detailFile": "Go__CNA-2022-0008.json",
-      "organizationName": "Go Project",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 269,
-      "active_cna_count": 332,
-      "percentile": 19.3,
-      "total_cves": 158,
-      "recent_cves": 158,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 76.46,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 96.84,
-        "software_identification": 0.0,
-        "severity_and_impact": 51.27,
-        "patchinfo": 42.41
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities in software published by the Go Project (including the Go standard library, Go toolchain, and the golang.org modules) and publicly disclosed vulnerabilities in publicly importable packages in the Go ecosystem, unless covered by another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://pkg.go.dev/vuln/list"
-        }
-      ],
-      "officialCnaID": "CNA-2022-0008",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://go.dev/security"
-        }
-      ]
-    },
-    {
       "shortName": "Joomla",
       "detailFile": "Joomla__CNA-2020-0036.json",
       "organizationName": "Joomla! Project",
@@ -923,6 +878,51 @@
           "label": "Policy",
           "language": "",
           "url": "https://developer.joomla.org/security.html"
+        }
+      ]
+    },
+    {
+      "shortName": "Go",
+      "detailFile": "Go__CNA-2022-0008.json",
+      "organizationName": "Go Project",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 269,
+      "active_cna_count": 332,
+      "percentile": 19.3,
+      "total_cves": 158,
+      "recent_cves": 158,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 76.46,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 96.84,
+        "software_identification": 0.0,
+        "severity_and_impact": 51.27,
+        "patchinfo": 42.41
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities in software published by the Go Project (including the Go standard library, Go toolchain, and the golang.org modules) and publicly disclosed vulnerabilities in publicly importable packages in the Go ecosystem, unless covered by another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://pkg.go.dev/vuln/list"
+        }
+      ],
+      "officialCnaID": "CNA-2022-0008",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://go.dev/security"
         }
       ]
     },
@@ -1105,19 +1105,18 @@
       ]
     },
     {
-      "shortName": "symantec",
-      "detailFile": "symantec__CNA-2012-0003.json",
-      "organizationName": "Symantec - A Division of Broadcom",
-      "cnaType": "Vendor",
+      "shortName": "SK-CERT",
+      "detailFile": "SK-CERT__CNA-2022-0034.json",
+      "organizationName": "National Cyber Security Centre SK-CERT",
+      "cnaType": "CERT",
       "cnaTypes": [
-        "Vendor",
-        "Researcher"
+        "CERT"
       ],
       "rank": 275,
       "active_cna_count": 332,
       "percentile": 17.5,
-      "total_cves": 9,
-      "recent_cves": 9,
+      "total_cves": 3,
+      "recent_cves": 3,
       "is_active": true,
       "scores": {
         "overall_average_score": 75.0,
@@ -1132,20 +1131,21 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Symantec Enterprise products as well as vulnerabilities in third-party software discovered by Symantec that are not in another CNA’s scope.",
+      "scope": "Vulnerabilities in software discovered by National Cyber Security Centre SK-CERT, and vulnerabilities reported to National Cyber Security Centre SK-CERT for coordinated disclosure, which are not in another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://support.broadcom.com/security-advisory/security-advisories-list.html"
+          "language": "",
+          "url": "https://www.sk-cert.sk/threat/"
         }
       ],
-      "officialCnaID": "CNA-2012-0003",
-      "country": "USA",
+      "officialCnaID": "CNA-2022-0034",
+      "country": "Slovak Republic",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.broadcom.com/support/security-center/vulnerability-management"
+          "url": "https://www.sk-cert.sk/wp-content/uploads/2019/10/Vulnerability_reporting.pdf"
         }
       ]
     },
@@ -1195,18 +1195,19 @@
       ]
     },
     {
-      "shortName": "SK-CERT",
-      "detailFile": "SK-CERT__CNA-2022-0034.json",
-      "organizationName": "National Cyber Security Centre SK-CERT",
-      "cnaType": "CERT",
+      "shortName": "symantec",
+      "detailFile": "symantec__CNA-2012-0003.json",
+      "organizationName": "Symantec - A Division of Broadcom",
+      "cnaType": "Vendor",
       "cnaTypes": [
-        "CERT"
+        "Vendor",
+        "Researcher"
       ],
       "rank": 275,
       "active_cna_count": 332,
       "percentile": 17.5,
-      "total_cves": 3,
-      "recent_cves": 3,
+      "total_cves": 9,
+      "recent_cves": 9,
       "is_active": true,
       "scores": {
         "overall_average_score": 75.0,
@@ -1221,21 +1222,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities in software discovered by National Cyber Security Centre SK-CERT, and vulnerabilities reported to National Cyber Security Centre SK-CERT for coordinated disclosure, which are not in another CNA’s scope.",
+      "scope": "Symantec Enterprise products as well as vulnerabilities in third-party software discovered by Symantec that are not in another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "language": "",
-          "url": "https://www.sk-cert.sk/threat/"
+          "url": "https://support.broadcom.com/security-advisory/security-advisories-list.html"
         }
       ],
-      "officialCnaID": "CNA-2022-0034",
-      "country": "Slovak Republic",
+      "officialCnaID": "CNA-2012-0003",
+      "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.sk-cert.sk/wp-content/uploads/2019/10/Vulnerability_reporting.pdf"
+          "url": "https://www.broadcom.com/support/security-center/vulnerability-management"
         }
       ]
     },
@@ -1418,50 +1418,6 @@
       ]
     },
     {
-      "shortName": "OAI",
-      "detailFile": "OAI__CNA-2026-0026.json",
-      "organizationName": "OpenAI",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 282,
-      "active_cna_count": 332,
-      "percentile": 15.4,
-      "total_cves": 2,
-      "recent_cves": 2,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 72.5,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 50.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities in OpenAI installed software including desktop apps, mobile apps, and SDKs only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://trust.openai.com/"
-        }
-      ],
-      "officialCnaID": "CNA-2026-0026",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://openai.com/policies/openai-cve-assignment-policy/"
-        }
-      ]
-    },
-    {
       "shortName": "SN",
       "detailFile": "SN__CNA-2023-0012.json",
       "organizationName": "ServiceNow",
@@ -1553,9 +1509,9 @@
       ]
     },
     {
-      "shortName": "tibco",
-      "detailFile": "tibco__CNA-2017-0001.json",
-      "organizationName": "TIBCO Software Inc.",
+      "shortName": "OAI",
+      "detailFile": "OAI__CNA-2026-0026.json",
+      "organizationName": "OpenAI",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor"
@@ -1569,9 +1525,9 @@
       "scores": {
         "overall_average_score": 72.5,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 50.0,
+        "root_cause_analysis": 100.0,
         "software_identification": 0.0,
-        "severity_and_impact": 100.0,
+        "severity_and_impact": 50.0,
         "patchinfo": 0.0
       },
       "trend": {
@@ -1579,20 +1535,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "TIBCO issues only.",
+      "scope": "Vulnerabilities in OpenAI installed software including desktop apps, mobile apps, and SDKs only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.tibco.com/services/support/advisories"
+          "url": "https://trust.openai.com/"
         }
       ],
-      "officialCnaID": "CNA-2017-0001",
+      "officialCnaID": "CNA-2026-0026",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.tibco.com/security/vulnerability-disclosure-policy"
+          "url": "https://openai.com/policies/openai-cve-assignment-policy/"
         }
       ]
     },
@@ -1637,6 +1593,50 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.cloud.com/trust-center/product-security/vulnerability-response"
+        }
+      ]
+    },
+    {
+      "shortName": "tibco",
+      "detailFile": "tibco__CNA-2017-0001.json",
+      "organizationName": "TIBCO Software Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 282,
+      "active_cna_count": 332,
+      "percentile": 15.4,
+      "total_cves": 2,
+      "recent_cves": 2,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 72.5,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 50.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "TIBCO issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.tibco.com/services/support/advisories"
+        }
+      ],
+      "officialCnaID": "CNA-2017-0001",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.tibco.com/security/vulnerability-disclosure-policy"
         }
       ]
     },
@@ -2134,6 +2134,59 @@
       ]
     },
     {
+      "shortName": "WPScan",
+      "detailFile": "WPScan__CNA-2021-0002.json",
+      "organizationName": "WPScan",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 298,
+      "active_cna_count": 332,
+      "percentile": 10.5,
+      "total_cves": 197,
+      "recent_cves": 197,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.15,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 1.02,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "WordPress core, plugins, and themes.",
+      "advisories": [
+        {
+          "label": "Word Press Advisories",
+          "url": "https://wpscan.com/wordpresses"
+        },
+        {
+          "label": "Word Press Plug In Advisories",
+          "url": "https://wpscan.com/plugins"
+        },
+        {
+          "label": "Word Press Theme Advisories",
+          "url": "https://wpscan.com/themes"
+        }
+      ],
+      "officialCnaID": "CNA-2021-0002",
+      "country": "France",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://wpscan.com/vulnerability-disclosure-policy"
+        }
+      ]
+    },
+    {
       "shortName": "certcc",
       "detailFile": "certcc__CNA-2005-0002.json",
       "organizationName": "CERT/CC",
@@ -2141,9 +2194,9 @@
       "cnaTypes": [
         "CERT"
       ],
-      "rank": 298,
+      "rank": 299,
       "active_cna_count": 332,
-      "percentile": 10.5,
+      "percentile": 10.2,
       "total_cves": 104,
       "recent_cves": 104,
       "is_active": true,
@@ -2186,9 +2239,9 @@
         "Vendor",
         "Open Source"
       ],
-      "rank": 298,
+      "rank": 299,
       "active_cna_count": 332,
-      "percentile": 10.5,
+      "percentile": 10.2,
       "total_cves": 104,
       "recent_cves": 104,
       "is_active": true,
@@ -2219,51 +2272,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.drupal.org/drupal-security-team/security-advisory-process-and-permissions-policy"
-        }
-      ]
-    },
-    {
-      "shortName": "Linux",
-      "detailFile": "Linux__CNA-2024-0016.json",
-      "organizationName": "kernel.org",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 300,
-      "active_cna_count": 332,
-      "percentile": 9.9,
-      "total_cves": 2451,
-      "recent_cves": 2451,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.01,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 100.0,
-        "severity_and_impact": 33.37,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Any vulnerabilities in the Linux kernel as listed on kernel.org, excluding end-of-life (EOL) versions.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://lore.kernel.org/linux-cve-announce/"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0016",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.kernel.org/doc/html/latest/process/security-bugs.html"
         }
       ]
     }
