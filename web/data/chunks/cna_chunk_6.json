@@ -5,18 +5,18 @@
   "count": 31,
   "items": [
     {
-      "shortName": "Salesforce",
-      "detailFile": "Salesforce__CNA-2019-0007.json",
-      "organizationName": "Salesforce, Inc.",
-      "cnaType": "Vendor",
+      "shortName": "glibc",
+      "detailFile": "glibc__CNA-2024-0013.json",
+      "organizationName": "GNU C Library",
+      "cnaType": "Open Source",
       "cnaTypes": [
-        "Vendor"
+        "Open Source"
       ],
       "rank": 301,
       "active_cna_count": 331,
       "percentile": 9.4,
-      "total_cves": 5,
-      "recent_cves": 5,
+      "total_cves": 8,
+      "recent_cves": 8,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
@@ -31,27 +31,27 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "<a href='https://trust.salesforce.com/en/trust-and-compliance-documentation/' target='_blank'>Salesforce products</a> only.",
+      "scope": "Security issues and vulnerabilities in the GNU C Library.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://trust.salesforce.com/en/security/security-advisories/"
+          "url": "https://sourceware.org/git/?p=glibc.git;a=tree;f=advisories;hb=HEAD"
         }
       ],
-      "officialCnaID": "CNA-2019-0007",
+      "officialCnaID": "CNA-2024-0013",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://trust.salesforce.com/en/security/responsible-disclosure-policy"
+          "url": "https://sourceware.org/glibc/security.html"
         }
       ]
     },
     {
-      "shortName": "TECNOMobile",
-      "detailFile": "TECNOMobile__CNA-2024-0020.json",
-      "organizationName": "TECNO Mobile Limited",
+      "shortName": "sonicwall",
+      "detailFile": "sonicwall__CNA-2018-0004.json",
+      "organizationName": "SonicWall, Inc.",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor"
@@ -59,8 +59,8 @@
       "rank": 301,
       "active_cna_count": 331,
       "percentile": 9.4,
-      "total_cves": 2,
-      "recent_cves": 2,
+      "total_cves": 17,
+      "recent_cves": 17,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
@@ -75,43 +75,44 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities in TECNO products and services only.",
+      "scope": "SonicWall issues only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://security.tecno.com/SRC/blog"
+          "url": "https://psirt.global.sonicwall.com/vuln-list"
         }
       ],
-      "officialCnaID": "CNA-2024-0020",
-      "country": "China",
+      "officialCnaID": "CNA-2018-0004",
+      "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://security.tecno.com"
+          "url": "https://psirt.global.sonicwall.com/vuln-policy"
         }
       ]
     },
     {
-      "shortName": "hpe",
-      "detailFile": "hpe__CNA-2016-0003.json",
-      "organizationName": "Hewlett Packard Enterprise (HPE)",
+      "shortName": "imaginationtech",
+      "detailFile": "imaginationtech__CNA-2024-0051.json",
+      "organizationName": "Imagination Technologies",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor"
+        "Vendor",
+        "Open Source"
       ],
       "rank": 301,
       "active_cna_count": 331,
       "percentile": 9.4,
-      "total_cves": 58,
-      "recent_cves": 58,
+      "total_cves": 27,
+      "recent_cves": 27,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
+        "root_cause_analysis": 100.0,
         "software_identification": 0.0,
-        "severity_and_impact": 100.0,
+        "severity_and_impact": 0.0,
         "patchinfo": 0.0
       },
       "trend": {
@@ -119,20 +120,65 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "HPE and acquisitions issues only.",
+      "scope": "Imagination Technologies branded products and technologies and Imagination Technologies (IMG) managed open source projects.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://support.hpe.com/portal/site/hpsc/public/kb/secBullArchive/"
+          "url": "https://www.imaginationtech.com/gpu-driver-vulnerabilities/"
         }
       ],
-      "officialCnaID": "CNA-2016-0003",
+      "officialCnaID": "CNA-2024-0051",
+      "country": "UK",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.imaginationtech.com/product-security-policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "freebsd",
+      "detailFile": "freebsd__CNA-2005-0004.json",
+      "organizationName": "FreeBSD",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 301,
+      "active_cna_count": 331,
+      "percentile": 9.4,
+      "total_cves": 34,
+      "recent_cves": 34,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Primarily FreeBSD issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.freebsd.org/"
+        }
+      ],
+      "officialCnaID": "CNA-2005-0004",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=a00100637en_us"
+          "url": "https://www.freebsd.org/security/"
         }
       ]
     },
@@ -181,140 +227,6 @@
       ]
     },
     {
-      "shortName": "Honor",
-      "detailFile": "Honor__CNA-2022-0045.json",
-      "organizationName": "Honor Device Co., Ltd.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 301,
-      "active_cna_count": 331,
-      "percentile": 9.4,
-      "total_cves": 3,
-      "recent_cves": 3,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities in Honor products and services unless covered by the scope of another CNA.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "language": "",
-          "url": "https://www.hihonor.com/global/security/"
-        }
-      ],
-      "officialCnaID": "CNA-2022-0045",
-      "country": "China",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.hihonor.com/global/security/"
-        }
-      ]
-    },
-    {
-      "shortName": "MediaTek",
-      "detailFile": "MediaTek__CNA-2021-0043.json",
-      "organizationName": "MediaTek, Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 301,
-      "active_cna_count": 331,
-      "percentile": 9.4,
-      "total_cves": 63,
-      "recent_cves": 63,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "MediaTek product issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://corp.mediatek.com/product-security-bulletin"
-        }
-      ],
-      "officialCnaID": "CNA-2021-0043",
-      "country": "Taiwan",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "English",
-          "url": "https://corp.mediatek.com/vulnerability-disclosure-policy"
-        }
-      ]
-    },
-    {
-      "shortName": "imaginationtech",
-      "detailFile": "imaginationtech__CNA-2024-0051.json",
-      "organizationName": "Imagination Technologies",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 301,
-      "active_cna_count": 331,
-      "percentile": 9.4,
-      "total_cves": 24,
-      "recent_cves": 24,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Imagination Technologies branded products and technologies and Imagination Technologies (IMG) managed open source projects.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.imaginationtech.com/gpu-driver-vulnerabilities/"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0051",
-      "country": "UK",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.imaginationtech.com/product-security-policy/"
-        }
-      ]
-    },
-    {
       "shortName": "netapp",
       "detailFile": "netapp__CNA-2017-0035.json",
       "organizationName": "NetApp, Inc.",
@@ -355,6 +267,50 @@
           "label": "Policy",
           "language": "",
           "url": "https://security.netapp.com/policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "hikvision",
+      "detailFile": "hikvision__CNA-2018-0002.json",
+      "organizationName": "Hangzhou Hikvision Digital Technology Co., Ltd.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 301,
+      "active_cna_count": 331,
+      "percentile": 9.4,
+      "total_cves": 14,
+      "recent_cves": 14,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All <a href='http://www.hikvision.com/en/' target='_blank'>Hikvision Internet of Things (IoT) products</a> including cameras and digital video recorders (DVRs).",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://us.hikvision.com/en/support-resources/cybersecurity-center/security-notices"
+        }
+      ],
+      "officialCnaID": "CNA-2018-0002",
+      "country": "China",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.hikvision.com/en/policies/vulnerability-disclosure-policy/"
         }
       ]
     },
@@ -403,50 +359,6 @@
       ]
     },
     {
-      "shortName": "Spotfire",
-      "detailFile": "Spotfire__CNA-2025-0021.json",
-      "organizationName": "Spotfire",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 301,
-      "active_cna_count": 331,
-      "percentile": 9.4,
-      "total_cves": 1,
-      "recent_cves": 1,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities associated with the Spotfire product only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://community.spotfire.com/security-advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2025-0021",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://community.spotfire.com/security/"
-        }
-      ]
-    },
-    {
       "shortName": "curl",
       "detailFile": "curl__CNA-2024-0006.json",
       "organizationName": "curl",
@@ -487,55 +399,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://curl.se/dev/vuln-disclosure.html"
-        }
-      ]
-    },
-    {
-      "shortName": "NCSC-NL",
-      "detailFile": "NCSC-NL__CNA-2022-0022.json",
-      "organizationName": "National Cyber Security Centre Netherlands (NCSC-NL)",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 301,
-      "active_cna_count": 331,
-      "percentile": 9.4,
-      "total_cves": 2,
-      "recent_cves": 2,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities in software discovered by NCSC-NL, and vulnerabilities reported to NCSC-NL for coordinated disclosure, which are not in another CNA's scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.ncsc.nl/actueel/beveiligingsadviezen"
-        }
-      ],
-      "officialCnaID": "CNA-2022-0022",
-      "country": "Netherlands",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "Dutch",
-          "url": "https://www.ncsc.nl/contact/kwetsbaarheid-melden"
-        },
-        {
-          "label": "Policy",
-          "language": "English",
-          "url": "https://english.ncsc.nl/contact/reporting-a-vulnerability-cvd"
         }
       ]
     },
@@ -674,9 +537,9 @@
       ]
     },
     {
-      "shortName": "sonicwall",
-      "detailFile": "sonicwall__CNA-2018-0004.json",
-      "organizationName": "SonicWall, Inc.",
+      "shortName": "naver",
+      "detailFile": "naver__CNA-2018-0007.json",
+      "organizationName": "Naver Corporation",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor"
@@ -684,8 +547,8 @@
       "rank": 301,
       "active_cna_count": 331,
       "percentile": 9.4,
-      "total_cves": 17,
-      "recent_cves": 17,
+      "total_cves": 2,
+      "recent_cves": 2,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
@@ -700,27 +563,27 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "SonicWall issues only.",
+      "scope": "Naver products only, except Line products.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://psirt.global.sonicwall.com/vuln-list"
+          "url": "https://cve.naver.com/"
         }
       ],
-      "officialCnaID": "CNA-2018-0004",
-      "country": "USA",
+      "officialCnaID": "CNA-2018-0007",
+      "country": "South Korea",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://psirt.global.sonicwall.com/vuln-policy"
+          "url": "https://cve.naver.com/"
         }
       ]
     },
     {
-      "shortName": "hikvision",
-      "detailFile": "hikvision__CNA-2018-0002.json",
-      "organizationName": "Hangzhou Hikvision Digital Technology Co., Ltd.",
+      "shortName": "TECNOMobile",
+      "detailFile": "TECNOMobile__CNA-2024-0020.json",
+      "organizationName": "TECNO Mobile Limited",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor"
@@ -728,8 +591,140 @@
       "rank": 301,
       "active_cna_count": 331,
       "percentile": 9.4,
-      "total_cves": 14,
-      "recent_cves": 14,
+      "total_cves": 2,
+      "recent_cves": 2,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities in TECNO products and services only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://security.tecno.com/SRC/blog"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0020",
+      "country": "China",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://security.tecno.com"
+        }
+      ]
+    },
+    {
+      "shortName": "MediaTek",
+      "detailFile": "MediaTek__CNA-2021-0043.json",
+      "organizationName": "MediaTek, Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 301,
+      "active_cna_count": 331,
+      "percentile": 9.4,
+      "total_cves": 63,
+      "recent_cves": 63,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "MediaTek product issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://corp.mediatek.com/product-security-bulletin"
+        }
+      ],
+      "officialCnaID": "CNA-2021-0043",
+      "country": "Taiwan",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "English",
+          "url": "https://corp.mediatek.com/vulnerability-disclosure-policy"
+        }
+      ]
+    },
+    {
+      "shortName": "Salesforce",
+      "detailFile": "Salesforce__CNA-2019-0007.json",
+      "organizationName": "Salesforce, Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 301,
+      "active_cna_count": 331,
+      "percentile": 9.4,
+      "total_cves": 5,
+      "recent_cves": 5,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "<a href='https://trust.salesforce.com/en/trust-and-compliance-documentation/' target='_blank'>Salesforce products</a> only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://trust.salesforce.com/en/security/security-advisories/"
+        }
+      ],
+      "officialCnaID": "CNA-2019-0007",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://trust.salesforce.com/en/security/responsible-disclosure-policy"
+        }
+      ]
+    },
+    {
+      "shortName": "NCSC-NL",
+      "detailFile": "NCSC-NL__CNA-2022-0022.json",
+      "organizationName": "National Cyber Security Centre Netherlands (NCSC-NL)",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 301,
+      "active_cna_count": 331,
+      "percentile": 9.4,
+      "total_cves": 2,
+      "recent_cves": 2,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
@@ -744,109 +739,114 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All <a href='http://www.hikvision.com/en/' target='_blank'>Hikvision Internet of Things (IoT) products</a> including cameras and digital video recorders (DVRs).",
+      "scope": "Vulnerabilities in software discovered by NCSC-NL, and vulnerabilities reported to NCSC-NL for coordinated disclosure, which are not in another CNA's scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://us.hikvision.com/en/support-resources/cybersecurity-center/security-notices"
+          "url": "https://www.ncsc.nl/actueel/beveiligingsadviezen"
         }
       ],
-      "officialCnaID": "CNA-2018-0002",
+      "officialCnaID": "CNA-2022-0022",
+      "country": "Netherlands",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "Dutch",
+          "url": "https://www.ncsc.nl/contact/kwetsbaarheid-melden"
+        },
+        {
+          "label": "Policy",
+          "language": "English",
+          "url": "https://english.ncsc.nl/contact/reporting-a-vulnerability-cvd"
+        }
+      ]
+    },
+    {
+      "shortName": "hpe",
+      "detailFile": "hpe__CNA-2016-0003.json",
+      "organizationName": "Hewlett Packard Enterprise (HPE)",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 301,
+      "active_cna_count": 331,
+      "percentile": 9.4,
+      "total_cves": 58,
+      "recent_cves": 58,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "HPE and acquisitions issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://support.hpe.com/portal/site/hpsc/public/kb/secBullArchive/"
+        }
+      ],
+      "officialCnaID": "CNA-2016-0003",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://support.hpe.com/hpesc/public/docDisplay?docLocale=en_US&docId=a00100637en_us"
+        }
+      ]
+    },
+    {
+      "shortName": "Honor",
+      "detailFile": "Honor__CNA-2022-0045.json",
+      "organizationName": "Honor Device Co., Ltd.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 301,
+      "active_cna_count": 331,
+      "percentile": 9.4,
+      "total_cves": 3,
+      "recent_cves": 3,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 65.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities in Honor products and services unless covered by the scope of another CNA.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "language": "",
+          "url": "https://www.hihonor.com/global/security/"
+        }
+      ],
+      "officialCnaID": "CNA-2022-0045",
       "country": "China",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.hikvision.com/en/policies/vulnerability-disclosure-policy/"
-        }
-      ]
-    },
-    {
-      "shortName": "glibc",
-      "detailFile": "glibc__CNA-2024-0013.json",
-      "organizationName": "GNU C Library",
-      "cnaType": "Open Source",
-      "cnaTypes": [
-        "Open Source"
-      ],
-      "rank": 301,
-      "active_cna_count": 331,
-      "percentile": 9.4,
-      "total_cves": 8,
-      "recent_cves": 8,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Security issues and vulnerabilities in the GNU C Library.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://sourceware.org/git/?p=glibc.git;a=tree;f=advisories;hb=HEAD"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0013",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://sourceware.org/glibc/security.html"
-        }
-      ]
-    },
-    {
-      "shortName": "freebsd",
-      "detailFile": "freebsd__CNA-2005-0004.json",
-      "organizationName": "FreeBSD",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 301,
-      "active_cna_count": 331,
-      "percentile": 9.4,
-      "total_cves": 34,
-      "recent_cves": 34,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 65.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Primarily FreeBSD issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.freebsd.org/"
-        }
-      ],
-      "officialCnaID": "CNA-2005-0004",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.freebsd.org/security/"
+          "url": "https://www.hihonor.com/global/security/"
         }
       ]
     },
@@ -896,9 +896,9 @@
       ]
     },
     {
-      "shortName": "naver",
-      "detailFile": "naver__CNA-2018-0007.json",
-      "organizationName": "Naver Corporation",
+      "shortName": "Spotfire",
+      "detailFile": "Spotfire__CNA-2025-0021.json",
+      "organizationName": "Spotfire",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor"
@@ -906,15 +906,15 @@
       "rank": 301,
       "active_cna_count": 331,
       "percentile": 9.4,
-      "total_cves": 2,
-      "recent_cves": 2,
+      "total_cves": 1,
+      "recent_cves": 1,
       "is_active": true,
       "scores": {
         "overall_average_score": 65.0,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
+        "root_cause_analysis": 0.0,
         "software_identification": 0.0,
-        "severity_and_impact": 0.0,
+        "severity_and_impact": 100.0,
         "patchinfo": 0.0
       },
       "trend": {
@@ -922,20 +922,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Naver products only, except Line products.",
+      "scope": "Vulnerabilities associated with the Spotfire product only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://cve.naver.com/"
+          "url": "https://community.spotfire.com/security-advisories/"
         }
       ],
-      "officialCnaID": "CNA-2018-0007",
-      "country": "South Korea",
+      "officialCnaID": "CNA-2025-0021",
+      "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://cve.naver.com/"
+          "url": "https://community.spotfire.com/security/"
         }
       ]
     },
@@ -1262,18 +1262,19 @@
       ]
     },
     {
-      "shortName": "Nokia",
-      "detailFile": "Nokia__CNA-2023-0055.json",
-      "organizationName": "Nokia",
+      "shortName": "mozilla",
+      "detailFile": "mozilla__CNA-2012-0002.json",
+      "organizationName": "Mozilla Corporation",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor"
+        "Vendor",
+        "Open Source"
       ],
       "rank": 328,
       "active_cna_count": 331,
       "percentile": 1.2,
-      "total_cves": 10,
-      "recent_cves": 10,
+      "total_cves": 324,
+      "recent_cves": 324,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -1288,20 +1289,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All vulnerabilities in Nokia products.",
+      "scope": "Mozilla issues only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.nokia.com/about-us/security-and-privacy/product-security-advisory/"
+          "url": "https://www.mozilla.org/en-US/security/advisories/"
         }
       ],
-      "officialCnaID": "CNA-2023-0055",
-      "country": "Finland",
+      "officialCnaID": "CNA-2012-0002",
+      "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.nokia.com/notices/responsible-disclosure/"
+          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
         }
       ]
     },
@@ -1350,19 +1351,18 @@
       ]
     },
     {
-      "shortName": "mozilla",
-      "detailFile": "mozilla__CNA-2012-0002.json",
-      "organizationName": "Mozilla Corporation",
+      "shortName": "Nokia",
+      "detailFile": "Nokia__CNA-2023-0055.json",
+      "organizationName": "Nokia",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor",
-        "Open Source"
+        "Vendor"
       ],
       "rank": 328,
       "active_cna_count": 331,
       "percentile": 1.2,
-      "total_cves": 324,
-      "recent_cves": 324,
+      "total_cves": 10,
+      "recent_cves": 10,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -1377,20 +1377,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Mozilla issues only.",
+      "scope": "All vulnerabilities in Nokia products.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.mozilla.org/en-US/security/advisories/"
+          "url": "https://www.nokia.com/about-us/security-and-privacy/product-security-advisory/"
         }
       ],
-      "officialCnaID": "CNA-2012-0002",
-      "country": "USA",
+      "officialCnaID": "CNA-2023-0055",
+      "country": "Finland",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
+          "url": "https://www.nokia.com/notices/responsible-disclosure/"
         }
       ]
     }
