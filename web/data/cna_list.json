@@ -721,6 +721,46 @@
     "rootCnaInfo": {}
   },
   {
+    "shortName": "Anthropic",
+    "organizationName": "Anthropic, PBC",
+    "scope": "<strong>CNA Scope:</strong> Vulnerabilities in software, services, and open-source projects developed, maintained, or distributed by Anthropic. This includes Claude Code, Claude Desktop, browser extensions, the Model Context Protocol (MCP) SDKs and reference servers, Anthropic API client SDKs, and related developer tooling published under the Anthropic, anthropic-experimental, and modelcontextprotocol GitHub organizations.<br/><br/><strong><a href='/Resources/Roles/Cnas/FrontierAiResearcherCNAsPilot.pdf' target='_blank'>Frontier AI Researcher CVE Numbering Authorities (CNAs) Pilot</a> Scope:</strong> Vulnerabilities discovered by Anthropic that are not within another CNA’s scope.",
+    "cnaID": "CNA-2026-0052",
+    "type": [
+      "Vendor",
+      "AI Researcher (Frontier AI Researcher CVE Numbering Authorities (CNAs) Pilot)"
+    ],
+    "advisories": [
+      {
+        "label": "Security Advisories",
+        "url": "https://trust.anthropic.com/resources#6a44049fd659a87d0068f0c5"
+      },
+      {
+        "label": "CVD Program Advisories",
+        "url": "https://red.anthropic.com/2026/cvd/"
+      }
+    ],
+    "email": [
+      {
+        "label": "Email",
+        "emailAddr": "security-cna@anthropic.com"
+      }
+    ],
+    "country": "USA",
+    "disclosurePolicy": [
+      {
+        "label": "Disclosure Policy",
+        "language": "",
+        "url": "https://www.anthropic.com/responsible-disclosure-policy"
+      },
+      {
+        "label": "AI Researcher Disclosure Policy",
+        "language": "",
+        "url": "https://www.anthropic.com/coordinated-vulnerability-disclosure"
+      }
+    ],
+    "rootCnaInfo": {}
+  },
+  {
     "shortName": "apache",
     "organizationName": "Apache Software Foundation",
     "scope": "All Apache Software Foundation issues only.",
@@ -5355,7 +5395,7 @@
     "advisories": [
       {
         "label": "Advisories",
-        "url": "https://security.ts.fujitsu.com/IndexProdSecurity.asp?lng=EU"
+        "url": "https://security.eu.fsastech.com"
       }
     ],
     "email": [
@@ -5369,7 +5409,7 @@
       {
         "label": "Policy",
         "language": "",
-        "url": "https://security.ts.fujitsu.com/IndexProdSecurity.asp?lng=EU"
+        "url": "https://security.eu.fsastech.com"
       }
     ],
     "rootCnaInfo": {}
@@ -6411,6 +6451,40 @@
       }
     ],
     "rootCnaInfo": {}
+  },
+  {
+    "shortName": "hsi",
+    "organizationName": "Haverford Systems, Inc.",
+    "scope": "All products for Haverford Systems brands, PTZOptics and HuddleCamHD (supported products and end-of-life/end-of-service products), as well as vulnerabilities in third-party software discovered by Haverford Systems that are not in another CNA’s scope.",
+    "cnaID": "CNA-2026-0053",
+    "type": [
+      "Vendor",
+      "Researcher"
+    ],
+    "advisories": [
+      {
+        "label": "Advisories",
+        "url": "https://ptzoptics.com/known-vulnerabilities-and-fixes/"
+      }
+    ],
+    "email": [
+      {
+        "label": "Email",
+        "emailAddr": "psirt@havsys.com"
+      }
+    ],
+    "country": "USA",
+    "disclosurePolicy": [
+      {
+        "label": "Policy",
+        "language": "",
+        "url": "https://psirt.havsys.com/disclosure-policy.pdf"
+      }
+    ],
+    "rootCnaInfo": {
+      "shortName": "icscert",
+      "organizationName": "Cybersecurity and Infrastructure Security Agency (CISA) Industrial Control Systems (ICS)"
+    }
   },
   {
     "shortName": "HCL",
@@ -9327,6 +9401,39 @@
     "rootCnaInfo": {}
   },
   {
+    "shortName": "NCSC",
+    "organizationName": "NATO Cyber Security Centre",
+    "scope": "All commercial off-the-shelf software (COTS) selected for inclusion in the NATO Approved Software List (A2SL).",
+    "cnaID": "CNA-2026-0054",
+    "type": [
+      "Researcher"
+    ],
+    "advisories": [
+      {
+        "label": "Advisories",
+        "url": "https://github.com/NCSC-Assess/Advisories"
+      }
+    ],
+    "email": [
+      {
+        "label": "Email",
+        "emailAddr": "pentest@ncia.nato.int"
+      }
+    ],
+    "country": "Belgium",
+    "disclosurePolicy": [
+      {
+        "label": "Policy",
+        "language": "",
+        "url": "https://github.com/NCSC-Assess/Disclosure-Policy/blob/main/policy.md"
+      }
+    ],
+    "rootCnaInfo": {
+      "shortName": "ENISA",
+      "organizationName": "EU Agency for Cybersecurity (ENISA)"
+    }
+  },
+  {
     "shortName": "naver",
     "organizationName": "Naver Corporation",
     "scope": "Naver products only, except Line products.",
@@ -10252,10 +10359,11 @@
   {
     "shortName": "OAI",
     "organizationName": "OpenAI",
-    "scope": "Vulnerabilities in OpenAI installed software including desktop apps, mobile apps, and SDKs only.",
+    "scope": "<strong>CNA Scope:</strong> Vulnerabilities in OpenAI installed software including desktop apps, mobile apps, and SDKs only.<br/><br/><strong><a href='/Resources/Roles/Cnas/FrontierAiResearcherCNAsPilot.pdf' target='_blank'>Frontier AI Researcher CVE Numbering Authorities (CNAs) Pilot</a> Scope:</strong> Vulnerabilities discovered by OpenAI that are not within another CNA’s scope.",
     "cnaID": "CNA-2026-0026",
     "type": [
-      "Vendor"
+      "Vendor",
+      "AI Researcher (Frontier AI Researcher CVE Numbering Authorities (CNAs) Pilot)"
     ],
     "advisories": [
       {
@@ -11366,6 +11474,33 @@
     }
   },
   {
+    "shortName": "postiz",
+    "organizationName": "Postiz",
+    "scope": "Postiz products and projects only including: the core repository for postiz-app (github.com/gitroomhq/postiz-app); all gitroomhq repositories that are official components, tooling, or integrations of Postiz; official Postiz container images published under gitroomhq on GHCR; official Postiz CLI tools and NPM packages (NPM org: @postiz); Postiz-Cloud related infrastructure and services. (API, Frontend, Configurations etc.); and plugins for Postiz maintained within the gitroomhq organization.",
+    "cnaID": "CNA-2026-0053",
+    "type": [
+      "Vendor",
+      "Open Source",
+      "Hosted Service"
+    ],
+    "advisories": [
+      {
+        "label": "Advisories",
+        "url": "https://github.com/gitroomhq/postiz-app/security/advisories?state=published"
+      }
+    ],
+    "email": [],
+    "country": "Israel",
+    "disclosurePolicy": [
+      {
+        "label": "Disclosure Policy",
+        "language": "",
+        "url": "https://github.com/gitroomhq/postiz-app/blob/main/SECURITY.md"
+      }
+    ],
+    "rootCnaInfo": {}
+  },
+  {
     "shortName": "Profelis",
     "organizationName": "Profelis IT Consultancy",
     "scope": "Products and services developed by Profelis IT Consultancy including enterprise directory solution SambaBox and password reset product PassBox.",
@@ -11665,6 +11800,36 @@
         "label": "Policy",
         "language": "",
         "url": "https://www.qnap.com/en-us/security-advisory/report"
+      }
+    ],
+    "rootCnaInfo": {}
+  },
+  {
+    "shortName": "Qt",
+    "organizationName": "Qt Group",
+    "scope": "All supported Qt Group products. Excludes third-party redistributions and downstream packaging of Qt open source releases not published by Qt Group.",
+    "cnaID": "CNA-2025-0016",
+    "type": [
+      "Vendor"
+    ],
+    "advisories": [
+      {
+        "label": "Advisories",
+        "url": "https://wiki.qt.io/List_of_known_vulnerabilities_in_Qt_products"
+      }
+    ],
+    "email": [
+      {
+        "label": "Email",
+        "emailAddr": "security@qt.io"
+      }
+    ],
+    "country": "Finland",
+    "disclosurePolicy": [
+      {
+        "label": "Policy",
+        "language": "",
+        "url": "https://www.qt.io/terms-conditions/responsible-vulnerability-disclosure-process"
       }
     ],
     "rootCnaInfo": {}
@@ -14027,6 +14192,36 @@
     "rootCnaInfo": {}
   },
   {
+    "shortName": "Syncro",
+    "organizationName": "Syncro Soft SRL",
+    "scope": "All Syncro Soft SRL products, including Oxygen XML suite of products, published on <a href='https://www.oxygenxml.com' target='_blank'>https://www.oxygenxml.com</a> including end-of-life/end-of-service products.",
+    "cnaID": "CNA-2026-0054",
+    "type": [
+      "Vendor"
+    ],
+    "advisories": [
+      {
+        "label": "Advisories",
+        "url": "https://www.oxygenxml.com/security/advisories.html"
+      }
+    ],
+    "email": [
+      {
+        "label": "Email",
+        "emailAddr": "security@oxygenxml.com"
+      }
+    ],
+    "country": "Romania",
+    "disclosurePolicy": [
+      {
+        "label": "Disclosure Policy",
+        "language": "",
+        "url": "https://www.oxygenxml.com/security/"
+      }
+    ],
+    "rootCnaInfo": {}
+  },
+  {
     "shortName": "synology",
     "organizationName": "Synology Inc.",
     "scope": "Synology issues only.",
@@ -14791,36 +14986,6 @@
         "label": "Policy",
         "language": "",
         "url": "https://www.opennms.com/security/"
-      }
-    ],
-    "rootCnaInfo": {}
-  },
-  {
-    "shortName": "TQtC",
-    "organizationName": "The Qt Company",
-    "scope": "All supported The Qt Company products.",
-    "cnaID": "CNA-2025-0016",
-    "type": [
-      "Vendor"
-    ],
-    "advisories": [
-      {
-        "label": "Advisories",
-        "url": "https://wiki.qt.io/List_of_known_vulnerabilities_in_Qt_products"
-      }
-    ],
-    "email": [
-      {
-        "label": "Email",
-        "emailAddr": "security@qt.io"
-      }
-    ],
-    "country": "Finland",
-    "disclosurePolicy": [
-      {
-        "label": "Policy",
-        "language": "",
-        "url": "https://www.qt.io/terms-conditions/responsible-vulnerability-disclosure-process"
       }
     ],
     "rootCnaInfo": {}
