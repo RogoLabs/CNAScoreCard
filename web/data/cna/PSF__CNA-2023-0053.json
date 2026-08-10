@@ -1,8 +1,8 @@
 {
   "cna_info": {
     "cna": "PSF",
-    "total_cves": 31,
-    "total_cves_scored": 31,
+    "total_cves": 32,
+    "total_cves_scored": 32,
     "organizationName": "Python Software Foundation",
     "scope": "Only supported and end-of-life Python versions available at <a href='https://python.org/downloads' target='_blank'>https://python.org/downloads</a> and pip versions available at <a href='https://pypi.org/project/pip' target='_blank'>https://pypi.org/project/pip</a>, Pallets projects available at <a href='https://github.com/pallets' target='_blank'>https://github.com/pallets</a> (such as Flask, Jinja, Click, MarkupSafe, Werkzeug, and ItsDangerous), and excluding distributions of Python, pip, and Pallets projects maintained by third-party redistributors.",
     "advisories": [
@@ -34,25 +34,25 @@
   },
   "trend_direction": "steady",
   "trend_description": "No significant change",
-  "rank": 82,
-  "active_cna_count": 335,
-  "percentile": 75.8,
+  "rank": 80,
+  "active_cna_count": 336,
+  "percentile": 76.5,
   "cna_scoring": [
     {
-      "total_cves": 31,
-      "total_cves_scored": 31,
-      "recent_cves_count": 31,
-      "overall_average_score": 82.9,
+      "total_cves": 32,
+      "total_cves_scored": 32,
+      "recent_cves_count": 32,
+      "overall_average_score": 83.12,
       "average_foundational_completeness": 50.0,
-      "average_root_cause_analysis": 8.23,
+      "average_root_cause_analysis": 8.44,
       "average_software_identification": 0.0,
       "average_severity_context": 15.0,
-      "average_patchinfo": 9.68,
+      "average_patchinfo": 9.69,
       "percent_foundational_completeness": 100.0,
-      "percent_root_cause_analysis": 54.84,
+      "percent_root_cause_analysis": 56.25,
       "percent_software_identification": 0.0,
       "percent_severity_and_impact": 100.0,
-      "percent_patchinfo": 96.77,
+      "percent_patchinfo": 96.88,
       "trend_direction": "steady",
       "trend_description": "No significant change",
       "monthly_trends": []
@@ -340,6 +340,19 @@
       "scoreBreakdown": {
         "foundationalCompleteness": 50,
         "rootCauseAnalysis": 0,
+        "severityAndImpactContext": 15,
+        "softwareIdentification": 0,
+        "patchinfo": 10
+      }
+    },
+    {
+      "cveId": "CVE-2026-18503",
+      "assigningCna": "PSF",
+      "datePublished": "2026-08-10",
+      "totalCveScore": 90,
+      "scoreBreakdown": {
+        "foundationalCompleteness": 50,
+        "rootCauseAnalysis": 15,
         "severityAndImpactContext": 15,
         "softwareIdentification": 0,
         "patchinfo": 10
