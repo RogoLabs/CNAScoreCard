@@ -5,54 +5,9 @@
   "count": 50,
   "items": [
     {
-      "shortName": "Commvault",
-      "detailFile": "Commvault__CNA-2025-0044.json",
-      "organizationName": "Commvault Systems Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Hosted Service"
-      ],
-      "rank": 102,
-      "active_cna_count": 337,
-      "percentile": 70.0,
-      "total_cves": 3,
-      "recent_cves": 3,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 80.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities in Commvault SaaS and software products only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://documentation.commvault.com/securityadvisories"
-        }
-      ],
-      "officialCnaID": "CNA-2025-0044",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://trust.commvault.com/resources?s=vwnojdk0a0vsbx0qknnb&amp;name=vulnerability-disclosure-policy#689bba5cdc60fd4597bfd694"
-        }
-      ]
-    },
-    {
-      "shortName": "Citrix",
-      "detailFile": "Citrix__CNA-2022-0003.json",
-      "organizationName": "Citrix Systems, Inc.",
+      "shortName": "GoogleCloud",
+      "detailFile": "GoogleCloud__CNA-2025-0038.json",
+      "organizationName": "Google Cloud",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor"
@@ -60,8 +15,8 @@
       "rank": 102,
       "active_cna_count": 337,
       "percentile": 70.0,
-      "total_cves": 2,
-      "recent_cves": 2,
+      "total_cves": 18,
+      "recent_cves": 18,
       "is_active": true,
       "scores": {
         "overall_average_score": 80.0,
@@ -76,20 +31,65 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Citrix issues only.",
+      "scope": "Vulnerabilities in any Google Cloud developed product and not under the scope of another CNA.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://support.citrix.com/securitybulletins"
+          "language": "",
+          "url": "https://cloud.google.com/support/bulletins"
         }
       ],
-      "officialCnaID": "CNA-2022-0003",
+      "officialCnaID": "CNA-2025-0038",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.citrix.com/about/trust-center/vulnerability-process.html"
+          "url": "https://about.google/company-info/appsecurity/"
+        }
+      ]
+    },
+    {
+      "shortName": "Gallagher",
+      "detailFile": "Gallagher__CNA-2020-0024.json",
+      "organizationName": "Gallagher Group Ltd.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 102,
+      "active_cna_count": 337,
+      "percentile": 70.0,
+      "total_cves": 7,
+      "recent_cves": 7,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 80.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All Gallagher security products only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://security.gallagher.com/Security-Advisories"
+        }
+      ],
+      "officialCnaID": "CNA-2020-0024",
+      "country": "New Zealand",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://security.gallagher.com/responsible-disclosure-policy"
         }
       ]
     },
@@ -1284,25 +1284,24 @@
       ]
     },
     {
-      "shortName": "atlassian",
-      "detailFile": "atlassian__CNA-2017-0015.json",
-      "organizationName": "Atlassian",
-      "cnaType": "Vendor",
+      "shortName": "SK-CERT",
+      "detailFile": "SK-CERT__CNA-2022-0034.json",
+      "organizationName": "National Cyber Security Centre SK-CERT",
+      "cnaType": "CERT",
       "cnaTypes": [
-        "Vendor",
-        "Open Source"
+        "CERT"
       ],
       "rank": 279,
       "active_cna_count": 337,
       "percentile": 17.5,
-      "total_cves": 5,
-      "recent_cves": 5,
+      "total_cves": 3,
+      "recent_cves": 3,
       "is_active": true,
       "scores": {
         "overall_average_score": 75.0,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 100.0,
+        "root_cause_analysis": 66.67,
+        "software_identification": 0.0,
         "severity_and_impact": 100.0,
         "patchinfo": 0.0
       },
@@ -1311,20 +1310,21 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All Atlassian products, as well as Atlassian-maintained projects hosted on <a href='https://bitbucket.org/' target='_blank'>https://bitbucket.org/</a> and <a href='https://github.com/atlassian/' target='_blank'>https://github.com/atlassian/</a>.",
+      "scope": "Vulnerabilities in software discovered by National Cyber Security Centre SK-CERT, and vulnerabilities reported to National Cyber Security Centre SK-CERT for coordinated disclosure, which are not in another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.atlassian.com/trust/security/advisory-publishing-policy"
+          "language": "",
+          "url": "https://www.sk-cert.sk/threat/"
         }
       ],
-      "officialCnaID": "CNA-2017-0015",
-      "country": "Australia",
+      "officialCnaID": "CNA-2022-0034",
+      "country": "Slovak Republic",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://bugcrowd.com/atlassian"
+          "url": "https://www.sk-cert.sk/wp-content/uploads/2019/10/Vulnerability_reporting.pdf"
         }
       ]
     },
@@ -1374,24 +1374,25 @@
       ]
     },
     {
-      "shortName": "OPPO",
-      "detailFile": "OPPO__CNA-2019-0006.json",
-      "organizationName": "OPPO Mobile Telecommunication Corp., Ltd.",
+      "shortName": "atlassian",
+      "detailFile": "atlassian__CNA-2017-0015.json",
+      "organizationName": "Atlassian",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor"
+        "Vendor",
+        "Open Source"
       ],
       "rank": 279,
       "active_cna_count": 337,
       "percentile": 17.5,
-      "total_cves": 3,
-      "recent_cves": 3,
+      "total_cves": 5,
+      "recent_cves": 5,
       "is_active": true,
       "scores": {
         "overall_average_score": 75.0,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 66.67,
-        "software_identification": 0.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 100.0,
         "severity_and_impact": 100.0,
         "patchinfo": 0.0
       },
@@ -1400,20 +1401,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "OPPO devices only.",
+      "scope": "All Atlassian products, as well as Atlassian-maintained projects hosted on <a href='https://bitbucket.org/' target='_blank'>https://bitbucket.org/</a> and <a href='https://github.com/atlassian/' target='_blank'>https://github.com/atlassian/</a>.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://security.oppo.com/en/notice"
+          "url": "https://www.atlassian.com/trust/security/advisory-publishing-policy"
         }
       ],
-      "officialCnaID": "CNA-2019-0006",
-      "country": "China",
+      "officialCnaID": "CNA-2017-0015",
+      "country": "Australia",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://security.oppo.com/en/responsibleDisclosure"
+          "url": "https://bugcrowd.com/atlassian"
         }
       ]
     },
@@ -1463,12 +1464,12 @@
       ]
     },
     {
-      "shortName": "SK-CERT",
-      "detailFile": "SK-CERT__CNA-2022-0034.json",
-      "organizationName": "National Cyber Security Centre SK-CERT",
-      "cnaType": "CERT",
+      "shortName": "OPPO",
+      "detailFile": "OPPO__CNA-2019-0006.json",
+      "organizationName": "OPPO Mobile Telecommunication Corp., Ltd.",
+      "cnaType": "Vendor",
       "cnaTypes": [
-        "CERT"
+        "Vendor"
       ],
       "rank": 279,
       "active_cna_count": 337,
@@ -1489,21 +1490,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities in software discovered by National Cyber Security Centre SK-CERT, and vulnerabilities reported to National Cyber Security Centre SK-CERT for coordinated disclosure, which are not in another CNA’s scope.",
+      "scope": "OPPO devices only.",
       "advisories": [
         {
           "label": "Advisories",
-          "language": "",
-          "url": "https://www.sk-cert.sk/threat/"
+          "url": "https://security.oppo.com/en/notice"
         }
       ],
-      "officialCnaID": "CNA-2022-0034",
-      "country": "Slovak Republic",
+      "officialCnaID": "CNA-2019-0006",
+      "country": "China",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.sk-cert.sk/wp-content/uploads/2019/10/Vulnerability_reporting.pdf"
+          "url": "https://security.oppo.com/en/responsibleDisclosure"
         }
       ]
     },
@@ -1733,6 +1733,51 @@
       ]
     },
     {
+      "shortName": "OAI",
+      "detailFile": "OAI__CNA-2026-0026.json",
+      "organizationName": "OpenAI",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "AI Researcher (Frontier AI Researcher CVE Numbering Authorities (CNAs) Pilot)"
+      ],
+      "rank": 289,
+      "active_cna_count": 337,
+      "percentile": 14.5,
+      "total_cves": 2,
+      "recent_cves": 2,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 72.5,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 50.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "<strong>CNA Scope:</strong> Vulnerabilities in OpenAI installed software including desktop apps, mobile apps, and SDKs only.<br/><br/><strong><a href='/Resources/Roles/Cnas/FrontierAiResearcherCNAsPilot.pdf' target='_blank'>Frontier AI Researcher CVE Numbering Authorities (CNAs) Pilot</a> Scope:</strong> Vulnerabilities discovered by OpenAI that are not within another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://trust.openai.com/"
+        }
+      ],
+      "officialCnaID": "CNA-2026-0026",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://openai.com/policies/openai-cve-assignment-policy/"
+        }
+      ]
+    },
+    {
       "shortName": "symantec",
       "detailFile": "symantec__CNA-2012-0003.json",
       "organizationName": "Symantec - A Division of Broadcom",
@@ -1778,18 +1823,19 @@
       ]
     },
     {
-      "shortName": "tibco",
-      "detailFile": "tibco__CNA-2017-0001.json",
-      "organizationName": "TIBCO Software Inc.",
+      "shortName": "Centreon",
+      "detailFile": "Centreon__CNA-2025-0006.json",
+      "organizationName": "Centreon",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor"
+        "Vendor",
+        "Open Source"
       ],
       "rank": 289,
       "active_cna_count": 337,
       "percentile": 14.5,
-      "total_cves": 2,
-      "recent_cves": 2,
+      "total_cves": 4,
+      "recent_cves": 4,
       "is_active": true,
       "scores": {
         "overall_average_score": 72.5,
@@ -1804,20 +1850,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "TIBCO issues only.",
+      "scope": "All Centreon product issues only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.tibco.com/services/support/advisories"
+          "url": "https://thewatch.centreon.com/latest-security-bulletins-64"
         }
       ],
-      "officialCnaID": "CNA-2017-0001",
-      "country": "USA",
+      "officialCnaID": "CNA-2025-0006",
+      "country": "France",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.tibco.com/security/vulnerability-disclosure-policy"
+          "url": "https://vdp.centreon.com/p/centreon-VDP"
         }
       ]
     },
@@ -1868,96 +1914,6 @@
       ]
     },
     {
-      "shortName": "Centreon",
-      "detailFile": "Centreon__CNA-2025-0006.json",
-      "organizationName": "Centreon",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 289,
-      "active_cna_count": 337,
-      "percentile": 14.5,
-      "total_cves": 4,
-      "recent_cves": 4,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 72.5,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 50.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All Centreon product issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://thewatch.centreon.com/latest-security-bulletins-64"
-        }
-      ],
-      "officialCnaID": "CNA-2025-0006",
-      "country": "France",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://vdp.centreon.com/p/centreon-VDP"
-        }
-      ]
-    },
-    {
-      "shortName": "OAI",
-      "detailFile": "OAI__CNA-2026-0026.json",
-      "organizationName": "OpenAI",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "AI Researcher (Frontier AI Researcher CVE Numbering Authorities (CNAs) Pilot)"
-      ],
-      "rank": 289,
-      "active_cna_count": 337,
-      "percentile": 14.5,
-      "total_cves": 2,
-      "recent_cves": 2,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 72.5,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 50.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "<strong>CNA Scope:</strong> Vulnerabilities in OpenAI installed software including desktop apps, mobile apps, and SDKs only.<br/><br/><strong><a href='/Resources/Roles/Cnas/FrontierAiResearcherCNAsPilot.pdf' target='_blank'>Frontier AI Researcher CVE Numbering Authorities (CNAs) Pilot</a> Scope:</strong> Vulnerabilities discovered by OpenAI that are not within another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://trust.openai.com/"
-        }
-      ],
-      "officialCnaID": "CNA-2026-0026",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://openai.com/policies/openai-cve-assignment-policy/"
-        }
-      ]
-    },
-    {
       "shortName": "NetScaler",
       "detailFile": "NetScaler__CNA-2025-0061.json",
       "organizationName": "NetScaler",
@@ -1998,6 +1954,50 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.cloud.com/trust-center/product-security/vulnerability-response"
+        }
+      ]
+    },
+    {
+      "shortName": "tibco",
+      "detailFile": "tibco__CNA-2017-0001.json",
+      "organizationName": "TIBCO Software Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 289,
+      "active_cna_count": 337,
+      "percentile": 14.5,
+      "total_cves": 2,
+      "recent_cves": 2,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 72.5,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 50.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "TIBCO issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.tibco.com/services/support/advisories"
+        }
+      ],
+      "officialCnaID": "CNA-2017-0001",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.tibco.com/security/vulnerability-disclosure-policy"
         }
       ]
     },
@@ -2102,16 +2102,16 @@
       "rank": 297,
       "active_cna_count": 337,
       "percentile": 12.2,
-      "total_cves": 604,
-      "recent_cves": 604,
+      "total_cves": 608,
+      "recent_cves": 608,
       "is_active": true,
       "scores": {
-        "overall_average_score": 70.02,
+        "overall_average_score": 69.98,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 98.18,
-        "software_identification": 1.49,
-        "severity_and_impact": 22.35,
-        "patchinfo": 17.88
+        "root_cause_analysis": 98.19,
+        "software_identification": 1.48,
+        "severity_and_impact": 22.2,
+        "patchinfo": 17.76
       },
       "trend": {
         "direction": "steady",
