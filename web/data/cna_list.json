@@ -301,10 +301,11 @@
   {
     "shortName": "AISLE",
     "organizationName": "AISLE Incorporated",
-    "scope": "All AISLE products.",
+    "scope": "All AISLE products as well as vulnerabilities discovered in third-party software not covered by other CNA’s scope.",
     "cnaID": "CNA-2026-0049",
     "type": [
-      "Vendor"
+      "Vendor",
+      "Researcher"
     ],
     "advisories": [
       {
@@ -2751,6 +2752,39 @@
     "rootCnaInfo": {}
   },
   {
+    "shortName": "Circutor",
+    "organizationName": "Circutor",
+    "scope": "All vulnerabilities affecting Circutor and Circontrol products.",
+    "cnaID": "CNA-2026-0060",
+    "type": [
+      "Vendor"
+    ],
+    "advisories": [
+      {
+        "label": "Advisories",
+        "url": "https://circutor.com/soporte/ciberseguridad/"
+      }
+    ],
+    "email": [
+      {
+        "label": "Email",
+        "emailAddr": "psirt@circutor.com"
+      }
+    ],
+    "country": "Spain",
+    "disclosurePolicy": [
+      {
+        "label": "Policy",
+        "language": "",
+        "url": "https://circutor.sharepoint.com/:b:/s/GestorDocumental/IQBd8ld4COldTb18_WDDF_OvAZRXTbSyciP5rYwXBDoDyVw?e=gL9GNd"
+      }
+    ],
+    "rootCnaInfo": {
+      "shortName": "INCIBE",
+      "organizationName": "Spanish National Cybersecurity Institute, S.A. (INCIBE)"
+    }
+  },
+  {
     "shortName": "cirosec",
     "organizationName": "cirosec GmbH",
     "scope": "Vulnerabilities discovered by or reported to cirosec researchers that are not in another CNA’s scope.",
@@ -4804,7 +4838,7 @@
   {
     "shortName": "ENISA",
     "organizationName": "EU Agency for Cybersecurity (ENISA)",
-    "scope": "<strong>Root Scope:</strong> European Union (EU) member states/EU authorities, EU CSIRTs network members, and cooperative partners under ENISA’s mandate as well as other CNAs who choose ENISA as their Root.<br/><br/><strong>CNA Scope:</strong> Vulnerabilities in information technology (IT) products discovered by European Union (EU) Computer Security Incident Response Teams (CSIRTs) or reported to EU CSIRTs for coordinated disclosure, as long as they do not fall under a CNA with a more specific scope.",
+    "scope": "<strong>Root Scope:</strong> European Union (EU) member states/EU authorities, EU CSIRTs network members, and cooperative partners under ENISA’s mandate as well as other CNAs who choose ENISA as their Root.<br/><br/><strong>CNA Scope:</strong> Vulnerabilities in information technology (IT) products discovered by European Union (EU) Computer Security Incident Response Teams (CSIRTs) or reported to ENISA or to EU CSIRTs for coordinated disclosure, as long as they do not fall under a CNA with a more specific scope.",
     "cnaID": "CNA-2024-0008",
     "type": [
       "Consortium"
@@ -6075,6 +6109,44 @@
     "rootCnaInfo": {
       "shortName": "redhat",
       "organizationName": "Red Hat, Inc."
+    }
+  },
+  {
+    "shortName": "Grayback",
+    "organizationName": "Grayback Security",
+    "scope": "Vulnerabilities identified by Grayback or third parties in the programs listed at <a href='https://app.grayback.es/programs' target='_blank'>https://app.grayback.es/programs</a>.",
+    "cnaID": "CNA-2026-0059",
+    "type": [
+      "Bug Bounty Provider"
+    ],
+    "advisories": [
+      {
+        "label": "Advisories",
+        "url": "https://www.grayback.es/en/advisories"
+      }
+    ],
+    "email": [
+      {
+        "label": "Email",
+        "emailAddr": "security@grayback.es"
+      }
+    ],
+    "country": "Spain",
+    "disclosurePolicy": [
+      {
+        "label": "Policy (Spanish)",
+        "language": "Spanish",
+        "url": "https://www.grayback.es/disclosure-policy"
+      },
+      {
+        "label": "Policy (English)",
+        "language": "English",
+        "url": "https://www.grayback.es/en/disclosure-policy"
+      }
+    ],
+    "rootCnaInfo": {
+      "shortName": "INCIBE",
+      "organizationName": "Spanish National Cybersecurity Institute, S.A. (INCIBE)"
     }
   },
   {
@@ -15719,6 +15791,39 @@
     }
   },
   {
+    "shortName": "Velneo",
+    "organizationName": "Velneo",
+    "scope": "Vulnerabilities in all Velneo brand products and technologies, including software components, application servers, runtime environments, development environments, and cloud services, unless they are covered by the more specific scope of another CNA.",
+    "cnaID": "CNA-2026-0061",
+    "type": [
+      "Vendor"
+    ],
+    "advisories": [
+      {
+        "label": "Advisories",
+        "url": "https://velneo.es/avisos-de-seguridad/"
+      }
+    ],
+    "email": [
+      {
+        "label": "Email",
+        "emailAddr": "security@velneo.com"
+      }
+    ],
+    "country": "Spain",
+    "disclosurePolicy": [
+      {
+        "label": "Policy",
+        "language": "",
+        "url": "https://velneo.es/mivelneo/politica-de-divulgacion-de-vulnerabilidades/"
+      }
+    ],
+    "rootCnaInfo": {
+      "shortName": "INCIBE",
+      "organizationName": "Spanish National Cybersecurity Institute, S.A. (INCIBE)"
+    }
+  },
+  {
     "shortName": "Verizon",
     "organizationName": "Verizon",
     "scope": "All Verizon products and services.",
@@ -16090,6 +16195,39 @@
       }
     ],
     "rootCnaInfo": {}
+  },
+  {
+    "shortName": "wibu",
+    "organizationName": "WIBU-SYSTEMS AG",
+    "scope": "WIBU-SYSTEMS products only.",
+    "cnaID": "CNA-2026-0058",
+    "type": [
+      "Vendor"
+    ],
+    "advisories": [
+      {
+        "label": "Advisories",
+        "url": "https://www.wibu.com/support/security-advisories.html"
+      }
+    ],
+    "email": [
+      {
+        "label": "Email",
+        "emailAddr": "cert@wibu.com"
+      }
+    ],
+    "country": "Germany",
+    "disclosurePolicy": [
+      {
+        "label": "Policy",
+        "language": "",
+        "url": "https://www.wibu.com/.well-known/WIBU-SYSTEMS_Vulnerability_Disclosure_Policy.pdf"
+      }
+    ],
+    "rootCnaInfo": {
+      "shortName": "ENISA",
+      "organizationName": "EU Agency for Cybersecurity (ENISA)"
+    }
   },
   {
     "shortName": "WindRiver",
