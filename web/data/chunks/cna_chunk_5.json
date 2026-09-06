@@ -5,18 +5,20 @@
   "count": 50,
   "items": [
     {
-      "shortName": "SRA",
-      "detailFile": "SRA__CNA-2023-0035.json",
-      "organizationName": "Security Risk Advisors (SRA)",
-      "cnaType": "Researcher",
+      "shortName": "Delinea",
+      "detailFile": "Delinea__CNA-2024-0086.json",
+      "organizationName": "Delinea, Inc.",
+      "cnaType": "Vendor",
       "cnaTypes": [
+        "Vendor",
+        "Hosted Service",
         "Researcher"
       ],
       "rank": 107,
       "active_cna_count": 333,
       "percentile": 68.2,
-      "total_cves": 7,
-      "recent_cves": 7,
+      "total_cves": 1,
+      "recent_cves": 1,
       "is_active": true,
       "scores": {
         "overall_average_score": 80.0,
@@ -31,27 +33,27 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities discovered by SRA that are not within the scope of another CNA.",
+      "scope": "Vulnerabilities in Delinea products or services listed on <a href='https://www.delinea.com' target='_blank'>delinea.com</a>, or vulnerabilities in third-party products or services discovered by or reported to Delinea, unless covered by the scope of another CNA.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://sra.io/advisories/"
+          "url": "https://trust.delinea.com/"
         }
       ],
-      "officialCnaID": "CNA-2023-0035",
+      "officialCnaID": "CNA-2024-0086",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://sra.io/disclosure-policy/"
+          "url": "https://trust.delinea.com/?itemUid=56583ca0-6561-4cf3-a150-8c0c45d214cf"
         }
       ]
     },
     {
-      "shortName": "SolarWinds",
-      "detailFile": "SolarWinds__CNA-2021-0027.json",
-      "organizationName": "SolarWinds",
+      "shortName": "Digi",
+      "detailFile": "Digi__CNA-2025-0015.json",
+      "organizationName": "Digi International Inc.",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor"
@@ -59,8 +61,8 @@
       "rank": 107,
       "active_cna_count": 333,
       "percentile": 68.2,
-      "total_cves": 22,
-      "recent_cves": 22,
+      "total_cves": 2,
+      "recent_cves": 2,
       "is_active": true,
       "scores": {
         "overall_average_score": 80.0,
@@ -75,38 +77,36 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "SolarWinds products only.",
+      "scope": "Digi branded products and services only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.solarwinds.com/trust-center/security-advisories"
+          "url": "https://www.digi.com/resources/security"
         }
       ],
-      "officialCnaID": "CNA-2021-0027",
+      "officialCnaID": "CNA-2025-0015",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.solarwinds.com/information-security/vulnerability-disclosure-policy"
+          "url": "https://www.digi.com/resources/security/submit-security-vulnerability"
         }
       ]
     },
     {
-      "shortName": "rami.io",
-      "detailFile": "rami.io__CNA-2024-0023.json",
-      "organizationName": "rami.io GmbH",
+      "shortName": "Ubiquiti",
+      "detailFile": "Ubiquiti__CNA-2026-0057.json",
+      "organizationName": "Ubiquiti, Inc.",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor",
-        "Hosted Service",
-        "Open Source"
+        "Vendor"
       ],
       "rank": 107,
       "active_cna_count": 333,
       "percentile": 68.2,
-      "total_cves": 22,
-      "recent_cves": 22,
+      "total_cves": 23,
+      "recent_cves": 23,
       "is_active": true,
       "scores": {
         "overall_average_score": 80.0,
@@ -121,20 +121,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All rami.io GmbH products and open source projects, including pretix, official pretix plugins and apps, and Venueless.",
+      "scope": "Vulnerabilities in all Ubiquiti products and products of Ubiquiti subsidiaries only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://rami.io/security/advisories/"
+          "url": "https://community.ui.com/releases?security-updates"
         }
       ],
-      "officialCnaID": "CNA-2024-0023",
-      "country": "Germany",
+      "officialCnaID": "CNA-2026-0057",
+      "country": "USA",
       "disclosurePolicy": [
         {
-          "label": "Policy",
+          "label": "Disclosure Policy",
           "language": "",
-          "url": "https://rami.io/security/disclosure/"
+          "url": "http://ui.com/downloads/compliance/vulnerability-disclosure-policy.pdf"
         }
       ]
     },
@@ -1009,51 +1009,6 @@
       ]
     },
     {
-      "shortName": "vmware",
-      "detailFile": "vmware__CNA-2016-0025.json",
-      "organizationName": "VMware by Broadcom",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 273,
-      "active_cna_count": 333,
-      "percentile": 18.3,
-      "total_cves": 262,
-      "recent_cves": 262,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 77.5,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 91.6,
-        "software_identification": 0.76,
-        "severity_and_impact": 91.22,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "VMware, Spring, and Cloud Foundry issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.broadcom.com/support/vmware-security-advisories"
-        }
-      ],
-      "officialCnaID": "CNA-2016-0025",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.broadcom.com/support/vmware-services/security-response"
-        }
-      ]
-    },
-    {
       "shortName": "Honeywell",
       "detailFile": "Honeywell__CNA-2022-0046.json",
       "organizationName": "Honeywell International Inc.",
@@ -1098,6 +1053,51 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.honeywell.com/us/en/product-security"
+        }
+      ]
+    },
+    {
+      "shortName": "vmware",
+      "detailFile": "vmware__CNA-2016-0025.json",
+      "organizationName": "VMware by Broadcom",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 273,
+      "active_cna_count": 333,
+      "percentile": 18.3,
+      "total_cves": 262,
+      "recent_cves": 262,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 77.5,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 91.6,
+        "software_identification": 0.76,
+        "severity_and_impact": 91.22,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "VMware, Spring, and Cloud Foundry issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.broadcom.com/support/vmware-security-advisories"
+        }
+      ],
+      "officialCnaID": "CNA-2016-0025",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.broadcom.com/support/vmware-services/security-response"
         }
       ]
     },
@@ -1235,51 +1235,6 @@
       ]
     },
     {
-      "shortName": "SK-CERT",
-      "detailFile": "SK-CERT__CNA-2022-0034.json",
-      "organizationName": "National Cyber Security Centre SK-CERT",
-      "cnaType": "CERT",
-      "cnaTypes": [
-        "CERT"
-      ],
-      "rank": 278,
-      "active_cna_count": 333,
-      "percentile": 16.8,
-      "total_cves": 3,
-      "recent_cves": 3,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 75.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 66.67,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities in software discovered by National Cyber Security Centre SK-CERT, and vulnerabilities reported to National Cyber Security Centre SK-CERT for coordinated disclosure, which are not in another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "language": "",
-          "url": "https://www.sk-cert.sk/threat/"
-        }
-      ],
-      "officialCnaID": "CNA-2022-0034",
-      "country": "Slovak Republic",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.sk-cert.sk/wp-content/uploads/2019/10/Vulnerability_reporting.pdf"
-        }
-      ]
-    },
-    {
       "shortName": "openssl",
       "detailFile": "openssl__CNA-2016-0019.json",
       "organizationName": "OpenSSL Software Foundation",
@@ -1366,6 +1321,51 @@
           "label": "Policy",
           "language": "",
           "url": "https://github.com/systemd/systemd/security/policy"
+        }
+      ]
+    },
+    {
+      "shortName": "SK-CERT",
+      "detailFile": "SK-CERT__CNA-2022-0034.json",
+      "organizationName": "National Cyber Security Centre SK-CERT",
+      "cnaType": "CERT",
+      "cnaTypes": [
+        "CERT"
+      ],
+      "rank": 278,
+      "active_cna_count": 333,
+      "percentile": 16.8,
+      "total_cves": 3,
+      "recent_cves": 3,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 75.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 66.67,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities in software discovered by National Cyber Security Centre SK-CERT, and vulnerabilities reported to National Cyber Security Centre SK-CERT for coordinated disclosure, which are not in another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "language": "",
+          "url": "https://www.sk-cert.sk/threat/"
+        }
+      ],
+      "officialCnaID": "CNA-2022-0034",
+      "country": "Slovak Republic",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.sk-cert.sk/wp-content/uploads/2019/10/Vulnerability_reporting.pdf"
         }
       ]
     },
@@ -1638,6 +1638,51 @@
       ]
     },
     {
+      "shortName": "atlassian",
+      "detailFile": "atlassian__CNA-2017-0015.json",
+      "organizationName": "Atlassian",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 287,
+      "active_cna_count": 333,
+      "percentile": 14.1,
+      "total_cves": 8,
+      "recent_cves": 8,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 72.5,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 75.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All Atlassian products, as well as Atlassian-maintained projects hosted on <a href='https://bitbucket.org/' target='_blank'>https://bitbucket.org/</a> and <a href='https://github.com/atlassian/' target='_blank'>https://github.com/atlassian/</a>.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.atlassian.com/trust/security/advisory-publishing-policy"
+        }
+      ],
+      "officialCnaID": "CNA-2017-0015",
+      "country": "Australia",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://bugcrowd.com/atlassian"
+        }
+      ]
+    },
+    {
       "shortName": "tibco",
       "detailFile": "tibco__CNA-2017-0001.json",
       "organizationName": "TIBCO Software Inc.",
@@ -1723,51 +1768,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.broadcom.com/support/security-center/vulnerability-management"
-        }
-      ]
-    },
-    {
-      "shortName": "atlassian",
-      "detailFile": "atlassian__CNA-2017-0015.json",
-      "organizationName": "Atlassian",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 287,
-      "active_cna_count": 333,
-      "percentile": 14.1,
-      "total_cves": 8,
-      "recent_cves": 8,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 72.5,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 75.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All Atlassian products, as well as Atlassian-maintained projects hosted on <a href='https://bitbucket.org/' target='_blank'>https://bitbucket.org/</a> and <a href='https://github.com/atlassian/' target='_blank'>https://github.com/atlassian/</a>.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.atlassian.com/trust/security/advisory-publishing-policy"
-        }
-      ],
-      "officialCnaID": "CNA-2017-0015",
-      "country": "Australia",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://bugcrowd.com/atlassian"
         }
       ]
     },
