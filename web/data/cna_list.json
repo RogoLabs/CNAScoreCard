@@ -12286,6 +12286,39 @@
     "rootCnaInfo": {}
   },
   {
+    "shortName": "RES",
+    "organizationName": "RedEye Security",
+    "scope": "Vulnerabilities in RedEye Security’s own products: software that RedEye develops and distributes for customers to deploy and operate in their own environments. Caver, RedEye’s self-hosted, Splunk-compatible SIEM and OCSF data-lake platform, including its server components, collectors and agents, command-line tooling, and officially distributed installers and container images. Out of scope: vulnerabilities in third-party components and dependencies that RedEye redistributes but does not maintain; vulnerabilities in RedEye-operated hosted services and web properties that RedEye remediates server-side with no customer action required; and the content of RedEye’s threat-intelligence and CVE detection feeds.",
+    "cnaID": "CNA-2026-0067",
+    "type": [
+      "Vendor"
+    ],
+    "advisories": [
+      {
+        "label": "Advisories",
+        "url": "https://redeyesecurity.com/security/advisories"
+      }
+    ],
+    "email": [
+      {
+        "label": "Email",
+        "emailAddr": "security@redeyesecurity.com"
+      }
+    ],
+    "country": "USA",
+    "disclosurePolicy": [
+      {
+        "label": "Policy",
+        "language": "",
+        "url": "https://redeyesecurity.com/security"
+      }
+    ],
+    "rootCnaInfo": {
+      "shortName": "icscert",
+      "organizationName": "Cybersecurity and Infrastructure Security Agency (CISA) Industrial Control Systems (ICS)"
+    }
+  },
+  {
     "shortName": "Replicated",
     "organizationName": "Replicated, Inc.",
     "scope": "Replicated products and services only.",
@@ -12799,7 +12832,7 @@
   {
     "shortName": "schneider",
     "organizationName": "Schneider Electric",
-    "scope": "All Schneider Electric products, including Proface, APC, and ProLeiT.",
+    "scope": "Products supported by Schneider Electric and its affiliates, including products branded Schneider Electric or any other brands owned or controlled by Schneider Electric (such as but not limited to APC, Eliwell, Proface, ProLeit, Lauritz Knudsen Electrical & Automation, etc.), excluding Aveva and RIB products.",
     "cnaID": "CNA-2017-0009",
     "type": [
       "Vendor"
@@ -12812,8 +12845,12 @@
     ],
     "email": [
       {
-        "label": "Email",
+        "label": "Email – Schneider Electric & Affiliates",
         "emailAddr": "cpcert@se.com"
+      },
+      {
+        "label": "Email – Lauritz Knudsen Electrical & Automation",
+        "emailAddr": "LK-EA-CERT@LK-EA.com"
       }
     ],
     "country": "France",
