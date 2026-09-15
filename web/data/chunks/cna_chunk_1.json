@@ -596,16 +596,16 @@
       "rank": 64,
       "active_cna_count": 339,
       "percentile": 81.4,
-      "total_cves": 80,
-      "recent_cves": 80,
+      "total_cves": 81,
+      "recent_cves": 81,
       "is_active": true,
       "scores": {
-        "overall_average_score": 87.38,
+        "overall_average_score": 87.28,
         "foundational_completeness": 100.0,
         "root_cause_analysis": 100.0,
         "software_identification": 0.0,
         "severity_and_impact": 100.0,
-        "patchinfo": 73.75
+        "patchinfo": 72.84
       },
       "trend": {
         "direction": "steady",
@@ -988,18 +988,18 @@
       ]
     },
     {
-      "shortName": "dotCMS",
-      "detailFile": "dotCMS__CNA-2023-0001.json",
-      "organizationName": "dotCMS LLC",
-      "cnaType": "Hosted Service",
+      "shortName": "Silabs",
+      "detailFile": "Silabs__CNA-2021-0056.json",
+      "organizationName": "Silicon Labs",
+      "cnaType": "Vendor",
       "cnaTypes": [
-        "Hosted Service"
+        "Vendor"
       ],
       "rank": 73,
       "active_cna_count": 339,
       "percentile": 78.8,
-      "total_cves": 2,
-      "recent_cves": 2,
+      "total_cves": 34,
+      "recent_cves": 34,
       "is_active": true,
       "scores": {
         "overall_average_score": 85.0,
@@ -1014,26 +1014,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All dotCMS product services including the vulnerabilities reported in our open source core located at <a href='https://github.com/dotCMS/core' target='_blank'>https://github.com/dotCMS/core</a>.",
+      "scope": "Silicon Labs issues only.",
       "advisories": [
         {
           "label": "Advisories",
-          "language": "",
-          "url": "https://www.dotcms.com/docs/latest/known-security-issues"
+          "url": "https://community.silabs.com/s/alert/Alert__c/00B1M000009sQ4R"
         }
       ],
-      "officialCnaID": "CNA-2023-0001",
+      "officialCnaID": "CNA-2021-0056",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.dotcms.com/docs/latest/responsible-disclosure-policy"
-        },
-        {
-          "label": "Reporting Issues",
-          "language": "",
-          "url": "https://www.dotcms.com/docs/latest/security-and-privacy#:~:text=dotCMS%20will%20disclose%20all%20issues,fix%20the%20reported%20security%20issue"
+          "url": "https://www.silabs.com/security/security-vulnerability-disclosure-policy"
         }
       ]
     },
@@ -1082,18 +1076,18 @@
       ]
     },
     {
-      "shortName": "Silabs",
-      "detailFile": "Silabs__CNA-2021-0056.json",
-      "organizationName": "Silicon Labs",
-      "cnaType": "Vendor",
+      "shortName": "dotCMS",
+      "detailFile": "dotCMS__CNA-2023-0001.json",
+      "organizationName": "dotCMS LLC",
+      "cnaType": "Hosted Service",
       "cnaTypes": [
-        "Vendor"
+        "Hosted Service"
       ],
       "rank": 73,
       "active_cna_count": 339,
       "percentile": 78.8,
-      "total_cves": 34,
-      "recent_cves": 34,
+      "total_cves": 2,
+      "recent_cves": 2,
       "is_active": true,
       "scores": {
         "overall_average_score": 85.0,
@@ -1108,20 +1102,26 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Silicon Labs issues only.",
+      "scope": "All dotCMS product services including the vulnerabilities reported in our open source core located at <a href='https://github.com/dotCMS/core' target='_blank'>https://github.com/dotCMS/core</a>.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://community.silabs.com/s/alert/Alert__c/00B1M000009sQ4R"
+          "language": "",
+          "url": "https://www.dotcms.com/docs/latest/known-security-issues"
         }
       ],
-      "officialCnaID": "CNA-2021-0056",
+      "officialCnaID": "CNA-2023-0001",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.silabs.com/security/security-vulnerability-disclosure-policy"
+          "url": "https://www.dotcms.com/docs/latest/responsible-disclosure-policy"
+        },
+        {
+          "label": "Reporting Issues",
+          "language": "",
+          "url": "https://www.dotcms.com/docs/latest/security-and-privacy#:~:text=dotCMS%20will%20disclose%20all%20issues,fix%20the%20reported%20security%20issue"
         }
       ]
     },
@@ -1262,6 +1262,62 @@
       ]
     },
     {
+      "shortName": "Docker",
+      "detailFile": "Docker__CNA-2022-0050.json",
+      "organizationName": "Docker Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 78,
+      "active_cna_count": 339,
+      "percentile": 77.3,
+      "total_cves": 14,
+      "recent_cves": 14,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 84.29,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 35.71,
+        "severity_and_impact": 100.0,
+        "patchinfo": 7.14
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All Docker products, including Docker Desktop and Docker Hub, as well as Docker maintained open source projects.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "language": "",
+          "url": "https://docs.docker.com/security/"
+        },
+        {
+          "label": "Desktop Release Notes",
+          "language": "",
+          "url": "https://docs.docker.com/desktop/release-notes/"
+        },
+        {
+          "label": "Engine Release Notes",
+          "language": "",
+          "url": "https://docs.docker.com/engine/release-notes/"
+        }
+      ],
+      "officialCnaID": "CNA-2022-0050",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.docker.com/trust/vulnerability-disclosure-policy/"
+        }
+      ]
+    },
+    {
       "shortName": "PingIdentity",
       "detailFile": "PingIdentity__CNA-2021-0042.json",
       "organizationName": "Ping Identity Corporation",
@@ -1271,9 +1327,9 @@
         "Researcher",
         "Bug Bounty Provider"
       ],
-      "rank": 79,
+      "rank": 80,
       "active_cna_count": 339,
-      "percentile": 77.0,
+      "percentile": 76.7,
       "total_cves": 5,
       "recent_cves": 5,
       "is_active": true,
@@ -1320,9 +1376,9 @@
       "cnaTypes": [
         "Vendor"
       ],
-      "rank": 80,
+      "rank": 81,
       "active_cna_count": 339,
-      "percentile": 76.7,
+      "percentile": 76.4,
       "total_cves": 14,
       "recent_cves": 14,
       "is_active": true,
@@ -1353,62 +1409,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.johnsoncontrols.com/trust-center/cybersecurity/response#CoordinatedDisclosure"
-        }
-      ]
-    },
-    {
-      "shortName": "Docker",
-      "detailFile": "Docker__CNA-2022-0050.json",
-      "organizationName": "Docker Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 81,
-      "active_cna_count": 339,
-      "percentile": 76.4,
-      "total_cves": 13,
-      "recent_cves": 13,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 83.85,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 30.77,
-        "severity_and_impact": 100.0,
-        "patchinfo": 7.69
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All Docker products, including Docker Desktop and Docker Hub, as well as Docker maintained open source projects.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "language": "",
-          "url": "https://docs.docker.com/security/"
-        },
-        {
-          "label": "Desktop Release Notes",
-          "language": "",
-          "url": "https://docs.docker.com/desktop/release-notes/"
-        },
-        {
-          "label": "Engine Release Notes",
-          "language": "",
-          "url": "https://docs.docker.com/engine/release-notes/"
-        }
-      ],
-      "officialCnaID": "CNA-2022-0050",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.docker.com/trust/vulnerability-disclosure-policy/"
         }
       ]
     },
@@ -1454,6 +1454,50 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.python.org/cve-numbering-authority/"
+        }
+      ]
+    },
+    {
+      "shortName": "Rockwell",
+      "detailFile": "Rockwell__CNA-2022-0028.json",
+      "organizationName": "Rockwell Automation",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 83,
+      "active_cna_count": 339,
+      "percentile": 75.8,
+      "total_cves": 42,
+      "recent_cves": 42,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 83.33,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 95.24,
+        "software_identification": 40.48,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All Rockwell Automation products.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.rockwellautomation.com/en-us/trust-center/security-advisories.html"
+        }
+      ],
+      "officialCnaID": "CNA-2022-0028",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.rockwellautomation.com/en-us/company/about-us/legal-notices/vulnerability-policy.html..html"
         }
       ]
     },
@@ -1542,50 +1586,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.cisa.gov/coordinated-vulnerability-disclosure-process"
-        }
-      ]
-    },
-    {
-      "shortName": "Rockwell",
-      "detailFile": "Rockwell__CNA-2022-0028.json",
-      "organizationName": "Rockwell Automation",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 83,
-      "active_cna_count": 339,
-      "percentile": 75.8,
-      "total_cves": 42,
-      "recent_cves": 42,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 83.33,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 95.24,
-        "software_identification": 40.48,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All Rockwell Automation products.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.rockwellautomation.com/en-us/trust-center/security-advisories.html"
-        }
-      ],
-      "officialCnaID": "CNA-2022-0028",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.rockwellautomation.com/en-us/company/about-us/legal-notices/vulnerability-policy.html..html"
         }
       ]
     },
@@ -1687,6 +1687,54 @@
       ]
     },
     {
+      "shortName": "ENISA",
+      "detailFile": "ENISA__CNA-2024-0008.json",
+      "organizationName": "EU Agency for Cybersecurity (ENISA)",
+      "cnaType": "Consortium",
+      "cnaTypes": [
+        "Consortium"
+      ],
+      "rank": 88,
+      "active_cna_count": 339,
+      "percentile": 74.3,
+      "total_cves": 33,
+      "recent_cves": 33,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 82.73,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 15.15,
+        "severity_and_impact": 100.0,
+        "patchinfo": 12.12
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "<strong>Root Scope:</strong> European Union (EU) member states/EU authorities, EU CSIRTs network members, and cooperative partners under ENISA’s mandate as well as other CNAs who choose ENISA as their Root.<br/><br/><strong>CNA Scope:</strong> Vulnerabilities in information technology (IT) products discovered by European Union (EU) Computer Security Incident Response Teams (CSIRTs) or reported to ENISA or to EU CSIRTs for coordinated disclosure, as long as they do not fall under a CNA with a more specific scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://github.com/enisaeu/CNW/tree/main/advisories"
+        },
+        {
+          "label": "Vulnerability List",
+          "url": "https://euvd.enisa.europa.eu/search?assigner=ENISA"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0008",
+      "country": "Greece",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://csirtsnetwork.eu/homepage?tab=cvd"
+        }
+      ]
+    },
+    {
       "shortName": "Mandiant",
       "detailFile": "Mandiant__CNA-2023-0051.json",
       "organizationName": "Mandiant Inc.",
@@ -1695,9 +1743,9 @@
         "Researcher",
         "Vendor"
       ],
-      "rank": 88,
+      "rank": 89,
       "active_cna_count": 339,
-      "percentile": 74.3,
+      "percentile": 74.0,
       "total_cves": 6,
       "recent_cves": 6,
       "is_active": true,
@@ -1740,9 +1788,9 @@
         "Vendor",
         "Researcher"
       ],
-      "rank": 88,
+      "rank": 89,
       "active_cna_count": 339,
-      "percentile": 74.3,
+      "percentile": 74.0,
       "total_cves": 4,
       "recent_cves": 4,
       "is_active": true,
@@ -1785,9 +1833,9 @@
         "Vendor",
         "Open Source"
       ],
-      "rank": 88,
+      "rank": 89,
       "active_cna_count": 339,
-      "percentile": 74.3,
+      "percentile": 74.0,
       "total_cves": 8,
       "recent_cves": 8,
       "is_active": true,
@@ -1829,9 +1877,9 @@
       "cnaTypes": [
         "CERT"
       ],
-      "rank": 91,
+      "rank": 92,
       "active_cna_count": 339,
-      "percentile": 73.5,
+      "percentile": 73.2,
       "total_cves": 80,
       "recent_cves": 80,
       "is_active": true,
@@ -1874,9 +1922,9 @@
         "Vendor",
         "Researcher"
       ],
-      "rank": 92,
+      "rank": 93,
       "active_cna_count": 339,
-      "percentile": 73.2,
+      "percentile": 72.9,
       "total_cves": 5,
       "recent_cves": 5,
       "is_active": true,
@@ -1918,9 +1966,9 @@
       "cnaTypes": [
         "Vendor"
       ],
-      "rank": 92,
+      "rank": 93,
       "active_cna_count": 339,
-      "percentile": 73.2,
+      "percentile": 72.9,
       "total_cves": 5,
       "recent_cves": 5,
       "is_active": true,
@@ -1964,9 +2012,9 @@
         "Open Source",
         "Researcher"
       ],
-      "rank": 94,
+      "rank": 95,
       "active_cna_count": 339,
-      "percentile": 72.6,
+      "percentile": 72.3,
       "total_cves": 70,
       "recent_cves": 70,
       "is_active": true,
@@ -2008,9 +2056,9 @@
       "cnaTypes": [
         "Researcher"
       ],
-      "rank": 95,
+      "rank": 96,
       "active_cna_count": 339,
-      "percentile": 72.3,
+      "percentile": 72.0,
       "total_cves": 11,
       "recent_cves": 11,
       "is_active": true,
@@ -2041,54 +2089,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://projectblack.io/blog/vulnerability-disclosure-policy/"
-        }
-      ]
-    },
-    {
-      "shortName": "ENISA",
-      "detailFile": "ENISA__CNA-2024-0008.json",
-      "organizationName": "EU Agency for Cybersecurity (ENISA)",
-      "cnaType": "Consortium",
-      "cnaTypes": [
-        "Consortium"
-      ],
-      "rank": 96,
-      "active_cna_count": 339,
-      "percentile": 72.0,
-      "total_cves": 28,
-      "recent_cves": 28,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 81.43,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 14.29
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "<strong>Root Scope:</strong> European Union (EU) member states/EU authorities, EU CSIRTs network members, and cooperative partners under ENISA’s mandate as well as other CNAs who choose ENISA as their Root.<br/><br/><strong>CNA Scope:</strong> Vulnerabilities in information technology (IT) products discovered by European Union (EU) Computer Security Incident Response Teams (CSIRTs) or reported to ENISA or to EU CSIRTs for coordinated disclosure, as long as they do not fall under a CNA with a more specific scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://github.com/enisaeu/CNW/tree/main/advisories"
-        },
-        {
-          "label": "Vulnerability List",
-          "url": "https://euvd.enisa.europa.eu/search?assigner=ENISA"
-        }
-      ],
-      "officialCnaID": "CNA-2024-0008",
-      "country": "Greece",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://csirtsnetwork.eu/homepage?tab=cvd"
         }
       ]
     },
