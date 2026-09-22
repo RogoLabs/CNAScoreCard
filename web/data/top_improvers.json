@@ -58,7 +58,7 @@
     },
     {
       "cna_name": "VulDB",
-      "total_improvement": 132.02247191011236,
+      "total_improvement": 133.14917127071823,
       "category_improvements": {
         "root_cause_analysis": {
           "first_period": 100.0,
@@ -77,12 +77,40 @@
         },
         "patch_information": {
           "first_period": 0.0,
-          "last_period": 32.02247191011236,
-          "improvement": 32.02247191011236
+          "last_period": 33.14917127071823,
+          "improvement": 33.14917127071823
         }
       },
-      "total_cves_analyzed": 10894,
+      "total_cves_analyzed": 10897,
       "analysis_days": 511
+    },
+    {
+      "cna_name": "glibc",
+      "total_improvement": 121.5909090909091,
+      "category_improvements": {
+        "root_cause_analysis": {
+          "first_period": 75.0,
+          "last_period": 100.0,
+          "improvement": 25.0
+        },
+        "severity_and_impact": {
+          "first_period": 12.5,
+          "last_period": 100.0,
+          "improvement": 87.5
+        },
+        "software_identification": {
+          "first_period": 0.0,
+          "last_period": 0.0,
+          "improvement": 0.0
+        },
+        "patch_information": {
+          "first_period": 0.0,
+          "last_period": 9.090909090909092,
+          "improvement": 9.090909090909092
+        }
+      },
+      "total_cves_analyzed": 27,
+      "analysis_days": 19
     },
     {
       "cna_name": "Sonatype",
@@ -165,36 +193,8 @@
           "improvement": 8.333333333333343
         }
       },
-      "total_cves_analyzed": 174,
-      "analysis_days": 96
-    },
-    {
-      "cna_name": "hackerone",
-      "total_improvement": 105.19480519480518,
-      "category_improvements": {
-        "root_cause_analysis": {
-          "first_period": 0.0,
-          "last_period": 90.9090909090909,
-          "improvement": 90.9090909090909
-        },
-        "severity_and_impact": {
-          "first_period": 85.71428571428572,
-          "last_period": 100.0,
-          "improvement": 14.285714285714278
-        },
-        "software_identification": {
-          "first_period": 0.0,
-          "last_period": 0.0,
-          "improvement": 0.0
-        },
-        "patch_information": {
-          "first_period": 0.0,
-          "last_period": 0.0,
-          "improvement": 0.0
-        }
-      },
-      "total_cves_analyzed": 295,
-      "analysis_days": 75
+      "total_cves_analyzed": 176,
+      "analysis_days": 97
     },
     {
       "cna_name": "CERT-PL",
@@ -225,34 +225,6 @@
       "analysis_days": 131
     },
     {
-      "cna_name": "glibc",
-      "total_improvement": 103.40909090909092,
-      "category_improvements": {
-        "root_cause_analysis": {
-          "first_period": 75.0,
-          "last_period": 100.0,
-          "improvement": 25.0
-        },
-        "severity_and_impact": {
-          "first_period": 12.5,
-          "last_period": 81.81818181818183,
-          "improvement": 69.31818181818183
-        },
-        "software_identification": {
-          "first_period": 0.0,
-          "last_period": 0.0,
-          "improvement": 0.0
-        },
-        "patch_information": {
-          "first_period": 0.0,
-          "last_period": 9.090909090909092,
-          "improvement": 9.090909090909092
-        }
-      },
-      "total_cves_analyzed": 25,
-      "analysis_days": 18
-    },
-    {
       "cna_name": "zephyr",
       "total_improvement": 100.0,
       "category_improvements": {
@@ -279,9 +251,37 @@
       },
       "total_cves_analyzed": 156,
       "analysis_days": 65
+    },
+    {
+      "cna_name": "CERTVDE",
+      "total_improvement": 100.0,
+      "category_improvements": {
+        "root_cause_analysis": {
+          "first_period": 100.0,
+          "last_period": 100.0,
+          "improvement": 0.0
+        },
+        "severity_and_impact": {
+          "first_period": 100.0,
+          "last_period": 100.0,
+          "improvement": 0.0
+        },
+        "software_identification": {
+          "first_period": 0.0,
+          "last_period": 100.0,
+          "improvement": 100.0
+        },
+        "patch_information": {
+          "first_period": 0.0,
+          "last_period": 0.0,
+          "improvement": 0.0
+        }
+      },
+      "total_cves_analyzed": 303,
+      "analysis_days": 81
     }
   ],
-  "generated_at": "2026-09-22T15:51:09.937980",
+  "generated_at": "2026-09-22T20:35:37.863444",
   "analysis_criteria": {
     "minimum_cves": 5,
     "top_n_count": 10
