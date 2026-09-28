@@ -1,8 +1,8 @@
 {
   "cna_info": {
     "cna": "kubernetes",
-    "total_cves": 1,
-    "total_cves_scored": 1,
+    "total_cves": 2,
+    "total_cves_scored": 2,
     "organizationName": "Kubernetes",
     "scope": "Kubernetes issues only.",
     "advisories": [
@@ -34,31 +34,44 @@
   },
   "trend_direction": "steady",
   "trend_description": "No significant change",
-  "rank": 112,
-  "active_cna_count": 341,
-  "percentile": 67.4,
+  "rank": 75,
+  "active_cna_count": 340,
+  "percentile": 78.2,
   "cna_scoring": [
     {
-      "total_cves": 1,
-      "total_cves_scored": 1,
-      "recent_cves_count": 1,
-      "overall_average_score": 80.0,
+      "total_cves": 2,
+      "total_cves_scored": 2,
+      "recent_cves_count": 2,
+      "overall_average_score": 85.0,
       "average_foundational_completeness": 50.0,
       "average_root_cause_analysis": 15.0,
       "average_software_identification": 0.0,
       "average_severity_context": 15.0,
-      "average_patchinfo": 0.0,
+      "average_patchinfo": 5.0,
       "percent_foundational_completeness": 100.0,
       "percent_root_cause_analysis": 100.0,
       "percent_software_identification": 0.0,
       "percent_severity_and_impact": 100.0,
-      "percent_patchinfo": 0.0,
+      "percent_patchinfo": 50.0,
       "trend_direction": "steady",
       "trend_description": "No significant change",
       "monthly_trends": []
     }
   ],
   "recent_cves": [
+    {
+      "cveId": "CVE-2026-19444",
+      "assigningCna": "kubernetes",
+      "datePublished": "2026-09-28",
+      "totalCveScore": 90,
+      "scoreBreakdown": {
+        "foundationalCompleteness": 50,
+        "rootCauseAnalysis": 15,
+        "severityAndImpactContext": 15,
+        "softwareIdentification": 0,
+        "patchinfo": 10
+      }
+    },
     {
       "cveId": "CVE-2026-15687",
       "assigningCna": "kubernetes",
