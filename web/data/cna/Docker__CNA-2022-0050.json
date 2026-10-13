@@ -1,8 +1,8 @@
 {
   "cna_info": {
     "cna": "Docker",
-    "total_cves": 32,
-    "total_cves_scored": 32,
+    "total_cves": 33,
+    "total_cves_scored": 33,
     "organizationName": "Docker Inc.",
     "scope": "All Docker products, including Docker Desktop and Docker Hub, as well as Docker maintained open source projects.",
     "advisories": [
@@ -45,31 +45,70 @@
   },
   "trend_direction": "steady",
   "trend_description": "No significant change",
-  "rank": 70,
+  "rank": 71,
   "active_cna_count": 354,
-  "percentile": 80.5,
+  "percentile": 80.2,
   "cna_scoring": [
     {
-      "total_cves": 32,
-      "total_cves_scored": 32,
-      "recent_cves_count": 32,
-      "overall_average_score": 86.72,
+      "total_cves": 33,
+      "total_cves_scored": 33,
+      "recent_cves_count": 33,
+      "overall_average_score": 86.52,
       "average_foundational_completeness": 50.0,
-      "average_root_cause_analysis": 14.53,
-      "average_software_identification": 3.12,
+      "average_root_cause_analysis": 14.55,
+      "average_software_identification": 3.03,
       "average_severity_context": 15.0,
-      "average_patchinfo": 4.06,
+      "average_patchinfo": 3.94,
       "percent_foundational_completeness": 100.0,
-      "percent_root_cause_analysis": 96.88,
-      "percent_software_identification": 31.25,
+      "percent_root_cause_analysis": 96.97,
+      "percent_software_identification": 30.3,
       "percent_severity_and_impact": 100.0,
-      "percent_patchinfo": 40.62,
+      "percent_patchinfo": 39.39,
       "trend_direction": "steady",
       "trend_description": "No significant change",
       "monthly_trends": []
     }
   ],
   "recent_cves": [
+    {
+      "cveId": "CVE-2026-12039",
+      "assigningCna": "Docker",
+      "datePublished": "2026-06-18",
+      "totalCveScore": 90,
+      "scoreBreakdown": {
+        "foundationalCompleteness": 50,
+        "rootCauseAnalysis": 15,
+        "severityAndImpactContext": 15,
+        "softwareIdentification": 10,
+        "patchinfo": 0
+      }
+    },
+    {
+      "cveId": "CVE-2026-12539",
+      "assigningCna": "Docker",
+      "datePublished": "2026-06-18",
+      "totalCveScore": 90,
+      "scoreBreakdown": {
+        "foundationalCompleteness": 50,
+        "rootCauseAnalysis": 15,
+        "severityAndImpactContext": 15,
+        "softwareIdentification": 10,
+        "patchinfo": 0
+      }
+    },
+    {
+      "cveId": "CVE-2026-17106",
+      "assigningCna": "Docker",
+      "datePublished": "2026-08-18",
+      "totalCveScore": 100,
+      "scoreBreakdown": {
+        "foundationalCompleteness": 50,
+        "rootCauseAnalysis": 15,
+        "severityAndImpactContext": 15,
+        "softwareIdentification": 10,
+        "patchinfo": 10
+      }
+    },
     {
       "cveId": "CVE-2026-8936",
       "assigningCna": "Docker",
@@ -110,16 +149,16 @@
       }
     },
     {
-      "cveId": "CVE-2026-17106",
+      "cveId": "CVE-2026-105445",
       "assigningCna": "Docker",
-      "datePublished": "2026-08-18",
-      "totalCveScore": 100,
+      "datePublished": "2026-10-13",
+      "totalCveScore": 80,
       "scoreBreakdown": {
         "foundationalCompleteness": 50,
         "rootCauseAnalysis": 15,
         "severityAndImpactContext": 15,
-        "softwareIdentification": 10,
-        "patchinfo": 10
+        "softwareIdentification": 0,
+        "patchinfo": 0
       }
     },
     {
@@ -171,32 +210,6 @@
         "rootCauseAnalysis": 15,
         "severityAndImpactContext": 15,
         "softwareIdentification": 0,
-        "patchinfo": 0
-      }
-    },
-    {
-      "cveId": "CVE-2026-12039",
-      "assigningCna": "Docker",
-      "datePublished": "2026-06-18",
-      "totalCveScore": 90,
-      "scoreBreakdown": {
-        "foundationalCompleteness": 50,
-        "rootCauseAnalysis": 15,
-        "severityAndImpactContext": 15,
-        "softwareIdentification": 10,
-        "patchinfo": 0
-      }
-    },
-    {
-      "cveId": "CVE-2026-12539",
-      "assigningCna": "Docker",
-      "datePublished": "2026-06-18",
-      "totalCveScore": 90,
-      "scoreBreakdown": {
-        "foundationalCompleteness": 50,
-        "rootCauseAnalysis": 15,
-        "severityAndImpactContext": 15,
-        "softwareIdentification": 10,
         "patchinfo": 0
       }
     },
