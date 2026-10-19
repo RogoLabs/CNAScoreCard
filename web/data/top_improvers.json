@@ -57,6 +57,34 @@
       "analysis_days": 50
     },
     {
+      "cna_name": "VulDB",
+      "total_improvement": 123.5,
+      "category_improvements": {
+        "root_cause_analysis": {
+          "first_period": 100.0,
+          "last_period": 99.0,
+          "improvement": -1.0
+        },
+        "severity_and_impact": {
+          "first_period": 100.0,
+          "last_period": 100.0,
+          "improvement": 0.0
+        },
+        "software_identification": {
+          "first_period": 0.0,
+          "last_period": 100.0,
+          "improvement": 100.0
+        },
+        "patch_information": {
+          "first_period": 0.0,
+          "last_period": 24.500000000000004,
+          "improvement": 24.500000000000004
+        }
+      },
+      "total_cves_analyzed": 11658,
+      "analysis_days": 535
+    },
+    {
       "cna_name": "glibc",
       "total_improvement": 122.5,
       "category_improvements": {
@@ -83,34 +111,6 @@
       },
       "total_cves_analyzed": 28,
       "analysis_days": 20
-    },
-    {
-      "cna_name": "VulDB",
-      "total_improvement": 122.45989304812835,
-      "category_improvements": {
-        "root_cause_analysis": {
-          "first_period": 100.0,
-          "last_period": 98.93048128342247,
-          "improvement": -1.0695187165775337
-        },
-        "severity_and_impact": {
-          "first_period": 100.0,
-          "last_period": 100.0,
-          "improvement": 0.0
-        },
-        "software_identification": {
-          "first_period": 0.0,
-          "last_period": 100.0,
-          "improvement": 100.0
-        },
-        "patch_information": {
-          "first_period": 0.0,
-          "last_period": 23.52941176470588,
-          "improvement": 23.52941176470588
-        }
-      },
-      "total_cves_analyzed": 11645,
-      "analysis_days": 535
     },
     {
       "cna_name": "CIRCL",
@@ -281,7 +281,7 @@
       "analysis_days": 108
     }
   ],
-  "generated_at": "2026-10-19T17:53:09.404037",
+  "generated_at": "2026-10-19T21:49:52.675481",
   "analysis_criteria": {
     "minimum_cves": 5,
     "top_n_count": 10
