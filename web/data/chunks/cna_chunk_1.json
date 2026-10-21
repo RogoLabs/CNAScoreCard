@@ -104,8 +104,8 @@
       "rank": 53,
       "active_cna_count": 353,
       "percentile": 85.3,
-      "total_cves": 1066,
-      "recent_cves": 1066,
+      "total_cves": 1065,
+      "recent_cves": 1065,
       "is_active": true,
       "scores": {
         "overall_average_score": 89.48,
@@ -318,50 +318,6 @@
       ]
     },
     {
-      "shortName": "Moxa",
-      "detailFile": "Moxa__CNA-2023-0029.json",
-      "organizationName": "Moxa Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 58,
-      "active_cna_count": 353,
-      "percentile": 83.9,
-      "total_cves": 12,
-      "recent_cves": 12,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 89.17,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 91.67,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Moxa products only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.moxa.com/en/support/product-support/security-advisory"
-        }
-      ],
-      "officialCnaID": "CNA-2023-0029",
-      "country": "Taiwan",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.moxa.com/en/support/product-support/security-advisory/cybersecurity-vulnerability-management-policy"
-        }
-      ]
-    },
-    {
       "shortName": "Deltaww",
       "detailFile": "Deltaww__CNA-2024-0082.json",
       "organizationName": "Delta Electronics, Inc.",
@@ -402,6 +358,50 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.deltaww.com/en-US/information/Cybersecurity-Vulnerability-Management-Policy"
+        }
+      ]
+    },
+    {
+      "shortName": "Moxa",
+      "detailFile": "Moxa__CNA-2023-0029.json",
+      "organizationName": "Moxa Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 58,
+      "active_cna_count": 353,
+      "percentile": 83.9,
+      "total_cves": 12,
+      "recent_cves": 12,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 89.17,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 91.67,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Moxa products only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.moxa.com/en/support/product-support/security-advisory"
+        }
+      ],
+      "officialCnaID": "CNA-2023-0029",
+      "country": "Taiwan",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.moxa.com/en/support/product-support/security-advisory/cybersecurity-vulnerability-management-policy"
         }
       ]
     },
@@ -1233,13 +1233,12 @@
       ]
     },
     {
-      "shortName": "kubernetes",
-      "detailFile": "kubernetes__CNA-2017-0022.json",
-      "organizationName": "Kubernetes",
+      "shortName": "CrowdStrike",
+      "detailFile": "CrowdStrike__CNA-2023-0044.json",
+      "organizationName": "CrowdStrike Holdings, Inc.",
       "cnaType": "Vendor",
       "cnaTypes": [
-        "Vendor",
-        "Open Source"
+        "Vendor"
       ],
       "rank": 78,
       "active_cna_count": 353,
@@ -1251,29 +1250,29 @@
         "overall_average_score": 85.0,
         "foundational_completeness": 100.0,
         "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
+        "software_identification": 50.0,
         "severity_and_impact": 100.0,
-        "patchinfo": 50.0
+        "patchinfo": 0.0
       },
       "trend": {
         "direction": "steady",
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Kubernetes issues only.",
+      "scope": "All CrowdStrike products.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://kubernetes.io/cve"
+          "url": "https://www.crowdstrike.com/security-advisories/"
         }
       ],
-      "officialCnaID": "CNA-2017-0022",
+      "officialCnaID": "CNA-2023-0044",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://kubernetes.io/security"
+          "url": "https://www.crowdstrike.com/report-a-security-bug/"
         }
       ]
     },
@@ -1318,6 +1317,101 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.toreon.com/cna-disclosure-policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "dotCMS",
+      "detailFile": "dotCMS__CNA-2023-0001.json",
+      "organizationName": "dotCMS LLC",
+      "cnaType": "Hosted Service",
+      "cnaTypes": [
+        "Hosted Service"
+      ],
+      "rank": 78,
+      "active_cna_count": 353,
+      "percentile": 78.2,
+      "total_cves": 2,
+      "recent_cves": 2,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 85.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 50.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All dotCMS product services including the vulnerabilities reported in our open source core located at <a href='https://github.com/dotCMS/core' target='_blank'>https://github.com/dotCMS/core</a>.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "language": "",
+          "url": "https://www.dotcms.com/docs/latest/known-security-issues"
+        }
+      ],
+      "officialCnaID": "CNA-2023-0001",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.dotcms.com/docs/latest/responsible-disclosure-policy"
+        },
+        {
+          "label": "Reporting Issues",
+          "language": "",
+          "url": "https://www.dotcms.com/docs/latest/security-and-privacy#:~:text=dotCMS%20will%20disclose%20all%20issues,fix%20the%20reported%20security%20issue"
+        }
+      ]
+    },
+    {
+      "shortName": "kubernetes",
+      "detailFile": "kubernetes__CNA-2017-0022.json",
+      "organizationName": "Kubernetes",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 78,
+      "active_cna_count": 353,
+      "percentile": 78.2,
+      "total_cves": 2,
+      "recent_cves": 2,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 85.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 50.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Kubernetes issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://kubernetes.io/cve"
+        }
+      ],
+      "officialCnaID": "CNA-2017-0022",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://kubernetes.io/security"
         }
       ]
     },
@@ -1408,100 +1502,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.flexera.com/products/operations/software-vulnerability-research/secunia-research/disclosure-policy.html?_ga=2.126100429.1927534686.1582843801-707336045.1578583910"
-        }
-      ]
-    },
-    {
-      "shortName": "dotCMS",
-      "detailFile": "dotCMS__CNA-2023-0001.json",
-      "organizationName": "dotCMS LLC",
-      "cnaType": "Hosted Service",
-      "cnaTypes": [
-        "Hosted Service"
-      ],
-      "rank": 78,
-      "active_cna_count": 353,
-      "percentile": 78.2,
-      "total_cves": 2,
-      "recent_cves": 2,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 85.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 50.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All dotCMS product services including the vulnerabilities reported in our open source core located at <a href='https://github.com/dotCMS/core' target='_blank'>https://github.com/dotCMS/core</a>.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "language": "",
-          "url": "https://www.dotcms.com/docs/latest/known-security-issues"
-        }
-      ],
-      "officialCnaID": "CNA-2023-0001",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.dotcms.com/docs/latest/responsible-disclosure-policy"
-        },
-        {
-          "label": "Reporting Issues",
-          "language": "",
-          "url": "https://www.dotcms.com/docs/latest/security-and-privacy#:~:text=dotCMS%20will%20disclose%20all%20issues,fix%20the%20reported%20security%20issue"
-        }
-      ]
-    },
-    {
-      "shortName": "CrowdStrike",
-      "detailFile": "CrowdStrike__CNA-2023-0044.json",
-      "organizationName": "CrowdStrike Holdings, Inc.",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 78,
-      "active_cna_count": 353,
-      "percentile": 78.2,
-      "total_cves": 2,
-      "recent_cves": 2,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 85.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 50.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All CrowdStrike products.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.crowdstrike.com/security-advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2023-0044",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.crowdstrike.com/report-a-security-bug/"
         }
       ]
     },
@@ -2010,19 +2010,19 @@
       "cnaTypes": [
         "Consortium"
       ],
-      "rank": 94,
+      "rank": 95,
       "active_cna_count": 353,
-      "percentile": 73.7,
-      "total_cves": 40,
-      "recent_cves": 40,
+      "percentile": 73.4,
+      "total_cves": 42,
+      "recent_cves": 42,
       "is_active": true,
       "scores": {
-        "overall_average_score": 82.5,
+        "overall_average_score": 82.38,
         "foundational_completeness": 100.0,
         "root_cause_analysis": 100.0,
-        "software_identification": 12.5,
+        "software_identification": 11.9,
         "severity_and_impact": 100.0,
-        "patchinfo": 12.5
+        "patchinfo": 11.9
       },
       "trend": {
         "direction": "steady",
