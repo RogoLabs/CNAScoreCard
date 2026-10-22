@@ -1,8 +1,8 @@
 {
   "cna_info": {
     "cna": "Checkmarx",
-    "total_cves": 5,
-    "total_cves_scored": 5,
+    "total_cves": 7,
+    "total_cves_scored": 7,
     "organizationName": "Checkmarx",
     "scope": "Vulnerabilities in Checkmarx products and open source vulnerabilities discovered by, or reported to, Checkmarx, that are not in another CNA’s scope.",
     "advisories": [
@@ -35,25 +35,25 @@
   },
   "trend_direction": "steady",
   "trend_description": "No significant change",
-  "rank": 11,
+  "rank": 15,
   "active_cna_count": 354,
-  "percentile": 97.2,
+  "percentile": 96.0,
   "cna_scoring": [
     {
-      "total_cves": 5,
-      "total_cves_scored": 5,
-      "recent_cves_count": 5,
-      "overall_average_score": 98.0,
+      "total_cves": 7,
+      "total_cves_scored": 7,
+      "recent_cves_count": 7,
+      "overall_average_score": 92.86,
       "average_foundational_completeness": 50.0,
       "average_root_cause_analysis": 15.0,
-      "average_software_identification": 8.0,
+      "average_software_identification": 5.71,
       "average_severity_context": 15.0,
-      "average_patchinfo": 10.0,
+      "average_patchinfo": 7.14,
       "percent_foundational_completeness": 100.0,
       "percent_root_cause_analysis": 100.0,
-      "percent_software_identification": 80.0,
+      "percent_software_identification": 57.14,
       "percent_severity_and_impact": 100.0,
-      "percent_patchinfo": 100.0,
+      "percent_patchinfo": 71.43,
       "trend_direction": "steady",
       "trend_description": "No significant change",
       "monthly_trends": []
@@ -74,7 +74,20 @@
       }
     },
     {
-      "cveId": "CVE-2026-109449",
+      "cveId": "CVE-2026-9591",
+      "assigningCna": "Checkmarx",
+      "datePublished": "2026-06-17",
+      "totalCveScore": 100,
+      "scoreBreakdown": {
+        "foundationalCompleteness": 50,
+        "rootCauseAnalysis": 15,
+        "severityAndImpactContext": 15,
+        "softwareIdentification": 10,
+        "patchinfo": 10
+      }
+    },
+    {
+      "cveId": "CVE-2026-109413",
       "assigningCna": "Checkmarx",
       "datePublished": "2026-10-15",
       "totalCveScore": 100,
@@ -87,7 +100,7 @@
       }
     },
     {
-      "cveId": "CVE-2026-109413",
+      "cveId": "CVE-2026-109449",
       "assigningCna": "Checkmarx",
       "datePublished": "2026-10-15",
       "totalCveScore": 100,
@@ -113,16 +126,29 @@
       }
     },
     {
-      "cveId": "CVE-2026-9591",
+      "cveId": "CVE-2026-77157",
       "assigningCna": "Checkmarx",
-      "datePublished": "2026-06-17",
-      "totalCveScore": 100,
+      "datePublished": "2026-10-22",
+      "totalCveScore": 80,
       "scoreBreakdown": {
         "foundationalCompleteness": 50,
         "rootCauseAnalysis": 15,
         "severityAndImpactContext": 15,
-        "softwareIdentification": 10,
-        "patchinfo": 10
+        "softwareIdentification": 0,
+        "patchinfo": 0
+      }
+    },
+    {
+      "cveId": "CVE-2026-77156",
+      "assigningCna": "Checkmarx",
+      "datePublished": "2026-10-22",
+      "totalCveScore": 80,
+      "scoreBreakdown": {
+        "foundationalCompleteness": 50,
+        "rootCauseAnalysis": 15,
+        "severityAndImpactContext": 15,
+        "softwareIdentification": 0,
+        "patchinfo": 0
       }
     }
   ]
