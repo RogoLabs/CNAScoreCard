@@ -95,6 +95,7 @@ CNA_SCORECARD_FIELDS = {
     
     # Software Identification (10% weight)
     'affected.cpes': 'softwareIdentification',
+    'affected.packageURL': 'softwareIdentification',
     
     # Patch Information (10% weight)
     'references.patch': 'patchinfo',
@@ -111,6 +112,7 @@ CANONICAL_FIELDS = [
     {"field": "metrics.cvssV3_0", "importance": "High", "description": "CVSS v3.0 metrics", "cna_scorecard_category": "severityAndImpactContext"},
     {"field": "metrics.cvssV4_0", "importance": "High", "description": "CVSS v4.0 metrics", "cna_scorecard_category": "severityAndImpactContext"},
     {"field": "affected.cpes", "importance": "High", "description": "Common Platform Enumeration identifiers", "cna_scorecard_category": "softwareIdentification"},
+    {"field": "affected.packageURL", "importance": "High", "description": "Package URL (PURL) identifiers", "cna_scorecard_category": "softwareIdentification"},
     {"field": "references.patch", "importance": "High", "description": "Patch references", "cna_scorecard_category": "patchinfo"},
     
     # Non-measured fields (no cna_scorecard_category)

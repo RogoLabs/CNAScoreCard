@@ -15,6 +15,11 @@ from utils import extract_cna_short_name, format_date_string
 # Pre-compiled regex for CWE ID extraction (used in scoring hot path)
 _CWE_PATTERN = re.compile(r'CWE-\d+', re.IGNORECASE)
 
+# Package URL shape (pkg:type/namespace/name) up to any qualifiers or subpath, and
+# a version marker: an '@' after a name character (a leading '@' is an npm scope)
+_PURL_PATTERN = re.compile(r'^pkg:[A-Za-z][A-Za-z0-9.+-]*/[^?#]+')
+_PURL_VERSION_PATTERN = re.compile(r'[^/]@')
+
 # Initialize logging and configuration
 logger = logging.getLogger('cnascorecard.scoring')
 scoring_config = ScoringConfig()
@@ -27,7 +32,7 @@ def score_cve_record(cve: Dict[str, Any]) -> Dict[str, Any]:
     - Foundational Completeness (50): problemTypes, affected products, references, descriptions
     - Root Cause Analysis (15): valid CWE ID, specific CWE
     - Severity & Impact Context (15): CVSS v3/v4 metrics, valid CVSS vector string
-    - Software Identification (10): valid CPE in affected
+    - Software Identification (10): CPE or unversioned Package URL in affected
     - Patch Info (10): Patch/Vendor Advisory in references
 
     Args:
@@ -289,8 +294,9 @@ def _has_valid_cvss_vector(metrics: List[Dict[str, Any]]) -> bool:
 
 def _calculate_software_identification(cve: Dict[str, Any], cna: Dict[str, Any]) -> int:
     """
-    Calculate software identification score based on presence of CPE identifiers.
-    Checks both traditional affected[].cpes and CVE 5.1 cpeApplicability fields.
+    Calculate software identification score based on presence of CPE or PURL identifiers.
+    Checks traditional affected[].cpes, CVE 5.1 cpeApplicability, and CVE 5.2
+    affected[].packageURL fields.
     
     Args:
         cve: Full CVE record
@@ -315,7 +321,12 @@ def _calculate_software_identification(cve: Dict[str, Any], cna: Dict[str, Any])
         logger.debug(f"Software identification: {rule['weight']}/{rule['weight']} (CPE found in cpeApplicability)")
         return rule['weight']
     
-    logger.debug("Software identification: 0 (no CPE identifiers found in either field)")
+    # Check CVE 5.2 affected[].packageURL field
+    if isinstance(affected, list) and _has_package_urls(affected):
+        logger.debug(f"Software identification: {rule['weight']}/{rule['weight']} (PURL found in affected[].packageURL)")
+        return rule['weight']
+    
+    logger.debug("Software identification: 0 (no CPE or PURL identifiers found)")
     return 0
 
 
@@ -338,6 +349,47 @@ def _has_cpe_identifiers(affected: List[Dict[str, Any]]) -> bool:
             return True
             
     return False
+
+
+def _has_package_urls(affected: List[Dict[str, Any]]) -> bool:
+    """
+    Check if affected products contain a valid Package URL in the CVE 5.2 affected[].packageURL field.
+    
+    The schema requires that the Package URL MUST NOT include a version, so versioned
+    PURLs (e.g. pkg:npm/lodash@4.17.21) do not count. Scoped npm names such as
+    pkg:npm/@fastify/static are not versions and do count.
+    
+    Args:
+        affected: List of affected product dictionaries
+        
+    Returns:
+        True if a well-formed, unversioned Package URL is found, False otherwise
+    """
+    for product in affected:
+        if not isinstance(product, dict):
+            continue
+            
+        if _is_valid_package_url(product.get('packageURL')):
+            return True
+            
+    return False
+
+
+def _is_valid_package_url(value: Any) -> bool:
+    """
+    Check that a value is a well-formed Package URL with no version component.
+    
+    Args:
+        value: Candidate packageURL value
+        
+    Returns:
+        True if value looks like pkg:type/name and carries no version, False otherwise
+    """
+    if not isinstance(value, str):
+        return False
+    
+    match = _PURL_PATTERN.match(value)
+    return bool(match) and not _PURL_VERSION_PATTERN.search(match.group(0))
 
 
 def _has_cpe_applicability(cna: Dict[str, Any]) -> bool:

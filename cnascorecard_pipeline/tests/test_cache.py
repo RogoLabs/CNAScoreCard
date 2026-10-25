@@ -66,6 +66,14 @@ class TestComputeHash:
         hash_val = ScoreCache.compute_hash(data)
         assert len(hash_val) == 16
     
+    def test_scoring_version_changes_hash(self, monkeypatch):
+        """Bumping SCORING_VERSION should invalidate existing hashes."""
+        import cache
+        data = {"test": "data"}
+        before = ScoreCache.compute_hash(data)
+        monkeypatch.setattr(cache, "SCORING_VERSION", cache.SCORING_VERSION + "-next")
+        assert ScoreCache.compute_hash(data) != before
+    
     def test_hash_is_hex(self):
         """Hash should be hexadecimal."""
         data = {"test": "data"}

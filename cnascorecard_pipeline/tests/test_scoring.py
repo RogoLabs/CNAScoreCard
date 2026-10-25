@@ -26,6 +26,8 @@ from scoring import (
     _has_cvss_metrics,
     _has_valid_cvss_vector,
     _has_cpe_identifiers,
+    _has_package_urls,
+    _is_valid_package_url,
     _has_patch_references
 )
 
@@ -444,6 +446,58 @@ class TestSoftwareIdentification(TestScoringFixtures):
         assert _has_cpe_identifiers(affected_with_cpes) is True
         assert _has_cpe_identifiers(affected_without_cpes) is False
         assert _has_cpe_identifiers([]) is False
+
+    def test_purl_only_scoring(self):
+        """Test affected product with a Package URL and no CPE."""
+        cna = {
+            "affected": [
+                {
+                    "collectionURL": "https://pypi.org",
+                    "packageName": "django",
+                    "packageURL": "pkg:pypi/django"
+                }
+            ]
+        }
+        assert _calculate_software_identification({}, cna) == 10
+
+    def test_purl_and_cpe_scoring(self, sample_cve_complete):
+        """Test that having both a CPE and a PURL still scores the full weight once."""
+        cna = sample_cve_complete["containers"]["cna"]
+        cna["affected"][0]["packageURL"] = "pkg:npm/foobar"
+        assert _calculate_software_identification(sample_cve_complete, cna) == 10
+
+    def test_versioned_purl_scoring(self):
+        """Test that a PURL with a version does not score."""
+        cna = {"affected": [{"packageURL": "pkg:npm/lodash@4.17.21"}]}
+        assert _calculate_software_identification({}, cna) == 0
+
+    def test_valid_package_url(self):
+        """Test well-formed, unversioned Package URLs."""
+        assert _is_valid_package_url("pkg:pypi/django") is True
+        assert _is_valid_package_url("pkg:npm/%40angular/animation") is True
+        assert _is_valid_package_url("pkg:npm/@fastify/static") is True
+        assert _is_valid_package_url("pkg:maven/org.apache.xmlgraphics/batik-anim?packaging=sources") is True
+        assert _is_valid_package_url("pkg:golang/google.golang.org/genproto#googleapis/api/annotations") is True
+        assert _is_valid_package_url("pkg:docker/customer/dockerimage?repository_url=gcr.io") is True
+
+    def test_invalid_package_url(self):
+        """Test malformed, versioned, and non-string Package URLs."""
+        assert _is_valid_package_url("pkg:/maven/org.apache.wss4j/wss4j-ws-security-dom") is False
+        assert _is_valid_package_url("pkg:npm/lodash@4.17.21") is False
+        assert _is_valid_package_url("pkg:npm/@fastify/static@1.0.0") is False
+        assert _is_valid_package_url("pkg:npm/foo@1.0?arch=x86") is False
+        assert _is_valid_package_url("pkg:npm/") is False
+        assert _is_valid_package_url("https://www.npmjs.com/package/foobar") is False
+        assert _is_valid_package_url("") is False
+        assert _is_valid_package_url(None) is False
+        assert _is_valid_package_url(["pkg:pypi/django"]) is False
+
+    def test_has_package_urls_detection(self):
+        """Test Package URL detection across affected products."""
+        assert _has_package_urls([{"vendor": "x"}, {"packageURL": "pkg:cargo/rand"}]) is True
+        assert _has_package_urls([{"packageURL": "pkg:cargo/rand@0.8.5"}]) is False
+        assert _has_package_urls(["not-a-dict", {"vendor": "x"}]) is False
+        assert _has_package_urls([]) is False
 
 
 class TestActionableIntelligence(TestScoringFixtures):
