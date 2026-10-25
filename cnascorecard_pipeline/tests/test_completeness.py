@@ -161,6 +161,11 @@ class TestCustomCheckAffected:
         data = [{"cpes": ["cpe:2.3:a:vendor:product:*"]}]
         assert _custom_check(data, "has_cpes") is True
     
+    def test_has_package_url(self):
+        """Should detect packageURL."""
+        assert _custom_check([{"packageURL": "pkg:pypi/django"}], "has_package_url") is True
+        assert _custom_check([{"product": "django"}], "has_package_url") is False
+    
     def test_has_modules(self):
         """Should detect modules."""
         data = [{"modules": ["core", "auth"]}]

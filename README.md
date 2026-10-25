@@ -75,7 +75,7 @@ Each CVE record is scored on a **100-point scale** across five categories:
 │  └── CVSS score with vector string                              │
 ├─────────────────────────────────────────────────────────────────┤
 │  SOFTWARE IDENTIFICATION (10 pts)                               │
-│  └── CPE identifiers (supports CVE 5.1 cpeApplicability)        │
+│  └── CPE (incl. cpeApplicability) or unversioned Package URL    │
 ├─────────────────────────────────────────────────────────────────┤
 │  PATCH INFORMATION (10 pts)                                     │
 │  └── References tagged as patches/fixes                         │

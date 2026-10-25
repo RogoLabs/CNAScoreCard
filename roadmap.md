@@ -35,6 +35,7 @@ SUPPORTED_SCHEMA_VERSIONS = ["5.0", "5.1", "5.2"]
 | CVE 5.2 Field | Compatibility Status | Notes |
 |---------------|---------------------|-------|
 | `cpeApplicability` | ✅ Already handled | Used in Software Identification scoring |
+| `affected[].packageURL` | ✅ Handled | Unversioned PURLs count toward Software Identification ([#38](https://github.com/RogoLabs/CNAScoreCard/issues/38)) |
 | `taxonomyMappings` | ✅ No action needed | Not in scoring rubric |
 | `tags` (cnaTags/adpTags) | ✅ No action needed | Not in scoring rubric |
 | `configurations` | ✅ No action needed | Not in scoring rubric |
@@ -605,6 +606,7 @@ Complete CNA data including individual CVE scores...
 | `containers.cna.problemTypes` | ✅ Scored | Root Cause | ✅ Yes |
 | `containers.cna.metrics` | ✅ Scored | Severity | ✅ Yes |
 | `containers.cna.cpeApplicability` | ✅ Scored | Software ID | ✅ Yes |
+| `containers.cna.affected[].packageURL` | ✅ Scored | Software ID | ✅ Yes |
 | `containers.cna.title` | ❌ Not Scored | None | ✅ Yes |
 | `containers.cna.impacts` | ❌ Not Scored | None | ✅ Yes |
 | `containers.cna.configurations` | ❌ Not Scored | None | ✅ Yes |

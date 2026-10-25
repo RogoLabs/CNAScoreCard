@@ -187,23 +187,25 @@
           <p class="category-what">
             <strong>What it is:</strong> Precise identification of affected
             software using CPE (Common Platform Enumeration) format, which
-            provides standardized names for software products and versions. CPE
-            data can be provided in either the traditional
-            <code>affected[].cpes</code> field or the advanced CVE 5.1
-            <code>cpeApplicability</code> field.
+            provides standardized names for software products and versions, or
+            Package URL (PURL) format, which identifies packages on known
+            package hosts such as npm, PyPI, and Maven. CPE data can be provided
+            in either the traditional <code>affected[].cpes</code> field or the
+            advanced CVE 5.1 <code>cpeApplicability</code> field; PURLs are
+            provided in the CVE 5.2 <code>affected[].packageURL</code> field.
           </p>
           <p class="category-why">
-            <strong>Why it matters:</strong> CPE data enables automated
+            <strong>Why it matters:</strong> CPE and PURL data enable automated
             vulnerability scanners to accurately match vulnerabilities to
             specific software in an organization's environment. Without it,
             security tools can't reliably identify what's at risk.
           </p>
           <p class="category-how">
             <strong>How points are awarded:</strong> Points are earned for
-            including valid CPE identifiers that precisely specify the affected
-            software products, versions, and configurations. Both traditional
-            CPE lists and advanced applicability statements with version ranges
-            are recognized.
+            including valid CPE identifiers or Package URLs that precisely
+            specify the affected software products. Traditional CPE lists,
+            advanced applicability statements with version ranges, and
+            unversioned Package URLs are all recognized.
           </p>
         </div>
 
@@ -474,7 +476,11 @@ def _has_valid_cvss_vector(metrics):
                 <code
                   >containers.cna.cpeApplicability[].nodes[].cpeMatch[].criteria</code
                 >
-                (CPE with operators)
+                (CPE with operators)<br />
+                <br />
+                <strong>CVE 5.2 Package URL Field:</strong><br />
+                <code>containers.cna.affected[].packageURL</code> (PURL string,
+                without a version)
               </div>
               <p
                 style="
@@ -483,8 +489,9 @@ def _has_valid_cvss_vector(metrics):
                   font-style: italic;
                 "
               >
-                <strong>Note:</strong> Both field types are checked. Points are
-                awarded if CPE data is found in either location.
+                <strong>Note:</strong> All three fields are checked. Points are
+                awarded if a CPE or a valid Package URL is found in any of
+                them.
               </p>
             </div>
 
@@ -494,9 +501,10 @@ def _has_valid_cvss_vector(metrics):
                 <strong>Binary Scoring:</strong> Either 10 points or 0 points
               </div>
               <div class="validation-rule">
-                <strong>Dual Field Support:</strong> Checks traditional
+                <strong>Multi-Field Support:</strong> Checks traditional
                 <code>affected[].cpes</code> first, then CVE 5.1
-                <code>cpeApplicability</code>
+                <code>cpeApplicability</code>, then CVE 5.2
+                <code>affected[].packageURL</code>
               </div>
               <div class="validation-rule">
                 <strong>Traditional CPE:</strong> At least one affected product
@@ -505,6 +513,14 @@ def _has_valid_cvss_vector(metrics):
               <div class="validation-rule">
                 <strong>CPE Applicability:</strong> Must contain valid nodes
                 with cpeMatch entries and criteria strings
+              </div>
+              <div class="validation-rule">
+                <strong>Package URL:</strong> At least one affected product
+                must have a <code>packageURL</code> of the form
+                <code>pkg:type/name</code> with no version. As the CVE schema
+                requires, versioned PURLs such as
+                <code>pkg:npm/lodash@4.17.21</code> do not count; scoped npm
+                names such as <code>pkg:npm/@fastify/static</code> do.
               </div>
             </div>
 
@@ -523,6 +539,10 @@ def _calculate_software_identification(cve, cna):
     # Check CVE 5.1 cpeApplicability field
     has_cpe_applicability = _has_cpe_applicability(cna)
     if has_cpe_applicability:
+        return 10
+    
+    # Check CVE 5.2 affected[].packageURL field
+    if isinstance(affected, list) and _has_package_urls(affected):
         return 10
     
     return 0
@@ -550,6 +570,27 @@ def _has_cpe_applicability(cna):
             for match in cpe_match:
                 if isinstance(match, dict) and match.get('criteria'):
                     return True
+    
+    return False
+
+# pkg:type/name up to any qualifiers or subpath; an '@' after a
+# name character is a version (a leading '@' is an npm scope)
+_PURL_PATTERN = re.compile(r'^pkg:[A-Za-z][A-Za-z0-9.+-]*/[^?#]+')
+_PURL_VERSION_PATTERN = re.compile(r'[^/]@')
+
+def _has_package_urls(affected):
+    """Check for a well-formed, unversioned CVE 5.2 packageURL"""
+    for product in affected:
+        if not isinstance(product, dict):
+            continue
+        
+        value = product.get('packageURL')
+        if not isinstance(value, str):
+            continue
+        
+        match = _PURL_PATTERN.match(value)
+        if match and not _PURL_VERSION_PATTERN.search(match.group(0)):
+            return True
     
     return False</pre
                 >
@@ -676,7 +717,7 @@ def _has_patch_references(references):
   },
   "softwareIdentification": {
     "weight": 10,
-    "criteria": ["validCPE"],
+    "criteria": ["validCPE", "validPURL"],
     "binary": true
   },
   "patchinfo": {
@@ -742,8 +783,9 @@ def _has_patch_references(references):
                 <strong>Issue:</strong> Missing software identification
                 points<br />
                 <strong>Check:</strong> Verify at least one affected product has
-                non-empty cpes array OR the cpeApplicability field contains
-                valid CPE match data with criteria strings
+                non-empty cpes array, OR the cpeApplicability field contains
+                valid CPE match data with criteria strings, OR at least one
+                affected product has a packageURL without a version
               </div>
               <div class="issue-solution">
                 <strong>Issue:</strong> Missing patch information points<br />
@@ -853,7 +895,7 @@ def _has_patch_references(references):
           <p class="category-what">
             <strong>What it shows:</strong> Interactive line charts displaying
             rolling averages for Root Cause Analysis (CWE), Severity & Impact
-            (CVSS), Software Identification (CPE), and Patch Information
+            (CVSS), Software Identification (CPE/PURL), and Patch Information
             categories.
           </p>
           <p class="category-why">

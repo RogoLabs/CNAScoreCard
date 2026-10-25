@@ -19,6 +19,9 @@ logger = logging.getLogger('cnascorecard.cache')
 # Default cache directory
 CACHE_DIR = WEB_DATA_DIR / ".cache" / "scores"
 
+# Bump whenever scoring rules change so cached scores are recomputed
+SCORING_VERSION = "2"
+
 
 class ScoreCache:
     """
@@ -63,8 +66,9 @@ class ScoreCache:
         """
         Compute a hash of CVE data for cache validation.
         
-        The hash is computed from the JSON-serialized CVE data, ensuring
-        that any change to the CVE invalidates the cache.
+        The hash is computed from the JSON-serialized CVE data plus
+        SCORING_VERSION, ensuring that any change to the CVE or to the
+        scoring rules invalidates the cache.
         
         Args:
             cve_data: CVE record dictionary
@@ -74,7 +78,7 @@ class ScoreCache:
         """
         # Sort keys for consistent ordering
         json_str = json.dumps(cve_data, sort_keys=True, separators=(',', ':'))
-        return hashlib.sha256(json_str.encode()).hexdigest()[:16]
+        return hashlib.sha256(f"{SCORING_VERSION}:{json_str}".encode()).hexdigest()[:16]
     
     def get(self, cve_id: str, cve_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """

@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Changed
+
+#### Package URLs count toward Software Identification ([#38](https://github.com/RogoLabs/CNAScoreCard/issues/38))
+- The 10-point Software Identification category now also accepts a CVE 5.2 `affected[].packageURL`, alongside `affected[].cpes` and `cpeApplicability`
+- The PURL must be well formed (`pkg:type/name`) and, as the CVE schema requires, must not include a version; scoped npm names such as `pkg:npm/@fastify/static` are not treated as versions
+- In the 6-month window ending 2026-10-24, 1,921 of 66,548 records (2.9%) gain these points; no scores go down
+- Largest average score gains: openjs (+9.9), bcorg (+6.9), CPANSec (+3.9), apache (+2.9), VulnCheck (+1.9)
+- `affected.packageURL` added to field completeness under the Software Identification category
+- Score cache keys now include a scoring version so cached scores are recomputed after rule changes
+
 ## [2.0.0] - 2025-12-26
 
 ### 🎉 Major Release: End-of-Year 2025 Roadmap Complete

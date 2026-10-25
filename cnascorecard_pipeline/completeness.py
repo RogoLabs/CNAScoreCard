@@ -60,6 +60,7 @@ def _get_schema_fields() -> Dict[str, Dict[str, Any]]:
         "affected.versions": {"path": ["containers", "cna", "affected"], "check": "has_versions"},
         "affected.defaultStatus": {"path": ["containers", "cna", "affected"], "check": "has_default_status"},
         "affected.cpes": {"path": ["containers", "cna", "affected"], "check": "has_cpes"},
+        "affected.packageURL": {"path": ["containers", "cna", "affected"], "check": "has_package_url"},
         "affected.modules": {"path": ["containers", "cna", "affected"], "check": "has_modules"},
         "affected.programFiles": {"path": ["containers", "cna", "affected"], "check": "has_program_files"},
         "affected.programRoutines": {"path": ["containers", "cna", "affected"], "check": "has_program_routines"},
@@ -134,6 +135,10 @@ def _custom_check(data: Any, check_type: str) -> bool:
     if check_type == "has_cpes":
         if isinstance(data, list):
             return any(item.get("cpes") for item in data if isinstance(item, dict))
+        return False
+    if check_type == "has_package_url":
+        if isinstance(data, list):
+            return any(item.get("packageURL") for item in data if isinstance(item, dict))
         return False
     if check_type == "has_modules":
         if isinstance(data, list):
