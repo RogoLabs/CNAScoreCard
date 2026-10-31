@@ -16,15 +16,15 @@
       "rank": 351,
       "active_cna_count": 362,
       "percentile": 3.3,
-      "total_cves": 279,
-      "recent_cves": 279,
+      "total_cves": 281,
+      "recent_cves": 281,
       "is_active": true,
       "scores": {
-        "overall_average_score": 63.92,
+        "overall_average_score": 64.04,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 91.4,
+        "root_cause_analysis": 91.46,
         "software_identification": 0.0,
-        "severity_and_impact": 1.43,
+        "severity_and_impact": 2.14,
         "patchinfo": 0.0
       },
       "trend": {
@@ -328,19 +328,18 @@
       ]
     },
     {
-      "shortName": "mozilla",
-      "detailFile": "mozilla__CNA-2012-0002.json",
-      "organizationName": "Mozilla Corporation",
-      "cnaType": "Vendor",
+      "shortName": "jenkins",
+      "detailFile": "jenkins__CNA-2018-0015.json",
+      "organizationName": "Jenkins Project",
+      "cnaType": "Open Source",
       "cnaTypes": [
-        "Vendor",
         "Open Source"
       ],
       "rank": 358,
       "active_cna_count": 362,
       "percentile": 1.4,
-      "total_cves": 683,
-      "recent_cves": 683,
+      "total_cves": 140,
+      "recent_cves": 140,
       "is_active": true,
       "scores": {
         "overall_average_score": 50.0,
@@ -355,20 +354,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Mozilla issues only.",
+      "scope": "Jenkins and Jenkins plugins distributed by the Jenkins Project (listed on <a href='https://plugins.jenkins.io/' target='_blank'>plugins.jenkins.io</a>) only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.mozilla.org/en-US/security/advisories/"
+          "url": "https://jenkins.io/security/advisories/"
         }
       ],
-      "officialCnaID": "CNA-2012-0002",
+      "officialCnaID": "CNA-2018-0015",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
+          "url": "https://jenkins.io/security/"
         }
       ]
     },
@@ -413,6 +412,51 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.nokia.com/notices/responsible-disclosure/"
+        }
+      ]
+    },
+    {
+      "shortName": "mozilla",
+      "detailFile": "mozilla__CNA-2012-0002.json",
+      "organizationName": "Mozilla Corporation",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 358,
+      "active_cna_count": 362,
+      "percentile": 1.4,
+      "total_cves": 683,
+      "recent_cves": 683,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 50.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 0.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 0.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Mozilla issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.mozilla.org/en-US/security/advisories/"
+        }
+      ],
+      "officialCnaID": "CNA-2012-0002",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.mozilla.org/en-US/about/governance/policies/security-group/bugs/"
         }
       ]
     },
@@ -502,50 +546,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.debian.org/security/disclosure-policy"
-        }
-      ]
-    },
-    {
-      "shortName": "jenkins",
-      "detailFile": "jenkins__CNA-2018-0015.json",
-      "organizationName": "Jenkins Project",
-      "cnaType": "Open Source",
-      "cnaTypes": [
-        "Open Source"
-      ],
-      "rank": 358,
-      "active_cna_count": 362,
-      "percentile": 1.4,
-      "total_cves": 140,
-      "recent_cves": 140,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 50.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 0.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 0.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Jenkins and Jenkins plugins distributed by the Jenkins Project (listed on <a href='https://plugins.jenkins.io/' target='_blank'>plugins.jenkins.io</a>) only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://jenkins.io/security/advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2018-0015",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://jenkins.io/security/"
         }
       ]
     }
