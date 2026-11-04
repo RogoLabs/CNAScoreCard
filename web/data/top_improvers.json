@@ -85,17 +85,17 @@
       "analysis_days": 243
     },
     {
-      "cna_name": "VulDB",
-      "total_improvement": 132.63157894736844,
+      "cna_name": "CPANSec",
+      "total_improvement": 132.5224071702945,
       "category_improvements": {
         "root_cause_analysis": {
           "first_period": 100.0,
-          "last_period": 100.0,
-          "improvement": 0.0
+          "last_period": 98.59154929577466,
+          "improvement": -1.408450704225345
         },
         "severity_and_impact": {
-          "first_period": 100.0,
-          "last_period": 100.0,
+          "first_period": 0.0,
+          "last_period": 0.0,
           "improvement": 0.0
         },
         "software_identification": {
@@ -104,13 +104,13 @@
           "improvement": 100.0
         },
         "patch_information": {
-          "first_period": 0.0,
-          "last_period": 32.631578947368425,
-          "improvement": 32.631578947368425
+          "first_period": 18.181818181818183,
+          "last_period": 52.112676056338024,
+          "improvement": 33.930857874519845
         }
       },
-      "total_cves_analyzed": 12000,
-      "analysis_days": 550
+      "total_cves_analyzed": 429,
+      "analysis_days": 149
     },
     {
       "cna_name": "glibc",
@@ -141,6 +141,34 @@
       "analysis_days": 21
     },
     {
+      "cna_name": "VulDB",
+      "total_improvement": 124.24242424242425,
+      "category_improvements": {
+        "root_cause_analysis": {
+          "first_period": 100.0,
+          "last_period": 100.0,
+          "improvement": 0.0
+        },
+        "severity_and_impact": {
+          "first_period": 100.0,
+          "last_period": 100.0,
+          "improvement": 0.0
+        },
+        "software_identification": {
+          "first_period": 0.0,
+          "last_period": 100.0,
+          "improvement": 100.0
+        },
+        "patch_information": {
+          "first_period": 0.0,
+          "last_period": 24.242424242424242,
+          "improvement": 24.242424242424242
+        }
+      },
+      "total_cves_analyzed": 12018,
+      "analysis_days": 551
+    },
+    {
       "cna_name": "ibm",
       "total_improvement": 114.23076923076921,
       "category_improvements": {
@@ -167,34 +195,6 @@
       },
       "total_cves_analyzed": 1811,
       "analysis_days": 196
-    },
-    {
-      "cna_name": "CPANSec",
-      "total_improvement": 113.19073083778966,
-      "category_improvements": {
-        "root_cause_analysis": {
-          "first_period": 100.0,
-          "last_period": 98.0392156862745,
-          "improvement": -1.9607843137254974
-        },
-        "severity_and_impact": {
-          "first_period": 0.0,
-          "last_period": 0.0,
-          "improvement": 0.0
-        },
-        "software_identification": {
-          "first_period": 0.0,
-          "last_period": 100.0,
-          "improvement": 100.0
-        },
-        "patch_information": {
-          "first_period": 18.181818181818183,
-          "last_period": 33.333333333333336,
-          "improvement": 15.151515151515152
-        }
-      },
-      "total_cves_analyzed": 409,
-      "analysis_days": 149
     },
     {
       "cna_name": "Sonatype",
@@ -281,7 +281,7 @@
       "analysis_days": 119
     }
   ],
-  "generated_at": "2026-11-03T22:41:00.238475",
+  "generated_at": "2026-11-04T03:34:13.753765",
   "analysis_criteria": {
     "minimum_cves": 5,
     "top_n_count": 10
