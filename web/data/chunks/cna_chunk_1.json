@@ -5,53 +5,9 @@
   "count": 50,
   "items": [
     {
-      "shortName": "illumos",
-      "detailFile": "illumos__CNA-2026-0046.json",
-      "organizationName": "The illumos project",
-      "cnaType": "Open Source",
-      "cnaTypes": [
-        "Open Source"
-      ],
-      "rank": 26,
-      "active_cna_count": 369,
-      "percentile": 93.2,
-      "total_cves": 9,
-      "recent_cves": 9,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 90.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 100.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "The illumos project’s <a href='https://code.illumos.org/plugins/gitiles/illumos-gate' target='_blank'>illumos-gate repository</a> and related downstream distributions such as <a href='https://openindiana.org' target='_blank'>OpenIndiana</a>, <a href='https://wiki.smartos.org' target='_blank'>SmartOS</a>, and <a href='https://omnios.org' target='_blank'>OmniOS</a>.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://illumos.org/docs/security/"
-        }
-      ],
-      "officialCnaID": "CNA-2026-0046",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://illumos.org/docs/security/"
-        }
-      ]
-    },
-    {
-      "shortName": "ca",
-      "detailFile": "ca__CNA-2017-0013.json",
-      "organizationName": "CA Technologies - A Broadcom Company",
+      "shortName": "NI",
+      "detailFile": "NI__CNA-2023-0003.json",
+      "organizationName": "National Instruments",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor"
@@ -59,8 +15,8 @@
       "rank": 26,
       "active_cna_count": 369,
       "percentile": 93.2,
-      "total_cves": 1,
-      "recent_cves": 1,
+      "total_cves": 28,
+      "recent_cves": 28,
       "is_active": true,
       "scores": {
         "overall_average_score": 90.0,
@@ -75,40 +31,37 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "CA Technologies issues only. Note that Broadcom PSIRT handles all CA issues.",
+      "scope": "NI products only (including National Instruments).",
       "advisories": [
         {
-          "label": "Broadcom Enterprise Software Advisories",
-          "url": "https://support.broadcom.com/security-advisory/security-advisories-list.html?segment=ES"
-        },
-        {
-          "label": "Broadcom Mainframe Software Advisories",
-          "url": "https://support.broadcom.com/security-advisory/security-advisories-list.html?segment=MF"
+          "label": "Advisories",
+          "language": "",
+          "url": "https://www.ni.com/en-us/support/documentation/supplemental/11/available-critical-and-security-updates-for-ni-software.html"
         }
       ],
-      "officialCnaID": "CNA-2017-0013",
+      "officialCnaID": "CNA-2023-0003",
       "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.broadcom.com/support/resources/product-security-center"
+          "url": "https://ni.com/security"
         }
       ]
     },
     {
-      "shortName": "STAR_Labs",
-      "detailFile": "STAR_Labs__CNA-2023-0010.json",
-      "organizationName": "STAR Labs SG Pte. Ltd.",
-      "cnaType": "Researcher",
+      "shortName": "esaqa",
+      "detailFile": "esaqa__CNA-2026-0065.json",
+      "organizationName": "esaqa GmbH",
+      "cnaType": "Vendor",
       "cnaTypes": [
-        "Researcher"
+        "Vendor"
       ],
       "rank": 26,
       "active_cna_count": 369,
       "percentile": 93.2,
-      "total_cves": 1,
-      "recent_cves": 1,
+      "total_cves": 5,
+      "recent_cves": 5,
       "is_active": true,
       "scores": {
         "overall_average_score": 90.0,
@@ -123,20 +76,64 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities discovered by, or reported to, STAR Labs SG that are not in another CNA’s scope.",
+      "scope": "All products developed and maintained by esaqa GmbH.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://starlabs.sg/advisories/"
+          "url": "https://gitlab.com/esaqa/esaqa/security-advisories"
         }
       ],
-      "officialCnaID": "CNA-2023-0010",
-      "country": "Singapore",
+      "officialCnaID": "CNA-2026-0065",
+      "country": "Germany",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://starlabs.sg/advisories/STAR%20Labs%20SG%20Pte.%20Ltd.%20Vulnerability%20Disclosure%20Policy.pdf"
+          "url": "https://esaqa.com/vulnerability-disclosure-policy"
+        }
+      ]
+    },
+    {
+      "shortName": "fortinet",
+      "detailFile": "fortinet__CNA-2016-0010.json",
+      "organizationName": "Fortinet, Inc.",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 26,
+      "active_cna_count": 369,
+      "percentile": 93.2,
+      "total_cves": 58,
+      "recent_cves": 58,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 90.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 100.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Fortinet issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.fortiguard.com/psirt"
+        }
+      ],
+      "officialCnaID": "CNA-2016-0010",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.fortiguard.com/psirt_policy"
         }
       ]
     },
@@ -185,12 +182,12 @@
       ]
     },
     {
-      "shortName": "Softing",
-      "detailFile": "Softing__CNA-2025-0009.json",
-      "organizationName": "Softing",
-      "cnaType": "Vendor",
+      "shortName": "STAR_Labs",
+      "detailFile": "STAR_Labs__CNA-2023-0010.json",
+      "organizationName": "STAR Labs SG Pte. Ltd.",
+      "cnaType": "Researcher",
       "cnaTypes": [
-        "Vendor"
+        "Researcher"
       ],
       "rank": 26,
       "active_cna_count": 369,
@@ -202,29 +199,29 @@
         "overall_average_score": 90.0,
         "foundational_completeness": 100.0,
         "root_cause_analysis": 100.0,
-        "software_identification": 100.0,
+        "software_identification": 0.0,
         "severity_and_impact": 100.0,
-        "patchinfo": 0.0
+        "patchinfo": 100.0
       },
       "trend": {
         "direction": "steady",
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Softing issues only.",
+      "scope": "Vulnerabilities discovered by, or reported to, STAR Labs SG that are not in another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://company.softing.com/psirt.html"
+          "url": "https://starlabs.sg/advisories/"
         }
       ],
-      "officialCnaID": "CNA-2025-0009",
-      "country": "Germany",
+      "officialCnaID": "CNA-2023-0010",
+      "country": "Singapore",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://company.softing.com/psirt.html"
+          "url": "https://starlabs.sg/advisories/STAR%20Labs%20SG%20Pte.%20Ltd.%20Vulnerability%20Disclosure%20Policy.pdf"
         }
       ]
     },
@@ -496,6 +493,50 @@
       ]
     },
     {
+      "shortName": "harborist",
+      "detailFile": "harborist__CNA-2025-0027.json",
+      "organizationName": "Harborist",
+      "cnaType": "Open Source",
+      "cnaTypes": [
+        "Open Source"
+      ],
+      "rank": 62,
+      "active_cna_count": 369,
+      "percentile": 83.5,
+      "total_cves": 22,
+      "recent_cves": 22,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 89.09,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 90.91
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All projects listed under <a href='https://www.npmjs.com/~ljharb' target='_blank'>https://www.npmjs.com/~ljharb</a>.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://github.com/harborist/advisories"
+        }
+      ],
+      "officialCnaID": "CNA-2025-0027",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://github.com/harborist/.github/blob/main/DISCLOSURE_POLICY.md"
+        }
+      ]
+    },
+    {
       "shortName": "TPLink",
       "detailFile": "TPLink__CNA-2025-0017.json",
       "organizationName": "TP-Link Systems Inc.",
@@ -537,50 +578,6 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.tp-link.com/us/press/security-advisory/"
-        }
-      ]
-    },
-    {
-      "shortName": "harborist",
-      "detailFile": "harborist__CNA-2025-0027.json",
-      "organizationName": "Harborist",
-      "cnaType": "Open Source",
-      "cnaTypes": [
-        "Open Source"
-      ],
-      "rank": 62,
-      "active_cna_count": 369,
-      "percentile": 83.5,
-      "total_cves": 22,
-      "recent_cves": 22,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 89.09,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 90.91
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All projects listed under <a href='https://www.npmjs.com/~ljharb' target='_blank'>https://www.npmjs.com/~ljharb</a>.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://github.com/harborist/advisories"
-        }
-      ],
-      "officialCnaID": "CNA-2025-0027",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://github.com/harborist/.github/blob/main/DISCLOSURE_POLICY.md"
         }
       ]
     },
@@ -1228,52 +1225,6 @@
       ]
     },
     {
-      "shortName": "flexera",
-      "detailFile": "flexera__CNA-2017-0004.json",
-      "organizationName": "Flexera Software LLC",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source",
-        "Researcher"
-      ],
-      "rank": 78,
-      "active_cna_count": 369,
-      "percentile": 79.1,
-      "total_cves": 5,
-      "recent_cves": 5,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 86.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 40.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 20.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All Flexera, Revenera, and Snow Software products, and vulnerabilities discovered by Secunia Research that are not in another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://security-info.flexera.com/"
-        }
-      ],
-      "officialCnaID": "CNA-2017-0004",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.flexera.com/products/operations/software-vulnerability-research/secunia-research/disclosure-policy.html?_ga=2.126100429.1927534686.1582843801-707336045.1578583910"
-        }
-      ]
-    },
-    {
       "shortName": "Canon_EMEA",
       "detailFile": "Canon_EMEA__CNA-2023-0061.json",
       "organizationName": "Canon EMEA",
@@ -1365,6 +1316,52 @@
           "label": "Ping Identity PGP Keys",
           "language": "",
           "url": "https://www.pingidentity.com/.well-known/security.txt"
+        }
+      ]
+    },
+    {
+      "shortName": "flexera",
+      "detailFile": "flexera__CNA-2017-0004.json",
+      "organizationName": "Flexera Software LLC",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source",
+        "Researcher"
+      ],
+      "rank": 78,
+      "active_cna_count": 369,
+      "percentile": 79.1,
+      "total_cves": 5,
+      "recent_cves": 5,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 86.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 40.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 20.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All Flexera, Revenera, and Snow Software products, and vulnerabilities discovered by Secunia Research that are not in another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://security-info.flexera.com/"
+        }
+      ],
+      "officialCnaID": "CNA-2017-0004",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.flexera.com/products/operations/software-vulnerability-research/secunia-research/disclosure-policy.html?_ga=2.126100429.1927534686.1582843801-707336045.1578583910"
         }
       ]
     },
@@ -1827,6 +1824,50 @@
       ]
     },
     {
+      "shortName": "Sophos",
+      "detailFile": "Sophos__CNA-2021-0003.json",
+      "organizationName": "Sophos Limited",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
+      ],
+      "rank": 91,
+      "active_cna_count": 369,
+      "percentile": 75.6,
+      "total_cves": 2,
+      "recent_cves": 2,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 85.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 50.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Sophos issues only.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://community.sophos.com/b/security-blog/"
+        }
+      ],
+      "officialCnaID": "CNA-2021-0003",
+      "country": "UK",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://sophos.com/security/"
+        }
+      ]
+    },
+    {
       "shortName": "dotCMS",
       "detailFile": "dotCMS__CNA-2023-0001.json",
       "organizationName": "dotCMS LLC",
@@ -1873,50 +1914,6 @@
           "label": "Reporting Issues",
           "language": "",
           "url": "https://www.dotcms.com/docs/latest/security-and-privacy#:~:text=dotCMS%20will%20disclose%20all%20issues,fix%20the%20reported%20security%20issue"
-        }
-      ]
-    },
-    {
-      "shortName": "Sophos",
-      "detailFile": "Sophos__CNA-2021-0003.json",
-      "organizationName": "Sophos Limited",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 91,
-      "active_cna_count": 369,
-      "percentile": 75.6,
-      "total_cves": 2,
-      "recent_cves": 2,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 85.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 50.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Sophos issues only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://community.sophos.com/b/security-blog/"
-        }
-      ],
-      "officialCnaID": "CNA-2021-0003",
-      "country": "UK",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://sophos.com/security/"
         }
       ]
     },
