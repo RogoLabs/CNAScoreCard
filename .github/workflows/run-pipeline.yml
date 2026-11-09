@@ -132,3 +132,7 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v5
+      with:
+        # Default is 600000 (10 min). On 2026-11-09 Pages sat in
+        # syncing_files for ~10 min on two consecutive deploys, failing one.
+        timeout: 1200000
