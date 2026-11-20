@@ -113,13 +113,41 @@
       "analysis_days": 256
     },
     {
-      "cna_name": "VulDB",
-      "total_improvement": 132.58426966292137,
+      "cna_name": "CPANSec",
+      "total_improvement": 138.33992094861662,
       "category_improvements": {
         "root_cause_analysis": {
           "first_period": 100.0,
-          "last_period": 98.87640449438203,
-          "improvement": -1.1235955056179705
+          "last_period": 100.0,
+          "improvement": 0.0
+        },
+        "severity_and_impact": {
+          "first_period": 0.0,
+          "last_period": 0.0,
+          "improvement": 0.0
+        },
+        "software_identification": {
+          "first_period": 0.0,
+          "last_period": 100.0,
+          "improvement": 100.0
+        },
+        "patch_information": {
+          "first_period": 18.181818181818183,
+          "last_period": 56.52173913043479,
+          "improvement": 38.33992094861661
+        }
+      },
+      "total_cves_analyzed": 458,
+      "analysis_days": 158
+    },
+    {
+      "cna_name": "VulDB",
+      "total_improvement": 131.6326530612245,
+      "category_improvements": {
+        "root_cause_analysis": {
+          "first_period": 100.0,
+          "last_period": 98.9795918367347,
+          "improvement": -1.0204081632653015
         },
         "severity_and_impact": {
           "first_period": 100.0,
@@ -133,12 +161,12 @@
         },
         "patch_information": {
           "first_period": 0.0,
-          "last_period": 33.70786516853933,
-          "improvement": 33.70786516853933
+          "last_period": 32.6530612244898,
+          "improvement": 32.6530612244898
         }
       },
-      "total_cves_analyzed": 12258,
-      "analysis_days": 564
+      "total_cves_analyzed": 12270,
+      "analysis_days": 565
     },
     {
       "cna_name": "glibc",
@@ -197,34 +225,6 @@
       "analysis_days": 59
     },
     {
-      "cna_name": "CPANSec",
-      "total_improvement": 119.31818181818181,
-      "category_improvements": {
-        "root_cause_analysis": {
-          "first_period": 100.0,
-          "last_period": 100.0,
-          "improvement": 0.0
-        },
-        "severity_and_impact": {
-          "first_period": 0.0,
-          "last_period": 0.0,
-          "improvement": 0.0
-        },
-        "software_identification": {
-          "first_period": 0.0,
-          "last_period": 100.0,
-          "improvement": 100.0
-        },
-        "patch_information": {
-          "first_period": 18.181818181818183,
-          "last_period": 37.5,
-          "improvement": 19.318181818181817
-        }
-      },
-      "total_cves_analyzed": 450,
-      "analysis_days": 157
-    },
-    {
       "cna_name": "ibm",
       "total_improvement": 114.37451437451438,
       "category_improvements": {
@@ -281,7 +281,7 @@
       "analysis_days": 19
     }
   ],
-  "generated_at": "2026-11-20T00:00:17.630404",
+  "generated_at": "2026-11-20T05:03:12.313279",
   "analysis_criteria": {
     "minimum_cves": 5,
     "top_n_count": 10
