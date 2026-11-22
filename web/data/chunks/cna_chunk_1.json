@@ -5,12 +5,56 @@
   "count": 50,
   "items": [
     {
-      "shortName": "WrenSecurity",
-      "detailFile": "WrenSecurity__CNA-2023-0067.json",
-      "organizationName": "Wren Security",
-      "cnaType": "Open Source",
+      "shortName": "RTI",
+      "detailFile": "RTI__CNA-2024-0068.json",
+      "organizationName": "Real-Time Innovations, Inc.",
+      "cnaType": "Vendor",
       "cnaTypes": [
-        "Open Source"
+        "Vendor"
+      ],
+      "rank": 26,
+      "active_cna_count": 380,
+      "percentile": 93.4,
+      "total_cves": 19,
+      "recent_cves": 19,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 90.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 100.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 0.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "All RTI Connext products, including EOL products. See <a href='https://www.rti.com/products' target='_blank'>https://www.rti.com/products</a> for more information.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://community.rti.com/static/documentation/connext-dds/current/doc/vulnerabilities/#"
+        }
+      ],
+      "officialCnaID": "CNA-2024-0068",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://community.rti.com/static/documentation/connext-dds/current/doc/vulnerabilities/#rti-s-approach-to-vulnerability-detection-and-management"
+        }
+      ]
+    },
+    {
+      "shortName": "Nutanix",
+      "detailFile": "Nutanix__CNA-2025-0056.json",
+      "organizationName": "Nutanix",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor"
       ],
       "rank": 26,
       "active_cna_count": 380,
@@ -22,37 +66,29 @@
         "overall_average_score": 90.0,
         "foundational_completeness": 100.0,
         "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
+        "software_identification": 100.0,
         "severity_and_impact": 100.0,
-        "patchinfo": 100.0
+        "patchinfo": 0.0
       },
       "trend": {
         "direction": "steady",
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Wren Security maintained software.",
+      "scope": "Nutanix issues only.",
       "advisories": [
         {
-          "label": "Wren:IDM Advisories",
-          "url": "https://github.com/WrenSecurity/wrenidm/security"
-        },
-        {
-          "label": "Wren:AM Advisories",
-          "url": "https://github.com/WrenSecurity/wrenam/security"
-        },
-        {
-          "label": "Wren:DS Advisories",
-          "url": "https://github.com/WrenSecurity/wrends/security"
+          "label": "Advisories",
+          "url": "https://portal.nutanix.com/page/security/security-advisories"
         }
       ],
-      "officialCnaID": "CNA-2023-0067",
-      "country": "Czech Republic",
+      "officialCnaID": "CNA-2025-0056",
+      "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://wrensecurity.org/community/disclosure.html"
+          "url": "https://portal.nutanix.com/page/security/security-contact"
         }
       ]
     },
@@ -103,9 +139,55 @@
       ]
     },
     {
-      "shortName": "CrowdStrike",
-      "detailFile": "CrowdStrike__CNA-2023-0044.json",
-      "organizationName": "CrowdStrike Holdings, Inc.",
+      "shortName": "postiz",
+      "detailFile": "postiz__CNA-2026-0055.json",
+      "organizationName": "Postiz",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source",
+        "Hosted Service"
+      ],
+      "rank": 26,
+      "active_cna_count": 380,
+      "percentile": 93.4,
+      "total_cves": 8,
+      "recent_cves": 8,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 90.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 100.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Postiz products and projects only including: the core repository for postiz-app (github.com/gitroomhq/postiz-app); all gitroomhq repositories that are official components, tooling, or integrations of Postiz; official Postiz container images published under gitroomhq on GHCR; official Postiz CLI tools and NPM packages (NPM org: @postiz); Postiz-Cloud related infrastructure and services. (API, Frontend, Configurations etc.); and plugins for Postiz maintained within the gitroomhq organization.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://postiz.gadvisory.org/advisories"
+        }
+      ],
+      "officialCnaID": "CNA-2026-0055",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Disclosure Policy",
+          "language": "",
+          "url": "https://github.com/gitroomhq/postiz-app/blob/main/SECURITY.md"
+        }
+      ]
+    },
+    {
+      "shortName": "Softing",
+      "detailFile": "Softing__CNA-2025-0009.json",
+      "organizationName": "Softing",
       "cnaType": "Vendor",
       "cnaTypes": [
         "Vendor"
@@ -129,109 +211,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "All CrowdStrike products.",
+      "scope": "Softing issues only.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.crowdstrike.com/security-advisories/"
+          "url": "https://company.softing.com/psirt.html"
         }
       ],
-      "officialCnaID": "CNA-2023-0044",
-      "country": "USA",
+      "officialCnaID": "CNA-2025-0009",
+      "country": "Germany",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.crowdstrike.com/report-a-security-bug/"
-        }
-      ]
-    },
-    {
-      "shortName": "Tcpdump",
-      "detailFile": "Tcpdump__CNA-2020-0003.json",
-      "organizationName": "Tcpdump Group",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 26,
-      "active_cna_count": 380,
-      "percentile": 93.4,
-      "total_cves": 7,
-      "recent_cves": 7,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 90.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 100.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Tcpdump and libpcap only. Vulnerabilities in other software will be considered on a case-by-case basis only, if the software is closely related to packet capture and analysis, and is not in the scope of another CNA.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://www.tcpdump.org/public-cve-list.txt"
-        }
-      ],
-      "officialCnaID": "CNA-2020-0003",
-      "country": "Canada",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.tcpdump.org/security.html"
-        }
-      ]
-    },
-    {
-      "shortName": "STAR_Labs",
-      "detailFile": "STAR_Labs__CNA-2023-0010.json",
-      "organizationName": "STAR Labs SG Pte. Ltd.",
-      "cnaType": "Researcher",
-      "cnaTypes": [
-        "Researcher"
-      ],
-      "rank": 26,
-      "active_cna_count": 380,
-      "percentile": 93.4,
-      "total_cves": 1,
-      "recent_cves": 1,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 90.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 100.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Vulnerabilities discovered by, or reported to, STAR Labs SG that are not in another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://starlabs.sg/advisories/"
-        }
-      ],
-      "officialCnaID": "CNA-2023-0010",
-      "country": "Singapore",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://starlabs.sg/advisories/STAR%20Labs%20SG%20Pte.%20Ltd.%20Vulnerability%20Disclosure%20Policy.pdf"
+          "url": "https://company.softing.com/psirt.html"
         }
       ]
     },
@@ -513,13 +506,13 @@
       "rank": 62,
       "active_cna_count": 380,
       "percentile": 83.9,
-      "total_cves": 1244,
-      "recent_cves": 1244,
+      "total_cves": 1245,
+      "recent_cves": 1245,
       "is_active": true,
       "scores": {
         "overall_average_score": 89.49,
         "foundational_completeness": 100.0,
-        "root_cause_analysis": 98.79,
+        "root_cause_analysis": 98.8,
         "software_identification": 97.35,
         "severity_and_impact": 99.2,
         "patchinfo": 0.56
@@ -1409,51 +1402,6 @@
       ]
     },
     {
-      "shortName": "DSF",
-      "detailFile": "DSF__CNA-2025-0057.json",
-      "organizationName": "Django Software Foundation",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor",
-        "Open Source"
-      ],
-      "rank": 82,
-      "active_cna_count": 380,
-      "percentile": 78.7,
-      "total_cves": 24,
-      "recent_cves": 24,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 85.83,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
-        "severity_and_impact": 100.0,
-        "patchinfo": 58.33
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Only supported and end-of-life Django versions available at <a href='https://www.djangoproject.com/download/' target='_blank'>https://www.djangoproject.com/download/</a> and projects listed at <a href='https://github.com/django' target='_blank'>https://github.com/django</a> (such as Django, channels, and daphne), excluding distributions maintained by third-party redistributors.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://docs.djangoproject.com/en/stable/releases/security/"
-        }
-      ],
-      "officialCnaID": "CNA-2025-0057",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.djangoproject.com/foundation/cve-numbering-authority/"
-        }
-      ]
-    },
-    {
       "shortName": "HeroDevs",
       "detailFile": "HeroDevs__CNA-2024-0041.json",
       "organizationName": "HeroDevs",
@@ -1496,6 +1444,51 @@
           "label": "Policy",
           "language": "",
           "url": "https://docs.herodevs.com/policies/security-disclosure"
+        }
+      ]
+    },
+    {
+      "shortName": "DSF",
+      "detailFile": "DSF__CNA-2025-0057.json",
+      "organizationName": "Django Software Foundation",
+      "cnaType": "Vendor",
+      "cnaTypes": [
+        "Vendor",
+        "Open Source"
+      ],
+      "rank": 82,
+      "active_cna_count": 380,
+      "percentile": 78.7,
+      "total_cves": 24,
+      "recent_cves": 24,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 85.83,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 58.33
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Only supported and end-of-life Django versions available at <a href='https://www.djangoproject.com/download/' target='_blank'>https://www.djangoproject.com/download/</a> and projects listed at <a href='https://github.com/django' target='_blank'>https://github.com/django</a> (such as Django, channels, and daphne), excluding distributions maintained by third-party redistributors.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://docs.djangoproject.com/en/stable/releases/security/"
+        }
+      ],
+      "officialCnaID": "CNA-2025-0057",
+      "country": "USA",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.djangoproject.com/foundation/cve-numbering-authority/"
         }
       ]
     },
@@ -1735,46 +1728,53 @@
       ]
     },
     {
-      "shortName": "Toreon",
-      "detailFile": "Toreon__CNA-2025-0031.json",
-      "organizationName": "Toreon",
-      "cnaType": "Researcher",
+      "shortName": "PingIdentity",
+      "detailFile": "PingIdentity__CNA-2021-0042.json",
+      "organizationName": "Ping Identity Corporation",
+      "cnaType": "Hosted Service",
       "cnaTypes": [
-        "Researcher"
+        "Hosted Service",
+        "Researcher",
+        "Bug Bounty Provider"
       ],
       "rank": 88,
       "active_cna_count": 380,
       "percentile": 77.1,
-      "total_cves": 2,
-      "recent_cves": 2,
+      "total_cves": 6,
+      "recent_cves": 6,
       "is_active": true,
       "scores": {
         "overall_average_score": 85.0,
         "foundational_completeness": 100.0,
         "root_cause_analysis": 100.0,
-        "software_identification": 0.0,
+        "software_identification": 33.33,
         "severity_and_impact": 100.0,
-        "patchinfo": 50.0
+        "patchinfo": 16.67
       },
       "trend": {
         "direction": "steady",
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities discovered by or reported to Toreon that are not in another CNA’s scope.",
+      "scope": "All Ping Identity and ForgeRock products (supported products and end-of-life/end-of-service products), as well as vulnerabilities in third-party software discovered by Ping Identity or ForgeRock that are not in another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.toreon.com/news/"
+          "url": "https://docs.pingidentity.com/pingam/latest/release-notes/security-advisories.html"
         }
       ],
-      "officialCnaID": "CNA-2025-0031",
-      "country": "Belgium",
+      "officialCnaID": "CNA-2021-0042",
+      "country": "USA",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.toreon.com/cna-disclosure-policy/"
+          "url": "https://www.pingidentity.com/en/company/security-at-ping-identity.html"
+        },
+        {
+          "label": "Ping Identity PGP Keys",
+          "language": "",
+          "url": "https://www.pingidentity.com/.well-known/security.txt"
         }
       ]
     },
@@ -1829,57 +1829,6 @@
       ]
     },
     {
-      "shortName": "PingIdentity",
-      "detailFile": "PingIdentity__CNA-2021-0042.json",
-      "organizationName": "Ping Identity Corporation",
-      "cnaType": "Hosted Service",
-      "cnaTypes": [
-        "Hosted Service",
-        "Researcher",
-        "Bug Bounty Provider"
-      ],
-      "rank": 88,
-      "active_cna_count": 380,
-      "percentile": 77.1,
-      "total_cves": 6,
-      "recent_cves": 6,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 85.0,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 33.33,
-        "severity_and_impact": 100.0,
-        "patchinfo": 16.67
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "All Ping Identity and ForgeRock products (supported products and end-of-life/end-of-service products), as well as vulnerabilities in third-party software discovered by Ping Identity or ForgeRock that are not in another CNA’s scope.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://docs.pingidentity.com/pingam/latest/release-notes/security-advisories.html"
-        }
-      ],
-      "officialCnaID": "CNA-2021-0042",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.pingidentity.com/en/company/security-at-ping-identity.html"
-        },
-        {
-          "label": "Ping Identity PGP Keys",
-          "language": "",
-          "url": "https://www.pingidentity.com/.well-known/security.txt"
-        }
-      ]
-    },
-    {
       "shortName": "Sophos",
       "detailFile": "Sophos__CNA-2021-0003.json",
       "organizationName": "Sophos Limited",
@@ -1920,6 +1869,50 @@
           "label": "Policy",
           "language": "",
           "url": "https://sophos.com/security/"
+        }
+      ]
+    },
+    {
+      "shortName": "Toreon",
+      "detailFile": "Toreon__CNA-2025-0031.json",
+      "organizationName": "Toreon",
+      "cnaType": "Researcher",
+      "cnaTypes": [
+        "Researcher"
+      ],
+      "rank": 88,
+      "active_cna_count": 380,
+      "percentile": 77.1,
+      "total_cves": 2,
+      "recent_cves": 2,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 85.0,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 50.0
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities discovered by or reported to Toreon that are not in another CNA’s scope.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.toreon.com/news/"
+        }
+      ],
+      "officialCnaID": "CNA-2025-0031",
+      "country": "Belgium",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.toreon.com/cna-disclosure-policy/"
         }
       ]
     },
@@ -2147,9 +2140,9 @@
       ]
     },
     {
-      "shortName": "SCHUTZWERK",
-      "detailFile": "SCHUTZWERK__CNA-2025-0024.json",
-      "organizationName": "SCHUTZWERK GmbH",
+      "shortName": "PRJBLK",
+      "detailFile": "PRJBLK__CNA-2026-0008.json",
+      "organizationName": "Project Black",
       "cnaType": "Researcher",
       "cnaTypes": [
         "Researcher"
@@ -2157,8 +2150,8 @@
       "rank": 98,
       "active_cna_count": 380,
       "percentile": 74.5,
-      "total_cves": 3,
-      "recent_cves": 3,
+      "total_cves": 6,
+      "recent_cves": 6,
       "is_active": true,
       "scores": {
         "overall_average_score": 83.33,
@@ -2173,64 +2166,20 @@
         "description": "No significant change",
         "monthly_data": []
       },
-      "scope": "Vulnerabilities discovered by, reported to, or coordinated by, SCHUTZWERK unless covered by another CNA.",
+      "scope": "Vulnerabilities discovered by Project Black that are not within another CNA’s scope.",
       "advisories": [
         {
           "label": "Advisories",
-          "url": "https://www.schutzwerk.com/blog/tags/advisories/"
+          "url": "https://projectblack.io/blog/tag/advisory/"
         }
       ],
-      "officialCnaID": "CNA-2025-0024",
-      "country": "Germany",
+      "officialCnaID": "CNA-2026-0008",
+      "country": "Australia",
       "disclosurePolicy": [
         {
           "label": "Policy",
           "language": "",
-          "url": "https://www.schutzwerk.com/en/advisories/"
-        }
-      ]
-    },
-    {
-      "shortName": "forcepoint",
-      "detailFile": "forcepoint__CNA-2017-0033.json",
-      "organizationName": "Forcepoint",
-      "cnaType": "Vendor",
-      "cnaTypes": [
-        "Vendor"
-      ],
-      "rank": 98,
-      "active_cna_count": 380,
-      "percentile": 74.5,
-      "total_cves": 3,
-      "recent_cves": 3,
-      "is_active": true,
-      "scores": {
-        "overall_average_score": 83.33,
-        "foundational_completeness": 100.0,
-        "root_cause_analysis": 100.0,
-        "software_identification": 33.33,
-        "severity_and_impact": 100.0,
-        "patchinfo": 0.0
-      },
-      "trend": {
-        "direction": "steady",
-        "description": "No significant change",
-        "monthly_data": []
-      },
-      "scope": "Forcepoint products only.",
-      "advisories": [
-        {
-          "label": "Advisories",
-          "url": "https://support.forcepoint.com/s/knowledge-base#t=All&sort=relevancy&f:@sfrecordtypename=[Security%20Advisory]"
-        }
-      ],
-      "officialCnaID": "CNA-2017-0033",
-      "country": "USA",
-      "disclosurePolicy": [
-        {
-          "label": "Policy",
-          "language": "",
-          "url": "https://www.forcepoint.com/company/innovation/product-security-report-issue"
+          "url": "https://projectblack.io/blog/vulnerability-disclosure-policy/"
         }
       ]
     },
@@ -2275,6 +2224,50 @@
           "label": "Policy",
           "language": "",
           "url": "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/vulnerability-disclosure-policy/"
+        }
+      ]
+    },
+    {
+      "shortName": "SCHUTZWERK",
+      "detailFile": "SCHUTZWERK__CNA-2025-0024.json",
+      "organizationName": "SCHUTZWERK GmbH",
+      "cnaType": "Researcher",
+      "cnaTypes": [
+        "Researcher"
+      ],
+      "rank": 98,
+      "active_cna_count": 380,
+      "percentile": 74.5,
+      "total_cves": 3,
+      "recent_cves": 3,
+      "is_active": true,
+      "scores": {
+        "overall_average_score": 83.33,
+        "foundational_completeness": 100.0,
+        "root_cause_analysis": 100.0,
+        "software_identification": 0.0,
+        "severity_and_impact": 100.0,
+        "patchinfo": 33.33
+      },
+      "trend": {
+        "direction": "steady",
+        "description": "No significant change",
+        "monthly_data": []
+      },
+      "scope": "Vulnerabilities discovered by, reported to, or coordinated by, SCHUTZWERK unless covered by another CNA.",
+      "advisories": [
+        {
+          "label": "Advisories",
+          "url": "https://www.schutzwerk.com/blog/tags/advisories/"
+        }
+      ],
+      "officialCnaID": "CNA-2025-0024",
+      "country": "Germany",
+      "disclosurePolicy": [
+        {
+          "label": "Policy",
+          "language": "",
+          "url": "https://www.schutzwerk.com/en/advisories/"
         }
       ]
     }
